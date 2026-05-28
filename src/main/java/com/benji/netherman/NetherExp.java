@@ -41,7 +41,7 @@ public class NetherExp {
     public static final String MODID = "netherman";
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    // Создаем реестры
+    // REGISTER
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);

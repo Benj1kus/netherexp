@@ -1,0 +1,6 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "netherman:block/nether_spawner_particles"
+  }
+}

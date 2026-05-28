@@ -1,0 +1,127 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "body",
+					"pivot": [0, 6, -0.85],
+					"cubes": [
+						{"origin": [-4, 5, -4], "size": [8, 8, 8], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "brain",
+					"parent": "body",
+					"pivot": [0, 9, 0],
+					"cubes": [
+						{"origin": [-3, 6, -3], "size": [6, 6, 6], "uv": [0, 16]}
+					]
+				},
+				{
+					"name": "tents",
+					"parent": "body",
+					"pivot": [0, 6, 0]
+				},
+				{
+					"name": "tent",
+					"parent": "tents",
+					"pivot": [-3, 5, -3],
+					"cubes": [
+						{"origin": [-4, 0, -3], "size": [2, 5, 0], "uv": [24, 16]}
+					]
+				},
+				{
+					"name": "tent10",
+					"parent": "tents",
+					"pivot": [4, 5, 0],
+					"rotation": [0, 90, 0],
+					"cubes": [
+						{"origin": [3, 0, 0], "size": [2, 5, 0], "uv": [24, 16]}
+					]
+				},
+				{
+					"name": "tent8",
+					"parent": "tents",
+					"pivot": [-4, 5, 0],
+					"rotation": [0, 90, 0],
+					"cubes": [
+						{"origin": [-5, 0, 0], "size": [2, 5, 0], "uv": [24, 16]}
+					]
+				},
+				{
+					"name": "tent2",
+					"parent": "tents",
+					"pivot": [0, 5, -3],
+					"cubes": [
+						{"origin": [-1, 0, -3], "size": [2, 5, 0], "uv": [24, 16]}
+					]
+				},
+				{
+					"name": "tent3",
+					"parent": "tents",
+					"pivot": [3, 5, -3],
+					"cubes": [
+						{"origin": [2, 0, -3], "size": [2, 5, 0], "uv": [24, 16]}
+					]
+				},
+				{
+					"name": "tent6",
+					"parent": "tents",
+					"pivot": [3, 5, 3],
+					"cubes": [
+						{"origin": [2, 0, 3], "size": [2, 5, 0], "uv": [24, 16]}
+					]
+				},
+				{
+					"name": "tent5",
+					"parent": "tents",
+					"pivot": [0, 5, 3],
+					"cubes": [
+						{"origin": [-1, 0, 3], "size": [2, 5, 0], "uv": [24, 16]}
+					]
+				},
+				{
+					"name": "tent4",
+					"parent": "tents",
+					"pivot": [-3, 5, 3],
+					"cubes": [
+						{"origin": [-4, 0, 3], "size": [2, 5, 0], "uv": [24, 16]}
+					]
+				},
+				{
+					"name": "eye_2",
+					"parent": "body",
+					"pivot": [-3, 8, -4.25],
+					"cubes": [
+						{"origin": [-4, 7, -4.25], "size": [2, 2, 0], "uv": [28, 23]}
+					]
+				},
+				{
+					"name": "eye",
+					"parent": "body",
+					"pivot": [3, 8, -4.25],
+					"cubes": [
+						{"origin": [2, 7, -4.25], "size": [2, 2, 0], "uv": [28, 25]}
+					]
+				},
+				{
+					"name": "mouth",
+					"parent": "body",
+					"pivot": [0, 6, -4.25],
+					"cubes": [
+						{"origin": [-2, 5.5, -4.25], "size": [3, 2, 0], "uv": [28, 21]}
+					]
+				}
+			]
+		}
+	]
+}

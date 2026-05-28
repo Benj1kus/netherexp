@@ -1,0 +1,26 @@
+{
+  "block.netherman.nether_spawner": "Blackstone Socle",
+  "block.netherman.blackstone_column": "Blackstone Column",
+  "block.netherman.pointed_blackstone": "Pointed Blackstone",
+  "block.netherman.blackstone_plant": "Blackstone Spur",
+  "block.netherman.grand_door": "Grand Door",
+  "block.netherman.crimson_web": "Crimson Web",
+  "block.netherman.entrance": "Sacred Veil",
+  "block.netherman.traphive": "Traphive",
+  "block.netherman.void_mid": "Void Middle",
+  "block.netherman.void_corner": "Void Corner",
+  "block.netherman.void_midcorner": "Void Line",
+  "block.netherman.voidnether_mid": "Red Void Middle",
+  "block.netherman.voidnether_corner": "Red Void Corner",
+  "block.netherman.voidnether_midcorner": "Red Void Line",
+  "block.netherman.blackstone_axon": "Blackstone Axon",
+
+  "entity.netherman.welcomer": "Welcomer",
+  "entity.netherman.guardian": "Gehinnom Guard",
+  "entity.netherman.villager_prisoner": "Prisoner Villager",
+  "entity.netherman.piglin_prisoner": "Prisoner Piglin",
+  "entity.netherman.ghastly": "Ghastly",
+  "entity.netherman.manipulator": "Manipulator",
+
+  "effect.netherman.manipulation": "Manipulation"
+}

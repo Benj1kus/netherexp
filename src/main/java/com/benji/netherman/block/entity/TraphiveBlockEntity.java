@@ -87,7 +87,7 @@ public class TraphiveBlockEntity extends BlockEntity implements GeoBlockEntity {
 
                 if (isTouching) {
                     entity.contactTimer++;
-                    if (entity.contactTimer >= 20) { // 40 тиков = 2 секунды
+                    if (entity.contactTimer >= 10) { // 40 тиков = 2 секунды
                         if (state.getBlock() instanceof TraphiveBlock block) {
                             block.activateWave(level, pos);
                         }

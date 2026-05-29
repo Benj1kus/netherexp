@@ -1,7 +1,5 @@
 package com.benji.netherman.block;
 
-import com.benji.netherman.block.entity.VoidMidBlockEntity;
-import com.benji.netherman.block.entity.VoidMidCornerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,10 +12,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -25,9 +21,9 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class VoidMidCornerBlock extends HorizontalDirectionalBlock implements EntityBlock {
+// ИСПРАВЛЕНИЕ: Больше не реализуем EntityBlock! Блок стал легковесным.
+public class VoidMidCornerBlock extends HorizontalDirectionalBlock {
 
-    // Визуальный хитбокс, чтобы игрок мог выделить блок мышкой и сломать в креативе
     private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
     public VoidMidCornerBlock(Properties properties) {
@@ -43,14 +39,12 @@ public class VoidMidCornerBlock extends HorizontalDirectionalBlock implements En
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        // Устанавливаем поворот блоку лицом к игроку
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
-    // --- ОТКЛЮЧЕНИЕ ФИЗИЧЕСКОЙ КОЛЛИЗИИ ---
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Shapes.empty(); // Игроки и мобы проходят насквозь
+        return Shapes.empty();
     }
 
     @Override
@@ -58,29 +52,17 @@ public class VoidMidCornerBlock extends HorizontalDirectionalBlock implements En
         return SHAPE;
     }
 
-    // --- УРОН ВНУТРИ БЛОКА ---
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (!level.isClientSide() && entity instanceof LivingEntity livingEntity) {
-
-            // 1. Наносим урон (5.0F за удар, ванильная механика ограничит до 2 раз в сек = 10 урона/сек)
             livingEntity.hurt(level.damageSources().magic(), 5.0F);
-
-            // 2. Накладываем эффект Тьмы (как у Вардена)
-            // Параметры: Эффект, Длительность в тиках (60 тиков = 3 сек), Уровень (0), Партиклы от зелья (false), Иконка (false)
             livingEntity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0, false, false));
         }
     }
 
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new VoidMidCornerBlockEntity(pos, state);
-    }
-
+    // ИСПРАВЛЕНИЕ: Изменили на RenderShape.MODEL. Теперь Майнкрафт запечет этот блок в чанк!
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
+        return RenderShape.MODEL;
     }
 }

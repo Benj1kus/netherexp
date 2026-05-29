@@ -253,15 +253,6 @@ public class NetherExp {
     public static final RegistryObject<BlockEntityType<VoidNetherMidBlockEntity>> VOIDMIDNETHER_BE = BLOCK_ENTITIES.register("voidnether_mid",
             () -> BlockEntityType.Builder.of(VoidNetherMidBlockEntity::new, VOIDMIDNETHER.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<VoidMidCornerBlockEntity>> VOIDMIDCORNER_BE = BLOCK_ENTITIES.register("void_midcorner",
-            () -> BlockEntityType.Builder.of(VoidMidCornerBlockEntity::new, VOIDMIDCORNER.get()).build(null));
-
-    public static final RegistryObject<BlockEntityType<VoidCornerBlockEntity>> VOIDCORNER_BE = BLOCK_ENTITIES.register("void_corner",
-            () -> BlockEntityType.Builder.of(VoidCornerBlockEntity::new, VOIDCORNER.get()).build(null));
-
-    public static final RegistryObject<BlockEntityType<VoidMidBlockEntity>> VOIDMID_BE = BLOCK_ENTITIES.register("void_mid",
-            () -> BlockEntityType.Builder.of(VoidMidBlockEntity::new, VOIDMID.get()).build(null));
-
     public static final RegistryObject<BlockEntityType<TraphiveBlockEntity>> TRAPHIVE_BE = BLOCK_ENTITIES.register("traphive",
             () -> BlockEntityType.Builder.of(TraphiveBlockEntity::new, TRAPHIVE.get()).build(null));
 
@@ -390,9 +381,6 @@ public class NetherExp {
             event.registerBlockEntityRenderer(VOIDMIDCORNERNETHER_BE.get(), VoidNetherMidCornerRenderer::new);
             event.registerBlockEntityRenderer(VOIDCORNERNETHER_BE.get(), VoidNetherCornerRenderer::new);
             event.registerBlockEntityRenderer(VOIDMIDNETHER_BE.get(), VoidNetherMidRenderer::new);
-            event.registerBlockEntityRenderer(VOIDMIDCORNER_BE.get(), VoidMidCornerRenderer::new);
-            event.registerBlockEntityRenderer(VOIDCORNER_BE.get(), VoidCornerRenderer::new);
-            event.registerBlockEntityRenderer(VOIDMID_BE.get(), VoidMidRenderer::new);
             event.registerBlockEntityRenderer(TRAPHIVE_BE.get(), TraphiveRenderer::new);
             event.registerBlockEntityRenderer(CRIMSON_WEB_BE.get(), CrimsonWebRenderer::new);
             event.registerBlockEntityRenderer(ENTRANCE_BE.get(), EntranceRenderer::new);

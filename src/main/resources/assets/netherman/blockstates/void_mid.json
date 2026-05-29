@@ -1,5 +1,8 @@
 {
   "variants": {
-    "": { "model": "netherman:block/void_mid" }
+    "facing=north": { "model": "netherman:block/void_mid" },
+    "facing=east":  { "model": "netherman:block/void_mid", "y": 90 },
+    "facing=south": { "model": "netherman:block/void_mid", "y": 180 },
+    "facing=west":  { "model": "netherman:block/void_mid", "y": 270 }
   }
 }

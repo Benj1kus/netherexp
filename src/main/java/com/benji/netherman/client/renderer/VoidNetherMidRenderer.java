@@ -1,10 +1,8 @@
 package com.benji.netherman.client.renderer;
 
 import com.benji.netherman.NetherExp;
-import com.benji.netherman.block.entity.VoidMidBlockEntity;
 import com.benji.netherman.block.entity.VoidNetherMidBlockEntity;
 import com.benji.netherman.client.layer.GenericEmissiveLayer;
-import com.benji.netherman.client.model.VoidMidModel;
 import com.benji.netherman.client.model.VoidNetherMidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

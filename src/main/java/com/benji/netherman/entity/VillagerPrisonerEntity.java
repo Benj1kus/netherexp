@@ -257,6 +257,11 @@ public class VillagerPrisonerEntity extends PathfinderMob implements GeoEntity {
     }
 
     @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.setMasterId(tag.getInt("MasterId"));

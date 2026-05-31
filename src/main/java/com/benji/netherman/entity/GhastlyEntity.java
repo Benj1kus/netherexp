@@ -160,6 +160,11 @@ public class GhastlyEntity extends TamableAnimal implements GeoEntity {
         }
     }
 
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
     // Отключаем урон от падения
     @Override
     public boolean causeFallDamage(float fallDistance, float multiplier, net.minecraft.world.damagesource.DamageSource source) {

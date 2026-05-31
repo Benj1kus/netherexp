@@ -113,6 +113,11 @@ public class GuardianEntity extends Monster implements GeoEntity {
         return this.random.nextBoolean() ? ModSounds.GUARDIAN_DAMAGE_1.get() : ModSounds.GUARDIAN_DAMAGE_2.get();
     }
 
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
     // Звуки шагов (синхронизировано с анимацией ходьбы майнкрафтом)
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {

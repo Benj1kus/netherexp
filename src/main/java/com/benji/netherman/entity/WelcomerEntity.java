@@ -187,6 +187,11 @@ public class WelcomerEntity extends Monster implements GeoEntity {
         controllers.add(controller);
     }
 
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {

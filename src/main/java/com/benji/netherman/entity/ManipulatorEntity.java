@@ -282,5 +282,10 @@ public class ManipulatorEntity extends Monster implements GeoEntity {
     }
 
     @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return this.cache; }
 }

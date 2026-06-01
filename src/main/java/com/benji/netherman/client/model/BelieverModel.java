@@ -13,6 +13,9 @@ public class BelieverModel extends GeoModel<BelieverEntity> {
 
     @Override
     public ResourceLocation getTextureResource(BelieverEntity animatable) {
+        if (animatable.getEntityData().get(BelieverEntity.IS_PROTECTED)) {
+            return new ResourceLocation(NetherExp.MODID, "textures/entity/believer_pray.png");
+        }
         return new ResourceLocation(NetherExp.MODID, "textures/entity/believer.png");
     }
 

@@ -361,6 +361,12 @@ public class NetherExp {
     public static final RegistryObject<MobEffect> FAITH_EFFECT = EFFECTS.register("faith", () -> new ZoneEffect(0x800080));
 
 
+    public static final RegistryObject<EntityType<AzazelEntity>> AZAZEL = ENTITIES.register("azazel",
+            () -> EntityType.Builder.of(AzazelEntity::new, MobCategory.MONSTER)
+                    .sized(3.0F, 4.5F) // Гигантский хитбокс
+                    .fireImmune()
+                    .build(new ResourceLocation(MODID, "azazel").toString()));
+
     public static final RegistryObject<EntityType<StatueBossunitEntity>> STATUE_BOSSUNIT = ENTITIES.register("statue_bossunit",
             () -> EntityType.Builder.of(StatueBossunitEntity::new, MobCategory.MONSTER)
                     .sized(0.625F, 2.125F) // Хитбокс статуи
@@ -483,6 +489,7 @@ public class NetherExp {
         @SubscribeEvent
         public static void registerAttributes(EntityAttributeCreationEvent event) {
             // Регистрируем здоровье и характеристики для нашего моба
+            event.put(AZAZEL.get(), AzazelEntity.createAttributes().build());
             event.put(LASER.get(), LaserEntity.createAttributes().build());
             event.put(STATUE_BOSSUNIT.get(), StatueBossunitEntity.createAttributes().build());
             event.put(BLACKSMITH.get(), BlacksmithEntity.createAttributes().build());
@@ -523,6 +530,7 @@ public class NetherExp {
             event.registerBlockEntityRenderer(BLACKSTONE_AXON_BE.get(), BlackstoneAxonRenderer::new);
 
             //entity
+            event.registerEntityRenderer(AZAZEL.get(), AzazelRenderer::new);
             event.registerEntityRenderer(LASER.get(), LaserRenderer::new);
             event.registerEntityRenderer(STATUE_BOSSUNIT.get(), StatueBossunitRenderer::new);
             event.registerEntityRenderer(BLACKSMITH.get(), BlacksmithRenderer::new);

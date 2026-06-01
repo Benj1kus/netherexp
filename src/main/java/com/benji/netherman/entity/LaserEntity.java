@@ -97,11 +97,11 @@ public class LaserEntity extends Mob implements GeoEntity {
 
             this.setPos(this.getX() + forwardX + perpX, this.getY(), this.getZ() + forwardZ + perpZ);
 
-            if (this.tickCount % 3 == 0) {
+            if (this.tickCount % 2 == 0) {
                 List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox());
                 for (Player player : players) {
                     if (player.isAlive() && !player.isCreative()) {
-                        player.hurt(this.damageSources().magic(), 2.0F);
+                        player.hurt(this.damageSources().magic(), 5.0F);
                         player.setSecondsOnFire(3);
                     }
                 }

@@ -45,7 +45,31 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> BIG_TEXT = registerSoundEvent("big_text");
 
+    public static final RegistryObject<SoundEvent> AZAZEL_IDLE_1 = registerSoundEvent("azazel_idle1");
+    public static final RegistryObject<SoundEvent> AZAZEL_IDLE_2 = registerSoundEvent("azazel_idle2");
+    public static final RegistryObject<SoundEvent> AZAZEL_IDLE_3 = registerSoundEvent("azazel_idle3");
+    public static final RegistryObject<SoundEvent> AZAZEL_IDLE_4 = registerSoundEvent("azazel_idle4");
 
+    public static final RegistryObject<SoundEvent> BOSS_FIGHT = registerSoundEvent("boss_fight");
+    public static final RegistryObject<SoundEvent> BOSS_FIGHT_LOOP = registerSoundEvent("boss_fight_loop");
+
+    public static final RegistryObject<SoundEvent> SPAWN_UNIT = registerSoundEvent("spawn_unit");
+
+    public static final RegistryObject<SoundEvent> IDLE_PRAY = registerSoundEvent("idle_pray");
+    public static final RegistryObject<SoundEvent> AZAZEL_PRAY = registerSoundEvent("azazel_pray");
+    public static final RegistryObject<SoundEvent> AZAZEL_PHASE = registerSoundEvent("azazel_phase");
+    public static final RegistryObject<SoundEvent> DEFENCE = registerSoundEvent("defence");
+    public static final RegistryObject<SoundEvent> ARROW_ATTACK = registerSoundEvent("arrow_attack");
+    public static final RegistryObject<SoundEvent> WHEEL_ATTACK = registerSoundEvent("wheel_attack");
+    public static final RegistryObject<SoundEvent> BREATH_AZAZEL = registerSoundEvent("breath_azazel");
+
+
+    public static final RegistryObject<SoundEvent> AZAZEL_DAMAGE_1 = registerSoundEvent("azazel_damage1");
+    public static final RegistryObject<SoundEvent> AZAZEL_DAMAGE_2 = registerSoundEvent("azazel_damage2");
+
+    public static final RegistryObject<SoundEvent> WING_1 = registerSoundEvent("wing1");
+    public static final RegistryObject<SoundEvent> WING_2 = registerSoundEvent("wing2");
+    public static final RegistryObject<SoundEvent> WING_3 = registerSoundEvent("wing3");
 
     public static final RegistryObject<SoundEvent> GUARDIAN_IDLE_1 = registerSoundEvent("guardian_idle1");
     public static final RegistryObject<SoundEvent> GUARDIAN_IDLE_2 = registerSoundEvent("guardian_idle2");

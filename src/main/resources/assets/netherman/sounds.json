@@ -12,6 +12,7 @@
   "prison1": { "sounds": [ "netherman:prison1" ] },
   "prison2": { "sounds": [ "netherman:prison2" ] },
   "prison3": { "sounds": [ "netherman:prison3" ] },
+  "prison4": { "sounds": [ "netherman:prison4" ] },
 
   "statue_hurt1": { "sounds": [ "netherman:statue_hurt1" ] },
   "statue_hurt2": { "sounds": [ "netherman:statue_hurt2" ] },
@@ -26,7 +27,32 @@
   "spring2": { "sounds": [ "netherman:spring2" ] },
   "spring3": { "sounds": [ "netherman:spring3" ] },
 
-  "prison4": { "sounds": [ "netherman:prison4" ] },
+  "spawn_unit": { "sounds": [ "netherman:spawn_unit" ] },
+
+
+  "azazel_idle1": { "sounds": [ "netherman:azazel_idle1" ] },
+  "azazel_idle2": { "sounds": [ "netherman:azazel_idle2" ] },
+  "azazel_idle3": { "sounds": [ "netherman:azazel_idle3" ] },
+  "azazel_idle4": { "sounds": [ "netherman:azazel_idle4" ] },
+
+  "azazel_damage1": { "sounds": [ "netherman:azazel_damage1" ] },
+  "azazel_damage2": { "sounds": [ "netherman:azazel_damage2" ] },
+
+  "idle_pray": { "sounds": [ "netherman:idle_pray" ] },
+  "boss_fight": { "sounds": [ "netherman:boss_fight" ] },
+  "boss_fight_loop": { "sounds": [ "netherman:boss_fight_loop" ] },
+  "azazel_pray": { "sounds": [ "netherman:azazel_pray" ] },
+  "azazel_phase": { "sounds": [ "netherman:azazel_phase" ] },
+  "defence": { "sounds": [ "netherman:defence" ] },
+  "arrow_attack": { "sounds": [ "netherman:arrow_attack" ] },
+  "wheel_attack": { "sounds": [ "netherman:wheel_attack" ] },
+  "breath_azazel": { "sounds": [ "netherman:breath_azazel" ] },
+
+  "wing1": { "sounds": [ "netherman:wing1" ] },
+  "wing2": { "sounds": [ "netherman:wing2" ] },
+  "wing3": { "sounds": [ "netherman:wing3" ] },
+
+
   "weakness": { "sounds": [ "netherman:weakness" ] },
   "entrance": { "sounds": [ "netherman:entrance" ] },
   "damned": { "sounds": [ "netherman:damned" ] },

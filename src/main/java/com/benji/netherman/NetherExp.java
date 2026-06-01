@@ -359,7 +359,7 @@ public class NetherExp {
     public static final RegistryObject<MobEffect> FEAR_EFFECT = EFFECTS.register("fear", () -> new ZoneEffect(0x000000));
     public static final RegistryObject<MobEffect> EXCITEMENT_EFFECT = EFFECTS.register("excitement", () -> new ZoneEffect(0xFF0000));
     public static final RegistryObject<MobEffect> FAITH_EFFECT = EFFECTS.register("faith", () -> new ZoneEffect(0x800080));
-
+    public static final RegistryObject<MobEffect> ANXIETY_EFFECT = EFFECTS.register("anxiety", () -> new ZoneEffect(0x8B0000));
 
     public static final RegistryObject<EntityType<AzazelEntity>> AZAZEL = ENTITIES.register("azazel",
             () -> EntityType.Builder.of(AzazelEntity::new, MobCategory.MONSTER)

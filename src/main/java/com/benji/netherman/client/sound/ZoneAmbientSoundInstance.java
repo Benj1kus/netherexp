@@ -11,27 +11,24 @@ public class ZoneAmbientSoundInstance extends AbstractTickableSoundInstance {
     private final Player player;
     private final MobEffect requiredEffect;
 
-    public ZoneAmbientSoundInstance(SoundEvent soundEvent, Player player, MobEffect requiredEffect) {
-        // SoundInstance.createUnseededRandom() используется для генерации параметров звука
+    // ДОБАВЛЕН ПАРАМЕТР isLooping
+    public ZoneAmbientSoundInstance(SoundEvent soundEvent, Player player, MobEffect requiredEffect, boolean isLooping) {
         super(soundEvent, SoundSource.AMBIENT, SoundInstance.createUnseededRandom());
         this.player = player;
         this.requiredEffect = requiredEffect;
 
-        this.looping = true; // МАГИЯ! Майнкрафт сам идеально зациклит звук
+        this.looping = isLooping; // Теперь интро играет один раз, а луп - бесконечно!
         this.delay = 0;
         this.volume = 1.0F;
         this.pitch = 1.0F;
 
-        // ВАЖНЫЕ НАСТРОЙКИ ДЛЯ ЗВУКА "В ГОЛОВЕ"
-        this.relative = true; // Звук вездесущий, не привязан к координатам в мире
-        this.attenuation = Attenuation.NONE; // Громкость не падает от расстояния
+        this.relative = true;
+        this.attenuation = Attenuation.NONE;
     }
 
     @Override
     public void tick() {
-        // Если игрок умер, вышел из мира или ВЫПИЛ МОЛОКО (потерял эффект)
         if (this.player.isRemoved() || !this.player.isAlive() || !this.player.hasEffect(this.requiredEffect)) {
-            // Мгновенно выключаем звук
             this.stop();
         }
     }

@@ -17,9 +17,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -51,7 +51,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
     public static final EntityDataAccessor<Boolean> IS_AGGRO = SynchedEntityData.defineId(AzazelEntity.class, EntityDataSerializers.BOOLEAN);
 
-    // 0 = Idle, 1 = Wind, 2 = Defence, 3 = Wheel, 4 = Arrow
+    // 0 = Idle, 1 = Wind, 2 = Defence, 3 = Wheel, 4 = Arrow, 5 = Pray
     public static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AzazelEntity.class, EntityDataSerializers.INT);
     // 0 = Normal, 1 = Damaged (<50%), 2 = Low HP (<25%)
     public static final EntityDataAccessor<Integer> PHASE_STATE = SynchedEntityData.defineId(AzazelEntity.class, EntityDataSerializers.INT);
@@ -61,10 +61,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
     private int hitCounter = 0;
     private int attackTimer = 0;
     private boolean playedPraySound = false;
-    private int musicTimer = 0;
-    private int musicPhase = 0;
 
-    // Внутренняя переменная для выбора под-атаки у Arrow Attack (0, 1 или 2)
     private int arrowAttackVariant = 0;
 
     public AzazelEntity(EntityType<? extends Monster> type, Level level) {
@@ -141,15 +138,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
         this.entityData.set(IS_AGGRO, true);
         this.playSound(ModSounds.AZAZEL_IDLE_4.get(), 1.5F, 1.0F);
 
-        // Запуск музыкальной темы
-        if (this.musicPhase == 0) {
-            this.musicPhase = 1;
-            // 2 минуты 25 секунд = 145 секунд = 2900 тиков
-            this.musicTimer = 2900;
-            // Используем громкость 20.0F, чтобы музыка покрывала огромный радиус арены
-            this.level().playSound(null, this.blockPosition(), ModSounds.BOSS_FIGHT.get(), SoundSource.HOSTILE, 20.0F, 1.0F);
-        }
-
         for (ServerPlayer player : this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(64.0D))) {
             this.bossEvent.addPlayer(player);
             Component title = Component.literal("THAT WAS A MISTAKE").withStyle(ChatFormatting.RED);
@@ -162,27 +150,38 @@ public class AzazelEntity extends Monster implements GeoEntity {
     // --- СТАРТЕРЫ АТАК ---
     private void startDefenseStun() {
         this.entityData.set(ATTACK_STATE, 2);
-        this.attackTimer = 100; // 5 сек
+        this.attackTimer = 100;
         this.heal(20.0F);
         this.playSound(ModSounds.DEFENCE.get(), 1.0F, 1.0F);
     }
 
     private void startWindAttack() {
         this.entityData.set(ATTACK_STATE, 1);
-        this.attackTimer = 60; // 3 сек
+        this.attackTimer = 60;
         this.playSound(SoundEvents.PHANTOM_SWOOP, 2.0F, 0.5F);
     }
 
     private void startWheelAttack() {
         this.entityData.set(ATTACK_STATE, 3);
-        this.attackTimer = 90; // 4.5 сек
+        this.attackTimer = 90;
         this.playSound(ModSounds.WHEEL_ATTACK.get(), 1.0F, 1.0F);
+    }
+
+    private void startPrayAttack() {
+        this.entityData.set(ATTACK_STATE, 5);
+        this.attackTimer = 180;
+        this.playSound(ModSounds.AZAZEL_PRAY.get(), 1.0F, 1.0F);
+
+        List<BelieverEntity> believers = this.level().getEntitiesOfClass(BelieverEntity.class, this.getBoundingBox().inflate(40.0D));
+        for (BelieverEntity believer : believers) {
+            believer.setProtected(150);
+        }
     }
 
     private void startArrowAttack() {
         this.entityData.set(ATTACK_STATE, 4);
-        this.attackTimer = 120; // 6 сек
-        this.arrowAttackVariant = this.random.nextInt(3); // Рандомим одну из 3-х атак
+        this.attackTimer = 120;
+        this.arrowAttackVariant = this.random.nextInt(3);
         this.playSound(ModSounds.ARROW_ATTACK.get(), 1.0F, 1.0F);
     }
 
@@ -196,14 +195,12 @@ public class AzazelEntity extends Monster implements GeoEntity {
             int attackState = this.entityData.get(ATTACK_STATE);
             int currentPhase = this.entityData.get(PHASE_STATE);
 
-            // --- ЗВУКИ КРЫЛЬЕВ ---
             if (this.tickCount % 20 == 0) {
                 int wingRand = this.random.nextInt(3);
                 SoundEvent wingSound = wingRand == 0 ? ModSounds.WING_1.get() : (wingRand == 1 ? ModSounds.WING_2.get() : ModSounds.WING_3.get());
                 this.playSound(wingSound, 1.0F, this.getVoicePitch());
             }
 
-            // --- СМЕНА ФАЗ ---
             float healthPct = this.getHealth() / this.getMaxHealth();
             if (healthPct <= 0.25F && currentPhase < 2) {
                 this.entityData.set(PHASE_STATE, 2);
@@ -229,10 +226,18 @@ public class AzazelEntity extends Monster implements GeoEntity {
             }
             // 2. АГРЕССИВНАЯ ФАЗА
             else {
+                // АУРА ТРЕВОГИ: Каждую секунду накладываем эффект Anxiety (музыка!) на игроков в радиусе 100 блоков
+                if (this.tickCount % 20 == 0) {
+                    List<Player> auraPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(100.0D));
+                    for (Player p : auraPlayers) {
+                        // 100 тиков (5 секунд). Иконка включена (true), партиклы зелья отключены (false).
+                        p.addEffect(new MobEffectInstance(NetherExp.ANXIETY_EFFECT.get(), 100, 0, false, false, true));
+                    }
+                }
+
                 if (attackState > 0) {
                     this.attackTimer--;
 
-                    // Выполнение активных атак
                     if (attackState == 1) performWindAttack();
                     else if (attackState == 3) performWheelAttack();
                     else if (attackState == 4) performArrowAttack();
@@ -240,15 +245,12 @@ public class AzazelEntity extends Monster implements GeoEntity {
                     if (this.attackTimer <= 0) this.entityData.set(ATTACK_STATE, 0);
                 } else {
                     if (this.getTarget() != null && this.random.nextInt(80) == 0) {
-                        int randAtk = this.random.nextInt(4); // Увеличено до 4
+                        int randAtk = this.random.nextInt(4);
                         if (randAtk == 0) startWindAttack();
                         else if (randAtk == 1) startWheelAttack();
                         else if (randAtk == 2) startArrowAttack();
-                        else startPrayAttack(); // Новая атака
+                        else startPrayAttack();
                     }
-
-
-                    // Пассивный спавн миньонов
                     handlePassiveSummons();
                 }
             }
@@ -256,7 +258,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
     }
 
     // --- ЛОГИКА АТАК ---
-
     private void performWindAttack() {
         List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(20.0D));
         for (Player player : players) {
@@ -275,20 +276,16 @@ public class AzazelEntity extends Monster implements GeoEntity {
     }
 
     private void performWheelAttack() {
-        // На 50-м тике таймера (через 2 секунды) босс начинает таран
         if (this.attackTimer <= 50 && this.getTarget() != null) {
             LivingEntity target = this.getTarget();
 
-            // Рывок в сторону игрока
             Vec3 dashVec = target.position().subtract(this.position()).normalize().scale(1.2D);
             this.setDeltaMovement(dashVec.x, this.getDeltaMovement().y, dashVec.z);
 
-            // Урон каждые 3 тика при столкновении
             if (this.tickCount % 3 == 0) {
                 List<Player> hitPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(1.0D));
                 for (Player player : hitPlayers) {
                     player.hurt(this.damageSources().mobAttack(this), 4.0F);
-                    // Толкаем игрока перед собой
                     player.setDeltaMovement(dashVec.scale(1.5D));
                     player.hurtMarked = true;
                 }
@@ -296,24 +293,10 @@ public class AzazelEntity extends Monster implements GeoEntity {
         }
     }
 
-    private void startPrayAttack() {
-        this.entityData.set(ATTACK_STATE, 5);
-        this.attackTimer = 180; // 9 секунд (анимация pray)
-        this.playSound(ModSounds.AZAZEL_PRAY.get(), 1.0F, 1.0F);
-
-        // Находим всех последователей в радиусе 40 блоков и даем им щит на 20 секунд
-        List<BelieverEntity> believers = this.level().getEntitiesOfClass(BelieverEntity.class, this.getBoundingBox().inflate(40.0D));
-        for (BelieverEntity believer : believers) {
-            believer.setProtected(150); // 20 сек
-        }
-    }
-
-
     private void performArrowAttack() {
         LivingEntity target = this.getTarget();
         if (target == null) return;
 
-        // Вариант 1: Дождь из 30 стрел (Срабатывает на 100-м тике)
         if (this.arrowAttackVariant == 0 && this.attackTimer == 100) {
             for (int i = 0; i < 30; i++) {
                 double offsetX = (this.random.nextDouble() - 0.5) * 10.0;
@@ -323,12 +306,29 @@ public class AzazelEntity extends Monster implements GeoEntity {
                 this.level().addFreshEntity(arrow);
             }
         }
-        // Вариант 2: 3 пасти из-под земли (Срабатывают на 100, 80 и 60 тиках)
         else if (this.arrowAttackVariant == 1 && (this.attackTimer == 100 || this.attackTimer == 80 || this.attackTimer == 60)) {
-            EvokerFangs fangs = new EvokerFangs(this.level(), target.getX(), target.getY(), target.getZ(), 0.0F, 0, this);
-            this.level().addFreshEntity(fangs);
+            for (int i = 0; i < 20; i++) {
+
+                double angle = Math.toRadians((360.0 / 5) * i);
+
+                double radius = 2.0D;
+
+                double x = target.getX() + Math.cos(angle) * radius;
+                double z = target.getZ() + Math.sin(angle) * radius;
+
+                EvokerFangs fangs = new EvokerFangs(
+                        this.level(),
+                        x,
+                        target.getY(),
+                        z,
+                        (float) angle,
+                        0,
+                        this
+                );
+
+                this.level().addFreshEntity(fangs);
+            }
         }
-        // Вариант 3: Спавн 4 Лазеров вокруг босса (Срабатывает на 100-м тике)
         else if (this.arrowAttackVariant == 2 && this.attackTimer == 100) {
             if (this.level() instanceof ServerLevel serverLevel && NetherExp.LASER.isPresent()) {
                 double[][] offsets = {{5, 5}, {-5, 5}, {5, -5}, {-5, -5}};
@@ -344,7 +344,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
     }
 
     private void handlePassiveSummons() {
-        // Шанс примерно раз в 15 секунд
         if (this.random.nextInt(600) == 0 && this.level() instanceof ServerLevel serverLevel) {
             this.playSound(ModSounds.SPAWN_UNIT.get(), 1.0F, 1.0F);
             serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY() + 2.0D, this.getZ(), 30, 1.5, 1.5, 1.5, 0.05);
@@ -371,12 +370,10 @@ public class AzazelEntity extends Monster implements GeoEntity {
         }
     }
 
-    // --- РАНДОМНЫЕ ЗВУКИ ЭМБИЕНТА ---
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.entityData.get(IS_AGGRO)) {
-            // Замена звуков, если ХП меньше 25%
             if (this.entityData.get(PHASE_STATE) == 2) {
                 return ModSounds.BREATH_AZAZEL.get();
             }
@@ -411,7 +408,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
         if (tag.contains("PhaseState")) this.entityData.set(PHASE_STATE, tag.getInt("PhaseState"));
     }
 
-    // --- ИИ ДВИЖЕНИЯ ---
     class AzazelMoveGoal extends Goal {
         private final AzazelEntity azazel;
 

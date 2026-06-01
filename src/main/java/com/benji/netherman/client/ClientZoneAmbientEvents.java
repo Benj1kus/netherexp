@@ -17,6 +17,10 @@ public class ClientZoneAmbientEvents {
     private static ZoneAmbientSoundInstance currentAmbientSound = null;
     private static int lastZoneType = -1;
 
+    // Таймеры для интро босса
+    private static int bossMusicTimer = 0;
+    private static boolean isPlayingBossIntro = false;
+
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.START || event.player != Minecraft.getInstance().player) return;
@@ -25,7 +29,11 @@ public class ClientZoneAmbientEvents {
         int currentZoneType = -1;
         MobEffect activeEffect = null;
 
-        if (player.hasEffect(NetherExp.FAITH_EFFECT.get())) {
+        // ВАЖНО: Тревога от Босса имеет высший приоритет и перекрывает остальные зоны!
+        if (player.hasEffect(NetherExp.ANXIETY_EFFECT.get())) {
+            currentZoneType = 3;
+            activeEffect = NetherExp.ANXIETY_EFFECT.get();
+        } else if (player.hasEffect(NetherExp.FAITH_EFFECT.get())) {
             currentZoneType = 2;
             activeEffect = NetherExp.FAITH_EFFECT.get();
         } else if (player.hasEffect(NetherExp.EXCITEMENT_EFFECT.get())) {
@@ -36,36 +44,58 @@ public class ClientZoneAmbientEvents {
             activeEffect = NetherExp.FEAR_EFFECT.get();
         }
 
-        // Если зона сменилась или эффект полностью пропал
-        if (currentZoneType != lastZoneType) {
+        // Логика перехода от Интро Босса к Лупу
+        if (currentZoneType == 3 && isPlayingBossIntro) {
+            bossMusicTimer--;
+            if (bossMusicTimer <= 0) {
+                isPlayingBossIntro = false;
 
-            // Если какой-то эмбиент уже играл - принудительно его глушим
+                // Глушим интро (на всякий случай) и запускаем зацикленный луп
+                if (currentAmbientSound != null) {
+                    Minecraft.getInstance().getSoundManager().stop(currentAmbientSound);
+                }
+
+                currentAmbientSound = new ZoneAmbientSoundInstance(ModSounds.BOSS_FIGHT_LOOP.get(), player, activeEffect, true);
+                Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
+            }
+        }
+
+        if (currentZoneType != lastZoneType) {
             if (currentAmbientSound != null) {
                 Minecraft.getInstance().getSoundManager().stop(currentAmbientSound);
                 currentAmbientSound = null;
             }
 
-            // Запускаем новый эмбиент
             if (currentZoneType != -1) {
-                var soundEvent = switch (currentZoneType) {
-                    case 2 -> ModSounds.CHURCH_AMBIENT.get();
-                    case 1 -> ModSounds.CITY_AMBIENT.get();
-                    default -> ModSounds.CAVE_AMBIENT.get();
-                };
+                if (currentZoneType == 3) {
+                    // НАЧАЛО БОЯ С БОССОМ
+                    currentAmbientSound = new ZoneAmbientSoundInstance(ModSounds.BOSS_FIGHT.get(), player, activeEffect, false); // false = не зацикливать интро!
+                    Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
 
-                // Создаем наш умный звук и отправляем его в SoundManager
-                currentAmbientSound = new ZoneAmbientSoundInstance(soundEvent, player, activeEffect);
-                Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
+                    bossMusicTimer = 2900; // 2 мин 25 сек (145 сек * 20 тиков)
+                    isPlayingBossIntro = true;
+                } else {
+                    // ОБЫЧНЫЕ ЗОНЫ
+                    var soundEvent = switch (currentZoneType) {
+                        case 2 -> ModSounds.CHURCH_AMBIENT.get();
+                        case 1 -> ModSounds.CITY_AMBIENT.get();
+                        default -> ModSounds.CAVE_AMBIENT.get();
+                    };
+                    isPlayingBossIntro = false;
+                    currentAmbientSound = new ZoneAmbientSoundInstance(soundEvent, player, activeEffect, true); // true = зациклить
+                    Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
+                }
+            } else {
+                isPlayingBossIntro = false; // Эффекты пропали
             }
 
             lastZoneType = currentZoneType;
         }
 
-        // Сброс `lastZoneType`, если звук остановился сам (например, игрок выпил молоко)
-        // Чтобы при новом получении эффекта звук включился снова
         if (currentZoneType == -1 && lastZoneType != -1) {
             lastZoneType = -1;
             currentAmbientSound = null;
+            isPlayingBossIntro = false;
         }
     }
 }

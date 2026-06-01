@@ -21,6 +21,7 @@
 
   "entity.netherman.welcomer": "Welcomer",
   "entity.netherman.trader": "Trader",
+  "entity.netherman.azazel": "The Divine Guardian Azazel",
   "entity.netherman.blacksmith": "Blacksmith",
   "entity.netherman.statue_bossunit": "Beller",
   "entity.netherman.laser": "Laser beam",
@@ -36,5 +37,6 @@
   "effect.netherman.manipulation": "Manipulation",
   "effect.netherman.fear": "Fear?",
   "effect.netherman.faith": "Faith?",
+  "effect.netherman.anxiety": "Don't be afraid",
   "effect.netherman.excitement": "Excitement?"
 }

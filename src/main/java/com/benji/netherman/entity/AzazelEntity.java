@@ -56,7 +56,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
     // 0 = Normal, 1 = Damaged (<50%), 2 = Low HP (<25%)
     public static final EntityDataAccessor<Integer> PHASE_STATE = SynchedEntityData.defineId(AzazelEntity.class, EntityDataSerializers.INT);
 
-    private final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(Component.literal("The Divine Guardian Azazel"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
+    private final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(Component.literal("The Divine Chariot Azazel"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
 
     private int hitCounter = 0;
     private int attackTimer = 0;
@@ -140,7 +140,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
         for (ServerPlayer player : this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(64.0D))) {
             this.bossEvent.addPlayer(player);
-            Component title = Component.literal("THAT WAS A MISTAKE").withStyle(ChatFormatting.RED);
+            Component title = Component.literal("DON'T BE AFRAID").withStyle(ChatFormatting.RED);
             player.connection.send(new ClientboundSetTitlesAnimationPacket(10, 80, 20));
             player.connection.send(new ClientboundSetTitleTextPacket(title));
             player.connection.send(new ClientboundSetSubtitleTextPacket(Component.empty()));

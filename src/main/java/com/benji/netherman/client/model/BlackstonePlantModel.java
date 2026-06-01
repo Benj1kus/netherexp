@@ -1,7 +1,6 @@
 package com.benji.netherman.client.model;
 
 import com.benji.netherman.NetherExp;
-import com.benji.netherman.block.entity.BlackstoneColumnBlockEntity;
 import com.benji.netherman.block.entity.BlackstonePlantBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;

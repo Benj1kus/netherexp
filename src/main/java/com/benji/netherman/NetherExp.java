@@ -66,23 +66,14 @@ public class NetherExp {
                     new ResourceLocation(MODID, "textures/block/nether_spawner_emissive.png") // Текстура свечения!
             ));
 
-
-
     public static final RegistryObject<Block> BLACKSTONE_COLUMN = BLOCKS.register("blackstone_column",
-            () -> new BlackstoneColumnBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
-                    .requiresCorrectToolForDrops()
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)
                     .strength(2.0F)
-                    .noOcclusion())); // Рекомендуется для кастомных рендеров, чтобы соседние блоки не становились прозрачными
+                    .requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Item> BLACKSTONE_COLUMN_ITEM = ITEMS.register("blackstone_column",
-            () -> new GeoBlockItem(
-                    BLACKSTONE_COLUMN.get(),
-                    new Item.Properties(),
-                    new ResourceLocation(MODID, "geo/blackstone_column.geo.json"),
-                    new ResourceLocation(MODID, "textures/block/blackstone_column.png"),
-                    new ResourceLocation(MODID, "animations/empty.animation.json"), // можно передать null, если анимаций пока нет
-                    new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png") // Текстура свечения!
-            ));
+            () -> new BlockItem(BLACKSTONE_COLUMN.get(), new Item.Properties()));
+
 
     // Внутри регистрации BLOCKS:
     public static final RegistryObject<Block> POINTED_BLACKSTONE = BLOCKS.register("pointed_blackstone",
@@ -219,6 +210,57 @@ public class NetherExp {
                     new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
             ));
 
+    public static final RegistryObject<Block> STATUE = BLOCKS.register("statue",
+            () -> new StatueBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_BRICKS)
+                    .strength(5.0F)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()));
+
+
+    public static final RegistryObject<Item> STATUE_ITEM = ITEMS.register("statue",
+            () -> new GeoBlockItem(
+                    STATUE.get(),
+                    new Item.Properties(),
+                    new ResourceLocation(MODID, "geo/statue.geo.json"),
+                    new ResourceLocation(MODID, "textures/block/statue.png"),
+                    new ResourceLocation(MODID, "animations/statue.animation.json"),
+                    new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
+            ));
+
+    public static final RegistryObject<Block> TOTEMUS = BLOCKS.register("totemus",
+            () -> new TotemusBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_BRICKS)
+                    .strength(5.0F)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()));
+
+
+    public static final RegistryObject<Item> TOTEMUS_ITEM = ITEMS.register("totemus",
+            () -> new GeoBlockItem(
+                    TOTEMUS.get(),
+                    new Item.Properties(),
+                    new ResourceLocation(MODID, "geo/totemus.geo.json"),
+                    new ResourceLocation(MODID, "textures/block/totem_cave.png"),
+                    new ResourceLocation(MODID, "animations/totemus.animation.json"),
+                    new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
+            ));
+
+
+    public static final RegistryObject<Block> EYE = BLOCKS.register("eye_block",
+            () -> new EyeBlock(BlockBehaviour.Properties.copy(Blocks.HONEY_BLOCK)
+                    .strength(-1.0F, 3600000.0F)
+                    .noOcclusion()));
+
+
+    public static final RegistryObject<Item> EYE_ITEM = ITEMS.register("eye_block",
+            () -> new GeoBlockItem(
+                    EYE.get(),
+                    new Item.Properties(),
+                    new ResourceLocation(MODID, "geo/eye_block.geo.json"),
+                    new ResourceLocation(MODID, "textures/block/eye_block.png"),
+                    new ResourceLocation(MODID, "animations/eye_block.animation.json"),
+                    new ResourceLocation(MODID, "textures/block/eye_block_emissive.png")
+            ));
+
 
     public static final RegistryObject<Block> MOSAIC_CHURCH = BLOCKS.register("mosaic_church",
             () -> new MosaicChurchBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
@@ -271,6 +313,15 @@ public class NetherExp {
     public static final RegistryObject<BlockEntityType<VoidNetherMidBlockEntity>> VOIDMIDNETHER_BE = BLOCK_ENTITIES.register("voidnether_mid",
             () -> BlockEntityType.Builder.of(VoidNetherMidBlockEntity::new, VOIDMIDNETHER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<EyeBlockEntity>> EYE_BE = BLOCK_ENTITIES.register("eye_block",
+            () -> BlockEntityType.Builder.of(EyeBlockEntity::new, EYE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<StatueBlockEntity>> STATUE_BE = BLOCK_ENTITIES.register("statue",
+            () -> BlockEntityType.Builder.of(StatueBlockEntity::new, STATUE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<TotemusBlockEntity>> TOTEMUS_BE = BLOCK_ENTITIES.register("totemus",
+            () -> BlockEntityType.Builder.of(TotemusBlockEntity::new, TOTEMUS.get()).build(null));
+
     public static final RegistryObject<BlockEntityType<TraphiveBlockEntity>> TRAPHIVE_BE = BLOCK_ENTITIES.register("traphive",
             () -> BlockEntityType.Builder.of(TraphiveBlockEntity::new, TRAPHIVE.get()).build(null));
 
@@ -288,9 +339,6 @@ public class NetherExp {
 
     public static final RegistryObject<BlockEntityType<NetherSpawnerBlockEntity>> NETHER_SPAWNER_BE = BLOCK_ENTITIES.register("nether_spawner",
             () -> BlockEntityType.Builder.of(NetherSpawnerBlockEntity::new, NETHER_SPAWNER.get()).build(null));
-
-    public static final RegistryObject<BlockEntityType<BlackstoneColumnBlockEntity>> BLACKSTONE_COLUMN_BE = BLOCK_ENTITIES.register("blackstone_column",
-            () -> BlockEntityType.Builder.of(BlackstoneColumnBlockEntity::new, BLACKSTONE_COLUMN.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<BlackstonePlantBlockEntity>> BLACKSTONE_PLANT_BE = BLOCK_ENTITIES.register("blackstone_plant",
             () -> BlockEntityType.Builder.of(BlackstonePlantBlockEntity::new, BLACKSTONE_PLANT.get()).build(null));
@@ -359,8 +407,8 @@ public class NetherExp {
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS || event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(NETHER_SPAWNER_ITEM);
-            event.accept(BLACKSTONE_COLUMN_ITEM);
             event.accept(GRAND_DOOR_ITEM);
+            event.accept(BLACKSTONE_COLUMN_ITEM);
             event.accept(ENTRANCE_ITEM);
             event.accept(CRIMSON_WEB_ITEM);
             event.accept(TRAPHIVE_ITEM);
@@ -370,6 +418,9 @@ public class NetherExp {
             event.accept(VOIDMIDNETHER_ITEM);
             event.accept(VOIDCORNERNETHER_ITEM);
             event.accept(MOSAIC_CHURCH_ITEM);
+            event.accept(STATUE_ITEM);
+            event.accept(TOTEMUS_ITEM);
+            event.accept(EYE_ITEM);
             event.accept(VOIDMIDCORNERNETHER_ITEM);
         }
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
@@ -405,12 +456,14 @@ public class NetherExp {
             event.registerBlockEntityRenderer(VOIDMIDNETHER_BE.get(), VoidNetherMidRenderer::new);
             event.registerBlockEntityRenderer(MOSAIC_CHURCH_BE.get(), MosaicChurchRenderer::new);
             event.registerBlockEntityRenderer(TRAPHIVE_BE.get(), TraphiveRenderer::new);
+            event.registerBlockEntityRenderer(STATUE_BE.get(), StatueRenderer::new);
+            event.registerBlockEntityRenderer(TOTEMUS_BE.get(), TotemusRenderer::new);
+            event.registerBlockEntityRenderer(EYE_BE.get(), EyeRenderer::new);
             event.registerBlockEntityRenderer(CRIMSON_WEB_BE.get(), CrimsonWebRenderer::new);
             event.registerBlockEntityRenderer(ENTRANCE_BE.get(), EntranceRenderer::new);
             event.registerBlockEntityRenderer(GRAND_DOOR_BE.get(), GrandDoorRenderer::new);
             event.registerBlockEntityRenderer(POINTED_BLACKSTONE_BE.get(), PointedBlackstoneRenderer::new);
             event.registerBlockEntityRenderer(NETHER_SPAWNER_BE.get(), NetherSpawnerRenderer::new);
-            event.registerBlockEntityRenderer(BLACKSTONE_COLUMN_BE.get(), BlackstoneColumnRenderer::new);
             event.registerBlockEntityRenderer(BLACKSTONE_PLANT_BE.get(), BlackstonePlantRenderer::new);
             event.registerBlockEntityRenderer(BLACKSTONE_AXON_BE.get(), BlackstoneAxonRenderer::new);
 

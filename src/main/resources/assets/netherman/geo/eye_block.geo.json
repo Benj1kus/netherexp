@@ -1,0 +1,40 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "eye_block",
+					"pivot": [0, 8, -0.45],
+					"cubes": [
+						{"origin": [-12, -4, 7.55], "size": [24, 24, 0], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "eye",
+					"parent": "eye_block",
+					"pivot": [0, 8, -0.55],
+					"cubes": [
+						{"origin": [-10, -2, 7.45], "size": [20, 20, 0], "uv": [0, 24]}
+					]
+				},
+				{
+					"name": "eyeball",
+					"parent": "eye",
+					"pivot": [0, 8, 7.25],
+					"cubes": [
+						{"origin": [-6, 2, 7.25], "size": [12, 12, 0], "uv": [40, 24]}
+					]
+				}
+			]
+		}
+	]
+}

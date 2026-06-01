@@ -306,22 +306,20 @@ public class AzazelEntity extends Monster implements GeoEntity {
                 this.level().addFreshEntity(arrow);
             }
         }
-        else if (this.arrowAttackVariant == 1 && (this.attackTimer == 100 || this.attackTimer == 80 || this.attackTimer == 60)) {
+        else if (this.arrowAttackVariant == 1 &&
+                (this.attackTimer == 100 || this.attackTimer == 80 || this.attackTimer == 60)) {
+
             for (int i = 0; i < 20; i++) {
 
-                double angle = Math.toRadians((360.0 / 5) * i);
-
-                double radius = 2.0D;
-
-                double x = target.getX() + Math.cos(angle) * radius;
-                double z = target.getZ() + Math.sin(angle) * radius;
+                double offsetX = (this.random.nextDouble() - 0.5D) * 2.0D;
+                double offsetZ = (this.random.nextDouble() - 0.5D) * 2.0D;
 
                 EvokerFangs fangs = new EvokerFangs(
                         this.level(),
-                        x,
+                        target.getX() + offsetX,
                         target.getY(),
-                        z,
-                        (float) angle,
+                        target.getZ() + offsetZ,
+                        this.random.nextFloat() * 360F,
                         0,
                         this
                 );

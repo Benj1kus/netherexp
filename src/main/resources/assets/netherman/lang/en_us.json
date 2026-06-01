@@ -8,7 +8,7 @@
   "block.netherman.entrance": "Sacred Veil",
   "block.netherman.traphive": "Traphive",
   "block.netherman.mosaic_church": "Church mosaic",
-  "block.netherman.statue": "Statue of Azazel",
+  "block.netherman.statue_stand": "Statue of Azazel",
   "block.netherman.eye_block": "Eye block",
   "block.netherman.totemus": "Totemus",
   "block.netherman.void_mid": "Void Middle",
@@ -20,11 +20,20 @@
   "block.netherman.blackstone_axon": "Blackstone Axon",
 
   "entity.netherman.welcomer": "Welcomer",
+  "entity.netherman.trader": "Trader",
+  "entity.netherman.blacksmith": "Blacksmith",
+  "entity.netherman.statue_bossunit": "Beller",
+  "entity.netherman.believer": "Believer",
+  "entity.netherman.doctor": "Doctor",
+  "entity.netherman.statue_entity": "Statue",
   "entity.netherman.guardian": "Gehinnom Guard",
   "entity.netherman.villager_prisoner": "Prisoner Villager",
   "entity.netherman.piglin_prisoner": "Prisoner Piglin",
   "entity.netherman.ghastly": "Ghastly",
   "entity.netherman.manipulator": "Manipulator",
 
-  "effect.netherman.manipulation": "Manipulation"
+  "effect.netherman.manipulation": "Manipulation",
+  "effect.netherman.fear": "Fear?",
+  "effect.netherman.faith": "Faith?",
+  "effect.netherman.excitement": "Excitement?"
 }

@@ -7,7 +7,9 @@ import com.benji.netherman.client.renderer.*;
 import com.benji.netherman.client.renderer.entity.GhastlyRenderer;
 import com.benji.netherman.client.renderer.entity.GuardianRenderer;
 import com.benji.netherman.effect.ManipulationEffect;
+import com.benji.netherman.effect.ZoneEffect;
 import com.benji.netherman.entity.*;
+import com.benji.netherman.entity.BelieverEntity;
 import com.benji.netherman.item.GeoBlockItem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -210,20 +212,20 @@ public class NetherExp {
                     new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
             ));
 
-    public static final RegistryObject<Block> STATUE = BLOCKS.register("statue",
-            () -> new StatueBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_BRICKS)
+    public static final RegistryObject<Block> STATUE_STAND = BLOCKS.register("statue_stand",
+            () -> new StatueStandBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_BRICKS)
                     .strength(5.0F)
                     .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
 
-    public static final RegistryObject<Item> STATUE_ITEM = ITEMS.register("statue",
+    public static final RegistryObject<Item> STATUE_STAND_ITEM = ITEMS.register("statue_stand",
             () -> new GeoBlockItem(
-                    STATUE.get(),
+                    STATUE_STAND.get(),
                     new Item.Properties(),
-                    new ResourceLocation(MODID, "geo/statue.geo.json"),
-                    new ResourceLocation(MODID, "textures/block/statue.png"),
-                    new ResourceLocation(MODID, "animations/statue.animation.json"),
+                    new ResourceLocation(MODID, "geo/statue_stand.geo.json"),
+                    new ResourceLocation(MODID, "textures/block/statue_stand.png"),
+                    new ResourceLocation(MODID, "animations/statue_stand.animation.json"),
                     new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
             ));
 
@@ -316,8 +318,8 @@ public class NetherExp {
     public static final RegistryObject<BlockEntityType<EyeBlockEntity>> EYE_BE = BLOCK_ENTITIES.register("eye_block",
             () -> BlockEntityType.Builder.of(EyeBlockEntity::new, EYE.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<StatueBlockEntity>> STATUE_BE = BLOCK_ENTITIES.register("statue",
-            () -> BlockEntityType.Builder.of(StatueBlockEntity::new, STATUE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<StatueStandBlockEntity>> STATUE_STAND_BE = BLOCK_ENTITIES.register("statue_stand",
+            () -> BlockEntityType.Builder.of(StatueStandBlockEntity::new, STATUE_STAND.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<TotemusBlockEntity>> TOTEMUS_BE = BLOCK_ENTITIES.register("totemus",
             () -> BlockEntityType.Builder.of(TotemusBlockEntity::new, TOTEMUS.get()).build(null));
@@ -354,6 +356,41 @@ public class NetherExp {
 
     // Регистрация эффекта:
     public static final RegistryObject<MobEffect> MANIPULATION_EFFECT = EFFECTS.register("manipulation", ManipulationEffect::new);
+    public static final RegistryObject<MobEffect> FEAR_EFFECT = EFFECTS.register("fear", () -> new ZoneEffect(0x000000));
+    public static final RegistryObject<MobEffect> EXCITEMENT_EFFECT = EFFECTS.register("excitement", () -> new ZoneEffect(0xFF0000));
+    public static final RegistryObject<MobEffect> FAITH_EFFECT = EFFECTS.register("faith", () -> new ZoneEffect(0x800080));
+
+
+    public static final RegistryObject<EntityType<StatueBossunitEntity>> STATUE_BOSSUNIT = ENTITIES.register("statue_bossunit",
+            () -> EntityType.Builder.of(StatueBossunitEntity::new, MobCategory.MONSTER)
+                    .sized(0.625F, 2.125F) // Хитбокс статуи
+                    .build(new ResourceLocation(MODID, "statue_bossunit").toString()));
+
+    public static final RegistryObject<EntityType<StatueEntity>> STATUE = ENTITIES.register("statue_entity",
+            () -> EntityType.Builder.of(StatueEntity::new, MobCategory.MONSTER)
+                    .sized(0.625F, 2.125F) // Хитбокс статуи
+                    .build(new ResourceLocation(MODID, "statue_entity").toString()));
+
+
+    public static final RegistryObject<EntityType<TraderEntity>> TRADER = ENTITIES.register("trader",
+            () -> EntityType.Builder.of(TraderEntity::new, MobCategory.CREATURE)
+                    .sized(1.125F, 1.5F)
+                    .build(new ResourceLocation(MODID, "trader").toString()));
+
+    public static final RegistryObject<EntityType<DoctorEntity>> DOCTOR = ENTITIES.register("doctor",
+            () -> EntityType.Builder.of(DoctorEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.95F) // Хитбокс жителя
+                    .build(new ResourceLocation(MODID, "doctor").toString()));
+
+    public static final RegistryObject<EntityType<BlacksmithEntity>> BLACKSMITH = ENTITIES.register("blacksmith",
+            () -> EntityType.Builder.of(BlacksmithEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.95F) // Хитбокс жителя
+                    .build(new ResourceLocation(MODID, "blacksmith").toString()));
+
+    public static final RegistryObject<EntityType<BelieverEntity>> BELIEVER = ENTITIES.register("believer",
+            () -> EntityType.Builder.of(BelieverEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.95F) // Хитбокс жителя
+                    .build(new ResourceLocation(MODID, "believer").toString()));
 
     public static final RegistryObject<EntityType<VillagerPrisonerEntity>> VILLAGER_PRISONER = ENTITIES.register("villager_prisoner",
             () -> EntityType.Builder.of(VillagerPrisonerEntity::new, MobCategory.CREATURE) // Мирный
@@ -418,7 +455,7 @@ public class NetherExp {
             event.accept(VOIDMIDNETHER_ITEM);
             event.accept(VOIDCORNERNETHER_ITEM);
             event.accept(MOSAIC_CHURCH_ITEM);
-            event.accept(STATUE_ITEM);
+            event.accept(STATUE_STAND_ITEM);
             event.accept(TOTEMUS_ITEM);
             event.accept(EYE_ITEM);
             event.accept(VOIDMIDCORNERNETHER_ITEM);
@@ -435,6 +472,12 @@ public class NetherExp {
         @SubscribeEvent
         public static void registerAttributes(EntityAttributeCreationEvent event) {
             // Регистрируем здоровье и характеристики для нашего моба
+            event.put(STATUE_BOSSUNIT.get(), StatueBossunitEntity.createAttributes().build());
+            event.put(BLACKSMITH.get(), BlacksmithEntity.createAttributes().build());
+            event.put(DOCTOR.get(), DoctorEntity.createAttributes().build());
+            event.put(TRADER.get(), TraderEntity.createAttributes().build());
+            event.put(STATUE.get(), StatueEntity.createAttributes().build());
+            event.put(BELIEVER.get(), BelieverEntity.createAttributes().build());
             event.put(PIGLIN_PRISONER.get(), PiglinPrisonerEntity.createAttributes().build());
             event.put(VILLAGER_PRISONER.get(), VillagerPrisonerEntity.createAttributes().build());
             event.put(MANIPULATOR.get(), ManipulatorEntity.createAttributes().build());
@@ -456,7 +499,7 @@ public class NetherExp {
             event.registerBlockEntityRenderer(VOIDMIDNETHER_BE.get(), VoidNetherMidRenderer::new);
             event.registerBlockEntityRenderer(MOSAIC_CHURCH_BE.get(), MosaicChurchRenderer::new);
             event.registerBlockEntityRenderer(TRAPHIVE_BE.get(), TraphiveRenderer::new);
-            event.registerBlockEntityRenderer(STATUE_BE.get(), StatueRenderer::new);
+            event.registerBlockEntityRenderer(STATUE_STAND_BE.get(), StatueStandRenderer::new);
             event.registerBlockEntityRenderer(TOTEMUS_BE.get(), TotemusRenderer::new);
             event.registerBlockEntityRenderer(EYE_BE.get(), EyeRenderer::new);
             event.registerBlockEntityRenderer(CRIMSON_WEB_BE.get(), CrimsonWebRenderer::new);
@@ -468,6 +511,12 @@ public class NetherExp {
             event.registerBlockEntityRenderer(BLACKSTONE_AXON_BE.get(), BlackstoneAxonRenderer::new);
 
             //entity
+            event.registerEntityRenderer(STATUE_BOSSUNIT.get(), StatueBossunitRenderer::new);
+            event.registerEntityRenderer(BLACKSMITH.get(), BlacksmithRenderer::new);
+            event.registerEntityRenderer(DOCTOR.get(), DoctorRenderer::new);
+            event.registerEntityRenderer(TRADER.get(), TraderRenderer::new);
+            event.registerEntityRenderer(STATUE.get(), StatueRenderer::new);
+            event.registerEntityRenderer(BELIEVER.get(), BelieverRenderer::new);
             event.registerEntityRenderer(PIGLIN_PRISONER.get(), PiglinPrisonerRenderer::new);
             event.registerEntityRenderer(VILLAGER_PRISONER.get(), VillagerPrisonerRenderer::new);
             event.registerEntityRenderer(MANIPULATOR.get(), ManipulatorRenderer::new);

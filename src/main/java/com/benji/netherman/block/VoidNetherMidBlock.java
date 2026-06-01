@@ -1,6 +1,5 @@
 package com.benji.netherman.block;
 
-import com.benji.netherman.block.entity.VoidMidBlockEntity;
 import com.benji.netherman.block.entity.VoidNetherMidBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

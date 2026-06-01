@@ -9,11 +9,11 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class StatueBlockEntity extends BlockEntity implements GeoBlockEntity {
+public class StatueStandBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public StatueBlockEntity(BlockPos pos, BlockState state) {
-        super(NetherExp.STATUE_BE.get(), pos, state);
+    public StatueStandBlockEntity(BlockPos pos, BlockState state) {
+        super(NetherExp.STATUE_STAND_BE.get(), pos, state);
     }
 
     @Override

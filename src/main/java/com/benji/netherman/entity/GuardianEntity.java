@@ -153,7 +153,7 @@ public class GuardianEntity extends Monster implements GeoEntity {
 
             for (GuardianEntity guardian : guardians) {
                 // Заставляем каждого живого стража проиграть звук
-                guardian.playSound(ModSounds.WEAKNESS.get(), 15.0F, guardian.getVoicePitch());
+                guardian.playSound(ModSounds.WEAKNESS.get(), 5.0F, guardian.getVoicePitch());
             }
         }
 

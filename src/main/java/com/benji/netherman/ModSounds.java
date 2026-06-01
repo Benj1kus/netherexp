@@ -13,6 +13,23 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> GUARDIAN_NEUTRAL_2 = registerSoundEvent("guardian_neutral2");
     public static final RegistryObject<SoundEvent> GUARDIAN_NEUTRAL_3 = registerSoundEvent("guardian_neutral3");
 
+    public static final RegistryObject<SoundEvent> UNIT_IDLE = registerSoundEvent("unit_idle");
+    public static final RegistryObject<SoundEvent> SPINNING_WHEEL = registerSoundEvent("spinning_wheel");
+
+
+    public static final RegistryObject<SoundEvent> BLACKSMITH_IDLE = registerSoundEvent("blacksmith_idle");
+
+    public static final RegistryObject<SoundEvent> SNEEZE = registerSoundEvent("sneeze");
+    public static final RegistryObject<SoundEvent> DOCTOR = registerSoundEvent("doctor");
+
+    public static final RegistryObject<SoundEvent> SPRING_1 = registerSoundEvent("spring1");
+    public static final RegistryObject<SoundEvent> SPRING_2 = registerSoundEvent("spring2");
+    public static final RegistryObject<SoundEvent> SPRING_3 = registerSoundEvent("spring3");
+
+    public static final RegistryObject<SoundEvent> STATUE_HURT_1 = registerSoundEvent("statue_hurt1");
+    public static final RegistryObject<SoundEvent> STATUE_HURT_2 = registerSoundEvent("statue_hurt2");
+    public static final RegistryObject<SoundEvent> STATUE_HURT_3 = registerSoundEvent("statue_hurt3");
+
     public static final RegistryObject<SoundEvent> GUARDIAN_WALK = registerSoundEvent("guardian_walk");
     public static final RegistryObject<SoundEvent> GRAND_DOOR_OPEN = registerSoundEvent("grand_door_open");
     public static final RegistryObject<SoundEvent> GRAND_DOOR_CLOSE = registerSoundEvent("grand_door_close");
@@ -20,6 +37,14 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> ENTRANCE = registerSoundEvent("entrance");
     public static final RegistryObject<SoundEvent> DAMNED = registerSoundEvent("damned");
     public static final RegistryObject<SoundEvent> GOODLUCK = registerSoundEvent("goodluck");
+
+
+    public static final RegistryObject<SoundEvent> CAVE_AMBIENT = registerSoundEvent("cave_ambient");
+    public static final RegistryObject<SoundEvent> CHURCH_AMBIENT = registerSoundEvent("church_ambient");
+    public static final RegistryObject<SoundEvent> CITY_AMBIENT = registerSoundEvent("city_ambient");
+
+    public static final RegistryObject<SoundEvent> BIG_TEXT = registerSoundEvent("big_text");
+
 
 
     public static final RegistryObject<SoundEvent> GUARDIAN_IDLE_1 = registerSoundEvent("guardian_idle1");

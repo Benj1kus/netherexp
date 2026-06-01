@@ -1,6 +1,5 @@
 package com.benji.netherman.block;
 
-import com.benji.netherman.block.entity.BlackstoneColumnBlockEntity;
 import com.benji.netherman.block.entity.BlackstonePlantBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.BaseEntityBlock;

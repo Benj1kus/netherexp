@@ -13,7 +13,11 @@ public class TotemusModel extends GeoModel<TotemusBlockEntity> {
 
     @Override
     public ResourceLocation getTextureResource(TotemusBlockEntity animatable) {
-        return new ResourceLocation(NetherExp.MODID, "textures/block/totem_cave.png");
+        return switch (animatable.getTotemType()) {
+            case 3, 2 -> new ResourceLocation(NetherExp.MODID, "textures/block/totem_church.png");
+            case 1 -> new ResourceLocation(NetherExp.MODID, "textures/block/totem_city.png");
+            default -> new ResourceLocation(NetherExp.MODID, "textures/block/totem_cave.png");
+        };
     }
 
     @Override

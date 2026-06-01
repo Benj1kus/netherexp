@@ -1,6 +1,6 @@
 package com.benji.netherman.block;
 
-import com.benji.netherman.block.entity.StatueBlockEntity;
+import com.benji.netherman.block.entity.StatueStandBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -10,18 +10,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 
-public class StatueBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class StatueStandBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
     private static final VoxelShape SHAPE =
             Block.box(2.0D, 0.0D, 2.0D,
                     14.0D, 32.0D, 14.0D);
 
-    public StatueBlock(Properties properties) {
+    public StatueStandBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
                 this.stateDefinition.any()
@@ -48,7 +47,7 @@ public class StatueBlock extends HorizontalDirectionalBlock implements EntityBlo
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new StatueBlockEntity(pos, state);
+        return new StatueStandBlockEntity(pos, state);
     }
 
     @Override

@@ -12,10 +12,30 @@
   "prison1": { "sounds": [ "netherman:prison1" ] },
   "prison2": { "sounds": [ "netherman:prison2" ] },
   "prison3": { "sounds": [ "netherman:prison3" ] },
+
+  "statue_hurt1": { "sounds": [ "netherman:statue_hurt1" ] },
+  "statue_hurt2": { "sounds": [ "netherman:statue_hurt2" ] },
+  "statue_hurt3": { "sounds": [ "netherman:statue_hurt3" ] },
+  "sneeze": { "sounds": [ "netherman:sneeze" ] },
+  "unit_idle": { "sounds": [ "netherman:unit_idle" ] },
+  "spinning_wheel": { "sounds": [ "netherman:spinning_wheel" ] },
+  "doctor": { "sounds": [ "netherman:doctor" ] },
+  "blacksmith_idle": { "sounds": [ "netherman:blacksmith_idle" ] },
+
+  "spring1": { "sounds": [ "netherman:spring1" ] },
+  "spring2": { "sounds": [ "netherman:spring2" ] },
+  "spring3": { "sounds": [ "netherman:spring3" ] },
+
   "prison4": { "sounds": [ "netherman:prison4" ] },
   "weakness": { "sounds": [ "netherman:weakness" ] },
   "entrance": { "sounds": [ "netherman:entrance" ] },
   "damned": { "sounds": [ "netherman:damned" ] },
+
+  "church_ambient": { "sounds": [ "netherman:church_ambient" ] },
+  "city_ambient": { "sounds": [ "netherman:city_ambient" ] },
+  "cave_ambient": { "sounds": [ "netherman:cave_ambient" ] },
+  "big_text": { "sounds": [ "netherman:big_text" ] },
+
   "goodluck": { "sounds": [ "netherman:goodluck" ] },
   "grand_door_open": { "sounds": [ "netherman:grand_door_open" ] },
   "grand_door_close": { "sounds": [ "netherman:grand_door_close" ] },

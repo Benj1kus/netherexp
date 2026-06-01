@@ -364,11 +364,19 @@ public class NetherExp {
     public static final RegistryObject<EntityType<StatueBossunitEntity>> STATUE_BOSSUNIT = ENTITIES.register("statue_bossunit",
             () -> EntityType.Builder.of(StatueBossunitEntity::new, MobCategory.MONSTER)
                     .sized(0.625F, 2.125F) // Хитбокс статуи
+                    .fireImmune()
                     .build(new ResourceLocation(MODID, "statue_bossunit").toString()));
+
+    public static final RegistryObject<EntityType<LaserEntity>> LASER = ENTITIES.register("laser",
+            () -> EntityType.Builder.of(LaserEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 18.75F) // Высоченный узкий хитбокс
+                    .fireImmune()
+                    .build(new ResourceLocation(MODID, "laser").toString()));
 
     public static final RegistryObject<EntityType<StatueEntity>> STATUE = ENTITIES.register("statue_entity",
             () -> EntityType.Builder.of(StatueEntity::new, MobCategory.MONSTER)
                     .sized(0.625F, 2.125F) // Хитбокс статуи
+                    .fireImmune()
                     .build(new ResourceLocation(MODID, "statue_entity").toString()));
 
 
@@ -405,6 +413,7 @@ public class NetherExp {
     // Регистрация Мнипулятора:
     public static final RegistryObject<EntityType<ManipulatorEntity>> MANIPULATOR = ENTITIES.register("manipulator",
             () -> EntityType.Builder.of(ManipulatorEntity::new, MobCategory.MONSTER)
+                    .fireImmune()
                     .sized(0.9375F, 2.125F) // Хитбокс 15x34x15 пикселей
                     .build("manipulator"));
 
@@ -418,11 +427,13 @@ public class NetherExp {
     public static final RegistryObject<EntityType<GuardianEntity>> GUARDIAN = ENTITIES.register("guardian",
             () -> EntityType.Builder.of(GuardianEntity::new, MobCategory.MONSTER)
                     .sized(1.0f, 5.125f)
+                    .fireImmune()
                     .build("guardian"));
 
     public static final RegistryObject<EntityType<GhastlyEntity>> GHASTLY = ENTITIES.register("ghastly",
             () -> EntityType.Builder.of(GhastlyEntity::new, MobCategory.CREATURE) // Он мирный, поэтому CREATURE
                     .sized(0.625f, 0.8125f)
+                    .fireImmune()
                     .build("ghastly"));
 
     public NetherExp(FMLJavaModLoadingContext context) {
@@ -472,6 +483,7 @@ public class NetherExp {
         @SubscribeEvent
         public static void registerAttributes(EntityAttributeCreationEvent event) {
             // Регистрируем здоровье и характеристики для нашего моба
+            event.put(LASER.get(), LaserEntity.createAttributes().build());
             event.put(STATUE_BOSSUNIT.get(), StatueBossunitEntity.createAttributes().build());
             event.put(BLACKSMITH.get(), BlacksmithEntity.createAttributes().build());
             event.put(DOCTOR.get(), DoctorEntity.createAttributes().build());
@@ -511,6 +523,7 @@ public class NetherExp {
             event.registerBlockEntityRenderer(BLACKSTONE_AXON_BE.get(), BlackstoneAxonRenderer::new);
 
             //entity
+            event.registerEntityRenderer(LASER.get(), LaserRenderer::new);
             event.registerEntityRenderer(STATUE_BOSSUNIT.get(), StatueBossunitRenderer::new);
             event.registerEntityRenderer(BLACKSMITH.get(), BlacksmithRenderer::new);
             event.registerEntityRenderer(DOCTOR.get(), DoctorRenderer::new);

@@ -140,7 +140,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
         for (ServerPlayer player : this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(64.0D))) {
             this.bossEvent.addPlayer(player);
-            Component title = Component.literal("DON'T BE AFRAID").withStyle(ChatFormatting.RED);
+            Component title = Component.literal("DON'T BE AFRAID").withStyle(ChatFormatting.DARK_RED,ChatFormatting.BOLD);
             player.connection.send(new ClientboundSetTitlesAnimationPacket(10, 80, 20));
             player.connection.send(new ClientboundSetTitleTextPacket(title));
             player.connection.send(new ClientboundSetSubtitleTextPacket(Component.empty()));

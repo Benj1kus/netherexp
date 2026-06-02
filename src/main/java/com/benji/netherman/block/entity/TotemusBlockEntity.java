@@ -93,7 +93,7 @@ public class TotemusBlockEntity extends BlockEntity implements GeoBlockEntity {
                         level.playSound(null, player.blockPosition(), ModSounds.BIG_TEXT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
                         // Чтобы убрать "ZONE", мы помещаем "YOU ARRIVED" в Title (главный большой текст), а Subtitle оставляем пустым
-                        Component title = Component.literal("YOU ARRIVED").withStyle(ChatFormatting.RED);
+                        Component title = Component.literal("YOU ARRIVED").withStyle(ChatFormatting.DARK_RED,ChatFormatting.BOLD);
                         Component subtitle = Component.empty();
 
                         player.connection.send(new ClientboundSetTitlesAnimationPacket(10, 60, 20));
@@ -119,9 +119,9 @@ public class TotemusBlockEntity extends BlockEntity implements GeoBlockEntity {
 
                         Component title = Component.literal("ZONE").withStyle(ChatFormatting.WHITE);
                         Component subtitle = switch (entity.totemType) {
-                            case 2 -> Component.literal("AZAZELS LAIR").withStyle(ChatFormatting.DARK_PURPLE);
-                            case 1 -> Component.literal("THE SACRED CITY").withStyle(ChatFormatting.RED);
-                            default -> Component.literal("THE CURSED QUARRIES").withStyle(ChatFormatting.YELLOW);
+                            case 2 -> Component.literal("AZAZELS LAIR").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);
+                            case 1 -> Component.literal("THE SACRED CITY").withStyle(ChatFormatting.RED, ChatFormatting.BOLD);
+                            default -> Component.literal("THE CURSED QUARRIES").withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD);
                         };
 
                         player.connection.send(new ClientboundSetTitlesAnimationPacket(10, 60, 20));

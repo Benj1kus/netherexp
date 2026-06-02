@@ -231,7 +231,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
                     List<Player> auraPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(100.0D));
                     for (Player p : auraPlayers) {
                         // 100 тиков (5 секунд). Иконка включена (true), партиклы зелья отключены (false).
-                        p.addEffect(new MobEffectInstance(NetherExp.ANXIETY_EFFECT.get(), 100, 0, false, false, true));
+                        p.addEffect(new MobEffectInstance(NetherExp.ANXIETY_EFFECT.get(), 300, 0, false, false, true));
                     }
                 }
 
@@ -329,11 +329,19 @@ public class AzazelEntity extends Monster implements GeoEntity {
         }
         else if (this.arrowAttackVariant == 2 && this.attackTimer == 100) {
             if (this.level() instanceof ServerLevel serverLevel && NetherExp.LASER.isPresent()) {
-                double[][] offsets = {{5, 5}, {-5, 5}, {5, -5}, {-5, -5}};
-                for (double[] offset : offsets) {
+
+                int laserCount = 10;
+                double radius = 7.0D; // Радиус кольца лазеров вокруг босса
+
+                for (int i = 0; i < laserCount; i++) {
+                    // Высчитываем угол для каждого лазера
+                    double angle = 2.0 * Math.PI * i / laserCount;
+                    double offsetX = Math.cos(angle) * radius;
+                    double offsetZ = Math.sin(angle) * radius;
+
                     LaserEntity laser = NetherExp.LASER.get().create(serverLevel);
                     if (laser != null) {
-                        laser.setPos(this.getX() + offset[0], this.getY(), this.getZ() + offset[1]);
+                        laser.setPos(this.getX() + offsetX, this.getY(), this.getZ() + offsetZ);
                         serverLevel.addFreshEntity(laser);
                     }
                 }

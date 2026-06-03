@@ -12,8 +12,19 @@
 			},
 			"bones": [
 				{
+					"name": "camera",
+					"pivot": [0, 49, -37]
+				},
+				{
+					"name": "flare",
+					"pivot": [-0.25, 47, 1.5],
+					"cubes": [
+						{"origin": [-27.25, 20, 1.5], "size": [54, 54, 0], "uv": [0, 202], "mirror": true}
+					]
+				},
+				{
 					"name": "main",
-					"pivot": [-0.0625, 46.75, -2.75]
+					"pivot": [-0.25, 47, -4.17222]
 				},
 				{
 					"name": "body",

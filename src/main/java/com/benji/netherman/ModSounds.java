@@ -19,6 +19,11 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> BLACKSMITH_IDLE = registerSoundEvent("blacksmith_idle");
 
+    public static final RegistryObject<SoundEvent> AZAZEL_VOICE = registerSoundEvent("azazel_voice");
+    public static final RegistryObject<SoundEvent> CLOCK = registerSoundEvent("clock");
+    public static final RegistryObject<SoundEvent> FLASH = registerSoundEvent("flash");
+
+
     public static final RegistryObject<SoundEvent> SNEEZE = registerSoundEvent("sneeze");
     public static final RegistryObject<SoundEvent> DOCTOR = registerSoundEvent("doctor");
 

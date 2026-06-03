@@ -117,11 +117,11 @@ public class TotemusBlockEntity extends BlockEntity implements GeoBlockEntity {
 
                         level.playSound(null, player.blockPosition(), ModSounds.BIG_TEXT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
-                        Component title = Component.literal("ZONE").withStyle(ChatFormatting.WHITE);
+                        Component title = Component.literal("ZONE").withStyle(ChatFormatting.YELLOW);
                         Component subtitle = switch (entity.totemType) {
                             case 2 -> Component.literal("AZAZELS LAIR").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);
                             case 1 -> Component.literal("THE SACRED CITY").withStyle(ChatFormatting.RED, ChatFormatting.BOLD);
-                            default -> Component.literal("THE CURSED QUARRIES").withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD);
+                            default -> Component.literal("THE CURSED QUARRIES").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
                         };
 
                         player.connection.send(new ClientboundSetTitlesAnimationPacket(10, 60, 20));

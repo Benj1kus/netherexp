@@ -56,7 +56,7 @@ public class TotemusBlockEntity extends BlockEntity implements GeoBlockEntity {
                 if (neighbor.is(NetherExp.BLACKSTONE_COLUMN.get())) {
                     newType = 3;
                     break; // Высший приоритет, сразу прерываем поиск
-                } else if (neighbor.is(Blocks.NETHERITE_BLOCK) && newType < 2) {
+                } else if (neighbor.is(Blocks.ANCIENT_DEBRIS) && newType < 2) {
                     newType = 2;
                 } else if (neighbor.is(Blocks.GOLD_BLOCK) && newType < 1) {
                     newType = 1;

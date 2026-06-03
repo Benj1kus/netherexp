@@ -47,6 +47,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> CAVE_AMBIENT = registerSoundEvent("cave_ambient");
     public static final RegistryObject<SoundEvent> CHURCH_AMBIENT = registerSoundEvent("church_ambient");
     public static final RegistryObject<SoundEvent> CITY_AMBIENT = registerSoundEvent("city_ambient");
+    public static final RegistryObject<SoundEvent> RESPAWN_TOTEM = registerSoundEvent("respawn_totem");
 
     public static final RegistryObject<SoundEvent> BIG_TEXT = registerSoundEvent("big_text");
 

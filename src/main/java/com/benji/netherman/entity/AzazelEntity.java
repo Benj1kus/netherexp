@@ -124,7 +124,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
         int attackState = this.entityData.get(ATTACK_STATE);
 
         // Полная неуязвимость во время режимов катсцен и ожидания
-        if (attackState >= 7 && attackState <= 9) {
+        if (attackState >= 7 && attackState <= 10) {
             return false;
         }
 
@@ -272,7 +272,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
             int currentPhase = this.entityData.get(PHASE_STATE);
 
 // --- ЛОГИКА ПОЩАДЫ И КАТСЦЕН ---
-            if (attackState >= 6 && attackState <= 9) {
+            if (attackState >= 6 && attackState <= 10) {
                 int mercyTick = this.entityData.get(MERCY_TICK);
                 mercyTick++;
                 this.entityData.set(MERCY_TICK, mercyTick);
@@ -330,9 +330,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
                 }
 // ФАЗА 9: Катсцена смерти (cinematic_death)
                 else if (attackState == 9) {
-                    // Убрана привязка взгляда игрока! Игрок теперь может крутить головой свободно.
-
-                    int textLen = 56; // Количество символов в строке смерти
+                    int textLen = 56;
                     int revealSpeed = 2;
 
                     if (mercyTick == 1) {
@@ -345,13 +343,62 @@ public class AzazelEntity extends Monster implements GeoEntity {
                         this.playSound(ModSounds.AZAZEL_VOICE.get(), 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
                     }
 
-                    if (mercyTick >= 200) { // Конец анимации (10 секунд)
-                        this.setHealth(0.0F);
-                        this.die(this.damageSources().generic()); // Триггерим ванильную смерть (для дропа и опыта)
+                    if (mercyTick >= 200) {
+                        if (this.level() instanceof ServerLevel serverLevel) {
+                            serverLevel.playSound(null, this.blockPosition(), SoundEvents.GENERIC_EXPLODE, net.minecraft.sounds.SoundSource.HOSTILE, 4.0F, 1.0F);
+                            serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY() + 1.0D, this.getZ(), 1, 0, 0, 0, 0);
+                            serverLevel.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY() + 1.0D, this.getZ(), 40, 1.0D, 1.0D, 1.0D, 0.1D);
+
+                            for (int i = 0; i < 30; i++) {
+                                net.minecraft.world.item.Item goldItem = this.random.nextBoolean() ? net.minecraft.world.item.Items.GOLD_INGOT : net.minecraft.world.item.Items.GOLD_NUGGET;
+                                net.minecraft.world.entity.item.ItemEntity gold = new net.minecraft.world.entity.item.ItemEntity(
+                                        serverLevel, this.getX(), this.getY() + 1.0D, this.getZ(), new ItemStack(goldItem, 1)
+                                );
+                                gold.setDeltaMovement((this.random.nextDouble() - 0.5D) * 0.5D, 0.5D + this.random.nextDouble() * 0.3D, (this.random.nextDouble() - 0.5D) * 0.5D);
+                                serverLevel.addFreshEntity(gold);
+                            }
+
+                            net.minecraft.core.BlockPos barrelPos = this.blockPosition();
+                            serverLevel.setBlockAndUpdate(barrelPos, net.minecraft.world.level.block.Blocks.BARREL.defaultBlockState());
+
+                            net.minecraft.world.level.block.entity.BlockEntity blockEntity = serverLevel.getBlockEntity(barrelPos);
+                            if (blockEntity instanceof net.minecraft.world.level.block.entity.BarrelBlockEntity barrel) {
+                                java.util.List<Integer> availableSlots = new java.util.ArrayList<>();
+                                for (int i = 0; i < 27; i++) availableSlots.add(i);
+                                java.util.Collections.shuffle(availableSlots);
+
+                                ItemStack[] loot = new ItemStack[] {
+                                        new ItemStack(NetherExp.MANIPULATOR_STICK.get(), 1),
+                                        new ItemStack(NetherExp.CHANCE_TOTEM.get(), 2),
+                                        new ItemStack(net.minecraft.world.item.Items.TOTEM_OF_UNDYING, 1),
+                                        new ItemStack(NetherExp.NOTE.get(), 1),
+                                        new ItemStack(net.minecraft.world.item.Items.DIAMOND, 25),
+                                        new ItemStack(net.minecraft.world.item.Items.NETHERITE_SCRAP, 12),
+                                        new ItemStack(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE, 4),
+                                        new ItemStack(NetherExp.NETHER_SPAWNER_ITEM.get(), 1)
+                                };
+
+                                for (int i = 0; i < loot.length && i < availableSlots.size(); i++) {
+                                    barrel.setItem(availableSlots.get(i), loot[i]);
+                                }
+                            }
+                        }
                         this.discard();
                     }
                 }
-                return;
+                // --- НОВОЕ: ФАЗА 10 (Катсцена спавна) ---
+                else if (attackState == 10) {
+                    if (mercyTick == 1) {
+                        this.playSound(ModSounds.SPAWN_UNIT.get(), 1.0F, 1.0F);
+                    }
+
+                    if (mercyTick >= 40) { // Конец анимации (2 секунды = 40 тиков)
+                        this.entityData.set(ATTACK_STATE, 0); // Переводим в Idle (Нейтрален)
+                        this.entityData.set(MERCY_TICK, 0); // Обнуляем таймер
+                    }
+                }
+
+                return; // Блокируем весь остальной код метода tick, пока идет любая из катсцен!
             }
 
 
@@ -601,7 +648,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
         @Override
         public boolean canUse() {
             int state = azazel.entityData.get(ATTACK_STATE);
-            if (state >= 6 && state <= 9) return false;
+            if (state >= 6 && state <= 10) return false;
 
             return azazel.entityData.get(IS_AGGRO) && state == 0 && azazel.getTarget() != null;
         }
@@ -632,6 +679,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
             if (state == 5) return event.setAndContinue(RawAnimation.begin().thenPlay("pray"));
             if (state == 8) return event.setAndContinue(RawAnimation.begin().thenPlay("cinematic_mercy"));
             if (state == 9) return event.setAndContinue(RawAnimation.begin().thenPlay("cinematic_death"));
+            if (state == 10) return event.setAndContinue(RawAnimation.begin().thenPlay("cinematic_spawn"));
 
             return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
         }));

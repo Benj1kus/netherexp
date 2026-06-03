@@ -281,6 +281,16 @@ public class NetherExp {
                     new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
             ));
 
+    // Добавь к остальным регистрациям предметов:
+    public static final RegistryObject<Item> MANIPULATOR_STICK = ITEMS.register("manipulator_stick",
+            () -> new com.benji.netherman.item.ManipulatorStickItem());
+
+    public static final RegistryObject<Item> CHANCE_TOTEM = ITEMS.register("chance_totem",
+            () -> new Item(new Item.Properties().stacksTo(1)));
+
+    // Регистрация записки (стакается по 1 штуке)
+    public static final RegistryObject<Item> NOTE = ITEMS.register("note",
+            () -> new com.benji.netherman.item.NoteItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Block> GRAND_DOOR = BLOCKS.register("grand_door",
             () -> new GrandDoorBlock(BlockBehaviour.Properties.copy(Blocks.POLISHED_BLACKSTONE_BRICKS)
@@ -375,7 +385,7 @@ public class NetherExp {
 
     public static final RegistryObject<EntityType<LaserEntity>> LASER = ENTITIES.register("laser",
             () -> EntityType.Builder.of(LaserEntity::new, MobCategory.MISC)
-                    .sized(0.5F, 18.75F) // Высоченный узкий хитбокс
+                    .sized(3.0F, 18.75F) // Высоченный узкий хитбокс
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "laser").toString()));
 
@@ -476,6 +486,11 @@ public class NetherExp {
             event.accept(TOTEMUS_ITEM);
             event.accept(EYE_ITEM);
             event.accept(VOIDMIDCORNERNETHER_ITEM);
+        }
+        if (event.getTabKey() == CreativeModeTabs.COMBAT || event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(MANIPULATOR_STICK);
+            event.accept(CHANCE_TOTEM);
+            event.accept(NOTE);
         }
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(BLACKSTONE_PLANT_ITEM);

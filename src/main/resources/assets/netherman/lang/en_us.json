@@ -34,6 +34,12 @@
   "entity.netherman.ghastly": "Ghastly",
   "entity.netherman.manipulator": "Manipulator",
 
+  "item.netherman.manipulator_stick": "§4Staff of Manipulation",
+  "item.netherman.chance_totem": "§6Totem of Rebirth",
+  "item.netherman.note": "Instruction?",
+
+
+
   "effect.netherman.manipulation": "Manipulation",
   "effect.netherman.fear": "Fear?",
   "effect.netherman.faith": "Faith?",

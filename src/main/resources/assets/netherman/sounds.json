@@ -30,6 +30,7 @@
   "spawn_unit": { "sounds": [ "netherman:spawn_unit" ] },
   "azazel_voice": { "sounds": [ "netherman:azazel_voice" ] },
   "clock": { "sounds": [ "netherman:clock" ] },
+  "respawn_totem": { "sounds": [ "netherman:respawn_totem" ] },
   "flash": { "sounds": [ "netherman:flash" ] },
   "azazel_idle1": { "sounds": [ "netherman:azazel_idle1" ] },
   "azazel_idle2": { "sounds": [ "netherman:azazel_idle2" ] },

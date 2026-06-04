@@ -104,11 +104,12 @@ public class GhastlyEntity extends TamableAnimal implements GeoEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, false));
-        // Кастомная цель опыления (будет работать, если не приручен)
-        this.goalSelector.addGoal(3, new GhastlyPollinateGoal(this));
-        // Спокойный полет, как у пчелы
+        this.goalSelector.addGoal(2, new GhastlyBuildNestGoal(this)); // Приоритет 2 (Высокий!)
+        this.goalSelector.addGoal(3, new GhastlyPollinateGoal(this)); // Приоритет 3
+        this.goalSelector.addGoal(4, new GhastlyEnterHiveGoal(this));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
     }
+
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {

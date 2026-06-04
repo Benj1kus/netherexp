@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "netherman:block/ghastly_nest_top",
+    "bottom": "netherman:block/ghastly_nest_top",
+    "side": "netherman:block/ghastly_nest_side",
+    "front": "netherman:block/ghastly_nest_front_honey",
+    "particle": "netherman:block/ghastly_nest_side"
+  }
+}

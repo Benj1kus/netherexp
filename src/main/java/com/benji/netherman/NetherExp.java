@@ -315,6 +315,36 @@ public class NetherExp {
                     .noOcclusion()
                     .noLootTable()));
 
+    // Регистрация Crimson Honey Block
+    public static final RegistryObject<Block> CRIMSON_HONEY_BLOCK = BLOCKS.register("crimson_honey_block",
+            () -> new CrimsonHoneyBlock(BlockBehaviour.Properties.copy(Blocks.HONEY_BLOCK)
+                    .instabreak()
+                    .lightLevel(state -> 5)
+                    .noOcclusion())); // noOcclusion жизненно важен для прозрачных блоков
+
+    public static final RegistryObject<Item> CRIMSON_HONEY_BLOCK_ITEM = ITEMS.register("crimson_honey_block",
+            () -> new BlockItem(CRIMSON_HONEY_BLOCK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> GHASTLY_NEST = BLOCKS.register("ghastly_nest",
+            () -> new GhastlyNestBlock(BlockBehaviour.Properties.copy(Blocks.BEEHIVE)
+                    .strength(2.0F)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion())); // Для кастомного рендера и прозрачности
+
+    // --- Добавить в реестр ITEMS ---
+    public static final RegistryObject<Item> GHASTLY_NEST_ITEM = ITEMS.register("ghastly_nest",
+            () -> new BlockItem(GHASTLY_NEST.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> CRIMSON_HONEY_BOTTLE = ITEMS.register("crimson_honey_bottle",
+            () -> new com.benji.netherman.item.CrimsonHoneyBottleItem(new Item.Properties()
+                    .stacksTo(16) // Как у обычного мёда
+                    .craftRemainder(net.minecraft.world.item.Items.GLASS_BOTTLE)
+                    .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(6).saturationMod(0.1F).alwaysEat().build())));
+
+    // --- Добавить в реестр BLOCK_ENTITIES ---
+    public static final RegistryObject<BlockEntityType<GhastlyNestBlockEntity>> GHASTLY_NEST_BE = BLOCK_ENTITIES.register("ghastly_nest",
+            () -> BlockEntityType.Builder.of(GhastlyNestBlockEntity::new, GHASTLY_NEST.get()).build(null));
+
     // BLOCK ENTITY
     public static final RegistryObject<BlockEntityType<VoidNetherMidCornerBlockEntity>> VOIDMIDCORNERNETHER_BE = BLOCK_ENTITIES.register("voidnether_midcorner",
             () -> BlockEntityType.Builder.of(VoidNetherMidCornerBlockEntity::new, VOIDMIDCORNERNETHER.get()).build(null));
@@ -487,6 +517,9 @@ public class NetherExp {
             event.accept(EYE_ITEM);
             event.accept(VOIDMIDCORNERNETHER_ITEM);
         }
+        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
+            event.accept(CRIMSON_HONEY_BOTTLE);
+        }
         if (event.getTabKey() == CreativeModeTabs.COMBAT || event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(MANIPULATOR_STICK);
             event.accept(CHANCE_TOTEM);
@@ -495,6 +528,8 @@ public class NetherExp {
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(BLACKSTONE_PLANT_ITEM);
             event.accept(BLACKSTONE_AXON_ITEM);
+            event.accept(CRIMSON_HONEY_BLOCK_ITEM);
+            event.accept(GHASTLY_NEST_ITEM);
             event.accept(POINTED_BLACKSTONE_ITEM);
         }
     }

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,has_honey=false": { "model": "netherman:block/ghastly_nest" },
+    "facing=east,has_honey=false":  { "model": "netherman:block/ghastly_nest", "y": 90 },
+    "facing=south,has_honey=false": { "model": "netherman:block/ghastly_nest", "y": 180 },
+    "facing=west,has_honey=false":  { "model": "netherman:block/ghastly_nest", "y": 270 },
+    "facing=north,has_honey=true":  { "model": "netherman:block/ghastly_nest_honey" },
+    "facing=east,has_honey=true":   { "model": "netherman:block/ghastly_nest_honey", "y": 90 },
+    "facing=south,has_honey=true":  { "model": "netherman:block/ghastly_nest_honey", "y": 180 },
+    "facing=west,has_honey=true":   { "model": "netherman:block/ghastly_nest_honey", "y": 270 }
+  }
+}

@@ -40,6 +40,17 @@
   "item.netherman.manipulator_stick": "§4Staff of Manipulation",
   "item.netherman.chance_totem": "§6Totem of Rebirth",
   "item.netherman.note": "Instruction?",
+  "item.netherman.gilded_golem_spawn_egg": "Gilded Golem Spawn egg",
+  "item.netherman.ghastly_spawn_egg": "Ghastly Spawn egg",
+  "item.netherman.blacksmith_spawn_egg": "Blacksmith Spawn egg",
+  "item.netherman.doctor_spawn_egg": "Doctor Spawn egg",
+  "item.netherman.manipulator_spawn_egg": "Manipulator Spawn egg",
+  "item.netherman.statue_bossunit_spawn_egg": "Beller Spawn egg",
+  "item.netherman.statue_entity_spawn_egg": "Statue Spawn egg",
+  "item.netherman.believer_spawn_egg": "Believer Spawn egg",
+  "item.netherman.trader_spawn_egg": "Trader Spawn egg",
+  "item.netherman.azazel_spawn_egg": "§4Azazel Spawn egg",
+  "item.netherman.guardian_spawn_egg": "§6Gehinnom Spawn egg",
   "item.netherman.crimson_honey_bottle": "Crimson Honey Bottle",
 
 

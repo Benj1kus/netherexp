@@ -490,6 +490,96 @@ public class NetherExp {
                     .fireImmune()
                     .build("ghastly"));
 
+    // SPAWN EGGS
+
+    public static final RegistryObject<Item> GILDED_GOLEM_SPAWN_EGG = ITEMS.register("gilded_golem_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    GILDED_GOLEM, // Ссылка на твоего моба
+                    0xFFFFFF,     // Основной цвет (hex)
+                    0xFFFFFF,     // Цвет пятен (hex)
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> GHASTLY_SPAWN_EGG = ITEMS.register("ghastly_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    GHASTLY, // Ссылка на твоего моба
+                    0xFFFFFF,     // Основной цвет (hex)
+                    0xFFFFFF,     // Цвет пятен (hex)
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> GUARDIAN_SPAWN_EGG = ITEMS.register("guardian_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    GUARDIAN,
+                    0xFFFFFF,
+                    0xFFFFFF,
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> BELIEVER_SPAWN_EGG = ITEMS.register("believer_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    BELIEVER,
+                    0xFFFFFF,
+                    0xFFFFFF,
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> BLACKSMITH_SPAWN_EGG = ITEMS.register("blacksmith_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    BLACKSMITH,
+                    0xFFFFFF,
+                    0xFFFFFF,
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> DOCTOR_SPAWN_EGG = ITEMS.register("doctor_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    DOCTOR,
+                    0xFFFFFF,
+                    0xFFFFFF,
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> MANIPULATOR_SPAWN_EGG = ITEMS.register("manipulator_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    MANIPULATOR,
+                    0xFFFFFF,
+                    0xFFFFFF,
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> STATUE_BOSSUNIT_SPAWN_EGG = ITEMS.register("statue_bossunit_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    STATUE_BOSSUNIT,
+                    0xFFFFFF,
+                    0xFFFFFF,
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> STATUE_SPAWN_EGG = ITEMS.register("statue_entity_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    STATUE,
+                    0xFFFFFF,
+                    0xFFFFFF,
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> TRADER_SPAWN_EGG = ITEMS.register("trader_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    TRADER,
+                    0xFFFFFF,
+                    0xFFFFFF,
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> AZAZEL_SPAWN_EGG = ITEMS.register("azazel_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    AZAZEL,
+                    0xFFFFFF,
+                    0xFFFFFF,
+                    new Item.Properties()
+            ));
+
     public NetherExp(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
 
@@ -527,6 +617,19 @@ public class NetherExp {
         }
         if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
             event.accept(CRIMSON_HONEY_BOTTLE);
+        }
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+            event.accept(GILDED_GOLEM_SPAWN_EGG);
+            event.accept(GHASTLY_SPAWN_EGG);
+            event.accept(GUARDIAN_SPAWN_EGG);
+            event.accept(BELIEVER_SPAWN_EGG);
+            event.accept(BLACKSMITH_SPAWN_EGG);
+            event.accept(DOCTOR_SPAWN_EGG);
+            event.accept(MANIPULATOR_SPAWN_EGG);
+            event.accept(STATUE_BOSSUNIT_SPAWN_EGG);
+            event.accept(STATUE_SPAWN_EGG);
+            event.accept(TRADER_SPAWN_EGG);
+            event.accept(AZAZEL_SPAWN_EGG);
         }
         if (event.getTabKey() == CreativeModeTabs.COMBAT || event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(MANIPULATOR_STICK);

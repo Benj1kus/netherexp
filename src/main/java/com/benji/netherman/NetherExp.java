@@ -5,6 +5,7 @@ import com.benji.netherman.block.entity.*;
 import com.benji.netherman.client.ManipulationOverlay;
 import com.benji.netherman.client.renderer.*;
 import com.benji.netherman.client.renderer.entity.GhastlyRenderer;
+import com.benji.netherman.client.renderer.entity.GildedGolemRenderer;
 import com.benji.netherman.client.renderer.entity.GuardianRenderer;
 import com.benji.netherman.effect.ManipulationEffect;
 import com.benji.netherman.effect.ZoneEffect;
@@ -407,6 +408,13 @@ public class NetherExp {
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "azazel").toString()));
 
+
+    public static final RegistryObject<EntityType<GildedGolemEntity>> GILDED_GOLEM = ENTITIES.register("gilded_golem",
+            () -> EntityType.Builder.of(GildedGolemEntity::new, MobCategory.MISC)
+                    .sized(1.4F, 2.7F) // Размеры железного голема
+                    .fireImmune()
+                    .build(new net.minecraft.resources.ResourceLocation(MODID, "gilded_golem").toString()));
+
     public static final RegistryObject<EntityType<StatueBossunitEntity>> STATUE_BOSSUNIT = ENTITIES.register("statue_bossunit",
             () -> EntityType.Builder.of(StatueBossunitEntity::new, MobCategory.MONSTER)
                     .sized(0.625F, 2.125F) // Хитбокс статуи
@@ -539,6 +547,7 @@ public class NetherExp {
         @SubscribeEvent
         public static void registerAttributes(EntityAttributeCreationEvent event) {
             // Регистрируем здоровье и характеристики для нашего моба
+            event.put(GILDED_GOLEM.get(), GildedGolemEntity.createAttributes().build());
             event.put(AZAZEL.get(), AzazelEntity.createAttributes().build());
             event.put(LASER.get(), LaserEntity.createAttributes().build());
             event.put(STATUE_BOSSUNIT.get(), StatueBossunitEntity.createAttributes().build());
@@ -580,6 +589,7 @@ public class NetherExp {
             event.registerBlockEntityRenderer(BLACKSTONE_AXON_BE.get(), BlackstoneAxonRenderer::new);
 
             //entity
+            event.registerEntityRenderer(GILDED_GOLEM.get(), GildedGolemRenderer::new);
             event.registerEntityRenderer(AZAZEL.get(), AzazelRenderer::new);
             event.registerEntityRenderer(LASER.get(), LaserRenderer::new);
             event.registerEntityRenderer(STATUE_BOSSUNIT.get(), StatueBossunitRenderer::new);

@@ -169,6 +169,11 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
         return false;
     }
 
+    @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {

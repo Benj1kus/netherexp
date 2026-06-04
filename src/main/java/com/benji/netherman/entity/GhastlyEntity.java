@@ -166,6 +166,11 @@ public class GhastlyEntity extends TamableAnimal implements GeoEntity {
         return false;
     }
 
+    @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+
     // Отключаем урон от падения
     @Override
     public boolean causeFallDamage(float fallDistance, float multiplier, net.minecraft.world.damagesource.DamageSource source) {

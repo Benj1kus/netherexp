@@ -261,6 +261,10 @@ public class PiglinPrisonerEntity extends PathfinderMob implements GeoEntity {
     }
 
     @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+    @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.setMasterId(tag.getInt("MasterId"));

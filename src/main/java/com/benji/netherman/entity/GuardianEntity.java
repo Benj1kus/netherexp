@@ -118,6 +118,10 @@ public class GuardianEntity extends Monster implements GeoEntity {
         return false;
     }
 
+    @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
     // Звуки шагов (синхронизировано с анимацией ходьбы майнкрафтом)
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {

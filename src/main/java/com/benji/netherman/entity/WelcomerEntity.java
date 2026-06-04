@@ -192,6 +192,12 @@ public class WelcomerEntity extends Monster implements GeoEntity {
         return false;
     }
 
+    @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+
+
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {

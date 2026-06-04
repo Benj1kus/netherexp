@@ -287,5 +287,10 @@ public class ManipulatorEntity extends Monster implements GeoEntity {
     }
 
     @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+
+    @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return this.cache; }
 }

@@ -223,6 +223,12 @@ public class BelieverEntity extends PathfinderMob implements GeoEntity {
 
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) { return false; }
+
+    @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+
     @Nullable @Override protected SoundEvent getAmbientSound() { return this.isSick() ? null : SoundEvents.PILLAGER_AMBIENT; }
     @Nullable @Override protected SoundEvent getHurtSound(DamageSource damageSourceIn) { return SoundEvents.PILLAGER_HURT; }
     @Nullable @Override protected SoundEvent getDeathSound() { return SoundEvents.PILLAGER_DEATH; }

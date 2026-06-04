@@ -225,6 +225,11 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
     }
 
     @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+
+    @Override
     public int getAmbientSoundInterval() {
         return 400; // 20 секунд (20 тиков * 20)
     }

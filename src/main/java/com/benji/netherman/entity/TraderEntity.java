@@ -233,6 +233,11 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
         return false;
     }
 
+    @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+
     // --- ЗВУКИ ---
     @Override
     public float getVoicePitch() { return 0.8F + this.random.nextFloat() * 0.4F; }

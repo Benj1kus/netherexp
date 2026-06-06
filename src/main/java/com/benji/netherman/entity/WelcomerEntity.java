@@ -187,16 +187,6 @@ public class WelcomerEntity extends Monster implements GeoEntity {
         controllers.add(controller);
     }
 
-    @Override
-    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
-    }
-
-    @Override
-    public boolean requiresCustomPersistence() {
-        return true;
-    }
-
 
     @Nullable
     @Override

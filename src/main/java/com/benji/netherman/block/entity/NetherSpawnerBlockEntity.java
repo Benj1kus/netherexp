@@ -76,7 +76,7 @@ public class NetherSpawnerBlockEntity extends BlockEntity implements GeoBlockEnt
                                     0.0); // Скорость
                         }
 
-                        entity.spawnCooldown = 36000; // 30 минут кулдаун
+                        entity.spawnCooldown = 18000; // 15 минут кулдаун
                     }
                 }
                 // ПРИОРИТЕТ 2: ГАРДИАН
@@ -94,7 +94,7 @@ public class NetherSpawnerBlockEntity extends BlockEntity implements GeoBlockEnt
 
                         guardian.startSpawning();
                         level.addFreshEntity(guardian);
-                        entity.spawnCooldown = 36000;
+                        entity.spawnCooldown = 18000;
                     }
                 }
                 // ПРИОРИТЕТ 3: ВЕЛКОМЕР
@@ -104,7 +104,7 @@ public class NetherSpawnerBlockEntity extends BlockEntity implements GeoBlockEnt
                         welcomer.moveTo(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 0, 0);
                         welcomer.startSpawning();
                         level.addFreshEntity(welcomer);
-                        entity.spawnCooldown = 36000;
+                        entity.spawnCooldown = 18000;
                     }
                 }
             }

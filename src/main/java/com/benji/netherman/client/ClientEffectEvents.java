@@ -4,6 +4,8 @@ import com.benji.netherman.NetherExp;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import com.benji.netherman.ModSounds;
+import com.benji.netherman.client.sound.ZoneAmbientSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
@@ -18,12 +20,21 @@ public class ClientEffectEvents {
     private static int clickTimer = 0;
     private static double rotationAngle = 0;
 
+    private static ZoneAmbientSoundInstance whisperSound;
+
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.START || event.player != Minecraft.getInstance().player) return;
         LocalPlayer player = (LocalPlayer) event.player;
 
         if (player.hasEffect(NetherExp.MANIPULATION_EFFECT.get())) {
+
+            // --- НОВОЕ: Запуск зацикленного звука шепота ---
+            if (whisperSound == null || whisperSound.isStopped()) {
+                whisperSound = new ZoneAmbientSoundInstance(ModSounds.WHISPER.get(), player, NetherExp.MANIPULATION_EFFECT.get(), true);
+                Minecraft.getInstance().getSoundManager().play(whisperSound);
+            }
+
             // 1. Плавный поворот камеры по синусоиде
             rotationAngle += 0.05;
             player.setYRot(player.getYRot() + (float) Math.sin(rotationAngle) * 0.8F);

@@ -35,6 +35,8 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.List;
+
 public class ManipulatorEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -114,7 +116,7 @@ public class ManipulatorEntity extends Monster implements GeoEntity {
             this.getNavigation().stop();
 
             if (this.castTicks == 0) {
-                // Если мы кастовали просто атаку (скелеты/жители) - возвращаемся в IDLE
+                // Если мы кастовали просто атаку (скелеты/жители/гастли) - возвращаемся в IDLE
                 if (this.getEntityState() == STATE_ATTACK) {
                     this.setEntityState(STATE_IDLE);
                 }

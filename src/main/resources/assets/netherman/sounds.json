@@ -18,6 +18,7 @@
   "statue_hurt2": { "sounds": [ "netherman:statue_hurt2" ] },
   "statue_hurt3": { "sounds": [ "netherman:statue_hurt3" ] },
   "sneeze": { "sounds": [ "netherman:sneeze" ] },
+  "whisper": { "sounds": [ "netherman:whisper" ] },
   "unit_idle": { "sounds": [ "netherman:unit_idle" ] },
   "spinning_wheel": { "sounds": [ "netherman:spinning_wheel" ] },
   "doctor": { "sounds": [ "netherman:doctor" ] },

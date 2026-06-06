@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -49,6 +50,8 @@ public class NetherExp {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
+    public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
+            DeferredRegister.create(net.minecraft.core.registries.Registries.STRUCTURE_TYPE, MODID);
 
     // BLOCK & ITEMS
     public static final RegistryObject<Block> NETHER_SPAWNER = BLOCKS.register("nether_spawner",
@@ -95,6 +98,9 @@ public class NetherExp {
                     .lightLevel(state -> 10)
                     .instabreak()
                     .noOcclusion()));
+
+    public static final RegistryObject<StructureType<com.benji.netherman.worldgen.structure.MegaJigsawStructure>> MEGA_JIGSAW_STRUCTURE =
+            STRUCTURE_TYPES.register("mega_jigsaw", () -> () -> com.benji.netherman.worldgen.structure.MegaJigsawStructure.CODEC);
 
 // VOID
     public static final RegistryObject<Block> VOIDMID = BLOCKS.register("void_mid",
@@ -612,6 +618,7 @@ public class NetherExp {
         EFFECTS.register(modEventBus);
         RECIPE_SERIALIZERS.register(modEventBus);
         ModSounds.SOUNDS.register(modEventBus);
+        STRUCTURE_TYPES.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 

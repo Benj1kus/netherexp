@@ -326,6 +326,19 @@ public class NetherExp {
     public static final RegistryObject<Item> CRIMSON_HONEY_BLOCK_ITEM = ITEMS.register("crimson_honey_block",
             () -> new BlockItem(CRIMSON_HONEY_BLOCK.get(), new Item.Properties()));
 
+    // Предмет стрелы
+    public static final RegistryObject<Item> CRIMSON_ARROW_ITEM = ITEMS.register("crimson_arrow",
+            () -> new com.benji.netherman.item.CrimsonArrowItem(new Item.Properties()));
+
+    // Сущность летящей стрелы
+    public static final RegistryObject<EntityType<com.benji.netherman.entity.CrimsonArrowEntity>> CRIMSON_ARROW_ENTITY = ENTITIES.register("crimson_arrow",
+            () -> EntityType.Builder.<com.benji.netherman.entity.CrimsonArrowEntity>of(com.benji.netherman.entity.CrimsonArrowEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .build("crimson_arrow"));
+
+
     public static final RegistryObject<Block> GHASTLY_NEST = BLOCKS.register("ghastly_nest",
             () -> new GhastlyNestBlock(BlockBehaviour.Properties.copy(Blocks.BEEHIVE)
                     .strength(2.0F)
@@ -394,13 +407,21 @@ public class NetherExp {
 
     // ENTITY
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
+    public static final DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> RECIPE_SERIALIZERS =
+            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
 
     // Регистрация эффекта:
+
     public static final RegistryObject<MobEffect> MANIPULATION_EFFECT = EFFECTS.register("manipulation", ManipulationEffect::new);
     public static final RegistryObject<MobEffect> FEAR_EFFECT = EFFECTS.register("fear", () -> new ZoneEffect(0x000000));
     public static final RegistryObject<MobEffect> EXCITEMENT_EFFECT = EFFECTS.register("excitement", () -> new ZoneEffect(0xFF0000));
     public static final RegistryObject<MobEffect> FAITH_EFFECT = EFFECTS.register("faith", () -> new ZoneEffect(0x800080));
     public static final RegistryObject<MobEffect> ANXIETY_EFFECT = EFFECTS.register("anxiety", () -> new ZoneEffect(0x8B0000));
+
+    // Сериализатор кастомного рецепта обмазывания стрел
+    public static final RegistryObject<net.minecraft.world.item.crafting.RecipeSerializer<?>> CRIMSON_ARROW_CRAFTING = RECIPE_SERIALIZERS.register("crimson_arrow_coating",
+            () -> new net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer<>(com.benji.netherman.item.crafting.CrimsonArrowRecipe::new));
+
 
     public static final RegistryObject<EntityType<AzazelEntity>> AZAZEL = ENTITIES.register("azazel",
             () -> EntityType.Builder.of(AzazelEntity::new, MobCategory.MONSTER)
@@ -589,6 +610,7 @@ public class NetherExp {
         BLOCK_ENTITIES.register(modEventBus);
         ENTITIES.register(modEventBus);
         EFFECTS.register(modEventBus);
+        RECIPE_SERIALIZERS.register(modEventBus);
         ModSounds.SOUNDS.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
@@ -633,6 +655,7 @@ public class NetherExp {
         }
         if (event.getTabKey() == CreativeModeTabs.COMBAT || event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(MANIPULATOR_STICK);
+            event.accept(CRIMSON_ARROW_ITEM);
             event.accept(CHANCE_TOTEM);
             event.accept(NOTE);
         }
@@ -693,6 +716,7 @@ public class NetherExp {
 
             //entity
             event.registerEntityRenderer(GILDED_GOLEM.get(), GildedGolemRenderer::new);
+            event.registerEntityRenderer(CRIMSON_ARROW_ENTITY.get(), com.benji.netherman.client.renderer.entity.CrimsonArrowRenderer::new);
             event.registerEntityRenderer(AZAZEL.get(), AzazelRenderer::new);
             event.registerEntityRenderer(LASER.get(), LaserRenderer::new);
             event.registerEntityRenderer(STATUE_BOSSUNIT.get(), StatueBossunitRenderer::new);

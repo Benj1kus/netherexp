@@ -21,6 +21,7 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> AZAZEL_VOICE = registerSoundEvent("azazel_voice");
     public static final RegistryObject<SoundEvent> CLOCK = registerSoundEvent("clock");
+    public static final RegistryObject<SoundEvent> WHISPER = registerSoundEvent("whisper");
     public static final RegistryObject<SoundEvent> FLASH = registerSoundEvent("flash");
 
 

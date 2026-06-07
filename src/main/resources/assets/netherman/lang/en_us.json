@@ -37,6 +37,26 @@
   "entity.netherman.ghastly": "Ghastly",
   "entity.netherman.manipulator": "Manipulator",
 
+  "entity.netherman.azazel.mistake": "THAT WAS A MISTAKE",
+  "entity.netherman.azazel.surrender": "Hand over your weapon if you want to live!",
+  "entity.netherman.azazel.mercy": "You made the right decision.",
+  "entity.netherman.azazel.death": "I’m sorry I failed to meet your expectations, my lord...",
+
+  "block.netherman.totemus.arrived": "YOU ARRIVED",
+  "block.netherman.totemus.zone": "ZONE",
+  "block.netherman.totemus.zone.azazel": "AZAZELS LAIR",
+  "block.netherman.totemus.zone.city": "THE SACRED CITY",
+  "block.netherman.totemus.zone.quarries": "THE CURSED QUARRIES",
+
+  "advancement.netherman.enter_mansion.title": "Damn...",
+  "advancement.netherman.enter_mansion.description": "Now That's Luxury!",
+
+  "advancement.netherman.kill_azazel.title": "God.",
+  "advancement.netherman.kill_azazel.description": "You killed him.",
+
+  "advancement.netherman.tame_ghastly.title": "New Friend:D",
+  "advancement.netherman.tame_ghastly.description": "They're bees?",
+
   "item.netherman.manipulator_stick": "§4Staff of Manipulation",
   "item.netherman.crimson_arrow": "§4Crimson Arrow",
   "item.netherman.chance_totem": "§6Totem of Rebirth",

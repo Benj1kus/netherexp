@@ -1,0 +1,34 @@
+{
+  "parent": "netherman:enter_mansion",
+  "display": {
+    "icon": {
+      "item": "netherman:crimson_honey_bottle"
+    },
+    "title": {
+      "translate": "advancement.netherman.tame_ghastly.title"
+    },
+    "description": {
+      "translate": "advancement.netherman.tame_ghastly.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "tamed_ghastly": {
+      "trigger": "minecraft:tame_animal",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "netherman:ghastly"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

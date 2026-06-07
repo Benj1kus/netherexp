@@ -37,6 +37,26 @@
   "entity.netherman.ghastly": "Ghastly",
   "entity.netherman.manipulator": "操作者",
 
+  "entity.netherman.azazel.mistake": "あれは間違いだった",
+  "entity.netherman.azazel.surrender": "生き残りたいなら、武器を差し出せ！",
+  "entity.netherman.azazel.mercy": "あなたは正しい決断をしました。",
+  "entity.netherman.azazel.death": "ご期待に沿えず、申し訳ございません、閣下…",
+
+  "block.netherman.totemus.arrived": "到着しました",
+  "block.netherman.totemus.zone": "ゾーン",
+  "block.netherman.totemus.zone.azazel": "アザゼルの隠れ家",
+  "block.netherman.totemus.zone.city": "聖なる都市",
+  "block.netherman.totemus.zone.quarries": "呪われた採石場",
+
+  "advancement.netherman.enter_mansion.title": "くそっ……",
+  "advancement.netherman.enter_mansion.description": "なんて贅沢なんだ！",
+
+  "advancement.netherman.kill_azazel.title": "なんてことだ。",
+  "advancement.netherman.kill_azazel.description": "お前が彼を殺したんだ。",
+
+  "advancement.netherman.tame_ghastly.title": "新しい友達：D",
+  "advancement.netherman.tame_ghastly.description": "あれ、ミツバチ？",
+
   "item.netherman.manipulator_stick": "§4操りの杖",
   "item.netherman.crimson_arrow": "§4深紅の矢",
   "item.netherman.chance_totem": "§6再生のトーテム",

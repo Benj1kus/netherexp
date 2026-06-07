@@ -1,13 +1,22 @@
 package com.benji.netherman.entity;
 
 import com.benji.netherman.ModSounds;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,7 +36,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -37,6 +49,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class GhastlyEntity extends TamableAnimal implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    // Переменные для луча-компаса
+    private int mansionBeamTicks = 0;
+    private BlockPos targetMansionPos = null;
 
     // Синхронизация состояний
     public static final EntityDataAccessor<Boolean> IS_EATING = SynchedEntityData.defineId(GhastlyEntity.class, EntityDataSerializers.BOOLEAN);
@@ -120,7 +136,39 @@ public class GhastlyEntity extends TamableAnimal implements GeoEntity {
         }
 
         if (this.isTame()) {
-            // Если уже приручен, можно добавить посадку (sit), но пока просто игнорируем
+            // Если игрок кликает багровыми корнями по УЖЕ прирученному мобу
+            if (itemstack.is(Blocks.CRIMSON_ROOTS.asItem())) {
+                if (!player.getAbilities().instabuild) itemstack.shrink(1);
+
+                // Звук отрыжки
+                this.playSound(SoundEvents.PLAYER_BURP, 1.0F, this.getVoicePitch());
+
+                if (this.level() instanceof ServerLevel serverLevel) {
+                    // Партиклы редстоуна вокруг моба
+                    DustParticleOptions redstoneExplosion = new DustParticleOptions(new Vector3f(1.0f, 0.0f, 0.0f), 1.5f);
+                    serverLevel.sendParticles(redstoneExplosion, this.getX(), this.getY() + 0.5, this.getZ(), 20, 0.3, 0.3, 0.3, 0.0);
+
+                    // Поиск структуры
+                    Registry<Structure> registry = serverLevel.registryAccess().registryOrThrow(Registries.STRUCTURE);
+                    Holder<Structure> mansionHolder = registry.getHolder(ResourceKey.create(Registries.STRUCTURE, new ResourceLocation("netherman", "mansion_nether"))).orElse(null);
+
+                    if (mansionHolder != null) {
+                        // Ищем структуру в радиусе 100 чанков (1600 блоков)
+                        Pair<BlockPos, Holder<Structure>> pair = serverLevel.getChunkSource().getGenerator().findNearestMapStructure(
+                                serverLevel, HolderSet.direct(mansionHolder), this.blockPosition(), 100, false
+                        );
+
+                        if (pair != null) {
+                            this.targetMansionPos = pair.getFirst();
+                            this.mansionBeamTicks = 100; // Луч будет гореть ровно 5 секунд (100 тиков)
+                        } else {
+                            // Если особняк не найден поблизости, пускаем дым
+                            serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY() + 1.0, this.getZ(), 10, 0.2, 0.2, 0.2, 0.0);
+                        }
+                    }
+                }
+                return InteractionResult.SUCCESS;
+            }
             return InteractionResult.SUCCESS;
         } else {
             // Проверяем нужный предмет
@@ -148,7 +196,6 @@ public class GhastlyEntity extends TamableAnimal implements GeoEntity {
     public void tick() {
         super.tick();
 
-        // Логика таймеров на сервере
         if (!this.level().isClientSide()) {
             if (this.hintTicks > 0) {
                 this.hintTicks--;
@@ -157,6 +204,29 @@ public class GhastlyEntity extends TamableAnimal implements GeoEntity {
             if (this.eatTicks > 0) {
                 this.eatTicks--;
                 if (this.eatTicks == 0) this.entityData.set(IS_EATING, false);
+            }
+
+            // Отрисовка луча к особняку
+            if (this.mansionBeamTicks > 0 && this.targetMansionPos != null) {
+                this.mansionBeamTicks--;
+
+                // Спавним частицы каждые 2 тика, чтобы не перегружать клиент
+                if (this.mansionBeamTicks % 2 == 0) {
+                    ServerLevel serverLevel = (ServerLevel) this.level();
+                    Vec3 start = this.position().add(0, this.getBbHeight() / 2.0, 0);
+                    Vec3 target = Vec3.atCenterOf(this.targetMansionPos);
+                    Vec3 direction = target.subtract(start).normalize();
+
+                    // Масштаб частиц уменьшается по мере истечения времени (плавное затухание)
+                    float particleScale = Math.max(0.1f, (this.mansionBeamTicks / 100.0f) * 1.5f);
+                    DustParticleOptions beamParticle = new DustParticleOptions(new Vector3f(1.0f, 0.0f, 0.0f), particleScale);
+
+                    // Рисуем луч длиной 12 блоков
+                    for (int i = 1; i <= 12; i++) {
+                        Vec3 particlePos = start.add(direction.scale(i));
+                        serverLevel.sendParticles(beamParticle, particlePos.x, particlePos.y, particlePos.z, 1, 0.0, 0.0, 0.0, 0.0);
+                    }
+                }
             }
         }
     }

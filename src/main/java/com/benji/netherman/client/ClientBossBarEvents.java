@@ -4,6 +4,7 @@ import com.benji.netherman.NetherExp;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
@@ -56,9 +57,10 @@ public class ClientBossBarEvents {
             int mercyTick = azazel.getEntityData().get(com.benji.netherman.entity.AzazelEntity.MERCY_TICK);
             String fullText = "";
 
-            if (state == 6) fullText = "Hand over your weapon if you want to live!";
-            else if (state == 7) fullText = "You made the right decision.";
-            else if (state == 9) fullText = "I’m sorry I failed to meet your expectations, my lord...";
+            // I18n.get() автоматически берет текст нужного языка
+            if (state == 6) fullText = I18n.get("entity.netherman.azazel.surrender");
+            else if (state == 7) fullText = I18n.get("entity.netherman.azazel.mercy");
+            else if (state == 9) fullText = I18n.get("entity.netherman.azazel.death");
 
             int charsToShow = Math.min(fullText.length(), mercyTick / 2);
             String textToRender = fullText.substring(0, charsToShow);

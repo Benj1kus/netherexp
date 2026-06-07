@@ -37,6 +37,26 @@
   "entity.netherman.ghastly": "Ghastly",
   "entity.netherman.manipulator": "Manipulador",
 
+  "entity.netherman.azazel.mistake": "ESO FUE UN ERROR",
+  "entity.netherman.azazel.surrender": "¡Entrega tu arma si quieres vivir!",
+  "entity.netherman.azazel.mercy": "Has tomado la decisión correcta.",
+  "entity.netherman.azazel.death": "Siento no haber estado a la altura de sus expectativas, mi señor...",
+
+  "block.netherman.totemus.arrived": "HAS LLEGADO",
+  "block.netherman.totemus.zone": "ZONA",
+  "block.netherman.totemus.zone.azazel": "GUARIDA DE AZAZEL",
+  "block.netherman.totemus.zone.city": "LA CIUDAD SAGRADA",
+  "block.netherman.totemus.zone.quarries": "LAS CANTERAS MALDITAS",
+
+  "advancement.netherman.enter_mansion.title": "¡Maldita sea...",
+  "advancement.netherman.enter_mansion.description": "¡Qué lujo!",
+
+  "advancement.netherman.kill_azazel.title": "Dios.",
+  "advancement.netherman.kill_azazel.description": "Tú lo mataste.",
+
+  "advancement.netherman.tame_ghastly.title": "¿Un nuevo amigo?:D",
+  "advancement.netherman.tame_ghastly.description": "¿Son abejas?",
+
   "item.netherman.manipulator_stick": "§4Bastón de manipulación",
   "item.netherman.crimson_arrow": "§4Flecha carmesí",
   "item.netherman.chance_totem": "§6Tótem del renacimiento",

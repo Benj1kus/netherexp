@@ -37,6 +37,26 @@
   "entity.netherman.ghastly": "Ghastly",
   "entity.netherman.manipulator": "Manipulator",
 
+  "entity.netherman.azazel.mistake": "DAS WAR EIN FEHLER",
+  "entity.netherman.azazel.surrender": "Gib deine Waffe ab, wenn du am Leben bleiben willst!",
+  "entity.netherman.azazel.mercy": "Du hast die richtige Entscheidung getroffen.",
+  "entity.netherman.azazel.death": "Es tut mir leid, dass ich Ihre Erwartungen nicht erfüllt habe, mein Herr...",
+
+  "block.netherman.totemus.arrived": "DU BIST ANGEKOMMEN",
+  "block.netherman.totemus.zone": "ZONE",
+  "block.netherman.totemus.zone.azazel": "AZAZELS VERSTECK",
+  "block.netherman.totemus.zone.city": "DIE HEILIGE STADT",
+  "block.netherman.totemus.zone.quarries": "DIE VERFLUCHTEN STEINBRÜCHE",
+
+  "advancement.netherman.enter_mansion.title": "Verdammt…",
+  "advancement.netherman.enter_mansion.description": "Was für ein Luxus!",
+
+  "advancement.netherman.kill_azazel.title": "Gott.",
+  "advancement.netherman.kill_azazel.description": "Du hast ihn umgebracht.",
+
+  "advancement.netherman.tame_ghastly.title": "Neuer Freund:D",
+  "advancement.netherman.tame_ghastly.description": "Sind das Bienen?",
+
   "item.netherman.manipulator_stick": "§4Stab der Manipulation",
   "item.netherman.crimson_arrow": "§4Purpurpfeil",
   "item.netherman.chance_totem": "§6Totem der Wiedergeburt",

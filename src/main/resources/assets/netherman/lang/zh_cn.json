@@ -37,6 +37,26 @@
   "entity.netherman.ghastly": "Ghastly",
   "entity.netherman.manipulator": "操纵者",
 
+  "entity.netherman.azazel.mistake": "那是个错误",
+  "entity.netherman.azazel.surrender": "想要活命就交出武器！",
+  "entity.netherman.azazel.mercy": "你做出了正确的决定。",
+  "entity.netherman.azazel.death": "很抱歉，我没能达到您的期望，大人…",
+
+  "block.netherman.totemus.arrived": "你已抵达",
+  "block.netherman.totemus.zone": "区域",
+  "block.netherman.totemus.zone.azazel": "阿撒兹勒的巢穴",
+  "block.netherman.totemus.zone.city": "神圣之城",
+  "block.netherman.totemus.zone.quarries": "被诅咒的采石场",
+
+  "advancement.netherman.enter_mansion.title": "该死……",
+  "advancement.netherman.enter_mansion.description": "这可真奢侈！",
+
+  "advancement.netherman.kill_azazel.title": "天啊。",
+  "advancement.netherman.kill_azazel.description": "是你杀了他。",
+
+  "advancement.netherman.tame_ghastly.title": "新朋友：D",
+  "advancement.netherman.tame_ghastly.description": "它们是蜜蜂吗？",
+
   "item.netherman.manipulator_stick": "§4操纵之杖",
   "item.netherman.crimson_arrow": "§4猩红箭",
   "item.netherman.chance_totem": "§6重生图腾",

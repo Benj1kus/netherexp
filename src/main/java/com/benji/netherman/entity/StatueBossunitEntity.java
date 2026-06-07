@@ -31,7 +31,7 @@ public class StatueBossunitEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     // Таймер атаки (200 тиков = 10 секунд)
-    private int attackTimer = 200;
+    private int attackTimer = 300;
 
     // Радиус поражения
     private final double ATTACK_RADIUS = 20.0D;
@@ -51,7 +51,7 @@ public class StatueBossunitEntity extends Monster implements GeoEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 50.0D)
+                .add(Attributes.MAX_HEALTH, 15.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.0D) // Не двигается
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D); // Не откидывается
     }

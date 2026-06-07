@@ -37,6 +37,26 @@
   "entity.netherman.ghastly": "Гастли",
   "entity.netherman.manipulator": "Манипулятор",
 
+  "entity.netherman.azazel.mistake": "ЭТО БЫЛО ОШИБКОЙ",
+  "entity.netherman.azazel.surrender": "Бросай оружие если хочешь жить!",
+  "entity.netherman.azazel.mercy": "Ты сделал правильный выбор.",
+  "entity.netherman.azazel.death": "Мне жаль, я вас подвёл, мой господин...",
+
+  "block.netherman.totemus.arrived": "ТЫ ПРИБЫЛ",
+  "block.netherman.totemus.zone": "ЗОНА",
+  "block.netherman.totemus.zone.azazel": "ЛОГОВО АЗАЗЕЛЯ",
+  "block.netherman.totemus.zone.city": "СВЯЩЕННЫЙ ГОРОД",
+  "block.netherman.totemus.zone.quarries": "ПРОКЛЯТЫЕ КАМЕНОЛОМНИ",
+
+  "advancement.netherman.enter_mansion.title": "Чёрт...",
+  "advancement.netherman.enter_mansion.description": "Вот это роскошь!",
+
+  "advancement.netherman.kill_azazel.title": "Бог.",
+  "advancement.netherman.kill_azazel.description": "Ты убил его.",
+
+  "advancement.netherman.tame_ghastly.title": "Новый дружок:D",
+  "advancement.netherman.tame_ghastly.description": "Это пчёлы?",
+
   "item.netherman.manipulator_stick": "§4Жезл Манипуляции",
   "item.netherman.crimson_arrow": "§4Багрянная стрела",
   "item.netherman.chance_totem": "§6Тотем перерождения",

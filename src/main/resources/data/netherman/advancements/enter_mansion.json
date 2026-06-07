@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "netherman:blackstone_column"
+    },
+    "title": {
+      "translate": "advancement.netherman.enter_mansion.title"
+    },
+    "description": {
+      "translate": "advancement.netherman.enter_mansion.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/polished_blackstone_bricks.png"
+  },
+  "criteria": {
+    "in_mansion": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "netherman:mansion_nether"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

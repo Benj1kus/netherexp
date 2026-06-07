@@ -76,7 +76,7 @@ public class ManipulatorAttackGoal extends Goal {
                 mob.manipulationCooldown = 1200;
 
                 // Накладываем эффект на 2 минуты (2400 тиков)
-                player.addEffect(new MobEffectInstance(NetherExp.MANIPULATION_EFFECT.get(), 2400, 0));
+                player.addEffect(new MobEffectInstance(NetherExp.MANIPULATION_EFFECT.get(), 200, 0));
 
                 // Переключаем в луп через 1.75 сек с помощью отложенного стейта
                 mob.level().getServer().tell(new net.minecraft.server.TickTask(mob.level().getServer().getTickCount() + 35, () -> {

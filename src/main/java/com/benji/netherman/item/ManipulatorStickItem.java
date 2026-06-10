@@ -27,7 +27,7 @@ public class ManipulatorStickItem extends SwordItem {
 
     public ManipulatorStickItem() {
         // Используем Tiers.WOOD как заглушку для параметров, но переопределяем прочность на 250
-        super(Tiers.WOOD, 3, -2.4F, new Item.Properties().durability(250));
+        super(Tiers.WOOD, 3, -2.4F, new Item.Properties().durability(1500));
     }
 
     // ЛКМ: Удар по существу

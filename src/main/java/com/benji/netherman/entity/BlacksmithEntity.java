@@ -253,6 +253,8 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
         tag.putInt("PaymentState", this.entityData.get(PAYMENT_STATE));
     }
 
+    private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("idle");
+
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
@@ -263,7 +265,7 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 0, event -> {
-            return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
+            return event.setAndContinue(IDLE_ANIM);
         }));
     }
 

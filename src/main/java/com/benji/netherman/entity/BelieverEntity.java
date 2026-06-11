@@ -45,7 +45,7 @@ public class BelieverEntity extends PathfinderMob implements GeoEntity {
     private static final EntityDataAccessor<Boolean> IS_SICK = SynchedEntityData.defineId(BelieverEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> IS_PRAYING = SynchedEntityData.defineId(BelieverEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> IS_PROTECTED = SynchedEntityData.defineId(BelieverEntity.class, EntityDataSerializers.BOOLEAN);
-
+    public boolean clientIsProtected = false;
     public int protectedTimer = 0;
     private AzazelEntity currentAzazel = null;
 
@@ -130,6 +130,7 @@ public class BelieverEntity extends PathfinderMob implements GeoEntity {
         super.tick();
 
         if (!this.level().isClientSide()) {
+            this.clientIsProtected = this.entityData.get(IS_PROTECTED);
             // 1. Таймер защиты
             if (this.protectedTimer > 0) {
                 this.protectedTimer--;

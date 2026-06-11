@@ -676,6 +676,17 @@ public class AzazelEntity extends Monster implements GeoEntity {
         }
     }
 
+    private static final RawAnimation IDLE_PRAY_ANIM = RawAnimation.begin().thenLoop("idle_pray");
+    private static final RawAnimation WIND_ATTACK_ANIM = RawAnimation.begin().thenPlay("wind_attack");
+    private static final RawAnimation DEFENCE_STUN_ANIM = RawAnimation.begin().thenPlay("defence_stun");
+    private static final RawAnimation WHEEL_ANIM = RawAnimation.begin().thenPlay("wheel");
+    private static final RawAnimation ARROW_ATTACK_ANIM = RawAnimation.begin().thenPlay("arrow_attack");
+    private static final RawAnimation PRAY_ANIM = RawAnimation.begin().thenPlay("pray");
+    private static final RawAnimation CINEMATIC_MERCY_ANIM = RawAnimation.begin().thenPlay("cinematic_mercy");
+    private static final RawAnimation CINEMATIC_DEATH_ANIM = RawAnimation.begin().thenPlay("cinematic_death");
+    private static final RawAnimation CINEMATIC_SPAWN_ANIM = RawAnimation.begin().thenPlay("cinematic_spawn");
+    private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("idle");
+
     // --- АНИМАЦИИ ---
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
@@ -683,18 +694,18 @@ public class AzazelEntity extends Monster implements GeoEntity {
             boolean isAggro = this.entityData.get(IS_AGGRO);
             int state = this.entityData.get(ATTACK_STATE);
 
-            if (!isAggro) return event.setAndContinue(RawAnimation.begin().thenLoop("idle_pray"));
+            if (!isAggro) return event.setAndContinue(IDLE_PRAY_ANIM);
 
-            if (state == 1) return event.setAndContinue(RawAnimation.begin().thenPlay("wind_attack"));
-            if (state == 2) return event.setAndContinue(RawAnimation.begin().thenPlay("defence_stun"));
-            if (state == 3) return event.setAndContinue(RawAnimation.begin().thenPlay("wheel"));
-            if (state == 4) return event.setAndContinue(RawAnimation.begin().thenPlay("arrow_attack"));
-            if (state == 5) return event.setAndContinue(RawAnimation.begin().thenPlay("pray"));
-            if (state == 8) return event.setAndContinue(RawAnimation.begin().thenPlay("cinematic_mercy"));
-            if (state == 9) return event.setAndContinue(RawAnimation.begin().thenPlay("cinematic_death"));
-            if (state == 10) return event.setAndContinue(RawAnimation.begin().thenPlay("cinematic_spawn"));
+            if (state == 1) return event.setAndContinue(WIND_ATTACK_ANIM);
+            if (state == 2) return event.setAndContinue(DEFENCE_STUN_ANIM);
+            if (state == 3) return event.setAndContinue(WHEEL_ANIM);
+            if (state == 4) return event.setAndContinue(ARROW_ATTACK_ANIM);
+            if (state == 5) return event.setAndContinue(PRAY_ANIM);
+            if (state == 8) return event.setAndContinue(CINEMATIC_MERCY_ANIM);
+            if (state == 9) return event.setAndContinue(CINEMATIC_DEATH_ANIM);
+            if (state == 10) return event.setAndContinue(CINEMATIC_SPAWN_ANIM);
 
-            return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
+            return event.setAndContinue(IDLE_ANIM);
         }));
     }
 

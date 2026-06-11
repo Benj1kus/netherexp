@@ -6,21 +6,25 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
 public class BelieverModel extends GeoModel<BelieverEntity> {
+    private static final ResourceLocation MODEL = new ResourceLocation(NetherExp.MODID, "geo/believer.geo.json");
+    private static final ResourceLocation ANIMATION = new ResourceLocation(NetherExp.MODID, "animations/believer.animation.json");
+
+    private static final ResourceLocation TEX_NORMAL = new ResourceLocation(NetherExp.MODID, "textures/entity/believer.png");
+    private static final ResourceLocation TEX_PRAY = new ResourceLocation(NetherExp.MODID, "textures/entity/believer_pray.png");
+
     @Override
     public ResourceLocation getModelResource(BelieverEntity animatable) {
-        return new ResourceLocation(NetherExp.MODID, "geo/believer.geo.json");
+        return MODEL;
     }
 
     @Override
     public ResourceLocation getTextureResource(BelieverEntity animatable) {
-        if (animatable.getEntityData().get(BelieverEntity.IS_PROTECTED)) {
-            return new ResourceLocation(NetherExp.MODID, "textures/entity/believer_pray.png");
-        }
-        return new ResourceLocation(NetherExp.MODID, "textures/entity/believer.png");
+        // Мгновенное чтение обычной переменной вместо тяжелого SynchedEntityData
+        return animatable.clientIsProtected ? TEX_PRAY : TEX_NORMAL;
     }
 
     @Override
     public ResourceLocation getAnimationResource(BelieverEntity animatable) {
-        return new ResourceLocation(NetherExp.MODID, "animations/believer.animation.json");
+        return ANIMATION;
     }
 }

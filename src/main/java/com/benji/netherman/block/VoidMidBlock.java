@@ -59,16 +59,6 @@ public class VoidMidBlock extends HorizontalDirectionalBlock {
         }
     }
 
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if (random.nextInt(40) == 0) {
-            double x = pos.getX() + random.nextDouble();
-            double y = pos.getY() + random.nextDouble() * 4.0;
-            double z = pos.getZ() + random.nextDouble();
-            level.addParticle(ParticleTypes.ASH, x, y, z, 0.0D, 0.01D, 0.0D);
-        }
-    }
-
     // ИСПРАВЛЕНИЕ: Изменили на RenderShape.MODEL. Теперь Майнкрафт запечет этот блок в чанк!
     @Override
     public RenderShape getRenderShape(BlockState state) {

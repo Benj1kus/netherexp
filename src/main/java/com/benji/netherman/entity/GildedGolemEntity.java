@@ -290,16 +290,21 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
     }
 
     // --- АНИМАЦИИ ---
+
+    private static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenPlay("attack");
+    private static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("walk");
+    private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("idle");
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 5, event -> {
             if (this.attackTimer > 0) {
-                return event.setAndContinue(RawAnimation.begin().thenPlay("attack"));
+                return event.setAndContinue(ATTACK_ANIM);
             }
             if (event.isMoving()) {
-                return event.setAndContinue(RawAnimation.begin().thenLoop("walk"));
+                return event.setAndContinue(WALK_ANIM);
             }
-            return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
+            return event.setAndContinue(IDLE_ANIM);
         }));
     }
 

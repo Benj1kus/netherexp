@@ -58,20 +58,6 @@ public class VoidNetherCornerBlock extends HorizontalDirectionalBlock implements
         return SHAPE;
     }
 
-    // --- УРОН И ЭФФЕКТ ТЬМЫ ВНУТРИ БЛОКА ---
-    @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (!level.isClientSide() && entity instanceof LivingEntity livingEntity) {
-
-            // 1. Наносим урон (5.0F за удар, ванильная механика ограничит до 2 раз в сек = 10 урона/сек)
-            livingEntity.hurt(level.damageSources().magic(), 5.0F);
-
-            // 2. Накладываем эффект Тьмы (как у Вардена)
-            // Параметры: Эффект, Длительность в тиках (60 тиков = 3 сек), Уровень (0), Партиклы от зелья (false), Иконка (false)
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, false, false));
-        }
-    }
-
 
     @Nullable
     @Override

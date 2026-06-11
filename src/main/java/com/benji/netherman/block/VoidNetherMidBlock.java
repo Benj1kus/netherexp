@@ -57,36 +57,6 @@ public class VoidNetherMidBlock extends HorizontalDirectionalBlock implements En
         return SHAPE;
     }
 
-    // --- УРОН И ЭФФЕКТ ТЬМЫ ВНУТРИ БЛОКА ---
-    @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (!level.isClientSide() && entity instanceof LivingEntity livingEntity) {
-
-            // 1. Наносим урон (5.0F за удар, ванильная механика ограничит до 2 раз в сек = 10 урона/сек)
-            livingEntity.hurt(level.damageSources().magic(), 5.0F);
-
-            // 2. Накладываем эффект Тьмы (как у Вардена)
-            // Параметры: Эффект, Длительность в тиках (60 тиков = 3 сек), Уровень (0), Партиклы от зелья (false), Иконка (false)
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, false, false));
-        }
-    }
-
-    // --- ПАРТИКЛЫ НАД БЛОКОМ ---
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        // Вызываем частицы с небольшим шансом, чтобы их не было слишком много
-        if (random.nextInt(40) == 0) {
-            double x = pos.getX() + random.nextDouble();
-            // Поднимаем частицы на случайную высоту от 0 до 4 блоков над тьмой
-            double y = pos.getY() - random.nextDouble() * 4.0;
-            double z = pos.getZ() + random.nextDouble();
-
-            // ASH - это те самые серые пепельные частицы из Базальтовых Дельт.
-            // Даем им маааленькую скорость вверх (0.01D)
-            level.addParticle(ParticleTypes.CRIMSON_SPORE, x, y, z, 0.0D, 0.01D, 0.0D);
-        }
-    }
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

@@ -146,12 +146,13 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
                     this.tradingPlayer = null;
                 }
             } else {
-                // ПРОВЕРКА ИГРОКОВ С ВАЛЮТОЙ ВОКРУГ
-                boolean holdingCurrency = false;
+// ПРОВЕРКА ИГРОКОВ С ВАЛЮТОЙ ВОКРУГ (Оптимизировано под серверный TPS)
                 if (this.hintTicks > 0) {
                     this.hintTicks--;
-                    holdingCurrency = true; // Принудительно показываем подсказку от неудачного клика
-                } else {
+                    this.entityData.set(SHOW_HINT, true); // Принудительно показываем подсказку
+                } else if (this.tickCount % 10 == 0) {
+                    // Сканируем область только раз в 10 тиков!
+                    boolean holdingCurrency = false;
                     List<Player> nearbyPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(6.0D));
                     for (Player p : nearbyPlayers) {
                         if (isAcceptedItem(p.getMainHandItem()) || isAcceptedItem(p.getOffhandItem())) {
@@ -160,11 +161,19 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
                             break;
                         }
                     }
+                    this.entityData.set(SHOW_HINT, holdingCurrency);
                 }
-                this.entityData.set(SHOW_HINT, holdingCurrency);
             }
         }
     }
+
+    // --- ОПТИМИЗАЦИЯ 1: Кэшируем массив алмазных наград один раз ---
+    private static final ItemStack[] DIAMOND_GEAR = {
+            new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.DIAMOND_PICKAXE),
+            new ItemStack(Items.DIAMOND_AXE), new ItemStack(Items.DIAMOND_HELMET),
+            new ItemStack(Items.DIAMOND_CHESTPLATE), new ItemStack(Items.DIAMOND_LEGGINGS),
+            new ItemStack(Items.DIAMOND_BOOTS)
+    };
 
     private void giveRewardToPlayer() {
         ItemStack reward = ItemStack.EMPTY;
@@ -196,21 +205,14 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
                 case 2 -> new ItemStack(Items.GOLD_BLOCK, 3);
                 case 3 -> new ItemStack(Items.NETHER_STAR, 1);
                 default -> {
-                    // Случайный алмазный предмет брони или инструмента с топ чарами
-                    ItemStack[] diamondGear = {
-                            new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.DIAMOND_PICKAXE),
-                            new ItemStack(Items.DIAMOND_AXE), new ItemStack(Items.DIAMOND_HELMET),
-                            new ItemStack(Items.DIAMOND_CHESTPLATE), new ItemStack(Items.DIAMOND_LEGGINGS),
-                            new ItemStack(Items.DIAMOND_BOOTS)
-                    };
-                    ItemStack gear = diamondGear[this.random.nextInt(diamondGear.length)];
-                    yield EnchantmentHelper.enchantItem(this.random, gear, 30, false); // Накладывает ~3 топ зачарования
+                    // Берем предмет из статического массива и ОБЯЗАТЕЛЬНО делаем .copy()
+                    ItemStack gear = DIAMOND_GEAR[this.random.nextInt(DIAMOND_GEAR.length)].copy();
+                    yield EnchantmentHelper.enchantItem(this.random, gear, 30, false);
                 }
             };
         }
 
         if (!reward.isEmpty() && this.tradingPlayer != null) {
-            // Выкидываем предмет в сторону игрока
             Vec3 dir = this.tradingPlayer.position().subtract(this.position()).normalize().scale(0.3);
             ItemEntity itemEntity = new ItemEntity(this.level(), this.getX(), this.getY() + 1.0D, this.getZ(), reward);
             itemEntity.setDeltaMovement(dir.x, 0.3D, dir.z);
@@ -254,15 +256,20 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
     @Override
     protected SoundEvent getDeathSound() { return SoundEvents.WANDERING_TRADER_DEATH; }
 
+    private static final RawAnimation TRADE_OPEN_ANIM = RawAnimation.begin().thenPlay("trade_open");
+    private static final RawAnimation TRADE_CLOSE_ANIM = RawAnimation.begin().thenPlay("trade_close");
+    private static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("walk");
+    private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("idle");
+
     // --- АНИМАЦИИ ---
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 5, event -> {
             int state = this.entityData.get(TRADE_STATE);
-            if (state == 1) return event.setAndContinue(RawAnimation.begin().thenPlay("trade_open"));
-            if (state == 2) return event.setAndContinue(RawAnimation.begin().thenPlay("trade_close"));
-            if (event.isMoving()) return event.setAndContinue(RawAnimation.begin().thenLoop("walk"));
-            return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
+            if (state == 1) return event.setAndContinue(TRADE_OPEN_ANIM);
+            if (state == 2) return event.setAndContinue(TRADE_CLOSE_ANIM);
+            if (event.isMoving()) return event.setAndContinue(WALK_ANIM);
+            return event.setAndContinue(IDLE_ANIM);
         }));
     }
 

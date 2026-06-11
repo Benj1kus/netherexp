@@ -122,24 +122,24 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
         return InteractionResult.sidedSuccess(false);
     }
 
+    private static List<MobEffect> CACHED_EFFECTS = null;
+
     private void giveRandomPotion(Player player) {
-        // Создаем базовое зелье
         ItemStack potion = new ItemStack(Items.POTION);
 
-        // Получаем все зарегистрированные эффекты в игре
-        List<MobEffect> allEffects = ForgeRegistries.MOB_EFFECTS.getValues().stream().toList();
+        // Инициализируем кэш один раз при первой торговле
+        if (CACHED_EFFECTS == null) {
+            CACHED_EFFECTS = ForgeRegistries.MOB_EFFECTS.getValues().stream().toList();
+        }
 
-        // Выбираем абсолютно случайный эффект
-        MobEffect randomEffect = allEffects.get(this.random.nextInt(allEffects.size()));
+        // Выбираем абсолютно случайный эффект из готового списка
+        MobEffect randomEffect = CACHED_EFFECTS.get(this.random.nextInt(CACHED_EFFECTS.size()));
 
-        // Генерируем рандомную длительность (от 10 до 90 секунд) и уровень (от 1 до 4)
         int durationTicks = 200 + this.random.nextInt(1600);
-        int amplifier = this.random.nextInt(4); // 0, 1, 2, или 3 (Level 1-4)
+        int amplifier = this.random.nextInt(4);
 
-        // Применяем эффект к зелью
         PotionUtils.setCustomEffects(potion, List.of(new MobEffectInstance(randomEffect, durationTicks, amplifier)));
 
-        // Выкидываем зелье в сторону игрока
         Vec3 dir = player.position().subtract(this.position()).normalize().scale(0.3);
         ItemEntity itemEntity = new ItemEntity(this.level(), this.getX(), this.getY() + 1.0D, this.getZ(), potion);
         itemEntity.setDeltaMovement(dir.x, 0.3D, dir.z);
@@ -157,41 +157,19 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
         }
     }
 
-    // --- ЗВУКИ ---
-    @Nullable
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return ModSounds.DOCTOR.get();
-    }
-
-    @Override
-    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
-    }
-
-    @Override
-    public boolean requiresCustomPersistence() {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.PILLAGER_HURT;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.PILLAGER_DEATH;
-    }
+    @Nullable @Override protected SoundEvent getAmbientSound() { return ModSounds.DOCTOR.get(); }
+    @Override public boolean removeWhenFarAway(double distanceToClosestPlayer) { return false; }
+    @Override public boolean requiresCustomPersistence() { return true; }
+    @Nullable @Override protected SoundEvent getHurtSound(DamageSource damageSourceIn) { return SoundEvents.PILLAGER_HURT; }
+    @Nullable @Override protected SoundEvent getDeathSound() { return SoundEvents.PILLAGER_DEATH; }
 
     // --- АНИМАЦИИ ---
+    private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("idle");
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 0, event -> {
-            // Доктор всегда стоит в idle
-            return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
+            return event.setAndContinue(IDLE_ANIM);
         }));
     }
 

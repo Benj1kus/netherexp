@@ -2,6 +2,7 @@ package com.benji.netherman.block.entity;
 
 import com.benji.netherman.NetherExp;
 import com.benji.netherman.ModSounds;
+import com.benji.netherman.block.TotemusBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -20,17 +21,12 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class TotemusBlockEntity extends BlockEntity implements GeoBlockEntity {
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+// Убрали интерфейс GeoBlockEntity
+public class TotemusBlockEntity extends BlockEntity {
 
-    // 0 = CAVE (Fear), 1 = CITY (Excitement), 2 = CHURCH (Faith), 3 = BOSS ARENA (Clear)
     private int totemType = 0;
     private int scanTimer = 0;
 
@@ -38,24 +34,19 @@ public class TotemusBlockEntity extends BlockEntity implements GeoBlockEntity {
         super(NetherExp.TOTEMUS_BE.get(), pos, state);
     }
 
-    public int getTotemType() { return this.totemType; }
-
     public static void tick(Level level, BlockPos pos, BlockState state, TotemusBlockEntity entity) {
         if (level.isClientSide()) return;
 
         entity.scanTimer--;
         if (entity.scanTimer <= 0) {
-            entity.scanTimer = 20; // Проверяем всё раз в секунду
+            entity.scanTimer = 20;
 
-            // 1. ПРОВЕРКА БЛОКОВ ВОКРУГ (3x3x3)
             int newType = 0;
             for (BlockPos checkPos : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
                 BlockState neighbor = level.getBlockState(checkPos);
-
-                // Расставляем приоритеты: Blackstone Column (3) > Netherite (2) > Gold (1)
                 if (neighbor.is(NetherExp.BLACKSTONE_COLUMN.get())) {
                     newType = 3;
-                    break; // Высший приоритет, сразу прерываем поиск
+                    break;
                 } else if (neighbor.is(Blocks.ANCIENT_DEBRIS) && newType < 2) {
                     newType = 2;
                 } else if (neighbor.is(Blocks.GOLD_BLOCK) && newType < 1) {
@@ -63,36 +54,36 @@ public class TotemusBlockEntity extends BlockEntity implements GeoBlockEntity {
                 }
             }
 
-            // Обновляем состояние для текстуры
+// 1. Обновляем внутреннюю логику
             if (entity.totemType != newType) {
                 entity.totemType = newType;
                 entity.setChanged();
-                level.sendBlockUpdated(pos, state, state, 3);
             }
 
-            // 2. ВЫДАЧА ИЛИ СНЯТИЕ ЭФФЕКТОВ И ТИТРОВ В РАДИУСЕ 20 БЛОКОВ
+            // 2. МЕХАНИЗМ САМОЛЕЧЕНИЯ ДЛЯ СТРУКТУР:
+            // Берем самый свежий статус блока прямо из мира (а не из кэша)
+            BlockState currentState = level.getBlockState(pos);
+
+            // Если текстура в мире не совпадает с тем, что мы насчитали — принудительно обновляем!
+            if (currentState.hasProperty(TotemusBlock.TYPE) && currentState.getValue(TotemusBlock.TYPE) != entity.totemType) {
+                level.setBlock(pos, currentState.setValue(TotemusBlock.TYPE, entity.totemType), 3);
+            }
+
             AABB box = new AABB(pos).inflate(20.0);
             List<ServerPlayer> players = level.getEntitiesOfClass(ServerPlayer.class, box);
 
             for (ServerPlayer player : players) {
-
                 if (entity.totemType == 3) {
-                    // --- ЛОГИКА 3 ТИПА: ОЧИЩЕНИЕ ПЕРЕД БОССОМ ---
-
-                    // Сработает только один раз (когда у игрока еще висит какой-то эффект зоны)
                     if (player.hasEffect(NetherExp.FEAR_EFFECT.get()) ||
                             player.hasEffect(NetherExp.EXCITEMENT_EFFECT.get()) ||
                             player.hasEffect(NetherExp.FAITH_EFFECT.get())) {
 
-                        // Снимаем эффекты (эмбиент мгновенно затухнет благодаря нашему умному звуку!)
                         player.removeEffect(NetherExp.FEAR_EFFECT.get());
                         player.removeEffect(NetherExp.EXCITEMENT_EFFECT.get());
                         player.removeEffect(NetherExp.FAITH_EFFECT.get());
 
-                        // Проигрываем ударный звук
                         level.playSound(null, player.blockPosition(), ModSounds.BIG_TEXT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
-                        // Чтобы убрать "ZONE", мы помещаем "YOU ARRIVED" в Title (главный большой текст), а Subtitle оставляем пустым
                         Component title = Component.translatable("block.netherman.totemus.arrived").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);
                         Component subtitle = Component.empty();
 
@@ -101,7 +92,6 @@ public class TotemusBlockEntity extends BlockEntity implements GeoBlockEntity {
                         player.connection.send(new ClientboundSetTitleTextPacket(title));
                     }
                 } else {
-                    // --- ЛОГИКА 0, 1, 2 ТИПОВ: НАЛОЖЕНИЕ ЭФФЕКТОВ ---
                     MobEffect targetEffect = switch (entity.totemType) {
                         case 2 -> NetherExp.FAITH_EFFECT.get();
                         case 1 -> NetherExp.EXCITEMENT_EFFECT.get();
@@ -132,12 +122,6 @@ public class TotemusBlockEntity extends BlockEntity implements GeoBlockEntity {
             }
         }
     }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() { return this.cache; }
 
     @Override
     public void saveAdditional(CompoundTag tag) {

@@ -246,14 +246,7 @@ public class NetherExp {
 
 
     public static final RegistryObject<Item> TOTEMUS_ITEM = ITEMS.register("totemus",
-            () -> new GeoBlockItem(
-                    TOTEMUS.get(),
-                    new Item.Properties(),
-                    new ResourceLocation(MODID, "geo/totemus.geo.json"),
-                    new ResourceLocation(MODID, "textures/block/totem_cave.png"),
-                    new ResourceLocation(MODID, "animations/totemus.animation.json"),
-                    new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
-            ));
+            () -> new BlockItem(TOTEMUS.get(), new Item.Properties()));
 
 
     public static final RegistryObject<Block> EYE = BLOCKS.register("eye_block",
@@ -709,7 +702,6 @@ public class NetherExp {
             event.registerBlockEntityRenderer(VOIDMIDNETHER_BE.get(), VoidNetherMidRenderer::new);
             event.registerBlockEntityRenderer(TRAPHIVE_BE.get(), TraphiveRenderer::new);
             event.registerBlockEntityRenderer(STATUE_STAND_BE.get(), StatueStandRenderer::new);
-            event.registerBlockEntityRenderer(TOTEMUS_BE.get(), TotemusRenderer::new);
             event.registerBlockEntityRenderer(EYE_BE.get(), EyeRenderer::new);
             event.registerBlockEntityRenderer(CRIMSON_WEB_BE.get(), CrimsonWebRenderer::new);
             event.registerBlockEntityRenderer(ENTRANCE_BE.get(), EntranceRenderer::new);

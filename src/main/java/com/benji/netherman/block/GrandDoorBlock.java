@@ -111,28 +111,11 @@ public class GrandDoorBlock extends HorizontalDirectionalBlock implements Entity
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide() && hand == InteractionHand.MAIN_HAND) {
-            AABB scanBox = new AABB(pos).inflate(20.0);
-            List<Monster> monsters = level.getEntitiesOfClass(Monster.class, scanBox);
-
-            boolean hasHostiles = false;
-            for (Monster m : monsters) {
-                // ИГНОРИРУЕМ ХОЗЯЕВ ДАНЖА
-                if (m.isAlive() && !(m instanceof net.minecraft.world.entity.monster.Guardian) && !m.getType().toString().contains("netherman")) {
-                    hasHostiles = true;
-                    break;
-                }
-            }
-
             if (level.getBlockEntity(pos) instanceof GrandDoorBlockEntity door) {
                 if (door.getDoorState() == GrandDoorBlockEntity.STATE_CLOSED) {
-                    if (!hasHostiles) {
-                        door.openTemporary();
-                        player.displayClientMessage(Component.literal("§cGood Luck traveler!"), true);
-                        level.playSound(null,pos, ModSounds.GOODLUCK.get(), SoundSource.BLOCKS, 2.0F, 1.0F);
-                    } else {
-                        player.displayClientMessage(Component.literal("§cKill the damned creatures!"), true);
-                        level.playSound(null,pos, ModSounds.DAMNED.get(), SoundSource.BLOCKS, 2.0F, 1.0F);
-                    }
+                    door.openTemporary();
+                    player.displayClientMessage(Component.literal("§cGood Luck traveler!"), true);
+                    level.playSound(null, pos, ModSounds.GOODLUCK.get(), SoundSource.BLOCKS, 2.0F, 1.0F);
                 }
             }
         }

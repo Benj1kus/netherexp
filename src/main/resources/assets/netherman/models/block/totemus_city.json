@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.11",
+  "credit": "Made with Blockbench",
+  "ambientocclusion": false,
+  "texture_size": [64, 64],
+  "textures": {
+    "0": "netherman:block/totem_city",
+    "particle": "netherman:block/totem_city"
+  },
+  "elements": [
+    {
+      "name": "bb_main",
+      "from": [4, 0, 4],
+      "to": [12, 29, 12],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+      "faces": {
+        "north": {"uv": [2, 2, 4, 9.25], "texture": "#0"},
+        "east": {"uv": [0, 2, 2, 9.25], "texture": "#0"},
+        "south": {"uv": [6, 2, 8, 9.25], "texture": "#0"},
+        "west": {"uv": [4, 2, 6, 9.25], "texture": "#0"},
+        "up": {"uv": [4, 2, 2, 0], "texture": "#0"},
+        "down": {"uv": [6, 0, 4, 2], "texture": "#0"}
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "bb_main",
+      "origin": [8, 0, 8],
+      "scope": 0,
+      "color": 0,
+      "children": [0]
+    }
+  ]
+}

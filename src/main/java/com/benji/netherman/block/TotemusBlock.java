@@ -11,11 +11,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class TotemusBlock extends BaseEntityBlock {
+    public static final IntegerProperty TYPE = IntegerProperty.create("type", 0, 3);
 
     private static final VoxelShape SHAPE =
             Block.box(4.0D, 0.0D, 4.0D,
@@ -23,6 +26,13 @@ public class TotemusBlock extends BaseEntityBlock {
 
     public TotemusBlock(Properties properties) {
         super(properties);
+        // Устанавливаем тип по умолчанию (пещера)
+        this.registerDefaultState(this.stateDefinition.any().setValue(TYPE, 0));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(TYPE);
     }
 
     @Nullable
@@ -41,7 +51,8 @@ public class TotemusBlock extends BaseEntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
+        // МЕНЯЕМ НА MODEL! Теперь игру рендерит ванильный движок.
+        return RenderShape.MODEL;
     }
 
     @Override

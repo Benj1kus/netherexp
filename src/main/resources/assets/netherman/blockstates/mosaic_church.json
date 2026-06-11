@@ -1,5 +1,8 @@
 {
   "variants": {
-    "": { "model": "netherman:block/mosaic_church" }
+    "facing=north": { "model": "netherman:block/mosaic_church" },
+    "facing=south": { "model": "netherman:block/mosaic_church", "y": 180 },
+    "facing=west":  { "model": "netherman:block/mosaic_church", "y": 270 },
+    "facing=east":  { "model": "netherman:block/mosaic_church", "y": 90 }
   }
 }

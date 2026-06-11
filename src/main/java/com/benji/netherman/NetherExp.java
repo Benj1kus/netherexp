@@ -281,14 +281,7 @@ public class NetherExp {
 
 
     public static final RegistryObject<Item> MOSAIC_CHURCH_ITEM = ITEMS.register("mosaic_church",
-            () -> new GeoBlockItem(
-                    MOSAIC_CHURCH.get(),
-                    new Item.Properties(),
-                    new ResourceLocation(MODID, "geo/mosaic_church.geo.json"),
-                    new ResourceLocation(MODID, "textures/block/mosaic_church.png"),
-                    new ResourceLocation(MODID, "animations/mosaic_church.animation.json"),
-                    new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
-            ));
+            () -> new BlockItem(MOSAIC_CHURCH.get(), new Item.Properties()));
 
     // Добавь к остальным регистрациям предметов:
     public static final RegistryObject<Item> MANIPULATOR_STICK = ITEMS.register("manipulator_stick",
@@ -388,9 +381,6 @@ public class NetherExp {
 
     public static final RegistryObject<BlockEntityType<TraphiveBlockEntity>> TRAPHIVE_BE = BLOCK_ENTITIES.register("traphive",
             () -> BlockEntityType.Builder.of(TraphiveBlockEntity::new, TRAPHIVE.get()).build(null));
-
-    public static final RegistryObject<BlockEntityType<MosaicChurchBlockEntity>> MOSAIC_CHURCH_BE = BLOCK_ENTITIES.register("mosaic_church",
-            () -> BlockEntityType.Builder.of(MosaicChurchBlockEntity::new, MOSAIC_CHURCH.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<CrimsonWebBlockEntity>> CRIMSON_WEB_BE = BLOCK_ENTITIES.register("crimson_web",
             () -> BlockEntityType.Builder.of(CrimsonWebBlockEntity::new, CRIMSON_WEB.get()).build(null));
@@ -717,7 +707,6 @@ public class NetherExp {
             event.registerBlockEntityRenderer(VOIDMIDCORNERNETHER_BE.get(), VoidNetherMidCornerRenderer::new);
             event.registerBlockEntityRenderer(VOIDCORNERNETHER_BE.get(), VoidNetherCornerRenderer::new);
             event.registerBlockEntityRenderer(VOIDMIDNETHER_BE.get(), VoidNetherMidRenderer::new);
-            event.registerBlockEntityRenderer(MOSAIC_CHURCH_BE.get(), MosaicChurchRenderer::new);
             event.registerBlockEntityRenderer(TRAPHIVE_BE.get(), TraphiveRenderer::new);
             event.registerBlockEntityRenderer(STATUE_STAND_BE.get(), StatueStandRenderer::new);
             event.registerBlockEntityRenderer(TOTEMUS_BE.get(), TotemusRenderer::new);

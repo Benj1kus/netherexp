@@ -202,22 +202,35 @@ public class BelieverEntity extends PathfinderMob implements GeoEntity {
         super.die(cause);
     }
 
+    private static final RawAnimation HURT_ANIM = RawAnimation.begin().thenPlay("hurt");
+    private static final RawAnimation SICK_ANIM = RawAnimation.begin().thenLoop("sick");
+    private static final RawAnimation PRAY_ANIM = RawAnimation.begin().thenPlay("pray_sit").thenLoop("pray_loop");
+    private static final RawAnimation RUN_ANIM = RawAnimation.begin().thenLoop("run");
+    private static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("walk");
+    private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("idle");
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 5, event -> {
-            if (this.hurtTime > 0 && !this.entityData.get(IS_PROTECTED)) return event.setAndContinue(RawAnimation.begin().thenPlay("hurt"));
-            if (this.isSick()) return event.setAndContinue(RawAnimation.begin().thenLoop("sick"));
+        // Уменьшаем transitionLength (время перехода) с 5 до 3 для более отзывчивой анимации
+        controllers.add(new AnimationController<>(this, "controller", 3, event -> {
 
-            // Если молится Азазелю
+            // ОПТИМИЗАЦИЯ 2: Возвращаем уже готовые кэшированные константы
+            if (this.hurtTime > 0 && !this.entityData.get(IS_PROTECTED)) {
+                return event.setAndContinue(HURT_ANIM);
+            }
+            if (this.isSick()) {
+                return event.setAndContinue(SICK_ANIM);
+            }
             if (this.entityData.get(IS_PRAYING)) {
-                return event.setAndContinue(RawAnimation.begin().thenPlay("pray_sit").thenLoop("pray_loop"));
+                return event.setAndContinue(PRAY_ANIM);
             }
-
             if (event.isMoving()) {
-                if (this.getDeltaMovement().horizontalDistanceSqr() > 0.015) return event.setAndContinue(RawAnimation.begin().thenLoop("run"));
-                return event.setAndContinue(RawAnimation.begin().thenLoop("walk"));
+                if (this.getDeltaMovement().horizontalDistanceSqr() > 0.015) {
+                    return event.setAndContinue(RUN_ANIM);
+                }
+                return event.setAndContinue(WALK_ANIM);
             }
-            return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
+            return event.setAndContinue(IDLE_ANIM);
         }));
     }
 

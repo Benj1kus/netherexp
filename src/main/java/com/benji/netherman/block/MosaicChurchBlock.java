@@ -1,6 +1,5 @@
 package com.benji.netherman.block;
 
-import com.benji.netherman.block.entity.MosaicChurchBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -15,7 +14,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 
-public class MosaicChurchBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class MosaicChurchBlock extends HorizontalDirectionalBlock {
 
     private static final VoxelShape SHAPE_NS =
             Block.box(0.0D, 0.0D, 7.0D,
@@ -50,16 +49,5 @@ public class MosaicChurchBlock extends HorizontalDirectionalBlock implements Ent
         return state.getValue(FACING).getAxis() == Direction.Axis.X
                 ? SHAPE_EW
                 : SHAPE_NS;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new MosaicChurchBlockEntity(pos, state);
-    }
-
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 }

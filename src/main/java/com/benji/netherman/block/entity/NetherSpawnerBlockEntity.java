@@ -39,7 +39,7 @@ public class NetherSpawnerBlockEntity extends BlockEntity {
         // Проверяем раз в полсекунды для оптимизации TPS
         if (level.getGameTime() % 10 == 0) {
             // УВЕЛИЧЕННЫЙ РАДИУС ТРИГГЕРА: 40 БЛОКОВ
-            Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 40.0D, false);
+            Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 20.0D, false);
             if (player != null) {
 
                 BlockPos[] neighbors = {pos.north(), pos.south(), pos.east(), pos.west(), pos.above(), pos.below()};

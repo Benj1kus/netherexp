@@ -61,18 +61,11 @@ public class NetherExp {
                     .lightLevel(state -> 15) // Излучает свет
                     .requiresCorrectToolForDrops()
                     .strength(2.0F)
-                    .noOcclusion())); // Рекомендуется для кастомных рендеров, чтобы соседние блоки не становились прозрачными
+                    .noOcclusion()));
 
-    // 2. Регистрируем предмет-блок через наш GeoBlockItem
+    // ITEM (Обычный BlockItem)
     public static final RegistryObject<Item> NETHER_SPAWNER_ITEM = ITEMS.register("nether_spawner",
-            () -> new GeoBlockItem(
-                    NETHER_SPAWNER.get(),
-                    new Item.Properties(),
-                    new ResourceLocation(MODID, "geo/nether_spawner.geo.json"),
-                    new ResourceLocation(MODID, "textures/block/nether_spawner.png"),
-                    new ResourceLocation(MODID, "animations/empty.animation.json"), // можно передать null, если анимаций пока нет
-                    new ResourceLocation(MODID, "textures/block/nether_spawner_emissive.png") // Текстура свечения!
-            ));
+            () -> new BlockItem(NETHER_SPAWNER.get(), new Item.Properties()));
 
     public static final RegistryObject<Block> BLACKSTONE_COLUMN = BLOCKS.register("blackstone_column",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)
@@ -707,7 +700,6 @@ public class NetherExp {
             event.registerBlockEntityRenderer(ENTRANCE_BE.get(), EntranceRenderer::new);
             event.registerBlockEntityRenderer(GRAND_DOOR_BE.get(), GrandDoorRenderer::new);
             event.registerBlockEntityRenderer(POINTED_BLACKSTONE_BE.get(), PointedBlackstoneRenderer::new);
-            event.registerBlockEntityRenderer(NETHER_SPAWNER_BE.get(), NetherSpawnerRenderer::new);
             event.registerBlockEntityRenderer(BLACKSTONE_PLANT_BE.get(), BlackstonePlantRenderer::new);
             event.registerBlockEntityRenderer(BLACKSTONE_AXON_BE.get(), BlackstoneAxonRenderer::new);
 

@@ -1,6 +1,9 @@
 {
-  "parent": "block/block",
+  "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "particle": "netherman:block/nether_spawner_particles"
+    "top": "netherman:block/nether_spawner_top",
+    "bottom": "netherman:block/nether_spawner_bottom",
+    "side": "netherman:block/nether_spawner_side",
+    "particle": "netherman:block/nether_spawner_side"
   }
 }

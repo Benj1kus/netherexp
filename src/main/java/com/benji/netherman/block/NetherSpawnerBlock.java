@@ -24,7 +24,6 @@ public class NetherSpawnerBlock extends BaseEntityBlock {
         return new NetherSpawnerBlockEntity(pos, state);
     }
 
-    // Сообщаем игре, что этот блок должен обновляться (тикать)
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
@@ -33,6 +32,7 @@ public class NetherSpawnerBlock extends BaseEntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
+        // МЕНЯЕМ НА MODEL, чтобы игра искала JSON
+        return RenderShape.MODEL;
     }
 }

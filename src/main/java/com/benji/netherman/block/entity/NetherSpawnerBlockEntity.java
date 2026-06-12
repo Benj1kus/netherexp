@@ -21,8 +21,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class NetherSpawnerBlockEntity extends BlockEntity implements GeoBlockEntity {
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+public class NetherSpawnerBlockEntity extends BlockEntity {
     private int spawnCooldown = 0;
 
     public NetherSpawnerBlockEntity(BlockPos pos, BlockState state) {
@@ -87,8 +86,7 @@ public class NetherSpawnerBlockEntity extends BlockEntity implements GeoBlockEnt
                     spawnSingleEntity(level, pos, player, NetherExp.GILDED_GOLEM.get().create(level), entity, 72000);
                 } else if (spawnTrader) {
                     spawnSingleEntity(level, pos, player, NetherExp.TRADER.get().create(level), entity, 72000);
-                }
-                else if (spawnBelievers) {
+                } else if (spawnBelievers) {
                     // ЗАЩИТА TPS: Считаем сектантов в радиусе 15 блоков
                     List<BelieverEntity> currentBelievers = level.getEntitiesOfClass(BelieverEntity.class, new AABB(pos).inflate(15.0D));
 
@@ -158,9 +156,4 @@ public class NetherSpawnerBlockEntity extends BlockEntity implements GeoBlockEnt
         super.load(tag);
         this.spawnCooldown = tag.getInt("SpawnCooldown");
     }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() { return this.cache; }
 }

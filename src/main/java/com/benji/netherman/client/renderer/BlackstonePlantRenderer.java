@@ -2,10 +2,8 @@ package com.benji.netherman.client.renderer;
 
 import com.benji.netherman.NetherExp;
 import com.benji.netherman.block.entity.BlackstonePlantBlockEntity;
-import com.benji.netherman.block.entity.NetherSpawnerBlockEntity;
 import com.benji.netherman.client.layer.GenericEmissiveLayer;
 import com.benji.netherman.client.model.BlackstonePlantModel;
-import com.benji.netherman.client.model.NetherSpawnerModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;

@@ -43,6 +43,7 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public static final EntityDataAccessor<Integer> HINT_STATE = SynchedEntityData.defineId(DoctorEntity.class, EntityDataSerializers.INT);
     public int hintTimer = 0;
+    private int sicknessTimer = 1200;
 
     public DoctorEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -132,13 +133,57 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (!this.level().isClientSide() && this.hintTimer > 0) {
-            this.hintTimer--;
-            if (this.hintTimer <= 0) {
-                this.entityData.set(HINT_STATE, 0);
+
+        if (!this.level().isClientSide()) {
+            if (this.hintTimer > 0) {
+                this.hintTimer--;
+                if (this.hintTimer <= 0) {
+                    this.entityData.set(HINT_STATE, 0);
+                }
+            }
+
+            if (this.sicknessTimer > 0) {
+                this.sicknessTimer--;
+            } else {
+                this.sicknessTimer = 2400;
+
+                List<BelieverEntity> nearbyBelievers = this.level().getEntitiesOfClass(
+                        BelieverEntity.class,
+                        this.getBoundingBox().inflate(15.0D)
+                );
+
+                List<BelieverEntity> healthyBelievers = nearbyBelievers.stream()
+                        .filter(b -> !b.isSick())
+                        .toList();
+
+                if (!healthyBelievers.isEmpty()) {
+                    BelieverEntity victim = healthyBelievers.get(this.random.nextInt(healthyBelievers.size()));
+                    victim.setSick(true);
+
+                    if (this.level() instanceof ServerLevel serverLevel) {
+                        serverLevel.sendParticles(ParticleTypes.SNEEZE,
+                                victim.getX(), victim.getY() + 1.0D, victim.getZ(),
+                                15, 0.3D, 0.3D, 0.3D, 0.05D);
+                    }
+                }
             }
         }
     }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("SicknessTimer", this.sicknessTimer);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("SicknessTimer")) {
+            this.sicknessTimer = tag.getInt("SicknessTimer");
+        }
+    }
+
 
     @Nullable @Override protected SoundEvent getAmbientSound() { return ModSounds.DOCTOR.get(); }
     @Nullable @Override protected SoundEvent getHurtSound(DamageSource damageSourceIn) { return SoundEvents.PILLAGER_HURT; }

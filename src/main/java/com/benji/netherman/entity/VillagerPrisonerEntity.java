@@ -92,14 +92,14 @@ public class VillagerPrisonerEntity extends PathfinderMob implements GeoEntity {
         if (this.level().isClientSide()) {
             if ((state == STATE_IDLE_PRISON || state == STATE_MINING) && master != null) {
 
-                if (this.tickCount % 5 == 0) {
+                if (this.tickCount % 40 == 0) {
                     Vec3 start = this.position().add(0, 1.0, 0);
                     Vec3 end = master.position().add(0, 1.0, 0);
                     double distance = start.distanceTo(end);
 
                     Vec3 dir = end.subtract(start).normalize();
 
-                    for (double d = 0; d < distance; d += 1.5) {
+                    for (double d = 0; d < distance; d += 1.0) {
                         Vec3 pos = start.add(dir.scale(d));
                         this.level().addParticle(DustParticleOptions.REDSTONE, pos.x, pos.y, pos.z, 0, 0, 0);
                     }

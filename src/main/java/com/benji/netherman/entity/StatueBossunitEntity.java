@@ -45,6 +45,7 @@ public class StatueBossunitEntity extends Monster implements GeoEntity {
             MobEffects.DARKNESS           // Darkness
     };
 
+
     public StatueBossunitEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }

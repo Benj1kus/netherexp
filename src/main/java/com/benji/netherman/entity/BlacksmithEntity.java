@@ -44,6 +44,7 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
     public static final EntityDataAccessor<Integer> PAYMENT_STATE = SynchedEntityData.defineId(BlacksmithEntity.class, EntityDataSerializers.INT);
 
     public int hintTimer = 0;
+    private BlockPos targetAnvil = null;
 
     public BlacksmithEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -194,20 +195,35 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
                 if (this.hintTimer <= 0) this.entityData.set(SHOW_HINT, false);
             }
 
-            // 2. Поиск Наковальни раз в полсекунды (чтобы не нагружать сервер)
-            if (this.tickCount % 10 == 0) {
-                BlockPos anvilPos = null;
-                for (BlockPos pos : BlockPos.betweenClosed(this.blockPosition().offset(-3, -1, -3), this.blockPosition().offset(3, 1, 3))) {
-                    if (this.level().getBlockState(pos).getBlock() instanceof AnvilBlock) {
-                        anvilPos = pos;
-                        break;
+            // 2. Ищем наковальню (раз в секунду проверяем её наличие)
+            if (this.tickCount % 20 == 0) {
+                // Если наковальня была, но ее сломали — сбрасываем цель
+                if (this.targetAnvil != null && !(this.level().getBlockState(this.targetAnvil).getBlock() instanceof AnvilBlock)) {
+                    this.targetAnvil = null;
+                }
+
+                // Если цели нет — сканируем территорию
+                if (this.targetAnvil == null) {
+                    for (BlockPos pos : BlockPos.betweenClosed(this.blockPosition().offset(-3, -1, -3), this.blockPosition().offset(3, 1, 3))) {
+                        if (this.level().getBlockState(pos).getBlock() instanceof AnvilBlock) {
+                            this.targetAnvil = pos;
+                            break; // Нашли - выходим из цикла
+                        }
                     }
                 }
-                if (anvilPos != null) {
-                    // Плавно поворачиваем голову и тело к наковальне
-                    this.getLookControl().setLookAt(anvilPos.getX() + 0.5D, anvilPos.getY() + 0.5D, anvilPos.getZ() + 0.5D, 30.0F, 30.0F);
-                    this.setYBodyRot(this.getYHeadRot());
-                }
+            }
+
+            // 3. ЖЕСТКАЯ ФИКСАЦИЯ ПОВОРОТА (Каждый тик!)
+            if (this.targetAnvil != null) {
+                // Высчитываем точный угол от кузнеца до центра наковальни
+                double dx = this.targetAnvil.getX() + 0.5D - this.getX();
+                double dz = this.targetAnvil.getZ() + 0.5D - this.getZ();
+                float targetYaw = (float) (Math.atan2(-dx, dz) * (180D / Math.PI));
+
+                // Принудительно блокируем все оси вращения
+                this.setYRot(targetYaw);
+                this.setYHeadRot(targetYaw);
+                this.yBodyRot = targetYaw;
             }
         }
     }

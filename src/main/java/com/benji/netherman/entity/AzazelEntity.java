@@ -721,16 +721,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
         return this.random.nextBoolean() ? ModSounds.AZAZEL_DAMAGE_1.get() : ModSounds.AZAZEL_DAMAGE_2.get();
     }
 
-    @Override
-    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
-    }
-
-    @Override
-    public boolean requiresCustomPersistence() {
-        return true;
-    }
-
     // --- СОХРАНЕНИЕ ---
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {

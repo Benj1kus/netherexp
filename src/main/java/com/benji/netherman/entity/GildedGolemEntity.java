@@ -279,16 +279,6 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
         this.isHealingPhase = tag.getBoolean("IsHealingPhase");
     }
 
-    @Override
-    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
-    }
-
-    @Override
-    public boolean requiresCustomPersistence() {
-        return true;
-    }
-
     // --- АНИМАЦИИ ---
 
     private static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenPlay("attack");

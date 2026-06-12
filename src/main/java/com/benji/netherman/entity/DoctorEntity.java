@@ -158,8 +158,6 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
     }
 
     @Nullable @Override protected SoundEvent getAmbientSound() { return ModSounds.DOCTOR.get(); }
-    @Override public boolean removeWhenFarAway(double distanceToClosestPlayer) { return false; }
-    @Override public boolean requiresCustomPersistence() { return true; }
     @Nullable @Override protected SoundEvent getHurtSound(DamageSource damageSourceIn) { return SoundEvents.PILLAGER_HURT; }
     @Nullable @Override protected SoundEvent getDeathSound() { return SoundEvents.PILLAGER_DEATH; }
 

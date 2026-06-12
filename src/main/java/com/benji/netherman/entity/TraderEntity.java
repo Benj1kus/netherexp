@@ -1,5 +1,6 @@
 package com.benji.netherman.entity;
 
+import com.benji.netherman.NetherExp;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -8,6 +9,11 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -44,6 +50,10 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
     public static final EntityDataAccessor<Boolean> SHOW_HINT = SynchedEntityData.defineId(TraderEntity.class, EntityDataSerializers.BOOLEAN);
     // 0 = Не торгует, 1 = Открывает рюкзак (trade_open), 2 = Закрывает рюкзак (trade_close)
     public static final EntityDataAccessor<Integer> TRADE_STATE = SynchedEntityData.defineId(TraderEntity.class, EntityDataSerializers.INT);
+
+    public static final ResourceLocation GOLD_TRADE_LOOT = new ResourceLocation(NetherExp.MODID, "gameplay/trader_gold");
+    public static final ResourceLocation DIAMOND_TRADE_LOOT = new ResourceLocation(NetherExp.MODID, "gameplay/trader_diamond");
+    public static final ResourceLocation NETHERITE_TRADE_LOOT = new ResourceLocation(NetherExp.MODID, "gameplay/trader_netherite");
 
     public int hintTicks = 0;
     public int tradeTimer = 0;
@@ -167,56 +177,35 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
         }
     }
 
-    // --- ОПТИМИЗАЦИЯ 1: Кэшируем массив алмазных наград один раз ---
-    private static final ItemStack[] DIAMOND_GEAR = {
-            new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.DIAMOND_PICKAXE),
-            new ItemStack(Items.DIAMOND_AXE), new ItemStack(Items.DIAMOND_HELMET),
-            new ItemStack(Items.DIAMOND_CHESTPLATE), new ItemStack(Items.DIAMOND_LEGGINGS),
-            new ItemStack(Items.DIAMOND_BOOTS)
-    };
-
     private void giveRewardToPlayer() {
-        ItemStack reward = ItemStack.EMPTY;
+        if (this.tradingPlayer == null || !(this.level() instanceof ServerLevel serverLevel)) return;
 
-        if (this.pendingRewardTier == 1) { // ЗОЛОТО
-            int rand = this.random.nextInt(5);
-            reward = switch (rand) {
-                case 0 -> new ItemStack(Items.OBSIDIAN, 3);
-                case 1 -> new ItemStack(Items.GOLDEN_PICKAXE, 1);
-                case 2 -> new ItemStack(Items.GOLD_NUGGET, 8);
-                case 3 -> new ItemStack(Items.GOLDEN_CARROT, 10);
-                default -> new ItemStack(Items.BLAZE_POWDER, 3);
-            };
-        } else if (this.pendingRewardTier == 2) { // АЛМАЗ
-            int rand = this.random.nextInt(6);
-            reward = switch (rand) {
-                case 0 -> new ItemStack(Items.BLAZE_ROD, 5);
-                case 1 -> new ItemStack(Items.ENDER_PEARL, 2);
-                case 2 -> new ItemStack(Items.ENDER_EYE, 1);
-                case 3 -> new ItemStack(Items.REDSTONE, 32);
-                case 4 -> new ItemStack(Items.PIGLIN_HEAD, 1);
-                default -> new ItemStack(Items.GOLDEN_APPLE, 1);
-            };
-        } else if (this.pendingRewardTier == 3) { // НЕЗЕРИТ
-            int rand = this.random.nextInt(5);
-            reward = switch (rand) {
-                case 0 -> new ItemStack(Items.CRYING_OBSIDIAN, 5);
-                case 1 -> new ItemStack(Items.ENDER_PEARL, 5);
-                case 2 -> new ItemStack(Items.GOLD_BLOCK, 3);
-                case 3 -> new ItemStack(Items.NETHER_STAR, 1);
-                default -> {
-                    // Берем предмет из статического массива и ОБЯЗАТЕЛЬНО делаем .copy()
-                    ItemStack gear = DIAMOND_GEAR[this.random.nextInt(DIAMOND_GEAR.length)].copy();
-                    yield EnchantmentHelper.enchantItem(this.random, gear, 30, false);
-                }
-            };
-        }
+        // 1. Выбираем нужную таблицу
+        ResourceLocation lootTableId = null;
+        if (this.pendingRewardTier == 1) lootTableId = GOLD_TRADE_LOOT;
+        else if (this.pendingRewardTier == 2) lootTableId = DIAMOND_TRADE_LOOT;
+        else if (this.pendingRewardTier == 3) lootTableId = NETHERITE_TRADE_LOOT;
 
-        if (!reward.isEmpty() && this.tradingPlayer != null) {
-            Vec3 dir = this.tradingPlayer.position().subtract(this.position()).normalize().scale(0.3);
-            ItemEntity itemEntity = new ItemEntity(this.level(), this.getX(), this.getY() + 1.0D, this.getZ(), reward);
-            itemEntity.setDeltaMovement(dir.x, 0.3D, dir.z);
-            this.level().addFreshEntity(itemEntity);
+        if (lootTableId != null) {
+            // 2. Получаем саму таблицу из реестра сервера
+            LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(lootTableId);
+
+            // 3. Создаем параметры контекста (кто выдает, где это происходит)
+            LootParams lootParams = new LootParams.Builder(serverLevel)
+                    .withParameter(LootContextParams.THIS_ENTITY, this)
+                    .withParameter(LootContextParams.ORIGIN, this.position())
+                    .create(LootContextParamSets.GIFT);
+
+            // 4. Генерируем предметы
+            List<ItemStack> generatedLoot = lootTable.getRandomItems(lootParams);
+
+            // 5. Выкидываем каждый сгенерированный предмет игроку
+            for (ItemStack reward : generatedLoot) {
+                Vec3 dir = this.tradingPlayer.position().subtract(this.position()).normalize().scale(0.3);
+                ItemEntity itemEntity = new ItemEntity(this.level(), this.getX(), this.getY() + 1.0D, this.getZ(), reward);
+                itemEntity.setDeltaMovement(dir.x, 0.3D, dir.z);
+                this.level().addFreshEntity(itemEntity);
+            }
         }
     }
 
@@ -229,15 +218,6 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
         } else {
             super.travel(travelVector);
         }
-    }
-    @Override
-    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
-    }
-
-    @Override
-    public boolean requiresCustomPersistence() {
-        return true;
     }
 
     // --- ЗВУКИ ---

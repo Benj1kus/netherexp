@@ -112,6 +112,18 @@ public class AzazelEntity extends Monster implements GeoEntity {
     }
 
     @Override
+    public void travel(Vec3 travelVector) {
+        int attackState = this.entityData.get(ATTACK_STATE);
+        // Жестко блокируем передвижение на фазах диалогов, пощады и смерти (6, 7, 8, 9, 10)
+        // Также блокируем при фазе защиты (2)
+        if (attackState >= 6 || attackState == 2) {
+            this.setDeltaMovement(Vec3.ZERO);
+            return; // Отменяем ванильную логику перемещения
+        }
+        super.travel(travelVector);
+    }
+
+    @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
@@ -184,6 +196,18 @@ public class AzazelEntity extends Monster implements GeoEntity {
         this.attackTimer = 100;
         this.heal(20.0F);
         this.playSound(ModSounds.DEFENCE.get(), 1.0F, 1.0F);
+    }
+
+    private void startPullAttack() {
+        this.entityData.set(ATTACK_STATE, 11);
+        this.attackTimer = 60; // Длительность анимации как у wind_attack
+        this.playSound(SoundEvents.PHANTOM_SWOOP, 2.0F, 0.5F); // Можно поменять звук при желании
+    }
+
+    private void startLaunchAttack() {
+        this.entityData.set(ATTACK_STATE, 12);
+        this.attackTimer = 80; // Таймер подгони под длину твоей анимации PRAY
+        this.playSound(ModSounds.AZAZEL_PRAY.get(), 1.0F, 1.5F); // Чуть ускоренный звук для агрессии
     }
 
     private void startWindAttack() {
@@ -276,6 +300,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
 // --- ЛОГИКА ПОЩАДЫ И КАТСЦЕН ---
             if (attackState >= 6 && attackState <= 10) {
+                this.setTarget(null);
                 int mercyTick = this.entityData.get(MERCY_TICK);
                 mercyTick++;
                 this.entityData.set(MERCY_TICK, mercyTick);
@@ -451,6 +476,8 @@ public class AzazelEntity extends Monster implements GeoEntity {
                     if (attackState == 1) performWindAttack();
                     else if (attackState == 3) performWheelAttack();
                     else if (attackState == 4) performArrowAttack();
+                    else if (attackState == 11) performPullAttack();
+                    else if (attackState == 12) performLaunchAttack();
 
                     if (this.attackTimer <= 0) this.entityData.set(ATTACK_STATE, 0);
                 } else {
@@ -461,14 +488,25 @@ public class AzazelEntity extends Monster implements GeoEntity {
                             startMercyPhase();
                             this.hasOfferedMercy = true; // Запоминаем, что шанс уже давали
                         } else {
-                            // Обычный выбор атак
-                            int randAtk = this.random.nextInt(4);
-                            if (randAtk == 0) startWindAttack();
-                            else if (randAtk == 1) startWheelAttack();
-                            else if (randAtk == 2) startArrowAttack();
-                            else startPrayAttack();
+                            boolean hasClosePlayers = !this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(6.0D)).isEmpty();
 
-                            this.totalAttacksPerformed++; // Увеличиваем счетчик атак
+                            // Если игрок рядом, с шансом 50% босс делает подкидывание
+                            if (hasClosePlayers && this.random.nextBoolean()) {
+                                startLaunchAttack();
+                            } else {
+                                // Иначе обычный рандом
+                                boolean hasBelievers = !this.level().getEntitiesOfClass(BelieverEntity.class, this.getBoundingBox().inflate(40.0D)).isEmpty();
+                                int maxAttacks = hasBelievers ? 5 : 4;
+                                int randAtk = this.random.nextInt(maxAttacks);
+
+                                if (randAtk == 0) startWindAttack();
+                                else if (randAtk == 1) startWheelAttack();
+                                else if (randAtk == 2) startArrowAttack();
+                                else if (randAtk == 3) startPullAttack();
+                                else startPrayAttack();
+                            }
+
+                            this.totalAttacksPerformed++;
                         }
                     }
                     handlePassiveSummons();
@@ -478,6 +516,74 @@ public class AzazelEntity extends Monster implements GeoEntity {
     }
 
     // --- ЛОГИКА АТАК ---
+
+    private void performLaunchAttack() {
+        // Босса не трогаем — анимация в Blockbench сама поднимает его в воздух
+
+        if (this.attackTimer == 40) {
+            List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(10.0D));
+
+            for (Player player : players) {
+                // 1. СНАЧАЛА наносим урон (это сбросит старые векторы движения и применит ванильную отдачу)
+                player.hurt(this.damageSources().mobAttack(this), 8.0F);
+
+                // 2. ЗАТЕМ задаем наше мощное подбрасывание (перезаписывая ванильную отдачу от урона)
+                // 2.5D - это примерно 25 блоков вверх.
+                player.setDeltaMovement(player.getDeltaMovement().x, 2.5D, player.getDeltaMovement().z);
+
+                // 3. Обязательно сообщаем клиенту, что его пнули
+                player.hurtMarked = true;
+
+                // Спавним взрыв и звук прямо ПОД КАЖДЫМ ИГРОКОМ, которого зацепило
+                if (this.level() instanceof ServerLevel serverLevel) {
+                    serverLevel.sendParticles(ParticleTypes.EXPLOSION, player.getX(), player.getY(), player.getZ(), 2, 0.5D, 0.5D, 0.5D, 0.1D);
+                    serverLevel.playSound(null, player.blockPosition(), SoundEvents.GENERIC_EXPLODE, net.minecraft.sounds.SoundSource.HOSTILE, 1.0F, 1.2F);
+                }
+            }
+        }
+    }
+
+
+    private void performPullAttack() {
+        List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(20.0D));
+
+        for (Player player : players) {
+            if (this.attackTimer > 15) {
+                // Фаза 1: Притяжение (засасывание в центр)
+                Vec3 pullVec = this.position().subtract(player.position()).normalize().scale(0.6D); // Сила притяжения
+                player.setDeltaMovement(player.getDeltaMovement().add(pullVec.x, 0.0D, pullVec.z));
+                player.hurtMarked = true;
+            } else if (this.attackTimer == 15) {
+                // Фаза 2: Резкое подбрасывание вверх (когда таймер доходит до 15)
+                player.setDeltaMovement(player.getDeltaMovement().x, 1.5D, player.getDeltaMovement().z); // Сила подбрасывания
+                player.hurtMarked = true;
+                player.hurt(this.damageSources().mobAttack(this), 5.0F); // Наносим урон при подбросе
+            }
+        }
+
+        // Партиклы огня, которые "всасываются" в босса
+        if (this.level() instanceof ServerLevel serverLevel) {
+            // Спавним партиклы вокруг босса по радиусу и направляем их векторы движения в центр
+            for (int i = 0; i < 5; i++) {
+                double radius = 4.0D;
+                double angle = this.random.nextDouble() * 2 * Math.PI;
+                double offsetX = Math.cos(angle) * radius;
+                double offsetZ = Math.sin(angle) * radius;
+
+                // Вектор движения направлен от партикла к центру босса (скорость всасывания)
+                double motionX = -offsetX * 0.1;
+                double motionY = (this.random.nextDouble() - 0.5) * 0.1;
+                double motionZ = -offsetZ * 0.1;
+
+                serverLevel.sendParticles(ParticleTypes.FLAME,
+                        this.getX() + offsetX, this.getY() + 1.0D, this.getZ() + offsetZ,
+                        0, // Count = 0, чтобы партиклы следовали за нашими motion векторами!
+                        motionX, motionY, motionZ, 1.0);
+            }
+        }
+    }
+
+
     private void performWindAttack() {
         List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(20.0D));
         for (Player player : players) {
@@ -650,6 +756,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
         if (tag.contains("PhaseState")) this.entityData.set(PHASE_STATE, tag.getInt("PhaseState"));
     }
 
+
     class AzazelMoveGoal extends Goal {
         private final AzazelEntity azazel;
 
@@ -696,11 +803,11 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
             if (!isAggro) return event.setAndContinue(IDLE_PRAY_ANIM);
 
-            if (state == 1) return event.setAndContinue(WIND_ATTACK_ANIM);
+            if (state == 1 || state == 11) return event.setAndContinue(WIND_ATTACK_ANIM);
             if (state == 2) return event.setAndContinue(DEFENCE_STUN_ANIM);
             if (state == 3) return event.setAndContinue(WHEEL_ANIM);
             if (state == 4) return event.setAndContinue(ARROW_ATTACK_ANIM);
-            if (state == 5) return event.setAndContinue(PRAY_ANIM);
+            if (state == 5 || state == 12) return event.setAndContinue(PRAY_ANIM);
             if (state == 8) return event.setAndContinue(CINEMATIC_MERCY_ANIM);
             if (state == 9) return event.setAndContinue(CINEMATIC_DEATH_ANIM);
             if (state == 10) return event.setAndContinue(CINEMATIC_SPAWN_ANIM);

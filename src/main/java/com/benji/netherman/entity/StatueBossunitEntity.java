@@ -39,7 +39,7 @@ public class StatueBossunitEntity extends Monster implements GeoEntity {
     // Массив эффектов для рулетки
     private static final MobEffect[] DEBUFFS = {
             MobEffects.MOVEMENT_SLOWDOWN, // Slowness
-            MobEffects.DIG_SLOWDOWN,      // Mining Fatigue
+            MobEffects.POISON,
             MobEffects.WEAKNESS,          // Weakness
             MobEffects.WITHER,            // Wither
             MobEffects.DARKNESS           // Darkness

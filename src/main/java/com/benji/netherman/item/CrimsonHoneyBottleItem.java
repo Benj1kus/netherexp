@@ -24,17 +24,13 @@ public class CrimsonHoneyBottleItem extends Item {
     public CrimsonHoneyBottleItem(Properties properties) {
         super(properties);
     }
-
-    // --- ЛОГИКА ВЫПИВАНИЯ ---
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
-        super.finishUsingItem(stack, level, entityLiving); // Восстанавливаем голод
+        super.finishUsingItem(stack, level, entityLiving);
 
         if (entityLiving instanceof ServerPlayer serverPlayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
         }
-
-        // Возвращаем пустую колбу
         if (stack.isEmpty()) {
             return new ItemStack(Items.GLASS_BOTTLE);
         } else {
@@ -50,12 +46,12 @@ public class CrimsonHoneyBottleItem extends Item {
 
     @Override
     public int getUseDuration(ItemStack stack) {
-        return 40; // Длительность питья (как у ванильного меда)
+        return 40;
     }
 
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
-        return UseAnim.DRINK; // Анимация питья
+        return UseAnim.DRINK;
     }
 
     @Override
@@ -67,33 +63,22 @@ public class CrimsonHoneyBottleItem extends Item {
     public net.minecraft.sounds.SoundEvent getEatingSound() {
         return SoundEvents.HONEY_DRINK;
     }
-
-    // --- ЛОГИКА ПРЕВРАЩЕНИЯ ВАНИЛЬНОГО МЁДА ---
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         Player player = context.getPlayer();
         ItemStack stack = context.getItemInHand();
-
-        // Проверяем, кликнули ли мы по обычному мёду
         if (level.getBlockState(pos).is(Blocks.HONEY_BLOCK)) {
             if (!level.isClientSide()) {
-                // Превращаем в наш Crimson Honey Block
                 level.setBlockAndUpdate(pos, NetherExp.CRIMSON_HONEY_BLOCK.get().defaultBlockState());
-
-                // Звук выливания (бульканье + разбивание слизи)
                 level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.playSound(null, pos, SoundEvents.SLIME_BLOCK_BREAK, SoundSource.BLOCKS, 1.0F, 0.5F);
-
-                // Партиклы ломания Crimson Honey Block
                 ((ServerLevel) level).sendParticles(
                         new BlockParticleOption(ParticleTypes.BLOCK, NetherExp.CRIMSON_HONEY_BLOCK.get().defaultBlockState()),
                         pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                         30, 0.3, 0.3, 0.3, 0.05
                 );
-
-                // Забираем предмет и возвращаем пустую бутылку
                 if (player != null && !player.getAbilities().instabuild) {
                     stack.shrink(1);
                     ItemStack emptyBottle = new ItemStack(Items.GLASS_BOTTLE);

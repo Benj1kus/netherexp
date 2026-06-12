@@ -53,10 +53,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public static final EntityDataAccessor<Boolean> IS_AGGRO = SynchedEntityData.defineId(AzazelEntity.class, EntityDataSerializers.BOOLEAN);
-
-    // 0 = Idle, 1 = Wind, 2 = Defence, 3 = Wheel, 4 = Arrow, 5 = Pray
     public static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AzazelEntity.class, EntityDataSerializers.INT);
-    // 0 = Normal, 1 = Damaged (<50%), 2 = Low HP (<25%)
     public static final EntityDataAccessor<Integer> PHASE_STATE = SynchedEntityData.defineId(AzazelEntity.class, EntityDataSerializers.INT);
 
     public static final EntityDataAccessor<Integer> MERCY_TICK = SynchedEntityData.defineId(AzazelEntity.class, EntityDataSerializers.INT);
@@ -114,11 +111,9 @@ public class AzazelEntity extends Monster implements GeoEntity {
     @Override
     public void travel(Vec3 travelVector) {
         int attackState = this.entityData.get(ATTACK_STATE);
-        // Жестко блокируем передвижение на фазах диалогов, пощады и смерти (6, 7, 8, 9, 10)
-        // Также блокируем при фазе защиты (2)
         if (attackState >= 6 || attackState == 2) {
             this.setDeltaMovement(Vec3.ZERO);
-            return; // Отменяем ванильную логику перемещения
+            return;
         }
         super.travel(travelVector);
     }
@@ -134,8 +129,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
         if (this.level().isClientSide()) return false;
 
         int attackState = this.entityData.get(ATTACK_STATE);
-
-        // Полная неуязвимость во время режимов катсцен и ожидания
         if (attackState >= 7 && attackState <= 10) {
             return false;
         }
@@ -144,21 +137,15 @@ public class AzazelEntity extends Monster implements GeoEntity {
             this.playSound(SoundEvents.SHIELD_BLOCK, 1.0F, 1.5F);
             return false;
         }
-
-        // Если игрок ударил босса ВО ВРЕМЯ диалога пощады - пощада отменяется
         if (attackState == 6) {
             this.entityData.set(ATTACK_STATE, 0);
             triggerAggro();
             return super.hurt(source, amount);
         }
-
-        // Перехват смертельного урона (или опускающего ХП до 5% и ниже)
         if (this.getHealth() - amount <= this.getMaxHealth() * 0.05F) {
             startDeathCinematic();
-            return false; // Отменяем ванильное получение урона!
+            return false;
         }
-
-        // Обычный старт боя, если босс был мирным
         if (!this.entityData.get(IS_AGGRO)) {
             triggerAggro();
         }
@@ -180,8 +167,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
         for (ServerPlayer player : this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(64.0D))) {
             this.bossEvent.addPlayer(player);
-
-            // ИСПОЛЬЗУЕМ КЛЮЧ ПЕРЕВОДА
             Component title = Component.translatable("entity.netherman.azazel.mistake").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);
 
             player.connection.send(new ClientboundSetTitlesAnimationPacket(10, 80, 20));
@@ -189,8 +174,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
             player.connection.send(new ClientboundSetSubtitleTextPacket(Component.empty()));
         }
     }
-
-    // --- СТАРТЕРЫ АТАК ---
     private void startDefenseStun() {
         this.entityData.set(ATTACK_STATE, 2);
         this.attackTimer = 100;
@@ -200,13 +183,13 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
     private void startPullAttack() {
         this.entityData.set(ATTACK_STATE, 11);
-        this.attackTimer = 60; // Длительность анимации как у wind_attack
+        this.attackTimer = 60;
         this.playSound(SoundEvents.PHANTOM_SWOOP, 2.0F, 0.5F); // Можно поменять звук при желании
     }
 
     private void startLaunchAttack() {
         this.entityData.set(ATTACK_STATE, 12);
-        this.attackTimer = 80; // Таймер подгони под длину твоей анимации PRAY
+        this.attackTimer = 80;
         this.playSound(ModSounds.AZAZEL_PRAY.get(), 1.0F, 1.5F); // Чуть ускоренный звук для агрессии
     }
 
@@ -236,9 +219,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
         this.entityData.set(ATTACK_STATE, 9);
         this.entityData.set(MERCY_TICK, 0);
         this.getNavigation().stop();
-        this.setTarget(null); // Снимаем прицел
-
-        // Снимаем эффект тревоги, чтобы отключить музыку
+        this.setTarget(null);
         List<Player> nearbyPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(100.0D));
         for (Player p : nearbyPlayers) {
             p.removeEffect(NetherExp.ANXIETY_EFFECT.get());
@@ -249,12 +230,8 @@ public class AzazelEntity extends Monster implements GeoEntity {
         this.entityData.set(ATTACK_STATE, 6);
         this.entityData.set(MERCY_TICK, 0);
         this.getNavigation().stop();
-
-        // --- ДОБАВЛЕНО ---
-        this.setTarget(null); // Сбрасываем цель, чтобы босс не пытался атаковать
+        this.setTarget(null);
     }
-
-    // Обработка отдачи оружия (ПКМ по боссу)
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (this.entityData.get(ATTACK_STATE) == 6) {
@@ -266,10 +243,8 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
             if (isWeapon) {
                 if (!player.isCreative()) stack.shrink(1);
-
-                // Переходим к тексту благодарности
                 this.entityData.set(ATTACK_STATE, 7);
-                this.entityData.set(MERCY_TICK, 0); // Обнуляем таймер для нового текста
+                this.entityData.set(MERCY_TICK, 0);
 
                 if (this.level() instanceof ServerLevel serverLevel) {
                     serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 1.0D, player.getZ(), 50, 0.5D, 0.5D, 0.5D, 0.05D);
@@ -287,8 +262,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
         this.arrowAttackVariant = this.random.nextInt(3);
         this.playSound(ModSounds.ARROW_ATTACK.get(), 1.0F, 1.0F);
     }
-
-    // --- ГЛАВНЫЙ ЦИКЛ ---
     @Override
     public void tick() {
         super.tick();
@@ -297,15 +270,11 @@ public class AzazelEntity extends Monster implements GeoEntity {
             boolean isAggro = this.entityData.get(IS_AGGRO);
             int attackState = this.entityData.get(ATTACK_STATE);
             int currentPhase = this.entityData.get(PHASE_STATE);
-
-// --- ЛОГИКА ПОЩАДЫ И КАТСЦЕН ---
             if (attackState >= 6 && attackState <= 10) {
                 this.setTarget(null);
                 int mercyTick = this.entityData.get(MERCY_TICK);
                 mercyTick++;
                 this.entityData.set(MERCY_TICK, mercyTick);
-
-                // ФАЗА 6: Текст предложения
                 if (attackState == 6) {
                     int textLen = 42;
                     int revealSpeed = 2;
@@ -322,7 +291,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
                         if (closestPlayer != null) this.setTarget(closestPlayer);
                     }
                 }
-                // ФАЗА 7: Текст благодарности
                 else if (attackState == 7) {
                     int textLen = 28;
                     int revealSpeed = 2;
@@ -341,7 +309,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
                         }
                     }
                 }
-                // ФАЗА 8: Катсцена пощады (cinematic_mercy)
                 else if (attackState == 8) {
                     List<Player> nearbyPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(30.0D));
                     for (Player p : nearbyPlayers) {
@@ -356,7 +323,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
                         this.discard();
                     }
                 }
-// ФАЗА 9: Катсцена смерти (cinematic_death)
                 else if (attackState == 9) {
                     int textLen = 56;
                     int revealSpeed = 2;
@@ -414,19 +380,18 @@ public class AzazelEntity extends Monster implements GeoEntity {
                         this.discard();
                     }
                 }
-                // --- НОВОЕ: ФАЗА 10 (Катсцена спавна) ---
                 else if (attackState == 10) {
                     if (mercyTick == 1) {
                         this.playSound(ModSounds.SPAWN_UNIT.get(), 1.0F, 1.0F);
                     }
 
-                    if (mercyTick >= 40) { // Конец анимации (2 секунды = 40 тиков)
-                        this.entityData.set(ATTACK_STATE, 0); // Переводим в Idle (Нейтрален)
-                        this.entityData.set(MERCY_TICK, 0); // Обнуляем таймер
+                    if (mercyTick >= 40) {
+                        this.entityData.set(ATTACK_STATE, 0);
+                        this.entityData.set(MERCY_TICK, 0);
                     }
                 }
 
-                return; // Блокируем весь остальной код метода tick, пока идет любая из катсцен!
+                return;
             }
 
 
@@ -444,8 +409,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
                 this.entityData.set(PHASE_STATE, 1);
                 this.playSound(ModSounds.AZAZEL_PHASE.get(), 1.0F, 1.0F);
             }
-
-            // 1. НЕЙТРАЛЬНАЯ ФАЗА
             if (!isAggro) {
                 if (this.tickCount % 240 == 0) {
                     this.playSound(ModSounds.IDLE_PRAY.get(), 1.0F, 1.0F);
@@ -459,13 +422,10 @@ public class AzazelEntity extends Monster implements GeoEntity {
                     }
                 }
             }
-            // 2. АГРЕССИВНАЯ ФАЗА
             else {
-                // АУРА ТРЕВОГИ: Каждую секунду накладываем эффект Anxiety (музыка!) на игроков в радиусе 100 блоков
                 if (this.tickCount % 20 == 0) {
                     List<Player> auraPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(100.0D));
                     for (Player p : auraPlayers) {
-                        // 100 тиков (5 секунд). Иконка включена (true), партиклы зелья отключены (false).
                         p.addEffect(new MobEffectInstance(NetherExp.ANXIETY_EFFECT.get(), 300, 0, false, false, true));
                     }
                 }
@@ -482,19 +442,14 @@ public class AzazelEntity extends Monster implements GeoEntity {
                     if (this.attackTimer <= 0) this.entityData.set(ATTACK_STATE, 0);
                 } else {
                     if (this.getTarget() != null && this.random.nextInt(80) == 0) {
-
-                        // --- НОВАЯ ЛОГИКА: Триггер пощады после 5 атак ---
                         if (!this.hasOfferedMercy && this.totalAttacksPerformed >= 5) {
                             startMercyPhase();
-                            this.hasOfferedMercy = true; // Запоминаем, что шанс уже давали
+                            this.hasOfferedMercy = true;
                         } else {
                             boolean hasClosePlayers = !this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(6.0D)).isEmpty();
-
-                            // Если игрок рядом, с шансом 50% босс делает подкидывание
                             if (hasClosePlayers && this.random.nextBoolean()) {
                                 startLaunchAttack();
                             } else {
-                                // Иначе обычный рандом
                                 boolean hasBelievers = !this.level().getEntitiesOfClass(BelieverEntity.class, this.getBoundingBox().inflate(40.0D)).isEmpty();
                                 int maxAttacks = hasBelievers ? 5 : 4;
                                 int randAtk = this.random.nextInt(maxAttacks);
@@ -515,26 +470,15 @@ public class AzazelEntity extends Monster implements GeoEntity {
         }
     }
 
-    // --- ЛОГИКА АТАК ---
-
     private void performLaunchAttack() {
-        // Босса не трогаем — анимация в Blockbench сама поднимает его в воздух
 
         if (this.attackTimer == 40) {
             List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(10.0D));
 
             for (Player player : players) {
-                // 1. СНАЧАЛА наносим урон (это сбросит старые векторы движения и применит ванильную отдачу)
                 player.hurt(this.damageSources().mobAttack(this), 8.0F);
-
-                // 2. ЗАТЕМ задаем наше мощное подбрасывание (перезаписывая ванильную отдачу от урона)
-                // 2.5D - это примерно 25 блоков вверх.
                 player.setDeltaMovement(player.getDeltaMovement().x, 2.5D, player.getDeltaMovement().z);
-
-                // 3. Обязательно сообщаем клиенту, что его пнули
                 player.hurtMarked = true;
-
-                // Спавним взрыв и звук прямо ПОД КАЖДЫМ ИГРОКОМ, которого зацепило
                 if (this.level() instanceof ServerLevel serverLevel) {
                     serverLevel.sendParticles(ParticleTypes.EXPLOSION, player.getX(), player.getY(), player.getZ(), 2, 0.5D, 0.5D, 0.5D, 0.1D);
                     serverLevel.playSound(null, player.blockPosition(), SoundEvents.GENERIC_EXPLODE, net.minecraft.sounds.SoundSource.HOSTILE, 1.0F, 1.2F);
@@ -549,35 +493,28 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
         for (Player player : players) {
             if (this.attackTimer > 15) {
-                // Фаза 1: Притяжение (засасывание в центр)
-                Vec3 pullVec = this.position().subtract(player.position()).normalize().scale(0.6D); // Сила притяжения
+                Vec3 pullVec = this.position().subtract(player.position()).normalize().scale(0.6D);
                 player.setDeltaMovement(player.getDeltaMovement().add(pullVec.x, 0.0D, pullVec.z));
                 player.hurtMarked = true;
             } else if (this.attackTimer == 15) {
-                // Фаза 2: Резкое подбрасывание вверх (когда таймер доходит до 15)
-                player.setDeltaMovement(player.getDeltaMovement().x, 1.5D, player.getDeltaMovement().z); // Сила подбрасывания
+                player.setDeltaMovement(player.getDeltaMovement().x, 1.5D, player.getDeltaMovement().z);
                 player.hurtMarked = true;
-                player.hurt(this.damageSources().mobAttack(this), 5.0F); // Наносим урон при подбросе
+                player.hurt(this.damageSources().mobAttack(this), 5.0F);
             }
         }
-
-        // Партиклы огня, которые "всасываются" в босса
         if (this.level() instanceof ServerLevel serverLevel) {
-            // Спавним партиклы вокруг босса по радиусу и направляем их векторы движения в центр
             for (int i = 0; i < 5; i++) {
                 double radius = 4.0D;
                 double angle = this.random.nextDouble() * 2 * Math.PI;
                 double offsetX = Math.cos(angle) * radius;
                 double offsetZ = Math.sin(angle) * radius;
-
-                // Вектор движения направлен от партикла к центру босса (скорость всасывания)
                 double motionX = -offsetX * 0.1;
                 double motionY = (this.random.nextDouble() - 0.5) * 0.1;
                 double motionZ = -offsetZ * 0.1;
 
                 serverLevel.sendParticles(ParticleTypes.FLAME,
                         this.getX() + offsetX, this.getY() + 1.0D, this.getZ() + offsetZ,
-                        0, // Count = 0, чтобы партиклы следовали за нашими motion векторами!
+                        0,
                         motionX, motionY, motionZ, 1.0);
             }
         }
@@ -657,10 +594,9 @@ public class AzazelEntity extends Monster implements GeoEntity {
             if (this.level() instanceof ServerLevel serverLevel && NetherExp.LASER.isPresent()) {
 
                 int laserCount = 10;
-                double radius = 7.0D; // Радиус кольца лазеров вокруг босса
+                double radius = 7.0D;
 
                 for (int i = 0; i < laserCount; i++) {
-                    // Высчитываем угол для каждого лазера
                     double angle = 2.0 * Math.PI * i / laserCount;
                     double offsetX = Math.cos(angle) * radius;
                     double offsetZ = Math.sin(angle) * radius;
@@ -720,8 +656,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return this.random.nextBoolean() ? ModSounds.AZAZEL_DAMAGE_1.get() : ModSounds.AZAZEL_DAMAGE_2.get();
     }
-
-    // --- СОХРАНЕНИЕ ---
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
@@ -783,8 +717,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
     private static final RawAnimation CINEMATIC_DEATH_ANIM = RawAnimation.begin().thenPlay("cinematic_death");
     private static final RawAnimation CINEMATIC_SPAWN_ANIM = RawAnimation.begin().thenPlay("cinematic_spawn");
     private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("idle");
-
-    // --- АНИМАЦИИ ---
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 5, event -> {

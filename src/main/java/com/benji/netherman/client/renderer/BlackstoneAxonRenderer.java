@@ -11,11 +11,7 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 public class BlackstoneAxonRenderer extends GeoBlockRenderer<BlackstoneAxonBlockEntity> {
     public BlackstoneAxonRenderer(BlockEntityRendererProvider.Context context) {
         super(new BlackstoneAxonModel());
-
-        // Указываем путь к твоему светящемуся слою
         ResourceLocation emissiveTexture = new ResourceLocation(NetherExp.MODID, "textures/block/blackstone_axon_emissive.png");
-
-        // Добавляем слой из твоего старого проекта
         addRenderLayer(new GenericEmissiveLayer<>(this, emissiveTexture));
     }
 }

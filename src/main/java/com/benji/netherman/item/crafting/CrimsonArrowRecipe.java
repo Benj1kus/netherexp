@@ -30,11 +30,10 @@ public class CrimsonArrowRecipe extends CustomRecipe {
                 } else if (stack.is(Items.ARROW)) {
                     arrows += stack.getCount();
                 } else {
-                    return false; // Любой другой предмет отменяет крафт
+                    return false;
                 }
             }
         }
-        // Должна быть ровно 1 бутылка и от 1 до 5 стрел суммарно
         return bottles == 1 && arrows >= 1 && arrows <= 5;
     }
 
@@ -47,7 +46,6 @@ public class CrimsonArrowRecipe extends CustomRecipe {
                 arrows += stack.getCount();
             }
         }
-        // Возвращаем кастомные стрелы в количестве обычных стрел из сетки крафта
         return new ItemStack(NetherExp.CRIMSON_ARROW_ITEM.get(), arrows);
     }
 
@@ -58,15 +56,10 @@ public class CrimsonArrowRecipe extends CustomRecipe {
         for (int i = 0; i < remaining.size(); ++i) {
             ItemStack stack = container.getItem(i);
             if (!stack.isEmpty()) {
-                // Если это наша банка меда — оставляем на её месте пустую колбу
                 if (stack.is(NetherExp.CRIMSON_HONEY_BOTTLE.get())) {
                     remaining.set(i, new ItemStack(Items.GLASS_BOTTLE));
                 }
-                // Если это обычные стрелы — применяем хак с обнулением стака
                 else if (stack.is(Items.ARROW)) {
-                    // Выставляем размер стака в контейнере в 1.
-                    // После завершения этого метода Майнкрафт сделает автоматический декремент на 1,
-                    // превратив 1 в 0, и весь стак из слота полностью удалится за один крафт!
                     stack.setCount(1);
                 }
             }

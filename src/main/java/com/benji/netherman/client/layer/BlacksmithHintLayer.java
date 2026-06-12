@@ -25,8 +25,6 @@ public class BlacksmithHintLayer extends GeoRenderLayer<BlacksmithEntity> {
 
     @Override
     public void render(PoseStack poseStack, BlacksmithEntity animatable, BakedGeoModel bakedModel, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
-
-        // Рисуем подсказку только если SHOW_HINT == true
         if (!animatable.getEntityData().get(BlacksmithEntity.SHOW_HINT)) return;
 
         poseStack.pushPose();

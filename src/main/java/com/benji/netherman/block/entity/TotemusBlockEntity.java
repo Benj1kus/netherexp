@@ -23,8 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
-
-// Убрали интерфейс GeoBlockEntity
 public class TotemusBlockEntity extends BlockEntity {
 
     private int totemType = 0;
@@ -53,18 +51,11 @@ public class TotemusBlockEntity extends BlockEntity {
                     newType = 1;
                 }
             }
-
-// 1. Обновляем внутреннюю логику
             if (entity.totemType != newType) {
                 entity.totemType = newType;
                 entity.setChanged();
             }
-
-            // 2. МЕХАНИЗМ САМОЛЕЧЕНИЯ ДЛЯ СТРУКТУР:
-            // Берем самый свежий статус блока прямо из мира (а не из кэша)
             BlockState currentState = level.getBlockState(pos);
-
-            // Если текстура в мире не совпадает с тем, что мы насчитали — принудительно обновляем!
             if (currentState.hasProperty(TotemusBlock.TYPE) && currentState.getValue(TotemusBlock.TYPE) != entity.totemType) {
                 level.setBlock(pos, currentState.setValue(TotemusBlock.TYPE, entity.totemType), 3);
             }

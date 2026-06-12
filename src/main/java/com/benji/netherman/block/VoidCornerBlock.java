@@ -21,7 +21,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-// ИСПРАВЛЕНИЕ: Больше не реализуем EntityBlock! Блок стал легковесным.
 public class VoidCornerBlock extends HorizontalDirectionalBlock {
 
     private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
@@ -60,7 +59,6 @@ public class VoidCornerBlock extends HorizontalDirectionalBlock {
         }
     }
 
-    // ИСПРАВЛЕНИЕ: Изменили на RenderShape.MODEL. Теперь Майнкрафт запечет этот блок в чанк!
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;

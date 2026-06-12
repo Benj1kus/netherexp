@@ -18,8 +18,6 @@ public class EntranceRenderer extends GeoBlockRenderer<EntranceBlockEntity> {
 
         addRenderLayer(new GenericEmissiveLayer<>(this, new ResourceLocation(NetherExp.MODID, "textures/block/entrance_emissive.png")));
     }
-
-    // ВАЖНО: Разрешаем прозрачность!
     @Override
     public RenderType getRenderType(EntranceBlockEntity animatable, ResourceLocation texture, MultiBufferSource bufferSource, float partialTick) {
         return RenderType.entityTranslucent(texture);

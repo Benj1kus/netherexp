@@ -52,19 +52,14 @@ public class TraphiveBlock extends Block implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        // Ловушка больше не открывается по клику ПКМ
         return InteractionResult.PASS;
     }
-
-    // --- МЕТОД ДЛЯ СНАРЯДОВ ---
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         if (!level.isClientSide()) {
             this.activateWave(level, hit.getBlockPos());
         }
     }
-
-    // --- ПУБЛИЧНЫЙ МЕТОД ЗАПУСКА ВОЛНЫ ---
     public void activateWave(Level level, BlockPos pos) {
         if (level.getBlockState(pos).getValue(OPEN)) return;
 
@@ -74,8 +69,6 @@ public class TraphiveBlock extends Block implements EntityBlock {
         queue.add(pos);
         distances.put(pos, 0);
         int maxDist = 0;
-
-        // Ограничение в 1000 блоков
         while (!queue.isEmpty() && distances.size() < 1000) {
             BlockPos current = queue.poll();
             int currentDist = distances.get(current);
@@ -90,8 +83,6 @@ public class TraphiveBlock extends Block implements EntityBlock {
                 }
             }
         }
-
-        // Передаем команду всем найденным блокам
         for (Map.Entry<BlockPos, Integer> entry : distances.entrySet()) {
             if (level.getBlockEntity(entry.getKey()) instanceof TraphiveBlockEntity be) {
                 be.triggerWave(entry.getValue(), maxDist);

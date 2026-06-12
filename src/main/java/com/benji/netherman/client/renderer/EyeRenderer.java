@@ -11,11 +11,7 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 public class EyeRenderer extends GeoBlockRenderer<EyeBlockEntity> {
     public EyeRenderer(BlockEntityRendererProvider.Context context) {
         super(new EyeModel());
-
-        // Указываем путь к твоему светящемуся слою
         ResourceLocation emissiveTexture = new ResourceLocation(NetherExp.MODID, "textures/block/eye_block_emissive.png");
-
-        // Добавляем слой из твоего старого проекта
         addRenderLayer(new GenericEmissiveLayer<>(this, emissiveTexture));
     }
 }

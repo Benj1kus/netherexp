@@ -36,11 +36,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
-    // 0 = Скрыта, 1 = blacksmith_hint
     public static final EntityDataAccessor<Boolean> SHOW_HINT = SynchedEntityData.defineId(BlacksmithEntity.class, EntityDataSerializers.BOOLEAN);
-
-    // 0 = Ждет оплату, 1 = Получил Золото (разборка), 2 = Получил Незерит (починка)
     public static final EntityDataAccessor<Integer> PAYMENT_STATE = SynchedEntityData.defineId(BlacksmithEntity.class, EntityDataSerializers.INT);
 
     public int hintTimer = 0;
@@ -52,9 +48,9 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0D) // Как у жителя
-                .add(Attributes.MOVEMENT_SPEED, 0.0D) // Не двигается
-                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D); // Не откидывается
+                .add(Attributes.MAX_HEALTH, 20.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.0D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
     }
 
     @Override
@@ -68,8 +64,6 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
     }
-
-    // Защита от сдвигов
     @Override
     public void knockback(double strength, double x, double z) {}
     @Override
@@ -81,8 +75,6 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
 
         ItemStack stack = player.getItemInHand(hand);
         int state = this.entityData.get(PAYMENT_STATE);
-
-        // --- ЛОГИКА 1: ПРИЕМ ОПЛАТЫ ---
         if (state == 0) {
             if (stack.is(Items.RAW_GOLD)) {
                 if (!player.isCreative()) stack.shrink(1);
@@ -97,38 +89,28 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
                 return InteractionResult.sidedSuccess(false);
             }
         }
-        // --- ЛОГИКА 2: ВЗАИМОДЕЙСТВИЕ С ИНСТРУМЕНТОМ ---
         else {
-            // Если Кузнец готов РАЗБИРАТЬ (оплачен золотом)
             if (state == 1) {
                 ItemStack result = getDisassemblyResult(stack);
                 if (!result.isEmpty()) {
-                    if (!player.isCreative()) stack.shrink(1); // Забираем инструмент
-
-                    // Выдаем ресурсы
+                    if (!player.isCreative()) stack.shrink(1);
                     dropItemToPlayer(player, result);
-
-                    // Звуки переплавки и партиклы
                     this.level().playSound(null, this.blockPosition(), SoundEvents.LAVA_EXTINGUISH, SoundSource.NEUTRAL, 1.0F, 1.0F);
                     this.level().playSound(null, this.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.NEUTRAL, 0.5F, 1.0F);
                     spawnFlameParticles();
 
-                    this.entityData.set(PAYMENT_STATE, 0); // Сбрасываем состояние оплаты
+                    this.entityData.set(PAYMENT_STATE, 0);
                     return InteractionResult.sidedSuccess(false);
                 }
             }
-            // Если Кузнец готов ЧИНИТЬ (оплачен незеритом)
             else if (state == 2) {
-                // Проверяем, что это инструмент (имеет прочность), но НЕ броня
                 if (stack.isDamageableItem() && !(stack.getItem() instanceof ArmorItem)) {
                     ItemStack repaired = stack.copy();
-                    repaired.setDamageValue(0); // Полностью чиним
+                    repaired.setDamageValue(0);
 
-                    if (!player.isCreative()) stack.shrink(1); // Забираем сломанный
+                    if (!player.isCreative()) stack.shrink(1);
 
-                    dropItemToPlayer(player, repaired); // Отдаем починенный с чарами
-
-                    // Звук кузнеца и партиклы
+                    dropItemToPlayer(player, repaired);
                     this.level().playSound(null, this.blockPosition(), SoundEvents.VILLAGER_WORK_WEAPONSMITH, SoundSource.NEUTRAL, 1.0F, 1.0F);
                     spawnFlameParticles();
 
@@ -137,8 +119,6 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
                 }
             }
         }
-
-        // Если игрок кликнул чем-то другим или не тем предметом -> ПОКАЗЫВАЕМ ПОДСКАЗКУ
         this.entityData.set(SHOW_HINT, true);
         this.hintTimer = 80;
         this.playSound(SoundEvents.VILLAGER_NO, 1.0F, this.getVoicePitch());
@@ -148,13 +128,11 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
 
         return InteractionResult.sidedSuccess(false);
     }
-
-    // --- ЛОГИКА РАЗБОРА ИНСТРУМЕНТА ---
     private ItemStack getDisassemblyResult(ItemStack tool) {
         if (!(tool.getItem() instanceof TieredItem tieredItem)) return ItemStack.EMPTY;
 
         Tier tier = tieredItem.getTier();
-        if (tier == Tiers.WOOD || tier == Tiers.STONE) return ItemStack.EMPTY; // Дерево и камень не разбираем
+        if (tier == Tiers.WOOD || tier == Tiers.STONE) return ItemStack.EMPTY;
 
         Item material = Items.IRON_INGOT;
         if (tier == Tiers.GOLD) material = Items.GOLD_INGOT;
@@ -189,46 +167,33 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
         super.tick();
 
         if (!this.level().isClientSide()) {
-            // 1. Таймер подсказки
             if (this.hintTimer > 0) {
                 this.hintTimer--;
                 if (this.hintTimer <= 0) this.entityData.set(SHOW_HINT, false);
             }
-
-            // 2. Ищем наковальню (раз в секунду проверяем её наличие)
             if (this.tickCount % 20 == 0) {
-                // Если наковальня была, но ее сломали — сбрасываем цель
                 if (this.targetAnvil != null && !(this.level().getBlockState(this.targetAnvil).getBlock() instanceof AnvilBlock)) {
                     this.targetAnvil = null;
                 }
-
-                // Если цели нет — сканируем территорию
                 if (this.targetAnvil == null) {
                     for (BlockPos pos : BlockPos.betweenClosed(this.blockPosition().offset(-3, -1, -3), this.blockPosition().offset(3, 1, 3))) {
                         if (this.level().getBlockState(pos).getBlock() instanceof AnvilBlock) {
                             this.targetAnvil = pos;
-                            break; // Нашли - выходим из цикла
+                            break;
                         }
                     }
                 }
             }
-
-            // 3. ЖЕСТКАЯ ФИКСАЦИЯ ПОВОРОТА (Каждый тик!)
             if (this.targetAnvil != null) {
-                // Высчитываем точный угол от кузнеца до центра наковальни
                 double dx = this.targetAnvil.getX() + 0.5D - this.getX();
                 double dz = this.targetAnvil.getZ() + 0.5D - this.getZ();
                 float targetYaw = (float) (Math.atan2(-dx, dz) * (180D / Math.PI));
-
-                // Принудительно блокируем все оси вращения
                 this.setYRot(targetYaw);
                 this.setYHeadRot(targetYaw);
                 this.yBodyRot = targetYaw;
             }
         }
     }
-
-    // --- ЗВУКИ ПИЛЛАДЖЕРА И КАСТОМНЫЙ ЭМБИЕНТ ---
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -247,7 +212,7 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
 
     @Override
     public int getAmbientSoundInterval() {
-        return 400; // 20 секунд (20 тиков * 20)
+        return 400;
     }
 
     @Nullable
@@ -261,8 +226,6 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
     protected SoundEvent getDeathSound() {
         return SoundEvents.PILLAGER_DEATH;
     }
-
-    // --- СОХРАНЕНИЕ ---
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
@@ -276,8 +239,6 @@ public class BlacksmithEntity extends PathfinderMob implements GeoEntity {
         super.readAdditionalSaveData(tag);
         this.entityData.set(PAYMENT_STATE, tag.getInt("PaymentState"));
     }
-
-    // --- АНИМАЦИИ ---
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 0, event -> {

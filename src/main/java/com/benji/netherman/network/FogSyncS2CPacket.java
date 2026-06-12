@@ -24,7 +24,6 @@ public class FogSyncS2CPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            // Это код, который выполнится НА КЛИЕНТЕ, когда пакет придет
             ClientFogHandler.isInsideMansion = this.isInside;
         });
         return true;

@@ -46,32 +46,23 @@ public class EntranceBlock extends Block implements EntityBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        // Если блок открыт, убираем коллизию полностью
         return state.getValue(OPEN) ? Shapes.empty() : SHAPE;
     }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide() && hand == InteractionHand.MAIN_HAND) {
-
-            // Если он уже открыт, игнорируем клик
             if (state.getValue(OPEN)) return InteractionResult.PASS;
-
-            // --- АЛГОРИТМ BFS ДЛЯ ЭФФЕКТА ВОЛНЫ ---
             Map<BlockPos, Integer> distances = new HashMap<>();
             Queue<BlockPos> queue = new LinkedList<>();
 
             queue.add(pos);
             distances.put(pos, 0);
             int maxDist = 0;
-
-            // Ограничение в 1000 блоков для безопасности сервера
             while (!queue.isEmpty() && distances.size() < 1000) {
                 BlockPos current = queue.poll();
                 int currentDist = distances.get(current);
                 maxDist = Math.max(maxDist, currentDist);
-
-                // Проверяем 6 соседей (верх, низ, север, юг, восток, запад)
                 for (Direction dir : Direction.values()) {
                     BlockPos neighbor = current.relative(dir);
 
@@ -81,8 +72,6 @@ public class EntranceBlock extends Block implements EntityBlock {
                     }
                 }
             }
-
-            // Передаем команду всем найденным блокам
             for (Map.Entry<BlockPos, Integer> entry : distances.entrySet()) {
                 if (level.getBlockEntity(entry.getKey()) instanceof EntranceBlockEntity be) {
                     be.triggerWave(entry.getValue(), maxDist);

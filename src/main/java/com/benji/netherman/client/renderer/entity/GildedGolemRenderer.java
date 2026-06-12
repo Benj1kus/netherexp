@@ -9,7 +9,6 @@ public class GildedGolemRenderer extends GeoEntityRenderer<GildedGolemEntity> {
     public GildedGolemRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new GildedGolemModel());
 
-        // Задаем размер тени под мобом (0.7f - стандартный размер тени железного голема)
         this.shadowRadius = 0.7f;
     }
 }

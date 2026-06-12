@@ -13,13 +13,8 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 public class VoidNetherCornerRenderer extends GeoBlockRenderer<VoidNetherCornerBlockEntity> {
     public VoidNetherCornerRenderer(BlockEntityRendererProvider.Context context) {
         super(new VoidNetherCornerModel());
-        // Подключаем светящиеся элементы (глаза/цепи)
         addRenderLayer(new GenericEmissiveLayer<>(this, new ResourceLocation(NetherExp.MODID, "textures/block/void_nether_emissive.png")));
     }
-
-
-    // ВАЖНО: Разрешаем движку Майнкрафта обрабатывать альфа-канал (полупрозрачность)
-    // Это позволит верхней части текстуры плавно растворяться в воздухе
     @Override
     public RenderType getRenderType(VoidNetherCornerBlockEntity animatable, ResourceLocation texture, MultiBufferSource bufferSource, float partialTick) {
         return RenderType.entityTranslucent(texture);

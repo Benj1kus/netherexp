@@ -19,7 +19,7 @@ public class GeoBlockItem extends BlockItem implements GeoItem {
     private final ResourceLocation model;
     private final ResourceLocation texture;
     private final ResourceLocation animation;
-    private final ResourceLocation emissiveTexture; // Добавили поддержку свечения для инвентаря
+    private final ResourceLocation emissiveTexture;
 
     public GeoBlockItem(Block block, Properties properties, ResourceLocation model, ResourceLocation texture, ResourceLocation animation, ResourceLocation emissiveTexture) {
         super(block, properties);
@@ -51,7 +51,6 @@ public class GeoBlockItem extends BlockItem implements GeoItem {
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 if (renderer == null) {
-                    // Передаем сам предмет в рендер, чтобы он мог прочитать пути к файлам
                     renderer = new GeoBlockItemRenderer(GeoBlockItem.this);
                 }
                 return renderer;

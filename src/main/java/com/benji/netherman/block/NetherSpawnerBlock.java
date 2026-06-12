@@ -32,7 +32,6 @@ public class NetherSpawnerBlock extends BaseEntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        // МЕНЯЕМ НА MODEL, чтобы игра искала JSON
         return RenderShape.MODEL;
     }
 }

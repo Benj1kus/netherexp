@@ -18,10 +18,7 @@ public class GhastlyBuildNestGoal extends Goal {
         this.ghastly = ghastly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
-
-    // Выносим проверку в отдельный точный метод, чтобы использовать его дважды
     private boolean isNestNearby(Level level, BlockPos center) {
-        // Честный радиус в 30 блоков во все стороны без каких-либо пропусков координат
         for (BlockPos pos : BlockPos.betweenClosed(center.offset(-30, -10, -30), center.offset(30, 10, 30))) {
             if (level.getBlockState(pos).is(com.benji.netherman.NetherExp.GHASTLY_NEST.get())) {
                 return true;
@@ -33,17 +30,11 @@ public class GhastlyBuildNestGoal extends Goal {
     @Override
     public boolean canUse() {
         if (ghastly.isTame() || ghastly.eatTicks > 0) return false;
-
-        // Проверяем раз в 5 секунд (100 тиков) для оптимизации
         if (ghastly.tickCount % 100 != 0) return false;
 
         Level level = ghastly.level();
         BlockPos mobPos = ghastly.blockPosition();
-
-        // 1. Проверяем, нет ли уже гнезда в радиусе 30 блоков от самого моба
         if (isNestNearby(level, mobPos)) return false;
-
-        // 2. Ищем багряное бревно в радиусе 20 блоков
         for (BlockPos pos : BlockPos.betweenClosed(mobPos.offset(-20, -10, -20), mobPos.offset(20, 10, 20))) {
             if (level.getBlockState(pos).is(Blocks.CRIMSON_STEM)) {
                 for (Direction dir : Direction.values()) {
@@ -79,9 +70,6 @@ public class GhastlyBuildNestGoal extends Goal {
             Level level = ghastly.level();
 
             if (level.getBlockState(targetStem).is(Blocks.CRIMSON_STEM)) {
-
-                // КРИТИЧЕСКИЙ ФИКС: Проверяем ульи вокруг бревна ЕЩЕ РАЗ прямо перед установкой блока!
-                // Если пока мы летели, кто-то построился в радиусе 30 блоков — отменяем постройку.
                 if (!isNestNearby(level, targetStem)) {
                     level.setBlockAndUpdate(targetStem, com.benji.netherman.NetherExp.GHASTLY_NEST.get().defaultBlockState());
 

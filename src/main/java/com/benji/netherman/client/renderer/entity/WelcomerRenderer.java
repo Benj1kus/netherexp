@@ -8,7 +8,6 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class WelcomerRenderer extends GeoEntityRenderer<WelcomerEntity> {
     public WelcomerRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new WelcomerModel());
-        // Тень под мобом. 0.5f - стандартный размер
         this.shadowRadius = 0.5f;
     }
 }

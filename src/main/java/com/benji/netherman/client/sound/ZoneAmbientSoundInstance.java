@@ -10,14 +10,12 @@ import net.minecraft.world.entity.player.Player;
 public class ZoneAmbientSoundInstance extends AbstractTickableSoundInstance {
     private final Player player;
     private final MobEffect requiredEffect;
-
-    // ДОБАВЛЕН ПАРАМЕТР isLooping
     public ZoneAmbientSoundInstance(SoundEvent soundEvent, Player player, MobEffect requiredEffect, boolean isLooping) {
         super(soundEvent, SoundSource.AMBIENT, SoundInstance.createUnseededRandom());
         this.player = player;
         this.requiredEffect = requiredEffect;
 
-        this.looping = isLooping; // Теперь интро играет один раз, а луп - бесконечно!
+        this.looping = isLooping;
         this.delay = 0;
         this.volume = 1.0F;
         this.pitch = 1.0F;

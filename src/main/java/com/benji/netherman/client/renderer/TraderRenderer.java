@@ -10,8 +10,6 @@ public class TraderRenderer extends GeoEntityRenderer<TraderEntity> {
     public TraderRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new TraderModel());
         this.shadowRadius = 0.5f;
-
-        // Подключаем слой всплывающих подсказок
         addRenderLayer(new TraderHintLayer(this));
     }
 }

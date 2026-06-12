@@ -41,8 +41,6 @@ import java.util.stream.Collectors;
 
 public class DoctorEntity extends PathfinderMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
-    // 0 = Нет подсказки, 1 = doctor_hint, 2 = doctoradditional_hint, 3 = doctortrade_hint
     public static final EntityDataAccessor<Integer> HINT_STATE = SynchedEntityData.defineId(DoctorEntity.class, EntityDataSerializers.INT);
     public int hintTimer = 0;
 
@@ -53,8 +51,8 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.0D) // Вообще не ходит
-                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D); // 100% сопротивление отбрасыванию
+                .add(Attributes.MOVEMENT_SPEED, 0.0D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
     }
 
     @Override
@@ -65,11 +63,8 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
 
     @Override
     protected void registerGoals() {
-        // Убрали все цели на перемещение. Он только стоит и смотрит на игрока.
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
     }
-
-    // Дополнительная защита от любых сдвигов (взрывы, удары)
     @Override
     public void knockback(double strength, double x, double z) {}
     @Override
@@ -80,30 +75,23 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
         if (this.level().isClientSide()) return InteractionResult.sidedSuccess(true);
 
         ItemStack stack = player.getItemInHand(hand);
-
-        // 1. Сканируем радиус 10 блоков на наличие больных Believer
         List<BelieverEntity> nearbyBelievers = this.level().getEntitiesOfClass(BelieverEntity.class, this.getBoundingBox().inflate(10.0D));
         boolean hasSickBeliever = nearbyBelievers.stream().anyMatch(BelieverEntity::isSick);
 
         int currentState = this.entityData.get(HINT_STATE);
 
         if (hasSickBeliever) {
-            // ЛОГИКА: ЕСТЬ БОЛЬНЫЕ
             if (currentState == 1) {
-                // Если уже была первая подсказка -> показываем дополнительную
                 this.entityData.set(HINT_STATE, 2);
             } else {
-                // Показываем первую подсказку и дым
                 this.entityData.set(HINT_STATE, 1);
                 ((ServerLevel) this.level()).sendParticles(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY() + 1.5D, this.getZ(), 5, 0.3, 0.3, 0.3, 0.0);
             }
-            this.hintTimer = 80; // Показываем на 4 секунды
+            this.hintTimer = 80;
             this.playSound(SoundEvents.VILLAGER_NO, 1.0F, this.getVoicePitch());
 
         } else {
-            // ЛОГИКА: НЕТ БОЛЬНЫХ (МОЖНО ТОРГОВАТЬ)
             if (stack.is(Items.GOLDEN_APPLE)) {
-                // ТОРГОВЛЯ!
                 if (!player.isCreative()) stack.shrink(1);
 
                 this.playSound(SoundEvents.VILLAGER_TRADE, 1.0F, this.getVoicePitch());
@@ -112,7 +100,6 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
                 this.entityData.set(HINT_STATE, 3);
                 this.hintTimer = 60;
             } else {
-                // Игрок кликнул пустой рукой или другим предметом -> показываем подсказку торговли
                 this.entityData.set(HINT_STATE, 3);
                 this.hintTimer = 80;
                 this.playSound(SoundEvents.VILLAGER_TRADE, 1.0F, this.getVoicePitch());
@@ -126,13 +113,9 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
 
     private void giveRandomPotion(Player player) {
         ItemStack potion = new ItemStack(Items.POTION);
-
-        // Инициализируем кэш один раз при первой торговле
         if (CACHED_EFFECTS == null) {
             CACHED_EFFECTS = ForgeRegistries.MOB_EFFECTS.getValues().stream().toList();
         }
-
-        // Выбираем абсолютно случайный эффект из готового списка
         MobEffect randomEffect = CACHED_EFFECTS.get(this.random.nextInt(CACHED_EFFECTS.size()));
 
         int durationTicks = 200 + this.random.nextInt(1600);
@@ -152,7 +135,7 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
         if (!this.level().isClientSide() && this.hintTimer > 0) {
             this.hintTimer--;
             if (this.hintTimer <= 0) {
-                this.entityData.set(HINT_STATE, 0); // Прячем подсказку
+                this.entityData.set(HINT_STATE, 0);
             }
         }
     }
@@ -160,8 +143,6 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
     @Nullable @Override protected SoundEvent getAmbientSound() { return ModSounds.DOCTOR.get(); }
     @Nullable @Override protected SoundEvent getHurtSound(DamageSource damageSourceIn) { return SoundEvents.PILLAGER_HURT; }
     @Nullable @Override protected SoundEvent getDeathSound() { return SoundEvents.PILLAGER_DEATH; }
-
-    // --- АНИМАЦИИ ---
     private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("idle");
 
     @Override

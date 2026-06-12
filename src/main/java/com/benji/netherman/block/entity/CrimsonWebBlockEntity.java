@@ -36,7 +36,6 @@ public class CrimsonWebBlockEntity extends BlockEntity implements GeoBlockEntity
 
     private int blockStateAnim = STATE_CLOSED;
 
-    // Таймеры
     private boolean isWaitingToOpen = false;
     private int delayTimer = 0;
     private int animTimer = 0;
@@ -68,7 +67,6 @@ public class CrimsonWebBlockEntity extends BlockEntity implements GeoBlockEntity
 
     public static void tick(Level level, BlockPos pos, BlockState state, CrimsonWebBlockEntity entity) {
         if (!level.isClientSide()) {
-            // --- СЕРВЕРНАЯ ЧАСТЬ: ЛОГИКА И ЗВУКИ ---
             if (entity.isWaitingToOpen) {
                 entity.delayTimer--;
                 if (entity.delayTimer <= 0) {
@@ -76,7 +74,6 @@ public class CrimsonWebBlockEntity extends BlockEntity implements GeoBlockEntity
                     entity.setBlockStateAnim(STATE_OPENING);
                     entity.animTimer = 20;
 
-                    // ЗВУК ОТКРЫТИЯ С ВОЛНОВЫМ ЭФФЕКТОМ (Рандомный питч для красивого наложения)
                     level.playSound(null, pos, SoundEvents.SCULK_BLOCK_BREAK, SoundSource.BLOCKS, 1.0F, 0.9F + level.random.nextFloat() * 0.2F);
 
                     level.setBlockAndUpdate(pos, state.setValue(BlockStateProperties.OPEN, true));
@@ -92,7 +89,6 @@ public class CrimsonWebBlockEntity extends BlockEntity implements GeoBlockEntity
                     entity.setBlockStateAnim(STATE_CLOSING);
                     entity.animTimer = 20;
 
-                    // ЗВУК ЗАКРЫТИЯ С ВОЛНОВЫМ ЭФФЕКТОМ
                     level.playSound(null, pos, SoundEvents.SCULK_BLOCK_BREAK, SoundSource.BLOCKS, 1.0F, 0.9F + level.random.nextFloat() * 0.2F);
                 }
             }
@@ -104,15 +100,12 @@ public class CrimsonWebBlockEntity extends BlockEntity implements GeoBlockEntity
                 }
             }
         } else {
-            // --- КЛИЕНТСКАЯ ЧАСТЬ: ВОЛНОВЫЕ ПАРТИКЛЫ ---
             if (entity.blockStateAnim == STATE_OPENING || entity.blockStateAnim == STATE_CLOSING) {
-                // Создаем 2 частицы каждый тик, пока идет анимация (итого 40 частиц за 1 секунду на каждый блок)
                 for (int i = 0; i < 2; i++) {
                     double px = pos.getX() + level.random.nextDouble();
                     double py = pos.getY() + level.random.nextDouble();
                     double pz = pos.getZ() + level.random.nextDouble();
 
-                    // Частицы редстоуна с легким движением вверх
                     level.addParticle(ParticleTypes.CRIMSON_SPORE, px, py, pz, 0, 0.05D, 0);
                 }
             }

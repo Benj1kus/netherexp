@@ -33,7 +33,6 @@ public class GrandDoorBlockEntity extends BlockEntity implements GeoBlockEntity 
     public static final int STATE_OPEN = 2;
     public static final int STATE_CLOSING = 3;
 
-    // --- КЭШИРОВАНИЕ АНИМАЦИЙ (ИСПРАВЛЯЕТ БАГ С ЗАСТЫВАНИЕМ) ---
     private static final RawAnimation ANIM_OPEN = RawAnimation.begin().thenPlayAndHold("open");
     private static final RawAnimation ANIM_IDLE_OPEN = RawAnimation.begin().thenLoop("idle_open");
     private static final RawAnimation ANIM_CLOSE = RawAnimation.begin().thenPlayAndHold("close");
@@ -56,12 +55,10 @@ public class GrandDoorBlockEntity extends BlockEntity implements GeoBlockEntity 
         this.doorState = state;
         this.setChanged();
 
-        // ИСПРАВЛЕНИЕ: Выполняем смену хитбоксов ТОЛЬКО на сервере, чтобы клиент не ломался
         if (this.level != null && !this.level.isClientSide()) {
             boolean isOpen = (state == STATE_OPEN || state == STATE_OPENING);
             BlockState mainState = this.getBlockState();
 
-            // ПРОИГРЫВАНИЕ ЗВУКОВ
             if (state == STATE_OPENING) {
                 this.level.playSound(null, this.worldPosition, ModSounds.GRAND_DOOR_OPEN.get(), SoundSource.BLOCKS, 2.0F, 1.0F);
             } else if (state == STATE_CLOSING) {
@@ -113,7 +110,6 @@ public class GrandDoorBlockEntity extends BlockEntity implements GeoBlockEntity 
 
     public static void tick(Level level, BlockPos pos, BlockState state, GrandDoorBlockEntity entity) {
         if (!level.isClientSide()) {
-            // Уменьшаем кулдаун босса
             if (entity.bossCooldown > 0) {
                 entity.bossCooldown--;
             }
@@ -170,7 +166,6 @@ public class GrandDoorBlockEntity extends BlockEntity implements GeoBlockEntity 
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        // Добавлен небольшой переход в 5 тиков, чтобы анимации плавно склеивались
         controllers.add(new AnimationController<>(this, "controller", 5, event -> {
             return switch (this.doorState) {
                 case STATE_OPENING -> event.setAndContinue(ANIM_OPEN);

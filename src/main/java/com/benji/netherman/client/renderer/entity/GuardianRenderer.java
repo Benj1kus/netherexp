@@ -13,7 +13,6 @@ public class GuardianRenderer extends GeoEntityRenderer<GuardianEntity> {
         super(renderManager, new GuardianModel());
         this.shadowRadius = 1.0f;
 
-        // Подключаем наш новый слой с логикой баффа
         addRenderLayer(new GuardianEmissiveLayer(this, new ResourceLocation(NetherExp.MODID, "textures/entity/guardian_emissive.png")));
     }
 }

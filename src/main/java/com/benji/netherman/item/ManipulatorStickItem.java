@@ -26,49 +26,36 @@ import java.util.List;
 public class ManipulatorStickItem extends SwordItem {
 
     public ManipulatorStickItem() {
-        // Используем Tiers.WOOD как заглушку для параметров, но переопределяем прочность на 250
         super(Tiers.WOOD, 3, -2.4F, new Item.Properties().durability(1500));
     }
-
-    // ЛКМ: Удар по существу
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!attacker.level().isClientSide()) {
-            // Накладываем эффект Манипуляции на 30 секунд (600 тиков)
             target.addEffect(new MobEffectInstance(NetherExp.MANIPULATION_EFFECT.get(), 600, 0));
-            // Тратит 5 прочности (1 уже тратит ванильный меч, добавляем еще 4)
             stack.hurtAndBreak(4, attacker, (p) -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         }
         return super.hurtEnemy(stack, target, attacker);
     }
-
-    // ПКМ и Shift+ПКМ
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide()) {
             ServerLevel serverLevel = (ServerLevel) level;
-
-            // --- ЛОГИКА 4: Shift + ПКМ (Призыв скелетов) ---
             if (player.isShiftKeyDown()) {
                 if (stack.getDamageValue() + 50 > stack.getMaxDamage()) {
-                    return InteractionResultHolder.fail(stack); // Недостаточно прочности
+                    return InteractionResultHolder.fail(stack);
                 }
-
-                // Эффект редстоун-кольца, поднимающегося вверх
                 for (double yOffset = 0; yOffset <= 2.0; yOffset += 0.2) {
                     for (int i = 0; i < 360; i += 15) {
                         double rad = Math.toRadians(i);
-                        double x = Math.cos(rad) * 2.0; // Радиус кольца 2 блока
+                        double x = Math.cos(rad) * 2.0;
                         double z = Math.sin(rad) * 2.0;
                         serverLevel.sendParticles(DustParticleOptions.REDSTONE,
                                 player.getX() + x, player.getY() + yOffset, player.getZ() + z,
                                 1, 0, 0, 0, 0);
                     }
                 }
-
-                // Спавн 5 скелетов-иссушителей
                 for (int i = 0; i < 5; i++) {
                     double offsetX = (player.getRandom().nextDouble() - 0.5D) * 4.0D;
                     double offsetZ = (player.getRandom().nextDouble() - 0.5D) * 4.0D;
@@ -77,37 +64,27 @@ public class ManipulatorStickItem extends SwordItem {
                     WitherSkeleton skeleton = net.minecraft.world.entity.EntityType.WITHER_SKELETON.create(level);
                     if (skeleton != null) {
                         skeleton.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, player.getYRot(), 0);
-
-                        // Экипируем в золото
                         skeleton.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.GOLDEN_HELMET));
                         skeleton.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.GOLDEN_CHESTPLATE));
                         skeleton.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.GOLDEN_LEGGINGS));
                         skeleton.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.GOLDEN_BOOTS));
                         skeleton.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.GOLDEN_SWORD));
-
-                        // Запрещаем дроп брони
                         for (EquipmentSlot slot : EquipmentSlot.values()) {
                             if (slot.getType() == EquipmentSlot.Type.ARMOR || slot == EquipmentSlot.MAINHAND) {
                                 skeleton.setDropChance(slot, 0.0F);
                             }
                         }
-
-                        // Метка во внутренние данные скелета, чтобы знать, кто его создал
                         skeleton.getPersistentData().putUUID("SummonerUUID", player.getUUID());
 
                         level.addFreshEntity(skeleton);
                         serverLevel.sendParticles(ParticleTypes.CRIMSON_SPORE, skeleton.getX(), skeleton.getY() + 1.0, skeleton.getZ(), 10, 0.3, 0.5, 0.3, 0.01);
                     }
                 }
-
-                // Кастомный звук манипулятора
                 level.playSound(null, player.blockPosition(), ModSounds.SUMMON1.get(), net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.0F);
                 stack.hurtAndBreak(50, player, (p) -> p.broadcastBreakEvent(hand));
                 player.getCooldowns().addCooldown(this, 40); // Кулдаун 2 секунды на призыв
                 return InteractionResultHolder.success(stack);
             }
-
-            // --- ЛОГИКА 2: ОБЫЧНЫЙ ПКМ (Быстрый луч и притягивание) ---
             if (stack.getDamageValue() + 20 > stack.getMaxDamage()) {
                 return InteractionResultHolder.fail(stack);
             }
@@ -115,12 +92,8 @@ public class ManipulatorStickItem extends SwordItem {
             Vec3 lookVec = player.getLookAngle();
             Vec3 startPos = player.getEyePosition(1.0F);
             LivingEntity hitEntity = null;
-
-            // Просчитываем луч пошагово на 15 блоков
             for (double d = 0.5; d <= 15.0; d += 0.5) {
                 Vec3 checkPos = startPos.add(lookVec.scale(d));
-
-                // Партиклы луча
                 serverLevel.sendParticles(DustParticleOptions.REDSTONE, checkPos.x, checkPos.y, checkPos.z, 1, 0, 0, 0, 0);
 
                 if (hitEntity == null) {
@@ -132,13 +105,8 @@ public class ManipulatorStickItem extends SwordItem {
                     }
                 }
             }
-
-            // Если зацепили кого-то лучом
             if (hitEntity != null) {
-                // Накладываем эффект
                 hitEntity.addEffect(new MobEffectInstance(NetherExp.MANIPULATION_EFFECT.get(), 600, 0));
-
-                // Притягиваем быстро к игроку
                 Vec3 pullVec = player.position().subtract(hitEntity.position()).normalize().scale(1.4D);
                 hitEntity.setDeltaMovement(pullVec.x, 0.4D, pullVec.z);
                 hitEntity.hurtMarked = true;

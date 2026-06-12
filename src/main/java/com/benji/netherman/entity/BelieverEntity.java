@@ -69,8 +69,6 @@ public class BelieverEntity extends PathfinderMob implements GeoEntity {
 
     public boolean isSick() { return this.entityData.get(IS_SICK); }
     public void setSick(boolean sick) { this.entityData.set(IS_SICK, sick); }
-
-    // Вызывается боссом Азазелем
     public void setProtected(int ticks) {
         this.protectedTimer = ticks;
         this.entityData.set(IS_PROTECTED, true);
@@ -84,12 +82,10 @@ public class BelieverEntity extends PathfinderMob implements GeoEntity {
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
     }
-
-    // --- НЕУЯЗВИМОСТЬ ПРИ ЗАЩИТЕ ---
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (this.entityData.get(IS_PROTECTED)) {
-            return false; // Полностью блокируем урон
+            return false;
         }
         return super.hurt(source, amount);
     }
@@ -113,8 +109,6 @@ public class BelieverEntity extends PathfinderMob implements GeoEntity {
         }
         return super.mobInteract(player, hand);
     }
-
-    // --- ЛОГИКА ОБЕЗДВИЖИВАНИЯ ---
     @Override
     public void travel(Vec3 travelVector) {
         if (this.isSick() || this.entityData.get(IS_PRAYING)) {
@@ -131,49 +125,45 @@ public class BelieverEntity extends PathfinderMob implements GeoEntity {
 
         if (!this.level().isClientSide()) {
             this.clientIsProtected = this.entityData.get(IS_PROTECTED);
-            // 1. Таймер защиты
             if (this.protectedTimer > 0) {
                 this.protectedTimer--;
                 if (this.protectedTimer <= 0) {
                     this.entityData.set(IS_PROTECTED, false);
                 }
             }
-
-            // 2. Чихание
             if (this.isSick() && this.random.nextInt(80) == 0) {
                 this.playSound(com.benji.netherman.ModSounds.SNEEZE.get(), 1.0F, this.getVoicePitch());
             }
 
-            // 3. Поиск Азазеля (каждую секунду)
             if (this.tickCount % 20 == 0) {
-                List<AzazelEntity> azazels = this.level().getEntitiesOfClass(AzazelEntity.class, this.getBoundingBox().inflate(30.0D));
-                if (!azazels.isEmpty()) {
-                    this.currentAzazel = azazels.get(0);
+                if (this.currentAzazel != null && this.currentAzazel.isAlive() && this.distanceToSqr(this.currentAzazel) < 1600.0D) {
                     this.entityData.set(IS_PRAYING, true);
                 } else {
-                    this.currentAzazel = null;
-                    this.entityData.set(IS_PRAYING, false);
+                    List<AzazelEntity> azazels = this.level().getEntitiesOfClass(AzazelEntity.class, this.getBoundingBox().inflate(30.0D));
+                    if (!azazels.isEmpty()) {
+                        this.currentAzazel = azazels.get(0);
+                        this.entityData.set(IS_PRAYING, true);
+                    } else {
+                        this.currentAzazel = null;
+                        this.entityData.set(IS_PRAYING, false);
+                    }
                 }
             }
 
-            // 4. Лечение и Партиклы-нити
             if (this.currentAzazel != null && this.currentAzazel.isAlive()) {
                 this.getLookControl().setLookAt(this.currentAzazel);
 
-                // Лечит босса на 5 ХП каждую секунду
                 if (this.tickCount % 20 == 0) {
                     this.currentAzazel.heal(5.0F);
                 }
 
-                // Линия редстоуна к боссу (каждые 5 тиков)
-                if (this.tickCount % 5 == 0 && this.level() instanceof ServerLevel serverLevel) {
-                    Vec3 start = this.position().add(0, 1.0, 0); // От груди Believer
-                    Vec3 end = this.currentAzazel.position().add(0, 2.0, 0); // К груди Босса
+                if (this.tickCount % 10 == 0 && this.level() instanceof ServerLevel serverLevel) {
+                    Vec3 start = this.position().add(0, 1.0, 0);
+                    Vec3 end = this.currentAzazel.position().add(0, 2.0, 0);
                     double distance = start.distanceTo(end);
                     Vec3 dir = end.subtract(start).normalize();
 
-                    // Рисуем линию
-                    for (double d = 0; d < distance; d += 0.5) {
+                    for (double d = 0; d < distance; d += 1.5) {
                         Vec3 pos = start.add(dir.scale(d));
                         serverLevel.sendParticles(DustParticleOptions.REDSTONE, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
                     }
@@ -212,10 +202,7 @@ public class BelieverEntity extends PathfinderMob implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        // Уменьшаем transitionLength (время перехода) с 5 до 3 для более отзывчивой анимации
         controllers.add(new AnimationController<>(this, "controller", 3, event -> {
-
-            // ОПТИМИЗАЦИЯ 2: Возвращаем уже готовые кэшированные константы
             if (this.hurtTime > 0 && !this.entityData.get(IS_PROTECTED)) {
                 return event.setAndContinue(HURT_ANIM);
             }

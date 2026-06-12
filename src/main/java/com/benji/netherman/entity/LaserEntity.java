@@ -48,8 +48,6 @@ public class LaserEntity extends Mob implements GeoEntity {
         super.defineSynchedData();
         this.entityData.define(LIFE_TICKS, 1200);
     }
-
-    // --- ОТКЛЮЧЕНИЕ КОЛЛИЗИИ И ТОЛЧКОВ ---
     @Override
     public boolean isPushable() { return false; }
     @Override
@@ -72,8 +70,6 @@ public class LaserEntity extends Mob implements GeoEntity {
         if (!this.level().isClientSide()) {
             life--;
             this.entityData.set(LIFE_TICKS, life);
-
-            // ЗАПУСК ТВОЕЙ АНИМАЦИИ СМЕРТИ ЗА 1 СЕКУНДУ ДО ИСЧЕЗНОВЕНИЯ
             if (life == 20) {
                 this.triggerAnim("controller", "death");
             }
@@ -114,15 +110,11 @@ public class LaserEntity extends Mob implements GeoEntity {
             }
         }
     }
-
-    // --- АНИМАЦИИ ---
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         AnimationController<LaserEntity> controller = new AnimationController<>(this, "controller", 0, event -> {
             return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
         });
-
-        // Регистрируем триггер на анимацию death
         controller.triggerableAnim("death", RawAnimation.begin().thenPlay("death"));
 
         controllers.add(controller);

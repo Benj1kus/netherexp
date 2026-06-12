@@ -36,8 +36,6 @@ public class CrimsonWebRenderer extends GeoBlockRenderer<CrimsonWebBlockEntity> 
             default -> {}
         }
     }
-
-    // ВАЖНО: Разрешаем прозрачность!
     @Override
     public RenderType getRenderType(CrimsonWebBlockEntity animatable, ResourceLocation texture, MultiBufferSource bufferSource, float partialTick) {
         return RenderType.entityTranslucent(texture);

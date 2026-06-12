@@ -36,14 +36,10 @@ public class TraphiveBlockEntity extends BlockEntity implements GeoBlockEntity {
     private static final RawAnimation ANIM_IDLE_CLOSE = RawAnimation.begin().thenLoop("close_idle");
 
     private int blockStateAnim = STATE_CLOSED;
-
-    // Таймеры
     private boolean isWaitingToOpen = false;
     private int delayTimer = 0;
     private int animTimer = 0;
     private int autoCloseTimer = 0;
-
-    // Таймер контакта (чтобы игрок простоял 2 секунды)
     private int contactTimer = 0;
 
     public TraphiveBlockEntity(BlockPos pos, BlockState state) {
@@ -72,33 +68,29 @@ public class TraphiveBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, TraphiveBlockEntity entity) {
         if (!level.isClientSide()) {
-            // --- ТРИГГЕР ОТ ФИЗИЧЕСКОГО КОНТАКТА ---
             if (entity.blockStateAnim == STATE_CLOSED && !entity.isWaitingToOpen) {
-                // Создаем зону проверки на 0.05 блока больше самого блока
                 AABB touchBox = new AABB(pos).inflate(0.05D);
                 boolean isTouching = false;
 
                 for (Player player : level.players()) {
                     if (player.isAlive() && player.getBoundingBox().intersects(touchBox)) {
                         isTouching = true;
-                        break; // Достаточно одного игрока
+                        break;
                     }
                 }
 
                 if (isTouching) {
                     entity.contactTimer++;
-                    if (entity.contactTimer >= 10) { // 40 тиков = 2 секунды
+                    if (entity.contactTimer >= 10) {
                         if (state.getBlock() instanceof TraphiveBlock block) {
                             block.activateWave(level, pos);
                         }
                         entity.contactTimer = 0;
                     }
                 } else {
-                    if (entity.contactTimer > 0) entity.contactTimer--; // Быстро сбрасываем, если игрок отошел
+                    if (entity.contactTimer > 0) entity.contactTimer--;
                 }
             }
-
-            // --- СЕРВЕРНАЯ ЧАСТЬ: ЛОГИКА ВОЛНЫ ---
             if (entity.isWaitingToOpen) {
                 entity.delayTimer--;
                 if (entity.delayTimer <= 0) {
@@ -131,7 +123,6 @@ public class TraphiveBlockEntity extends BlockEntity implements GeoBlockEntity {
                 }
             }
         } else {
-            // --- КЛИЕНТСКАЯ ЧАСТЬ: ВОЛНОВЫЕ ПАРТИКЛЫ ---
             if (entity.blockStateAnim == STATE_OPENING || entity.blockStateAnim == STATE_CLOSING) {
                 for (int i = 0; i < 2; i++) {
                     double px = pos.getX() + level.random.nextDouble();
@@ -167,7 +158,7 @@ public class TraphiveBlockEntity extends BlockEntity implements GeoBlockEntity {
         tag.putInt("DelayTimer", this.delayTimer);
         tag.putInt("AnimTimer", this.animTimer);
         tag.putInt("AutoClose", this.autoCloseTimer);
-        tag.putInt("ContactTimer", this.contactTimer); // Сохраняем прогресс касания
+        tag.putInt("ContactTimer", this.contactTimer);
     }
 
     @Override

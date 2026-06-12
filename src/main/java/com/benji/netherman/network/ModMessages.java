@@ -25,8 +25,6 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
-
-        // Регистрируем наш пакет тумана
         net.messageBuilder(FogSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(FogSyncS2CPacket::new)
                 .encoder(FogSyncS2CPacket::toBytes)

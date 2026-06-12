@@ -11,12 +11,10 @@ public class GhastlyEnterHiveGoal extends net.minecraft.world.entity.ai.goal.Goa
 
     @Override
     public boolean canUse() {
-        // Дикие Гастли прячутся, если они сыты (eatTicks == 0) и просто случайным образом (шанс 1/40)
         if (ghastly.isTame() || ghastly.eatTicks > 0) return false;
 
         if (ghastly.getRandom().nextInt(40) == 0) {
             net.minecraft.core.BlockPos mobPos = ghastly.blockPosition();
-            // Ищем улей в радиусе 10 блоков
             for (int x = -10; x <= 10; x++) {
                 for (int y = -5; y <= 5; y++) {
                     for (int z = -10; z <= 10; z++) {
@@ -41,14 +39,14 @@ public class GhastlyEnterHiveGoal extends net.minecraft.world.entity.ai.goal.Goa
     public void tick() {
         if (targetHive != null) {
             double dist = ghastly.distanceToSqr(targetHive.getX() + 0.5, targetHive.getY() + 0.5, targetHive.getZ() + 0.5);
-            if (dist < 2.0) { // Подлетели вплотную к улью
+            if (dist < 2.0) {
                 net.minecraft.world.level.block.entity.BlockEntity be = ghastly.level().getBlockEntity(targetHive);
                 if (be instanceof com.benji.netherman.block.entity.GhastlyNestBlockEntity nest) {
-                    if (nest.addGhastly(ghastly)) { // Если успешно залез (не переполнен)
+                    if (nest.addGhastly(ghastly)) {
                         ghastly.level().playSound(null, targetHive, net.minecraft.sounds.SoundEvents.BEEHIVE_ENTER, net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
                     }
                 }
-                targetHive = null; // Заканчиваем цель
+                targetHive = null;
             }
         }
     }

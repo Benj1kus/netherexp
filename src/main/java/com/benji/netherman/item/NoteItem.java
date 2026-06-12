@@ -21,10 +21,7 @@ public class NoteItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (level.isClientSide) {
-            // Звук перелистывания бумаги
             level.playSound(player, player.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.0F, 1.0F);
-
-            // Открываем GUI строго на клиенте (используем DistExecutor, чтобы не крашнуть сервер)
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> com.benji.netherman.client.gui.NoteScreen.openScreen());
         }
 

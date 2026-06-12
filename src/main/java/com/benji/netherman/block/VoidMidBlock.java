@@ -59,7 +59,6 @@ public class VoidMidBlock extends HorizontalDirectionalBlock {
         }
     }
 
-    // ИСПРАВЛЕНИЕ: Изменили на RenderShape.MODEL. Теперь Майнкрафт запечет этот блок в чанк!
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;

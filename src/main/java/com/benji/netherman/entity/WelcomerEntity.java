@@ -27,8 +27,6 @@ import java.util.List;
 
 public class WelcomerEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
-    // Параметр для синхронизации каста
     private static final EntityDataAccessor<Boolean> IS_CASTING = SynchedEntityData.defineId(WelcomerEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_SPAWNING = SynchedEntityData.defineId(WelcomerEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_WELCOMING = SynchedEntityData.defineId(WelcomerEntity.class, EntityDataSerializers.BOOLEAN);
@@ -65,12 +63,9 @@ public class WelcomerEntity extends Monster implements GeoEntity {
 
     public boolean isCasting() { return this.entityData.get(IS_CASTING); }
     public void setCasting(boolean casting) { this.entityData.set(IS_CASTING, casting); }
-
-
-    // 3. Метод, который вызывает спавнер
     public void startSpawning() {
         this.setSpawning(true);
-        this.spawnTicks = 20; // 1 секунда анимации spawn
+        this.spawnTicks = 20;
     }
 
     @Override
@@ -89,7 +84,6 @@ public class WelcomerEntity extends Monster implements GeoEntity {
         super.tick();
 
         if (!this.level().isClientSide()) {
-            // СЕРВЕРНАЯ ЧАСТЬ
             if (this.spawnTicks > 0) {
                 this.spawnTicks--;
                 if (this.spawnTicks == 0) {
@@ -97,8 +91,6 @@ public class WelcomerEntity extends Monster implements GeoEntity {
                 }
                 return;
             }
-
-            // Оптимизация: проверяем радиус не каждый тик, а раз в полсекунды (10 тиков)
             if (this.tickCount % 10 == 0) {
                 AABB searchBox = this.getBoundingBox().inflate(30.0);
                 List<GuardianEntity> guardians = this.level().getEntitiesOfClass(GuardianEntity.class, searchBox);
@@ -106,7 +98,7 @@ public class WelcomerEntity extends Monster implements GeoEntity {
                 List<GhastlyEntity> ghastlies = this.level().getEntitiesOfClass(GhastlyEntity.class, searchBox);
                 boolean hasGhastly = false;
                 for (GhastlyEntity g : ghastlies) {
-                    if (g.isTame()) { // Учитываем только ПРИРУЧЕННЫХ Ghastly!
+                    if (g.isTame()) {
                         hasGhastly = true;
                         break;
                     }
@@ -114,10 +106,9 @@ public class WelcomerEntity extends Monster implements GeoEntity {
 
                 boolean foundAggressive = false;
                 for (GuardianEntity guardian : guardians) {
-                    // Если Guardian нашел цель (агрится)
                     if (guardian.getTarget() != null) {
                         foundAggressive = true;
-                        break; // Выходим из цикла, достаточно одного агрессивного
+                        break;
                     }
                 }
                 if (foundAggressive) {
@@ -125,9 +116,8 @@ public class WelcomerEntity extends Monster implements GeoEntity {
                     this.setWelcoming(false);
                 } else if (hasGhastly) {
                     this.setCasting(false);
-                    // Запускаем таймер только в момент начала приветствия
                     if (!this.isWelcoming()) {
-                        this.welcomeTicks = 20; // 1 сек
+                        this.welcomeTicks = 20;
                     }
                     this.setWelcoming(true);
                 } else {
@@ -135,8 +125,6 @@ public class WelcomerEntity extends Monster implements GeoEntity {
                     this.setWelcoming(false);
                 }
             }
-
-            // Проверка звука каста
             boolean currentCasting = this.isCasting();
             if (currentCasting && !this.wasCasting) {
                 this.playSound(SoundEvents.EVOKER_CAST_SPELL, 1.0F, 1.0F);
@@ -144,9 +132,7 @@ public class WelcomerEntity extends Monster implements GeoEntity {
             this.wasCasting = currentCasting;
 
         } else {
-            // КЛИЕНТСКАЯ ЧАСТЬ: спавн партиклов во время каста
             if (this.isCasting()) {
-                // Спавним 2 частицы за тик для эффекта плотности
                 for (int i = 0; i < 2; i++) {
                     double offsetX = (this.random.nextDouble() - 0.5) * 1.5;
                     double offsetZ = (this.random.nextDouble() - 0.5) * 1.5;
@@ -168,7 +154,6 @@ public class WelcomerEntity extends Monster implements GeoEntity {
                 return event.setAndContinue(RawAnimation.begin().thenLoop("magic_loop"));
             }
             if (this.isWelcoming()) {
-                // Если таймер идет - играем начало. Если прошел - играем луп.
                 if (this.welcomeTicks > 0) {
                     return event.setAndContinue(RawAnimation.begin().thenPlay("welcome"));
                 } else {

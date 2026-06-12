@@ -10,8 +10,6 @@ public class BelieverRenderer extends GeoEntityRenderer<BelieverEntity> {
     public BelieverRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new BelieverModel());
         this.shadowRadius = 0.5f;
-
-        // Подключаем условный светящийся слой
         addRenderLayer(new BelieverPrayEmissiveLayer(this));
     }
 }

@@ -26,7 +26,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class VoidNetherMidBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
-    // Визуальный хитбокс, чтобы игрок мог выделить блок мышкой и сломать в креативе
     private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
     public VoidNetherMidBlock(Properties properties) {
@@ -42,14 +41,12 @@ public class VoidNetherMidBlock extends HorizontalDirectionalBlock implements En
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        // Устанавливаем поворот блоку лицом к игроку
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
-    // --- ОТКЛЮЧЕНИЕ ФИЗИЧЕСКОЙ КОЛЛИЗИИ ---
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Shapes.empty(); // Игроки и мобы проходят насквозь
+        return Shapes.empty();
     }
 
     @Override

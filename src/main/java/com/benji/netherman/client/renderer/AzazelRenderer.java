@@ -11,11 +11,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class AzazelRenderer extends GeoEntityRenderer<AzazelEntity> {
     public AzazelRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new AzazelModel());
-
-        // Огромная тень для огромного босса
         this.shadowRadius = 1.5f;
-
-        // Подключаем светящийся слой (он один для всех стадий)
         ResourceLocation emissiveTexture = new ResourceLocation(NetherExp.MODID, "textures/entity/azazel_emissive.png");
         addRenderLayer(new GenericEmissiveLayer<>(this, emissiveTexture));
     }

@@ -73,15 +73,10 @@ public class ManipulatorEntity extends Monster implements GeoEntity {
     }
 
     public int getEntityState() { return this.entityData.get(STATE); }
-
-    // ПЕРЕХВАТЫВАЕМ СМЕНУ СОСТОЯНИЯ ДЛЯ ЗВУКА И ПАРТИКЛОВ
     public void setEntityState(int state) {
         if (state == STATE_ATTACK && this.getEntityState() != STATE_ATTACK) {
             if (!this.level().isClientSide()) {
-                // Триггерим клиентское событие №60 (Круг из партиклов)
                 this.level().broadcastEntityEvent(this, (byte) 60);
-
-                // Проигрываем рандомный звук SUMMON1 или SUMMON2
                 SoundEvent summonSound = this.random.nextBoolean() ? ModSounds.SUMMON1.get() : ModSounds.SUMMON2.get();
                 this.playSound(summonSound, 1.5F, this.getVoicePitch());
             }
@@ -91,14 +86,12 @@ public class ManipulatorEntity extends Monster implements GeoEntity {
 
     public int getHealthPhase() { return this.entityData.get(HEALTH_PHASE); }
     public void setHealthPhase(int phase) { this.entityData.set(HEALTH_PHASE, phase); }
-
-    // ЗВУКИ ШАГОВ (Кряхтение костей с шансом 1 к 3)
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
         if (this.random.nextInt(3) == 0) {
             this.playSound(SoundEvents.WITHER_SKELETON_STEP, 0.5F, this.getVoicePitch());
         } else {
-            super.playStepSound(pos, blockIn); // Обычный звук шага по блоку
+            super.playStepSound(pos, blockIn);
         }
     }
 
@@ -116,11 +109,9 @@ public class ManipulatorEntity extends Monster implements GeoEntity {
             this.getNavigation().stop();
 
             if (this.castTicks == 0) {
-                // Если мы кастовали просто атаку (скелеты/жители/гастли) - возвращаемся в IDLE
                 if (this.getEntityState() == STATE_ATTACK) {
                     this.setEntityState(STATE_IDLE);
                 }
-                // Если мы кастовали луп (разум) - возвращаемся в IDLE
                 else if (this.getEntityState() == STATE_ATTACK_LOOP) {
                     this.setEntityState(STATE_IDLE);
                 }
@@ -183,7 +174,6 @@ public class ManipulatorEntity extends Monster implements GeoEntity {
 
             guardian.startSpawning();
             this.level().addFreshEntity(guardian);
-            // Звук убран отсюда, так как он теперь проигрывается автоматически при STATE_ATTACK
         }
     }
 
@@ -213,31 +203,25 @@ public class ManipulatorEntity extends Monster implements GeoEntity {
 
                 this.level().addFreshEntity(skeleton);
 
-                for(int j=0; j<8; j++) {
-                    this.level().addParticle(ParticleTypes.CRIMSON_SPORE, skeleton.getRandomX(0.5), skeleton.getRandomY(), skeleton.getRandomZ(0.5), 0, 0.1, 0);
+                for(int j = 0; j < 4; j++) {
+                    this.level().addParticle(ParticleTypes.CRIMSON_SPORE, skeleton.getRandomX(0.5), skeleton.getRandomY(), skeleton.getRandomZ(0.5), 0, 0.05, 0);
                 }
             }
         }
-        // Звук убран отсюда, так как он теперь проигрывается автоматически при STATE_ATTACK
     }
-
-    // --- КЛИЕНТСКИЙ ОБРАБОТЧИК ПАРТИКЛОВ ПРИЗЫВА ---
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 60) {
-            // Рисуем красивый круг вокруг моба
-            for (int i = 0; i < 360; i += 10) {
+            for (int i = 0; i < 360; i += 30) {
                 double rad = Math.toRadians(i);
-                double x = Math.cos(rad) * 1.5; // Радиус 1.5 блока
+                double x = Math.cos(rad) * 1.5;
                 double z = Math.sin(rad) * 1.5;
 
-                // Так как ванильный редстоун партикл часто игнорирует скорость,
-                // мы спавним его немного "столбом", задавая случайную высоту, чтобы сымитировать взлет
-                double yOffset = this.random.nextDouble() * 1.5;
+                double yOffset = this.random.nextDouble() * 1.0;
 
                 this.level().addParticle(DustParticleOptions.REDSTONE,
                         this.getX() + x, this.getY() + 0.1 + yOffset, this.getZ() + z,
-                        0.0, 0.2, 0.0); // Передаем Y скорость на всякий случай
+                        0.0, 0.1, 0.0);
             }
         } else {
             super.handleEntityEvent(id);
@@ -247,9 +231,7 @@ public class ManipulatorEntity extends Monster implements GeoEntity {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        // ПРИОРИТЕТ 1: Порабощение
         this.goalSelector.addGoal(1, new ManipulatorConvertGoal(this));
-        // ПРИОРИТЕТ 2: Атака игрока
         this.goalSelector.addGoal(2, new ManipulatorAttackGoal(this));
 
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -261,24 +243,18 @@ public class ManipulatorEntity extends Monster implements GeoEntity {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 5, event -> {
             int state = this.getEntityState();
-
-            // 1. ПРИОРИТЕТ: Жесткие анимации атак (блокируем ходьбу во время каста)
             if (state == STATE_ATTACK) {
                 return event.setAndContinue(RawAnimation.begin().thenPlay("attack"));
             }
             if (state == STATE_ATTACK_LOOP) {
                 return event.setAndContinue(RawAnimation.begin().thenLoop("attack_loop"));
             }
-
-            // 2. ВТОРОСТЕПЕННО: Анимации движения
             if (this.walkAnimation.isMoving()) {
                 if (state == STATE_RUN) {
                     return event.setAndContinue(RawAnimation.begin().thenLoop("run"));
                 }
                 return event.setAndContinue(RawAnimation.begin().thenLoop("walk"));
             }
-
-            // 3. БАЗА: Простой
             return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
         }));
     }

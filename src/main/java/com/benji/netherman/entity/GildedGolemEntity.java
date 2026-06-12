@@ -39,8 +39,6 @@ import java.util.UUID;
 
 public class GildedGolemEntity extends IronGolem implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
-    // 0 = Full (100-50%), 1 = Damaged (50-25%), 2 = Healing (<25%)
     public static final EntityDataAccessor<Integer> TEXTURE_STATE = SynchedEntityData.defineId(GildedGolemEntity.class, EntityDataSerializers.INT);
 
     @Nullable
@@ -57,7 +55,7 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
                 .add(Attributes.MAX_HEALTH, 100.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
-                .add(Attributes.ATTACK_DAMAGE, 15.0D); // Урон как у обычного голема
+                .add(Attributes.ATTACK_DAMAGE, 15.0D);
     }
 
     @Override
@@ -82,11 +80,7 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.6D));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-
-        // 1. Атакует тех, кто ударил его (исключая создателя)
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
-
-        // 2. ИЗМЕНЕНО: Атакует ТОЛЬКО мирных мобов (Животных и Жителей), игнорируя монстров
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false,
                 (entity) -> entity instanceof net.minecraft.world.entity.animal.Animal || entity instanceof net.minecraft.world.entity.animal.IronGolem || entity instanceof net.minecraft.world.entity.npc.AbstractVillager));
     }
@@ -101,23 +95,15 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
             }
         } else {
             float healthPct = this.getHealth() / this.getMaxHealth();
-
-            // КРИТИЧЕСКИЙ ФИКС: Если голем полностью здоров — принудительно отключаем всасывание
             if (this.getHealth() >= this.getMaxHealth()) {
                 this.isHealingPhase = false;
             }
-
-            // Включаем режим лечения, если ХП упало ниже 25%
             if (healthPct <= 0.25F && !this.isHealingPhase && this.getHealth() > 0) {
                 this.isHealingPhase = true;
             }
-
-            // Обработка фаз и текстур
             if (this.isHealingPhase) {
                 this.entityData.set(TEXTURE_STATE, 2);
                 boolean stillSucking = performHealingSuck();
-
-                // Если все предметы засосались и игроки умерли/убежали — отключаем фазу
                 if (!stillSucking) {
                     this.isHealingPhase = false;
                 }
@@ -126,8 +112,6 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
             } else {
                 this.entityData.set(TEXTURE_STATE, 0);
             }
-
-            // Механика защиты Believer (Поиск обидчиков)
             if (this.tickCount % 10 == 0 && this.getTarget() == null && !this.isHealingPhase) {
                 List<BelieverEntity> believers = this.level().getEntitiesOfClass(BelieverEntity.class, this.getBoundingBox().inflate(15.0D));
                 for (BelieverEntity believer : believers) {
@@ -143,26 +127,17 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
             }
         }
     }
-
-    // --- ЛОГИКА ВСАСЫВАНИЯ (HEALING) ---
     private boolean performHealingSuck() {
-        // Проверка на случай полного исцеления прямо перед тиком всасывания
         if (this.getHealth() >= this.getMaxHealth()) {
             return false;
         }
 
         List<ItemEntity> items = this.level().getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(10.0D));
         List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(10.0D));
-
-        // Фильтруем игроков: убираем креатив, спектральный режим, мертвых и создателя голема
         players.removeIf(p -> p.isCreative() || p.isSpectator() || !p.isAlive() || (this.creatorUUID != null && p.getUUID().equals(this.creatorUUID)));
-
-        // Если предметов нет и живых игроков в радиусе тоже нет — останавливаем "пылесос"
         if (items.isEmpty() && players.isEmpty()) {
             return false;
         }
-
-        // Звуки ветра и дыхания (каждые 20 тиков, когда метод работает)
         if (this.tickCount % 20 == 0) {
             this.playSound(SoundEvents.BLAZE_AMBIENT, 1.0F, 0.5F);
             this.playSound(SoundEvents.ENDER_DRAGON_FLAP, 1.0F, 1.5F);
@@ -173,59 +148,49 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
         }
 
         boolean ateItem = false;
-
-        // 1. Сначала поглощаем предметы на земле
         for (ItemEntity item : items) {
             pullEntity(item);
             if (this.distanceToSqr(item) < 2.5D) {
                 item.discard();
-                this.heal(4.0F); // Восстановление ХП от предметов
+                this.heal(4.0F);
                 this.playSound(SoundEvents.WITCH_DRINK, 1.0F, 1.0F);
                 ateItem = true;
-                break; // За один тик съедаем один предмет для плавности звуков
+                break;
             }
         }
-
-        // 2. Если предметов в этом тике не поглотили — переключаемся на высасывание ХП из игроков
         if (!ateItem && !players.isEmpty()) {
             for (Player player : players) {
                 pullEntity(player);
                 if (this.distanceToSqr(player) < 3.5D) {
-                    if (this.tickCount % 20 == 0) { // Каждую секунду (глоток)
-
-                        // ФИКС: Используем урон MAGIC вместо mobAttack, чтобы обойти командную защиту голема!
-                        player.hurt(this.damageSources().magic(), 2.0F); // Наносим игроку 2 единицы урона (1 сердце)
-                        this.heal(6.0F); // Лечим голема на 6 ХП за глоток
+                    if (this.tickCount % 20 == 0) {
+                        player.hurt(this.damageSources().magic(), 2.0F);
+                        this.heal(6.0F);
 
                         this.playSound(SoundEvents.WITCH_DRINK, 1.0F, 1.0F);
                     }
                 }
             }
         }
-
-        // Повторная проверка здоровья в конце тика
         if (this.getHealth() >= this.getMaxHealth()) {
             return false;
         }
 
-        return true; // Всасывание продолжается
+        return true;
     }
 
     private void pullEntity(Entity entity) {
-        Vec3 pullVec = this.position().subtract(entity.position()).normalize().scale(0.15D); // Сила притяжения
+        Vec3 pullVec = this.position().subtract(entity.position()).normalize().scale(0.15D);
         entity.setDeltaMovement(entity.getDeltaMovement().add(pullVec.x, 0.0D, pullVec.z));
         entity.hurtMarked = true;
     }
-
-    // --- ЛОГИКА АТАКИ (Подкидывание) ---
     @Override
     public boolean doHurtTarget(Entity entity) {
-        this.attackTimer = 10; // 0.5 секунды анимации
-        this.level().broadcastEntityEvent(this, (byte) 4); // Триггер анимации на клиент
+        this.attackTimer = 10;
+        this.level().broadcastEntityEvent(this, (byte) 4);
 
         boolean flag = super.doHurtTarget(entity);
         if (flag) {
-            float upKnockback = 0.4F; // Подкидывание вверх
+            float upKnockback = 0.4F;
             entity.setDeltaMovement(entity.getDeltaMovement().add(0.0D, (double) upKnockback, 0.0D));
             this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);
         }
@@ -240,8 +205,6 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
             super.handleEntityEvent(id);
         }
     }
-
-    // Звуки урона и смерти ванильного голема
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
@@ -253,8 +216,6 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
     protected SoundEvent getDeathSound() {
         return SoundEvents.BLAZE_DEATH;
     }
-
-    // Дроп золотого блока (Дроп также нужно будет настроить через LootTables, но можно принудительно)
     @Override
     protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHit) {
         super.dropCustomDeathLoot(source, looting, recentlyHit);
@@ -278,8 +239,6 @@ public class GildedGolemEntity extends IronGolem implements GeoEntity {
         }
         this.isHealingPhase = tag.getBoolean("IsHealingPhase");
     }
-
-    // --- АНИМАЦИИ ---
 
     private static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenPlay("attack");
     private static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("walk");

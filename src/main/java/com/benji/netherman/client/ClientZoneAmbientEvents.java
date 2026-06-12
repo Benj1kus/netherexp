@@ -16,8 +16,6 @@ public class ClientZoneAmbientEvents {
 
     private static ZoneAmbientSoundInstance currentAmbientSound = null;
     private static int lastZoneType = -1;
-
-    // Таймеры для интро босса
     private static int bossMusicTimer = 0;
     private static boolean isPlayingBossIntro = false;
 
@@ -28,8 +26,6 @@ public class ClientZoneAmbientEvents {
 
         int currentZoneType = -1;
         MobEffect activeEffect = null;
-
-        // ВАЖНО: Тревога от Босса имеет высший приоритет и перекрывает остальные зоны!
         if (player.hasEffect(NetherExp.ANXIETY_EFFECT.get())) {
             currentZoneType = 3;
             activeEffect = NetherExp.ANXIETY_EFFECT.get();
@@ -43,14 +39,10 @@ public class ClientZoneAmbientEvents {
             currentZoneType = 0;
             activeEffect = NetherExp.FEAR_EFFECT.get();
         }
-
-        // Логика перехода от Интро Босса к Лупу
         if (currentZoneType == 3 && isPlayingBossIntro) {
             bossMusicTimer--;
             if (bossMusicTimer <= 0) {
                 isPlayingBossIntro = false;
-
-                // Глушим интро (на всякий случай) и запускаем зацикленный луп
                 if (currentAmbientSound != null) {
                     Minecraft.getInstance().getSoundManager().stop(currentAmbientSound);
                 }
@@ -68,14 +60,12 @@ public class ClientZoneAmbientEvents {
 
             if (currentZoneType != -1) {
                 if (currentZoneType == 3) {
-                    // НАЧАЛО БОЯ С БОССОМ
                     currentAmbientSound = new ZoneAmbientSoundInstance(ModSounds.BOSS_FIGHT.get(), player, activeEffect, false); // false = не зацикливать интро!
                     Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
 
-                    bossMusicTimer = 6020; // 2 мин 25 сек (145 сек * 20 тиков)
+                    bossMusicTimer = 6020;
                     isPlayingBossIntro = true;
                 } else {
-                    // ОБЫЧНЫЕ ЗОНЫ
                     var soundEvent = switch (currentZoneType) {
                         case 2 -> ModSounds.CHURCH_AMBIENT.get();
                         case 1 -> ModSounds.CITY_AMBIENT.get();
@@ -86,7 +76,7 @@ public class ClientZoneAmbientEvents {
                     Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
                 }
             } else {
-                isPlayingBossIntro = false; // Эффекты пропали
+                isPlayingBossIntro = false;
             }
 
             lastZoneType = currentZoneType;

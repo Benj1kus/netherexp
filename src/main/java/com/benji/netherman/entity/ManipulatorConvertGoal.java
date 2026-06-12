@@ -25,22 +25,16 @@ public class ManipulatorConvertGoal extends Goal {
     @Override
     public boolean canUse() {
         if (mob.castTicks > 0) return false;
-
-        // 1. Ищем обычных жителей в радиусе 10 блоков
         List<Villager> villagers = mob.level().getEntitiesOfClass(Villager.class, mob.getBoundingBox().inflate(10.0));
         if (!villagers.isEmpty()) {
             this.targetVictim = villagers.get(0);
             return true;
         }
-
-        // 2. Если жителей нет, ищем Пиглинов
         List<Piglin> piglins = mob.level().getEntitiesOfClass(Piglin.class, mob.getBoundingBox().inflate(10.0));
         if (!piglins.isEmpty()) {
             this.targetVictim = piglins.get(0);
             return true;
         }
-
-        // 3. --- НОВОЕ: Ищем Ghastly для убийства ---
         List<GhastlyEntity> ghastlies = mob.level().getEntitiesOfClass(GhastlyEntity.class, mob.getBoundingBox().inflate(10.0));
         if (!ghastlies.isEmpty()) {
             this.targetVictim = ghastlies.get(0);
@@ -54,8 +48,6 @@ public class ManipulatorConvertGoal extends Goal {
     public void start() {
         mob.getNavigation().stop();
         mob.getLookControl().setLookAt(targetVictim);
-
-        // Запускаем анимацию каста Манипулятора
         mob.setEntityState(ManipulatorEntity.STATE_ATTACK);
         mob.castTicks = 35;
     }
@@ -65,11 +57,7 @@ public class ManipulatorConvertGoal extends Goal {
         if (targetVictim != null) {
             mob.getLookControl().setLookAt(targetVictim);
         }
-
-        // Когда каст завершается (остался 1 тик)
         if (mob.castTicks == 1 && targetVictim != null && targetVictim.isAlive()) {
-
-            // Проверяем, кого именно мы поймали
             if (targetVictim instanceof Villager) {
                 VillagerPrisonerEntity prisoner = NetherExp.VILLAGER_PRISONER.get().create(mob.level());
                 if (prisoner != null) {
@@ -89,22 +77,17 @@ public class ManipulatorConvertGoal extends Goal {
                 mob.playSound(SoundEvents.PIGLIN_BRUTE_CONVERTED_TO_ZOMBIFIED, 1.0F, 0.8F);
 
             } else if (targetVictim instanceof GhastlyEntity ghastly) {
-                // --- НОВОЕ: Казнь Ghastly ---
                 ghastly.setHealth(0.0F);
                 ghastly.die(mob.damageSources().magic());
-                mob.playSound(SoundEvents.WITHER_SPAWN, 0.5F, 1.5F); // Жуткий звук при убийстве
+                mob.playSound(SoundEvents.WITHER_SPAWN, 0.5F, 1.5F);
 
                 if (mob.level() instanceof ServerLevel serverLevel) {
-                    serverLevel.sendParticles(ParticleTypes.SOUL, targetVictim.getX(), targetVictim.getY() + 0.5, targetVictim.getZ(), 30, 0.3, 0.3, 0.3, 0.1);
+                    serverLevel.sendParticles(ParticleTypes.SOUL, targetVictim.getX(), targetVictim.getY() + 0.5, targetVictim.getZ(), 12, 0.3, 0.3, 0.3, 0.05);
                 }
             }
-
-            // Общие эффекты превращения/убийства (красный дым)
             if (mob.level() instanceof ServerLevel serverLevel) {
-                serverLevel.sendParticles(DustParticleOptions.REDSTONE, targetVictim.getX(), targetVictim.getY() + 1.0, targetVictim.getZ(), 30, 0.4, 0.8, 0.4, 0.1);
+                serverLevel.sendParticles(DustParticleOptions.REDSTONE, targetVictim.getX(), targetVictim.getY() + 1.0, targetVictim.getZ(), 10, 0.2, 0.5, 0.2, 0.05);
             }
-
-            // Ghastly удаляется сам через метод die(), остальных удаляем принудительно
             if (!(targetVictim instanceof GhastlyEntity)) {
                 targetVictim.discard();
             }

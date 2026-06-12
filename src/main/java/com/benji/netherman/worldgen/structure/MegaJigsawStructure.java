@@ -17,7 +17,6 @@ import com.benji.netherman.NetherExp; // Убедись, что импорт т�
 import java.util.Optional;
 
 public class MegaJigsawStructure extends Structure {
-    // Кодек без валидации ограничения размера в 128 блоков (подняли до 512)
     public static final Codec<MegaJigsawStructure> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             settingsCodec(instance),
             StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter((structure) -> structure.startPool),
@@ -50,13 +49,8 @@ public class MegaJigsawStructure extends Structure {
 
     @Override
     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
-        // 1. Вычисляем случайную стартовую высоту Y из тех, что мы задали в JSON
         int startY = this.startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
-
-        // 2. Определяем точную координату X, Y, Z для старта генерации
         BlockPos blockpos = new BlockPos(context.chunkPos().getMinBlockX(), startY, context.chunkPos().getMinBlockZ());
-
-        // 3. Вызываем правильный статический метод сборки пазлов JigsawPlacement
         return JigsawPlacement.addPieces(
                 context,
                 this.startPool,
@@ -71,7 +65,6 @@ public class MegaJigsawStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        // Ссылка на регистрацию типа структуры в твоем классе NetherExp
         return NetherExp.MEGA_JIGSAW_STRUCTURE.get();
     }
 }

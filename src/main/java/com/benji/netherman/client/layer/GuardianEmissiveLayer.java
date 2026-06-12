@@ -22,15 +22,9 @@ public class GuardianEmissiveLayer extends GeoRenderLayer<GuardianEntity> {
     public void render(PoseStack poseStack, GuardianEntity animatable, BakedGeoModel bakedModel,
                        RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer,
                        float partialTick, int packedLight, int packedOverlay) {
-
-        // Рендерим слой ТОЛЬКО если Guardian находится под баффом
         if (!animatable.isBuffed()) return;
-
-        // entityTranslucentEmissive идеально подходит для светящихся аур и полупрозрачных текстур
         RenderType glowRenderType = RenderType.entityTranslucentEmissive(this.emissiveTexture);
         VertexConsumer glowBuffer = bufferSource.getBuffer(glowRenderType);
-
-        // 15728880 - максимальный уровень света (игнорирует темноту)
         getRenderer().reRender(bakedModel, poseStack, bufferSource, animatable, glowRenderType,
                 glowBuffer, partialTick, 15728880, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
     }

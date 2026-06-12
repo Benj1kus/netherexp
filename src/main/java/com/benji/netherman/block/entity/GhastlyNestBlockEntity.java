@@ -19,14 +19,14 @@ import java.util.List;
 public class GhastlyNestBlockEntity extends BlockEntity {
     private final List<OccupantInfo> occupants = new ArrayList<>();
     private int honeyTimer = 0;
-    private int spawnTimer = 0; // Для спавна новых Ghastly (5 минут)
+    private int spawnTimer = 0;
 
     public GhastlyNestBlockEntity(BlockPos pos, BlockState state) {
         super(NetherExp.GHASTLY_NEST_BE.get(), pos, state);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, GhastlyNestBlockEntity nest) {
-        if (nest.occupants.isEmpty()) return; // Если улей пуст, ничего не происходит
+        if (nest.occupants.isEmpty()) return;
 
         Iterator<OccupantInfo> iterator = nest.occupants.iterator();
         while (iterator.hasNext()) {
@@ -39,9 +39,8 @@ public class GhastlyNestBlockEntity extends BlockEntity {
             }
         }
 
-        // --- МЕХАНИКА 1: Спавн нового Ghastly (Раз в 5 минут) ---
         nest.spawnTimer++;
-        if (nest.spawnTimer >= 6000) { // 6000 тиков = 5 минут
+        if (nest.spawnTimer >= 6000) {
             nest.spawnTimer = 0;
             BlockPos spawnPos = null;
 
@@ -63,7 +62,6 @@ public class GhastlyNestBlockEntity extends BlockEntity {
             }
         }
 
-        // --- МЕХАНИКА 2: Создание меда ---
         if (nest.occupants.size() >= 2 && !state.getValue(com.benji.netherman.block.GhastlyNestBlock.HAS_HONEY)) {
             nest.honeyTimer++;
 

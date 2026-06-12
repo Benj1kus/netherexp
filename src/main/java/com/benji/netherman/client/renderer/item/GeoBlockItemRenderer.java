@@ -26,7 +26,6 @@ public class GeoBlockItemRenderer extends GeoItemRenderer<GeoBlockItem> {
             }
         });
 
-        // Если у предмета указана emissive текстура — добавляем твой GenericEmissiveLayer
         if (item.getEmissiveTexture() != null) {
             addRenderLayer(new GenericEmissiveLayer<>(this, item.getEmissiveTexture()));
         }

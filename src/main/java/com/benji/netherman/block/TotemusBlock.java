@@ -26,7 +26,6 @@ public class TotemusBlock extends BaseEntityBlock {
 
     public TotemusBlock(Properties properties) {
         super(properties);
-        // Устанавливаем тип по умолчанию (пещера)
         this.registerDefaultState(this.stateDefinition.any().setValue(TYPE, 0));
     }
 
@@ -51,7 +50,6 @@ public class TotemusBlock extends BaseEntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        // МЕНЯЕМ НА MODEL! Теперь игру рендерит ванильный движок.
         return RenderShape.MODEL;
     }
 

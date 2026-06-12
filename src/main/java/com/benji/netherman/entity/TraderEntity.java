@@ -45,10 +45,7 @@ import java.util.List;
 
 public class TraderEntity extends PathfinderMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
-    // Синхронизация состояний для анимаций и рендера подсказок
     public static final EntityDataAccessor<Boolean> SHOW_HINT = SynchedEntityData.defineId(TraderEntity.class, EntityDataSerializers.BOOLEAN);
-    // 0 = Не торгует, 1 = Открывает рюкзак (trade_open), 2 = Закрывает рюкзак (trade_close)
     public static final EntityDataAccessor<Integer> TRADE_STATE = SynchedEntityData.defineId(TraderEntity.class, EntityDataSerializers.INT);
 
     public static final ResourceLocation GOLD_TRADE_LOOT = new ResourceLocation(NetherExp.MODID, "gameplay/trader_gold");
@@ -57,7 +54,7 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
 
     public int hintTicks = 0;
     public int tradeTimer = 0;
-    private int pendingRewardTier = 0; // 1 = Золото, 2 = Алмаз, 3 = Незерит
+    private int pendingRewardTier = 0;
     private Player tradingPlayer = null;
 
     public TraderEntity(EntityType<? extends PathfinderMob> type, Level level) {
@@ -94,11 +91,10 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
         ItemStack stack = player.getItemInHand(hand);
 
         if (this.entityData.get(TRADE_STATE) != 0) {
-            return InteractionResult.PASS; // Игнорируем клики, пока идет торговля
+            return InteractionResult.PASS;
         }
 
         if (isAcceptedItem(stack)) {
-            // ОПРЕДЕЛЯЕМ ТИР ТОРГОВЛИ
             if (stack.is(Items.GOLD_INGOT)) pendingRewardTier = 1;
             else if (stack.is(Items.DIAMOND)) pendingRewardTier = 2;
             else if (stack.is(Items.NETHERITE_INGOT)) pendingRewardTier = 3;
@@ -107,17 +103,14 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
 
             this.tradingPlayer = player;
             this.entityData.set(TRADE_STATE, 1);
-            this.tradeTimer = 80; // 4 секунды (trade_open)
-
-            // Торговец смотрит на игрока и мычит
+            this.tradeTimer = 80;
             this.getLookControl().setLookAt(player);
             this.playSound(SoundEvents.WANDERING_TRADER_TRADE, 1.0F, this.getVoicePitch());
 
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
-            // ИГРОК КЛИКНУЛ НЕПРАВИЛЬНЫМ ПРЕДМЕТОМ
             this.playSound(SoundEvents.VILLAGER_NO, 1.0F, this.getVoicePitch());
-            this.hintTicks = 60; // Показываем trader_hint.png на 3 сек
+            this.hintTicks = 60;
             this.entityData.set(SHOW_HINT, true);
 
             if (this.level() instanceof ServerLevel serverLevel) {
@@ -133,12 +126,8 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
 
         if (!this.level().isClientSide()) {
             int tradeState = this.entityData.get(TRADE_STATE);
-
-            // ЛОГИКА ТОРГОВЛИ (ТАЙМЕРЫ)
             if (tradeState > 0) {
                 this.tradeTimer--;
-
-                // ЗАВЕРШЕНИЕ trade_open
                 if (tradeState == 1 && this.tradeTimer <= 0) {
                     this.giveRewardToPlayer();
 
@@ -148,20 +137,17 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
                     }
 
                     this.entityData.set(TRADE_STATE, 2);
-                    this.tradeTimer = 80; // 4 секунды (trade_close)
+                    this.tradeTimer = 80;
                 }
-                // ЗАВЕРШЕНИЕ trade_close
                 else if (tradeState == 2 && this.tradeTimer <= 0) {
                     this.entityData.set(TRADE_STATE, 0);
                     this.tradingPlayer = null;
                 }
             } else {
-// ПРОВЕРКА ИГРОКОВ С ВАЛЮТОЙ ВОКРУГ (Оптимизировано под серверный TPS)
                 if (this.hintTicks > 0) {
                     this.hintTicks--;
-                    this.entityData.set(SHOW_HINT, true); // Принудительно показываем подсказку
+                    this.entityData.set(SHOW_HINT, true);
                 } else if (this.tickCount % 10 == 0) {
-                    // Сканируем область только раз в 10 тиков!
                     boolean holdingCurrency = false;
                     List<Player> nearbyPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(6.0D));
                     for (Player p : nearbyPlayers) {
@@ -179,27 +165,18 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
 
     private void giveRewardToPlayer() {
         if (this.tradingPlayer == null || !(this.level() instanceof ServerLevel serverLevel)) return;
-
-        // 1. Выбираем нужную таблицу
         ResourceLocation lootTableId = null;
         if (this.pendingRewardTier == 1) lootTableId = GOLD_TRADE_LOOT;
         else if (this.pendingRewardTier == 2) lootTableId = DIAMOND_TRADE_LOOT;
         else if (this.pendingRewardTier == 3) lootTableId = NETHERITE_TRADE_LOOT;
 
         if (lootTableId != null) {
-            // 2. Получаем саму таблицу из реестра сервера
             LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(lootTableId);
-
-            // 3. Создаем параметры контекста (кто выдает, где это происходит)
             LootParams lootParams = new LootParams.Builder(serverLevel)
                     .withParameter(LootContextParams.THIS_ENTITY, this)
                     .withParameter(LootContextParams.ORIGIN, this.position())
                     .create(LootContextParamSets.GIFT);
-
-            // 4. Генерируем предметы
             List<ItemStack> generatedLoot = lootTable.getRandomItems(lootParams);
-
-            // 5. Выкидываем каждый сгенерированный предмет игроку
             for (ItemStack reward : generatedLoot) {
                 Vec3 dir = this.tradingPlayer.position().subtract(this.position()).normalize().scale(0.3);
                 ItemEntity itemEntity = new ItemEntity(this.level(), this.getX(), this.getY() + 1.0D, this.getZ(), reward);
@@ -208,8 +185,6 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
             }
         }
     }
-
-    // --- ЛОГИКА ОБЕЗДВИЖИВАНИЯ ---
     @Override
     public void travel(Vec3 travelVector) {
         if (this.entityData.get(TRADE_STATE) > 0) {
@@ -219,8 +194,6 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
             super.travel(travelVector);
         }
     }
-
-    // --- ЗВУКИ ---
     @Override
     public float getVoicePitch() { return 0.8F + this.random.nextFloat() * 0.4F; }
 
@@ -240,8 +213,6 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
     private static final RawAnimation TRADE_CLOSE_ANIM = RawAnimation.begin().thenPlay("trade_close");
     private static final RawAnimation WALK_ANIM = RawAnimation.begin().thenLoop("walk");
     private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("idle");
-
-    // --- АНИМАЦИИ ---
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 5, event -> {

@@ -11,8 +11,6 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 public class GrandDoorRenderer extends GeoBlockRenderer<GrandDoorBlockEntity> {
     public GrandDoorRenderer(BlockEntityRendererProvider.Context context) {
         super(new GrandDoorModel());
-
-        // Свечение рун или узоров на двери
         addRenderLayer(new GenericEmissiveLayer<>(this, new ResourceLocation(NetherExp.MODID, "textures/block/grand_door_emissive.png")));
     }
 }

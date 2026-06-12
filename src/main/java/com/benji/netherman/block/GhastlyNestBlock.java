@@ -54,33 +54,24 @@ public class GhastlyNestBlock extends BaseEntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL; // Используем стандартный рендер по JSON
+        return RenderShape.MODEL;
     }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack itemstack = player.getItemInHand(hand);
-
-        // Если игрок кликает пустой бутылочкой и в улье есть мёд
         if (itemstack.is(Items.GLASS_BOTTLE) && state.getValue(HAS_HONEY)) {
             if (!level.isClientSide()) {
-                // Тратим 1 пустую бутылочку
                 if (!player.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
-
-                // Звук набора мёда
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
-
-                // Выдаем игроку Crimson Honey Bottle
                 ItemStack honeyBottle = new ItemStack(NetherExp.CRIMSON_HONEY_BOTTLE.get());
                 if (itemstack.isEmpty()) {
                     player.setItemInHand(hand, honeyBottle);
                 } else if (!player.getInventory().add(honeyBottle)) {
                     player.drop(honeyBottle, false);
                 }
-
-                // Опустошаем улей (сбрасываем текстуру на пустую)
                 level.setBlock(pos, state.setValue(HAS_HONEY, false), 3);
             }
             return InteractionResult.sidedSuccess(level.isClientSide());
@@ -94,8 +85,6 @@ public class GhastlyNestBlock extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         return level.isClientSide ? null : createTickerHelper(blockEntityType, com.benji.netherman.NetherExp.GHASTLY_NEST_BE.get(), GhastlyNestBlockEntity::serverTick);
     }
-
-    // Если блок ломают - выпускаем всех сохраненных гастли наружу!
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {

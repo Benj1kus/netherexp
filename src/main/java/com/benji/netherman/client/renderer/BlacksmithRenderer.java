@@ -10,8 +10,6 @@ public class BlacksmithRenderer extends GeoEntityRenderer<BlacksmithEntity> {
     public BlacksmithRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new BlacksmithModel());
         this.shadowRadius = 0.5f;
-
-        // Подключаем слой всплывающей подсказки
         addRenderLayer(new BlacksmithHintLayer(this));
     }
 }

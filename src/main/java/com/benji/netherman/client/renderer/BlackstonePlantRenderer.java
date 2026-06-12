@@ -11,11 +11,7 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 public class BlackstonePlantRenderer extends GeoBlockRenderer<BlackstonePlantBlockEntity> {
     public BlackstonePlantRenderer(BlockEntityRendererProvider.Context context) {
         super(new BlackstonePlantModel());
-
-        // Указываем путь к твоему светящемуся слою
         ResourceLocation emissiveTexture = new ResourceLocation(NetherExp.MODID, "textures/block/blackstone_plant_emissive.png");
-
-        // Добавляем слой из твоего старого проекта
         addRenderLayer(new GenericEmissiveLayer<>(this, emissiveTexture));
     }
 }

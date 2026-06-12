@@ -128,8 +128,6 @@ public class GrandDoorBlock extends HorizontalDirectionalBlock implements Entity
 
     @Override
     public RenderShape getRenderShape(BlockState state) { return RenderShape.ENTITYBLOCK_ANIMATED; }
-
-    // ИСПРАВЛЕНИЕ: БЕЗОПАСНАЯ РЕГИСТРАЦИЯ ТИКЕРА
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {

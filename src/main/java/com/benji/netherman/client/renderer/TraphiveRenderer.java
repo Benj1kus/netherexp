@@ -12,8 +12,6 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 public class TraphiveRenderer extends GeoBlockRenderer<TraphiveBlockEntity> {
     public TraphiveRenderer(BlockEntityRendererProvider.Context context) {
         super(new TraphiveModel());
-
-        // ПОДКЛЮЧАЕМ НАШ АНИМИРОВАННЫЙ СЛОЙ ВМЕСТО СТАТИЧНОГО
         addRenderLayer(new TraphiveAnimatedEmissiveLayer(this));
     }
 

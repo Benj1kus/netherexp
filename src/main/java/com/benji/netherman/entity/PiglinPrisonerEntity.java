@@ -46,7 +46,7 @@ public class PiglinPrisonerEntity extends PathfinderMob implements GeoEntity {
     public static final int STATE_TRANSFORM = 5;
 
     private int actionTimer = 0;
-    private int miningSoundTimer = 0; // ТАЙМЕР ДЛЯ ЗВУКОВ КОПАНИЯ
+    private int miningSoundTimer = 0;
 
     public PiglinPrisonerEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -71,8 +71,6 @@ public class PiglinPrisonerEntity extends PathfinderMob implements GeoEntity {
 
     public int getMasterId() { return this.entityData.get(MASTER_ID); }
     public void setMasterId(int id) { this.entityData.set(MASTER_ID, id); }
-
-    // --- ЗВУКИ ПОЛУЧЕНИЯ УРОНА И СМЕРТИ ---
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return SoundEvents.PIGLIN_HURT;
@@ -92,22 +90,24 @@ public class PiglinPrisonerEntity extends PathfinderMob implements GeoEntity {
 
         if (this.level().isClientSide()) {
             if ((state == STATE_IDLE_PRISON || state == STATE_MINING) && master != null) {
-                Vec3 start = this.position().add(0, 1.0, 0);
-                Vec3 end = master.position().add(0, 1.0, 0);
-                double distance = start.distanceTo(end);
-                Vec3 dir = end.subtract(start).normalize().scale(0.3);
 
-                for (int i = 0; i < (distance / 0.3); i++) {
-                    Vec3 pos = start.add(dir.scale(i));
-                    this.level().addParticle(DustParticleOptions.REDSTONE, pos.x, pos.y, pos.z, 0, 0, 0);
+                if (this.tickCount % 5 == 0) {
+                    Vec3 start = this.position().add(0, 1.0, 0);
+                    Vec3 end = master.position().add(0, 1.0, 0);
+                    double distance = start.distanceTo(end);
+
+                    Vec3 dir = end.subtract(start).normalize();
+
+                    for (double d = 0; d < distance; d += 1.5) {
+                        Vec3 pos = start.add(dir.scale(d));
+                        this.level().addParticle(DustParticleOptions.REDSTONE, pos.x, pos.y, pos.z, 0, 0, 0);
+                    }
                 }
             }
             return;
         }
 
         this.getNavigation().stop();
-
-        // --- ФАЗА 1: РАБСТВО ---
         if (state == STATE_IDLE_PRISON || state == STATE_MINING) {
             if (master == null || !master.isAlive()) {
                 this.getNavigation().stop();
@@ -149,8 +149,6 @@ public class PiglinPrisonerEntity extends PathfinderMob implements GeoEntity {
                 this.setYRot(targetRot);
                 this.yHeadRot = targetRot;
                 this.yBodyRot = targetRot;
-
-                // ЛОГИКА РАНДОМНЫХ ЗВУКОВ КОПАНИЯ С ТАЙМИНГАМИ
                 if (this.miningSoundTimer <= 0) {
                     int randSound = this.random.nextInt(4);
                     switch (randSound) {
@@ -165,7 +163,7 @@ public class PiglinPrisonerEntity extends PathfinderMob implements GeoEntity {
 
             } else {
                 if (state != STATE_IDLE_PRISON) this.setEntityState(STATE_IDLE_PRISON);
-                this.miningSoundTimer = 0; // Сбрасываем звуки копания, если блок исчез
+                this.miningSoundTimer = 0;
 
                 if (this.distanceToSqr(master) > 25.0D) {
                     this.getNavigation().moveTo(master, 1.0D);
@@ -174,15 +172,11 @@ public class PiglinPrisonerEntity extends PathfinderMob implements GeoEntity {
                 }
             }
         }
-
-        // --- ФАЗА 2: ОСВОБОЖДЕНИЕ ---
         else if (state == STATE_FREEDOM) {
             this.getNavigation().stop();
             if (this.actionTimer > 0) this.actionTimer--;
             else this.setEntityState(STATE_IDLE);
         }
-
-        // --- ФАЗА 3: ОЖИДАНИЕ ИГРОКА ---
         else if (state == STATE_IDLE) {
             this.getNavigation().stop();
             Player nearestPlayer = this.level().getNearestPlayer(this, 3.0D);
@@ -192,8 +186,6 @@ public class PiglinPrisonerEntity extends PathfinderMob implements GeoEntity {
                 this.actionTimer = 10;
             }
         }
-
-        // --- ФАЗА 4: НАГРАДА ---
         else if (state == STATE_GIVE) {
             this.getNavigation().stop();
             if (this.actionTimer > 0) {
@@ -202,16 +194,12 @@ public class PiglinPrisonerEntity extends PathfinderMob implements GeoEntity {
                 int rand = this.random.nextInt(100);
                 ItemStack reward = new ItemStack(rand < 60 ? Items.GOLD_INGOT : (rand < 90 ? Items.ENDER_PEARL : Items.NETHERITE_INGOT));
                 this.spawnAtLocation(reward);
-
-                // ДОВОЛЬНЫЙ ЗВУК ЖИТЕЛЯ ПРИ ВЫДАЧЕ НАГРАДЫ
                 this.playSound(SoundEvents.PIGLIN_CELEBRATE, 1.0F, this.getVoicePitch());
 
                 this.setEntityState(STATE_TRANSFORM);
                 this.actionTimer = 15;
             }
         }
-
-        // --- ФАЗА 5: ТРАНСФОРМАЦИЯ ---
         else if (state == STATE_TRANSFORM) {
             this.getNavigation().stop();
             if (this.actionTimer > 0) {

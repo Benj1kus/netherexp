@@ -33,39 +33,20 @@ public class TraderHintLayer extends GeoRenderLayer<TraderEntity> {
         ResourceLocation currentTexture = (tradeState == 1) ? WAIT_TEXTURE : HINT_TEXTURE;
 
         poseStack.pushPose();
-
-        // 1. Поднимаем над головой
         poseStack.translate(0.0D, 3.0D, 0.0D);
-
-        // 2. Поворачиваем к камере и инвертируем Y (как в Ghastly)
         poseStack.mulPose(Minecraft.getInstance().getEntityRenderDispatcher().cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-
-        // 3. Масштабируем (положительные значения, так как мы используем поворот на 180)
         poseStack.scale(0.03F, 0.03F, 0.03F);
 
         Matrix4f matrix4f = poseStack.last().pose();
-
-        // Используем проверенный CutoutNoCull
         VertexConsumer vertexconsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(currentTexture));
 
         float halfWidth = 14.0F;
         float height = 30.0F;
         int fullLight = 15728880;
-
-        // 4. ОТРИСОВКА: Убираем matrix3f из нормалей и ставим жестко (0, 1, 0)
-        // Теперь игра считает, что плоскость смотрит в небо, и отключает тени!
-
-        // Левый верхний угол
         vertexconsumer.vertex(matrix4f, -halfWidth, 0, 0).color(255, 255, 255, 255).uv(1.0F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(fullLight).normal(0.0F, 1.0F, 0.0F).endVertex();
-
-        // Левый нижний угол
         vertexconsumer.vertex(matrix4f, -halfWidth, height, 0).color(255, 255, 255, 255).uv(1.0F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(fullLight).normal(0.0F, 1.0F, 0.0F).endVertex();
-
-        // Правый нижний угол
         vertexconsumer.vertex(matrix4f, halfWidth, height, 0).color(255, 255, 255, 255).uv(0.0F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(fullLight).normal(0.0F, 1.0F, 0.0F).endVertex();
-
-        // Правый верхний угол
         vertexconsumer.vertex(matrix4f, halfWidth, 0, 0).color(255, 255, 255, 255).uv(0.0F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(fullLight).normal(0.0F, 1.0F, 0.0F).endVertex();
 
         poseStack.popPose();

@@ -21,8 +21,6 @@ public class ManipulatorStickEvents {
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();
         if (entity.level().isClientSide() || entity.tickCount % 4 != 0) return;
-
-        // --- ЛОГИКА 3: Жители и пиглины убегают от игрока с палкой ---
         if (entity instanceof Villager || entity instanceof AbstractPiglin) {
             Player scaringPlayer = entity.level().getNearestPlayer(entity.getX(), entity.getY(), entity.getZ(), 12.0D,
                     p -> p instanceof Player && (((Player) p).getMainHandItem().is(NetherExp.MANIPULATOR_STICK.get()) ||
@@ -35,30 +33,22 @@ public class ManipulatorStickEvents {
                 }
             }
         }
-
-        // --- НОВОЕ: ПРИНУДИТЕЛЬНЫЙ РАДАР ДЛЯ СКЕЛЕТОВ ---
-        // Ванильные скелеты не ищут монстров сами, поэтому мы находим их за них
         if (entity instanceof WitherSkeleton skeleton && skeleton.getPersistentData().contains("SummonerUUID")) {
-            if (skeleton.getTarget() == null) { // Если скелет стоит без дела
+            if (skeleton.getTarget() == null) {
                 java.util.UUID summonerUUID = skeleton.getPersistentData().getUUID("SummonerUUID");
-
-                // Ищем всех живых существ в радиусе 16 блоков
                 java.util.List<LivingEntity> potentialTargets = skeleton.level().getEntitiesOfClass(LivingEntity.class, skeleton.getBoundingBox().inflate(16.0D),
-                        e -> (e instanceof net.minecraft.world.entity.monster.Monster || e instanceof Player) // Ищем монстров или игроков
-                                && !e.getUUID().equals(summonerUUID) // Игнорируем призывателя
-                                && !(e instanceof AzazelEntity)      // Игнорируем Азазеля
-                                && !(e instanceof WitherSkeleton)    // Игнорируем своих же скелетов
+                        e -> (e instanceof net.minecraft.world.entity.monster.Monster || e instanceof Player)
+                                && !e.getUUID().equals(summonerUUID)
+                                && !(e instanceof AzazelEntity)
+                                && !(e instanceof WitherSkeleton)
                 );
 
                 if (!potentialTargets.isEmpty()) {
-                    // Берем в таргет первого попавшегося подходящего врага!
                     skeleton.setTarget(potentialTargets.get(0));
                 }
             }
         }
     }
-
-    // ЛОГИКА 4: Защита создателя (Осталась без изменений)
     @SubscribeEvent
     public static void onTargetChange(LivingChangeTargetEvent event) {
         if (event.getEntity() instanceof WitherSkeleton skeleton) {

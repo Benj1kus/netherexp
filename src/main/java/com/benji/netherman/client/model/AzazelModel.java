@@ -16,7 +16,6 @@ public class AzazelModel extends GeoModel<AzazelEntity> {
 
     @Override
     public ResourceLocation getModelResource(AzazelEntity animatable) {
-        // Фаза 2 (меньше 25% ХП) -> модель lowhp
         if (animatable.getEntityData().get(AzazelEntity.PHASE_STATE) == 2) {
             return MODEL_LOW_HP;
         }
@@ -26,12 +25,10 @@ public class AzazelModel extends GeoModel<AzazelEntity> {
     @Override
     public ResourceLocation getTextureResource(AzazelEntity animatable) {
         if (!animatable.getEntityData().get(AzazelEntity.IS_AGGRO)) {
-            return TEX_PRAY; // Нейтральная текстура
+            return TEX_PRAY;
         }
 
         int phase = animatable.getEntityData().get(AzazelEntity.PHASE_STATE);
-
-        // Фаза 1 или 2 -> текстура damaged
         if (phase >= 1) {
             return TEX_DAMAGED;
         }

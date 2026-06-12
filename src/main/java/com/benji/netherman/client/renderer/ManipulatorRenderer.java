@@ -11,8 +11,6 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class ManipulatorRenderer extends GeoEntityRenderer<ManipulatorEntity> {
     public ManipulatorRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new ManipulatorModel());
-
-        // Подключаем светящуюся текстуру глаз/узоров
         addRenderLayer(new GenericEmissiveLayer<>(this, new ResourceLocation(NetherExp.MODID, "textures/entity/manipulator_emissive.png")));
     }
 }

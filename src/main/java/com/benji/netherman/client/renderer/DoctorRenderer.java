@@ -10,8 +10,6 @@ public class DoctorRenderer extends GeoEntityRenderer<DoctorEntity> {
     public DoctorRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new DoctorModel());
         this.shadowRadius = 0.5f;
-
-        // Подключаем слой всплывающих подсказок
         addRenderLayer(new DoctorHintLayer(this));
     }
 }

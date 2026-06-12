@@ -22,12 +22,8 @@ public class GenericEmissiveLayer<T extends GeoAnimatable> extends GeoRenderLaye
     public void render(PoseStack poseStack, T animatable, BakedGeoModel bakedModel, RenderType renderType,
                        MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick,
                        int packedLight, int packedOverlay) {
-
-        // RenderType.eyes() заставляет текстуру игнорировать уровень освещения в игре
         RenderType glowRenderType = RenderType.eyes(this.emissiveTexture);
         VertexConsumer glowBuffer = bufferSource.getBuffer(glowRenderType);
-
-        // Рендерим слой с максимальным значением света (15728880)
         getRenderer().reRender(bakedModel, poseStack, bufferSource, animatable, glowRenderType,
                 glowBuffer, partialTick, 15728880, packedOverlay, 0.5F, 0.5F, 0.5F, 0.5F);
     }

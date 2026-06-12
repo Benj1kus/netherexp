@@ -46,8 +46,6 @@ import org.slf4j.Logger;
 public class NetherExp {
     public static final String MODID = "netherman";
     private static final Logger LOGGER = LogUtils.getLogger();
-
-    // REGISTER
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
@@ -55,15 +53,12 @@ public class NetherExp {
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
             DeferredRegister.create(net.minecraft.core.registries.Registries.STRUCTURE_TYPE, MODID);
 
-    // BLOCK & ITEMS
     public static final RegistryObject<Block> NETHER_SPAWNER = BLOCKS.register("nether_spawner",
             () -> new NetherSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
                     .lightLevel(state -> 15) // Излучает свет
                     .requiresCorrectToolForDrops()
                     .strength(2.0F)
                     .noOcclusion()));
-
-    // ITEM (Обычный BlockItem)
     public static final RegistryObject<Item> NETHER_SPAWNER_ITEM = ITEMS.register("nether_spawner",
             () -> new BlockItem(NETHER_SPAWNER.get(), new Item.Properties()));
 
@@ -74,9 +69,6 @@ public class NetherExp {
 
     public static final RegistryObject<Item> BLACKSTONE_COLUMN_ITEM = ITEMS.register("blackstone_column",
             () -> new BlockItem(BLACKSTONE_COLUMN.get(), new Item.Properties()));
-
-
-    // Внутри регистрации BLOCKS:
     public static final RegistryObject<Block> POINTED_BLACKSTONE = BLOCKS.register("pointed_blackstone",
             () -> new PointedBlackstoneBlock(BlockBehaviour.Properties.copy(Blocks.POINTED_DRIPSTONE)
                     .requiresCorrectToolForDrops()
@@ -86,8 +78,6 @@ public class NetherExp {
     public static final RegistryObject<Item> POINTED_BLACKSTONE_ITEM = ITEMS.register("pointed_blackstone",
             () -> new BlockItem(POINTED_BLACKSTONE.get(), new Item.Properties()));
 
-    //PLANTS
-
     public static final RegistryObject<Block> BLACKSTONE_PLANT = BLOCKS.register("blackstone_plant",
             () -> new BlackstonePlantBlock(BlockBehaviour.Properties.copy(Blocks.GRASS)
                     .lightLevel(state -> 10)
@@ -96,8 +86,6 @@ public class NetherExp {
 
     public static final RegistryObject<StructureType<com.benji.netherman.worldgen.structure.MegaJigsawStructure>> MEGA_JIGSAW_STRUCTURE =
             STRUCTURE_TYPES.register("mega_jigsaw", () -> () -> com.benji.netherman.worldgen.structure.MegaJigsawStructure.CODEC);
-
-// VOID
     public static final RegistryObject<Block> VOIDMID = BLOCKS.register("void_mid",
             () -> new VoidMidBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
                     .strength(-1.0F, 3600000.0F)
@@ -122,9 +110,6 @@ public class NetherExp {
 
     public static final RegistryObject<Item> VOIDMIDCORNER_ITEM = ITEMS.register("void_midcorner",
             () -> new BlockItem(VOIDMIDCORNER.get(), new Item.Properties()));
-//==========
-
-    // VOID
     public static final RegistryObject<Block> VOIDMIDNETHER = BLOCKS.register("voidnether_mid",
             () -> new VoidNetherMidBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
                     .strength(-1.0F, 3600000.0F)
@@ -149,7 +134,6 @@ public class NetherExp {
 
     public static final RegistryObject<Item> VOIDMIDCORNERNETHER_ITEM = ITEMS.register("voidnether_midcorner",
             () -> new BlockItem(VOIDMIDCORNERNETHER.get(), new Item.Properties()));
-    //===========
 
     public static final RegistryObject<Item> BLACKSTONE_PLANT_ITEM = ITEMS.register("blackstone_plant",
             () -> new BlockItem(BLACKSTONE_PLANT.get(), new Item.Properties()));
@@ -162,14 +146,10 @@ public class NetherExp {
 
     public static final RegistryObject<Item> BLACKSTONE_AXON_ITEM = ITEMS.register("blackstone_axon",
             () -> new BlockItem(BLACKSTONE_AXON.get(), new Item.Properties()));
-
-    // Блок входа
     public static final RegistryObject<Block> ENTRANCE = BLOCKS.register("entrance",
             () -> new EntranceBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_WART_BLOCK)
                     .strength(-1.0F, 3600000.0F)
-                    .noOcclusion())); // Чтобы сквозь него было видно мир, когда он прозрачный
-
-    // Предмет
+                    .noOcclusion()));
     public static final RegistryObject<Item> ENTRANCE_ITEM = ITEMS.register("entrance",
             () -> new GeoBlockItem(
                     ENTRANCE.get(),
@@ -184,7 +164,7 @@ public class NetherExp {
     public static final RegistryObject<Block> CRIMSON_WEB = BLOCKS.register("crimson_web",
             () -> new CrimsonWebBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_WART_BLOCK)
                     .instabreak()
-                    .noOcclusion())); // Чтобы сквозь него было видно мир, когда он прозрачный
+                    .noOcclusion()));
 
 
     public static final RegistryObject<Item> CRIMSON_WEB_ITEM = ITEMS.register("crimson_web",
@@ -201,7 +181,7 @@ public class NetherExp {
     public static final RegistryObject<Block> TRAPHIVE = BLOCKS.register("traphive",
             () -> new TraphiveBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_WART_BLOCK)
                     .instabreak()
-                    .noOcclusion())); // Чтобы сквозь него было видно мир, когда он прозрачный
+                    .noOcclusion()));
 
 
     public static final RegistryObject<Item> TRAPHIVE_ITEM = ITEMS.register("traphive",
@@ -263,20 +243,16 @@ public class NetherExp {
             () -> new MosaicChurchBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
                     .lightLevel(state -> 10)
                     .instabreak()
-                    .noOcclusion())); // Чтобы сквозь него было видно мир, когда он прозрачный
+                    .noOcclusion()));
 
 
     public static final RegistryObject<Item> MOSAIC_CHURCH_ITEM = ITEMS.register("mosaic_church",
             () -> new BlockItem(MOSAIC_CHURCH.get(), new Item.Properties()));
-
-    // Добавь к остальным регистрациям предметов:
     public static final RegistryObject<Item> MANIPULATOR_STICK = ITEMS.register("manipulator_stick",
             () -> new com.benji.netherman.item.ManipulatorStickItem());
 
     public static final RegistryObject<Item> CHANCE_TOTEM = ITEMS.register("chance_totem",
             () -> new Item(new Item.Properties().stacksTo(1)));
-
-    // Регистрация записки (стакается по 1 штуке)
     public static final RegistryObject<Item> NOTE = ITEMS.register("note",
             () -> new com.benji.netherman.item.NoteItem(new Item.Properties().stacksTo(1)));
 
@@ -284,8 +260,6 @@ public class NetherExp {
             () -> new GrandDoorBlock(BlockBehaviour.Properties.copy(Blocks.POLISHED_BLACKSTONE_BRICKS)
                     .strength(-1.0F, 3600000.0F)
                     .noOcclusion()));
-
-    // Предмет
     public static final RegistryObject<Item> GRAND_DOOR_ITEM = ITEMS.register("grand_door",
             () -> new GeoBlockItem(
                     GRAND_DOOR.get(),
@@ -295,15 +269,11 @@ public class NetherExp {
                     new ResourceLocation(MODID, "animations/grand_door.animation.json"),
                     new ResourceLocation(MODID, "textures/block/grand_door_emissive.png")
             ));
-
-    // Фантомный блок для двери
     public static final RegistryObject<Block> GRAND_DOOR_PART = BLOCKS.register("grand_door_part",
             () -> new GrandDoorPartBlock(BlockBehaviour.Properties.copy(Blocks.POLISHED_BLACKSTONE_BRICKS)
                     .strength(-1.0F, 3600000.0F)
                     .noOcclusion()
                     .noLootTable()));
-
-    // Регистрация Crimson Honey Block
     public static final RegistryObject<Block> CRIMSON_HONEY_BLOCK = BLOCKS.register("crimson_honey_block",
             () -> new CrimsonHoneyBlock(BlockBehaviour.Properties.copy(Blocks.HONEY_BLOCK)
                     .instabreak()
@@ -312,12 +282,8 @@ public class NetherExp {
 
     public static final RegistryObject<Item> CRIMSON_HONEY_BLOCK_ITEM = ITEMS.register("crimson_honey_block",
             () -> new BlockItem(CRIMSON_HONEY_BLOCK.get(), new Item.Properties()));
-
-    // Предмет стрелы
     public static final RegistryObject<Item> CRIMSON_ARROW_ITEM = ITEMS.register("crimson_arrow",
             () -> new com.benji.netherman.item.CrimsonArrowItem(new Item.Properties()));
-
-    // Сущность летящей стрелы
     public static final RegistryObject<EntityType<com.benji.netherman.entity.CrimsonArrowEntity>> CRIMSON_ARROW_ENTITY = ENTITIES.register("crimson_arrow",
             () -> EntityType.Builder.<com.benji.netherman.entity.CrimsonArrowEntity>of(com.benji.netherman.entity.CrimsonArrowEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
@@ -331,8 +297,6 @@ public class NetherExp {
                     .strength(2.0F)
                     .requiresCorrectToolForDrops()
                     .noOcclusion())); // Для кастомного рендера и прозрачности
-
-    // --- Добавить в реестр ITEMS ---
     public static final RegistryObject<Item> GHASTLY_NEST_ITEM = ITEMS.register("ghastly_nest",
             () -> new BlockItem(GHASTLY_NEST.get(), new Item.Properties()));
 
@@ -341,12 +305,8 @@ public class NetherExp {
                     .stacksTo(16) // Как у обычного мёда
                     .craftRemainder(net.minecraft.world.item.Items.GLASS_BOTTLE)
                     .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(6).saturationMod(0.1F).alwaysEat().build())));
-
-    // --- Добавить в реестр BLOCK_ENTITIES ---
     public static final RegistryObject<BlockEntityType<GhastlyNestBlockEntity>> GHASTLY_NEST_BE = BLOCK_ENTITIES.register("ghastly_nest",
             () -> BlockEntityType.Builder.of(GhastlyNestBlockEntity::new, GHASTLY_NEST.get()).build(null));
-
-    // BLOCK ENTITY
     public static final RegistryObject<BlockEntityType<VoidNetherMidCornerBlockEntity>> VOIDMIDCORNERNETHER_BE = BLOCK_ENTITIES.register("voidnether_midcorner",
             () -> BlockEntityType.Builder.of(VoidNetherMidCornerBlockEntity::new, VOIDMIDCORNERNETHER.get()).build(null));
 
@@ -388,53 +348,47 @@ public class NetherExp {
 
     public static final RegistryObject<BlockEntityType<PointedBlackstoneBlockEntity>> POINTED_BLACKSTONE_BE = BLOCK_ENTITIES.register("pointed_blackstone",
             () -> BlockEntityType.Builder.of(PointedBlackstoneBlockEntity::new, POINTED_BLACKSTONE.get()).build(null));
-
-    // ENTITY
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
     public static final DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> RECIPE_SERIALIZERS =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
-
-    // Регистрация эффекта:
 
     public static final RegistryObject<MobEffect> MANIPULATION_EFFECT = EFFECTS.register("manipulation", ManipulationEffect::new);
     public static final RegistryObject<MobEffect> FEAR_EFFECT = EFFECTS.register("fear", () -> new ZoneEffect(0x000000));
     public static final RegistryObject<MobEffect> EXCITEMENT_EFFECT = EFFECTS.register("excitement", () -> new ZoneEffect(0xFF0000));
     public static final RegistryObject<MobEffect> FAITH_EFFECT = EFFECTS.register("faith", () -> new ZoneEffect(0x800080));
     public static final RegistryObject<MobEffect> ANXIETY_EFFECT = EFFECTS.register("anxiety", () -> new ZoneEffect(0x8B0000));
-
-    // Сериализатор кастомного рецепта обмазывания стрел
     public static final RegistryObject<net.minecraft.world.item.crafting.RecipeSerializer<?>> CRIMSON_ARROW_CRAFTING = RECIPE_SERIALIZERS.register("crimson_arrow_coating",
             () -> new net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer<>(com.benji.netherman.item.crafting.CrimsonArrowRecipe::new));
 
 
     public static final RegistryObject<EntityType<AzazelEntity>> AZAZEL = ENTITIES.register("azazel",
             () -> EntityType.Builder.of(AzazelEntity::new, MobCategory.MONSTER)
-                    .sized(3.0F, 4.5F) // Гигантский хитбокс
+                    .sized(3.0F, 4.5F)
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "azazel").toString()));
 
 
     public static final RegistryObject<EntityType<GildedGolemEntity>> GILDED_GOLEM = ENTITIES.register("gilded_golem",
             () -> EntityType.Builder.of(GildedGolemEntity::new, MobCategory.MISC)
-                    .sized(1.4F, 2.7F) // Размеры железного голема
+                    .sized(1.4F, 2.7F)
                     .fireImmune()
                     .build(new net.minecraft.resources.ResourceLocation(MODID, "gilded_golem").toString()));
 
     public static final RegistryObject<EntityType<StatueBossunitEntity>> STATUE_BOSSUNIT = ENTITIES.register("statue_bossunit",
             () -> EntityType.Builder.of(StatueBossunitEntity::new, MobCategory.MONSTER)
-                    .sized(0.625F, 2.125F) // Хитбокс статуи
+                    .sized(0.625F, 2.125F)
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "statue_bossunit").toString()));
 
     public static final RegistryObject<EntityType<LaserEntity>> LASER = ENTITIES.register("laser",
             () -> EntityType.Builder.of(LaserEntity::new, MobCategory.MISC)
-                    .sized(3.0F, 18.75F) // Высоченный узкий хитбокс
+                    .sized(3.0F, 18.75F)
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "laser").toString()));
 
     public static final RegistryObject<EntityType<StatueEntity>> STATUE = ENTITIES.register("statue_entity",
             () -> EntityType.Builder.of(StatueEntity::new, MobCategory.MONSTER)
-                    .sized(0.625F, 2.125F) // Хитбокс статуи
+                    .sized(0.625F, 2.125F)
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "statue_entity").toString()));
 
@@ -446,43 +400,38 @@ public class NetherExp {
 
     public static final RegistryObject<EntityType<DoctorEntity>> DOCTOR = ENTITIES.register("doctor",
             () -> EntityType.Builder.of(DoctorEntity::new, MobCategory.CREATURE)
-                    .sized(0.6F, 1.95F) // Хитбокс жителя
+                    .sized(0.6F, 1.95F)
                     .build(new ResourceLocation(MODID, "doctor").toString()));
 
     public static final RegistryObject<EntityType<BlacksmithEntity>> BLACKSMITH = ENTITIES.register("blacksmith",
             () -> EntityType.Builder.of(BlacksmithEntity::new, MobCategory.CREATURE)
-                    .sized(0.6F, 1.95F) // Хитбокс жителя
+                    .sized(0.6F, 1.95F)
                     .build(new ResourceLocation(MODID, "blacksmith").toString()));
 
     public static final RegistryObject<EntityType<BelieverEntity>> BELIEVER = ENTITIES.register("believer",
             () -> EntityType.Builder.of(BelieverEntity::new, MobCategory.CREATURE)
-                    .sized(0.6F, 1.95F) // Хитбокс жителя
+                    .sized(0.6F, 1.95F)
                     .build(new ResourceLocation(MODID, "believer").toString()));
 
     public static final RegistryObject<EntityType<VillagerPrisonerEntity>> VILLAGER_PRISONER = ENTITIES.register("villager_prisoner",
             () -> EntityType.Builder.of(VillagerPrisonerEntity::new, MobCategory.CREATURE) // Мирный
-                    .sized(0.6F, 1.95F) // Стандартные размеры жителя
+                    .sized(0.6F, 1.95F)
                     .build("villager_prisoner"));
 
     public static final RegistryObject<EntityType<PiglinPrisonerEntity>> PIGLIN_PRISONER = ENTITIES.register("piglin_prisoner",
             () -> EntityType.Builder.of(PiglinPrisonerEntity::new, MobCategory.CREATURE) // Мирный
-                    .sized(0.6F, 1.95F) // Стандартные размеры жителя
+                    .sized(0.6F, 1.95F)
                     .build("piglin_prisoner"));
-
-    // Регистрация Мнипулятора:
     public static final RegistryObject<EntityType<ManipulatorEntity>> MANIPULATOR = ENTITIES.register("manipulator",
             () -> EntityType.Builder.of(ManipulatorEntity::new, MobCategory.MONSTER)
                     .fireImmune()
-                    .sized(0.9375F, 2.125F) // Хитбокс 15x34x15 пикселей
+                    .sized(0.9375F, 2.125F)
                     .build("manipulator"));
 
     public static final RegistryObject<EntityType<WelcomerEntity>> WELCOMER = ENTITIES.register("welcomer",
             () -> EntityType.Builder.of(WelcomerEntity::new, MobCategory.MONSTER)
-                    // Указываем размеры из Blockbench: 10/16 = 0.625, 36/16 = 2.25
                     .sized(0.625f, 2.25f)
                     .build("welcomer"));
-
-    // Регистрация моба с пересчетом хитбокса (16/16 = 1.0f ширина, 82/16 = 5.125f высота)
     public static final RegistryObject<EntityType<GuardianEntity>> GUARDIAN = ENTITIES.register("guardian",
             () -> EntityType.Builder.of(GuardianEntity::new, MobCategory.MONSTER)
                     .sized(1.0f, 5.125f)
@@ -490,26 +439,24 @@ public class NetherExp {
                     .build("guardian"));
 
     public static final RegistryObject<EntityType<GhastlyEntity>> GHASTLY = ENTITIES.register("ghastly",
-            () -> EntityType.Builder.of(GhastlyEntity::new, MobCategory.CREATURE) // Он мирный, поэтому CREATURE
+            () -> EntityType.Builder.of(GhastlyEntity::new, MobCategory.CREATURE)
                     .sized(0.625f, 0.8125f)
                     .fireImmune()
                     .build("ghastly"));
 
-    // SPAWN EGGS
-
     public static final RegistryObject<Item> GILDED_GOLEM_SPAWN_EGG = ITEMS.register("gilded_golem_spawn_egg",
             () -> new net.minecraftforge.common.ForgeSpawnEggItem(
-                    GILDED_GOLEM, // Ссылка на твоего моба
-                    0xFFFFFF,     // Основной цвет (hex)
-                    0xFFFFFF,     // Цвет пятен (hex)
+                    GILDED_GOLEM,
+                    0xFFFFFF,
+                    0xFFFFFF,
                     new Item.Properties()
             ));
 
     public static final RegistryObject<Item> GHASTLY_SPAWN_EGG = ITEMS.register("ghastly_spawn_egg",
             () -> new net.minecraftforge.common.ForgeSpawnEggItem(
-                    GHASTLY, // Ссылка на твоего моба
-                    0xFFFFFF,     // Основной цвет (hex)
-                    0xFFFFFF,     // Цвет пятен (hex)
+                    GHASTLY,
+                    0xFFFFFF,
+                    0xFFFFFF,
                     new Item.Properties()
             ));
 
@@ -587,8 +534,6 @@ public class NetherExp {
 
     public NetherExp(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
-
-        // Подключаем реестры
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
@@ -609,7 +554,6 @@ public class NetherExp {
             ModMessages.register();
         });
     }
-// CREATIVE MENU
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS || event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(NETHER_SPAWNER_ITEM);
@@ -664,7 +608,6 @@ public class NetherExp {
     public static class ModEvents {
         @SubscribeEvent
         public static void registerAttributes(EntityAttributeCreationEvent event) {
-            // Регистрируем здоровье и характеристики для нашего моба
             event.put(GILDED_GOLEM.get(), GildedGolemEntity.createAttributes().build());
             event.put(AZAZEL.get(), AzazelEntity.createAttributes().build());
             event.put(LASER.get(), LaserEntity.createAttributes().build());
@@ -682,9 +625,6 @@ public class NetherExp {
             event.put(GUARDIAN.get(), GuardianEntity.createAttributes().build());
         }
     }
-
-
-    // Твой старый класс ClientModEvents
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
 
@@ -702,8 +642,6 @@ public class NetherExp {
             event.registerBlockEntityRenderer(POINTED_BLACKSTONE_BE.get(), PointedBlackstoneRenderer::new);
             event.registerBlockEntityRenderer(BLACKSTONE_PLANT_BE.get(), BlackstonePlantRenderer::new);
             event.registerBlockEntityRenderer(BLACKSTONE_AXON_BE.get(), BlackstoneAxonRenderer::new);
-
-            //entity
             event.registerEntityRenderer(GILDED_GOLEM.get(), GildedGolemRenderer::new);
             event.registerEntityRenderer(CRIMSON_ARROW_ENTITY.get(), com.benji.netherman.client.renderer.entity.CrimsonArrowRenderer::new);
             event.registerEntityRenderer(AZAZEL.get(), AzazelRenderer::new);
@@ -721,8 +659,6 @@ public class NetherExp {
             event.registerEntityRenderer(GUARDIAN.get(), GuardianRenderer::new);
             event.registerEntityRenderer(GHASTLY.get(), GhastlyRenderer::new);
         }
-
-        // --- ДОБАВЛЯЕМ НОВЫЙ МЕТОД ДЛЯ ОВЕРЛЕЕВ СЮДА ---
         @SubscribeEvent
         public static void registerGuiOverlays(net.minecraftforge.client.event.RegisterGuiOverlaysEvent event) {
             event.registerAboveAll("manipulation_overlay", ManipulationOverlay.HUD_OVERLAY);

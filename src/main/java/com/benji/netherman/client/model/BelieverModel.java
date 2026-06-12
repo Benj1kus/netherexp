@@ -19,7 +19,6 @@ public class BelieverModel extends GeoModel<BelieverEntity> {
 
     @Override
     public ResourceLocation getTextureResource(BelieverEntity animatable) {
-        // Мгновенное чтение обычной переменной вместо тяжелого SynchedEntityData
         return animatable.clientIsProtected ? TEX_PRAY : TEX_NORMAL;
     }
 

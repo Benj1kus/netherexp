@@ -20,7 +20,7 @@ public class MansionCheckHandler {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (!event.player.level().isClientSide() && event.phase == TickEvent.Phase.END && event.player.tickCount % 20 == 0) {
             ServerLevel level = (ServerLevel) event.player.level();
-            ServerPlayer serverPlayer = (ServerPlayer) event.player; // Приводим к серверному игроку
+            ServerPlayer serverPlayer = (ServerPlayer) event.player;
 
             Registry<Structure> registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
             Structure mansion = registry.get(new ResourceLocation("netherman", "mansion_nether"));
@@ -31,8 +31,6 @@ public class MansionCheckHandler {
                 StructureStart start = level.structureManager().getStructureAt(event.player.blockPosition(), mansion);
                 isInside = start.isValid();
             }
-
-            // Отправляем пакет клиенту!
             ModMessages.sendToPlayer(new FogSyncS2CPacket(isInside), serverPlayer);
         }
     }

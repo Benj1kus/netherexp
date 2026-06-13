@@ -1,0 +1,63 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "comment": "Сырое железо (Ровно 5 слотов по 1 шт)",
+      "rolls": 5,
+      "entries": [
+        { "type": "minecraft:item", "name": "minecraft:raw_iron" }
+      ]
+    },
+    {
+      "comment": "Сырое золото (Ровно 6 слотов по 1 шт)",
+      "rolls": 6,
+      "entries": [
+        { "type": "minecraft:item", "name": "minecraft:raw_gold" }
+      ]
+    },
+    {
+      "comment": "Золотые слитки (Ровно 3 слота по 1 шт)",
+      "rolls": 3,
+      "entries": [
+        { "type": "minecraft:item", "name": "minecraft:gold_ingot" }
+      ]
+    },
+    {
+      "comment": "Ценные ресурсы и блоки (в один слот)",
+      "rolls": 3,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diamond",
+          "weight": 2,
+          "functions": [
+            { "function": "minecraft:set_count", "count": 2 }
+          ]
+        },
+        { "type": "minecraft:item", "name": "minecraft:iron_block", "weight": 1 },
+        { "type": "minecraft:item", "name": "minecraft:gold_block", "weight": 1 },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:copper_ingot",
+          "weight": 3,
+          "functions": [
+            { "function": "minecraft:set_count", "count": 6 }
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "Экипировка (От 1 до 3 случайных предметов из списка)",
+      "rolls": {
+        "min": 1,
+        "max": 3
+      },
+      "entries": [
+        { "type": "minecraft:item", "name": "minecraft:golden_sword", "weight": 1 },
+        { "type": "minecraft:item", "name": "minecraft:diamond_helmet", "weight": 1 },
+        { "type": "minecraft:item", "name": "minecraft:iron_chestplate", "weight": 1 },
+        { "type": "minecraft:item", "name": "minecraft:chainmail_leggings", "weight": 1 }
+      ]
+    }
+  ]
+}

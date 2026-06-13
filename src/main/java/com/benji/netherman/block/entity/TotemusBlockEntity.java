@@ -60,7 +60,7 @@ public class TotemusBlockEntity extends BlockEntity {
                 level.setBlock(pos, currentState.setValue(TotemusBlock.TYPE, entity.totemType), 3);
             }
 
-            AABB box = new AABB(pos).inflate(20.0);
+            AABB box = new AABB(pos).inflate(10.0);
             List<ServerPlayer> players = level.getEntitiesOfClass(ServerPlayer.class, box);
 
             for (ServerPlayer player : players) {

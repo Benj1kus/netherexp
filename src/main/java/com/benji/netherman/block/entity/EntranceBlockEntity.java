@@ -31,7 +31,7 @@ public class EntranceBlockEntity extends BlockEntity implements GeoBlockEntity {
     private static final RawAnimation ANIM_OPEN = RawAnimation.begin().thenPlayAndHold("open");
     private static final RawAnimation ANIM_IDLE_OPEN = RawAnimation.begin().thenLoop("open_idle");
     private static final RawAnimation ANIM_CLOSE = RawAnimation.begin().thenPlayAndHold("close");
-    private static final RawAnimation ANIM_IDLE_CLOSE = RawAnimation.begin().thenLoop("close_idle");
+    private static final RawAnimation ANIM_IDLE_CLOSE = RawAnimation.begin().thenLoop("close_idle2");
 
     private int blockStateAnim = STATE_CLOSED;
 

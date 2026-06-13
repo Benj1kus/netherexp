@@ -11,6 +11,5 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class VillagerPrisonerRenderer extends GeoEntityRenderer<VillagerPrisonerEntity> {
     public VillagerPrisonerRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new VillagerPrisonerModel());
-        addRenderLayer(new GenericEmissiveLayer<>(this, new ResourceLocation(NetherExp.MODID, "textures/entity/villager_prisoner_emissive.png")));
     }
 }

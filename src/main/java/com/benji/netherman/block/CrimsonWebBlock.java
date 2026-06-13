@@ -1,8 +1,12 @@
 package com.benji.netherman.block;
 
-import com.benji.netherman.block.entity.CrimsonWebBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -10,118 +14,148 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-public class CrimsonWebBlock extends HorizontalDirectionalBlock implements EntityBlock {
-    public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
+public class CrimsonWebBlock extends HorizontalDirectionalBlock {
+    public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 3);
+    public static final BooleanProperty CLOSING = BooleanProperty.create("closing");
 
-    private static final VoxelShape SHAPE_NS =
-            Block.box(0.0D, 0.0D, 7.0D,
-                    16.0D, 16.0D, 9.0D);
+    // Хитбоксы для Север-Юг
+    private static final VoxelShape SHAPE_NS_0 = Block.box(0.0D, 0.0D, 7.0D, 16.0D, 16.0D, 9.0D);
+    private static final VoxelShape SHAPE_NS_1 = Block.box(2.0D, 2.0D, 7.0D, 14.0D, 14.0D, 9.0D);
+    private static final VoxelShape SHAPE_NS_2 = Block.box(5.0D, 5.0D, 7.0D, 11.0D, 11.0D, 9.0D);
 
-    private static final VoxelShape SHAPE_EW =
-            Block.box(7.0D, 0.0D, 0.0D,
-                    9.0D, 16.0D, 16.0D);
+    // Хитбоксы для Запад-Восток
+    private static final VoxelShape SHAPE_EW_0 = Block.box(7.0D, 0.0D, 0.0D, 9.0D, 16.0D, 16.0D);
+    private static final VoxelShape SHAPE_EW_1 = Block.box(7.0D, 2.0D, 2.0D, 9.0D, 14.0D, 14.0D);
+    private static final VoxelShape SHAPE_EW_2 = Block.box(7.0D, 5.0D, 5.0D, 9.0D, 11.0D, 11.0D);
 
     public CrimsonWebBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(
-                this.stateDefinition.any()
-                        .setValue(FACING, Direction.NORTH)
-                        .setValue(OPEN, false)
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(STAGE, 0)
+                .setValue(CLOSING, false)
         );
     }
 
-
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, OPEN);
+        builder.add(FACING, STAGE, CLOSING);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                .setValue(OPEN, false);
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        int stage = state.getValue(STAGE);
+        if (stage == 3) return Shapes.empty();
 
-        if (state.getValue(OPEN)) {
-            return Shapes.empty();
-        }
+        boolean isXAxis = state.getValue(FACING).getAxis() == Direction.Axis.X;
 
-        return state.getValue(FACING).getAxis() == Direction.Axis.X
-                ? SHAPE_EW
-                : SHAPE_NS;
+        return switch (stage) {
+            case 1 -> isXAxis ? SHAPE_EW_1 : SHAPE_NS_1;
+            case 2 -> isXAxis ? SHAPE_EW_2 : SHAPE_NS_2;
+            default -> isXAxis ? SHAPE_EW_0 : SHAPE_NS_0;
+        };
     }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide() && hand == InteractionHand.MAIN_HAND) {
-            if (state.getValue(OPEN)) return InteractionResult.PASS;
+            if (state.getValue(STAGE) != 0) return InteractionResult.PASS;
+
             Map<BlockPos, Integer> distances = new HashMap<>();
             Queue<BlockPos> queue = new LinkedList<>();
 
             queue.add(pos);
             distances.put(pos, 0);
-            int maxDist = 0;
+
             while (!queue.isEmpty() && distances.size() < 1000) {
                 BlockPos current = queue.poll();
                 int currentDist = distances.get(current);
-                maxDist = Math.max(maxDist, currentDist);
+
                 for (Direction dir : Direction.values()) {
                     BlockPos neighbor = current.relative(dir);
-
                     if (!distances.containsKey(neighbor) && level.getBlockState(neighbor).is(this)) {
                         distances.put(neighbor, currentDist + 1);
                         queue.add(neighbor);
                     }
                 }
             }
+
             for (Map.Entry<BlockPos, Integer> entry : distances.entrySet()) {
-                if (level.getBlockEntity(entry.getKey()) instanceof CrimsonWebBlockEntity be) {
-                    be.triggerWave(entry.getValue(), maxDist);
-                }
+                int delay = (int) (Math.pow(entry.getValue(), 0.8) * 3);
+                level.scheduleTick(entry.getKey(), this, Math.max(1, delay));
             }
         }
         return InteractionResult.SUCCESS;
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) { return RenderShape.ENTITYBLOCK_ANIMATED; }
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        int stage = state.getValue(STAGE);
+        boolean isClosing = state.getValue(CLOSING);
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new CrimsonWebBlockEntity(pos, state);
+        if (!isClosing) {
+            if (stage == 0) {
+                level.playSound(null, pos, SoundEvents.SCULK_BLOCK_BREAK, SoundSource.BLOCKS, 1.0F, 0.9F + random.nextFloat() * 0.2F);
+                level.setBlock(pos, state.setValue(STAGE, 1), 3);
+                level.scheduleTick(pos, this, 3);
+            } else if (stage == 1) {
+                level.setBlock(pos, state.setValue(STAGE, 2), 3);
+                level.scheduleTick(pos, this, 3);
+            } else if (stage == 2) {
+                level.setBlock(pos, state.setValue(STAGE, 3), 3);
+                level.scheduleTick(pos, this, 50); // Открыто на 2.5 секунды
+                level.setBlock(pos, level.getBlockState(pos).setValue(CLOSING, true), 3);
+            }
+        } else {
+            if (stage == 3) {
+                level.playSound(null, pos, SoundEvents.SCULK_BLOCK_BREAK, SoundSource.BLOCKS, 1.0F, 0.9F + random.nextFloat() * 0.2F);
+                level.setBlock(pos, state.setValue(STAGE, 2), 3);
+                level.scheduleTick(pos, this, 3);
+            } else if (stage == 2) {
+                level.setBlock(pos, state.setValue(STAGE, 1), 3);
+                level.scheduleTick(pos, this, 3);
+            } else if (stage == 1) {
+                level.setBlock(pos, state.setValue(STAGE, 0).setValue(CLOSING, false), 3);
+            }
+        }
     }
 
-    @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return (lvl, p, st, entity) -> {
-            if (entity instanceof CrimsonWebBlockEntity be) CrimsonWebBlockEntity.tick(lvl, p, st, be);
-        };
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        int stage = state.getValue(STAGE);
+        if (stage == 1 || stage == 2) {
+            for (int i = 0; i < 2; i++) {
+                double px = pos.getX() + random.nextDouble();
+                double py = pos.getY() + random.nextDouble();
+                double pz = pos.getZ() + random.nextDouble();
+                level.addParticle(ParticleTypes.CRIMSON_SPORE, px, py, pz, 0, 0.05D, 0);
+            }
+        }
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 }

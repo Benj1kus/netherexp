@@ -16,16 +16,6 @@ public class GhastlyRenderer extends GeoEntityRenderer<GhastlyEntity> {
         super(renderManager, new GhastlyModel());
         this.shadowRadius = 0.3f;
 
-        // 1. Добавляем твой Emissive слой (он тоже поддерживает полупрозрачность через entityTranslucentEmissive)
-        addRenderLayer(new GenericEmissiveLayer<>(this, new ResourceLocation(NetherExp.MODID, "textures/entity/ghastly_emissive.png")));
-
-        // 2. Добавляем слой анимированной подсказки
         addRenderLayer(new GhastlyHintLayer(this));
-    }
-
-    // Это делает саму базовую текстуру ghastly.png полупрозрачной!
-    @Override
-    public RenderType getRenderType(GhastlyEntity animatable, ResourceLocation texture, MultiBufferSource bufferSource, float partialTick) {
-        return RenderType.entityTranslucent(texture);
     }
 }

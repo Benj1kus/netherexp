@@ -15,8 +15,4 @@ public class VoidNetherMidRenderer extends GeoBlockRenderer<VoidNetherMidBlockEn
         super(new VoidNetherMidModel());
         addRenderLayer(new GenericEmissiveLayer<>(this, new ResourceLocation(NetherExp.MODID, "textures/block/void_nether_emissive.png")));
     }
-    @Override
-    public RenderType getRenderType(VoidNetherMidBlockEntity animatable, ResourceLocation texture, MultiBufferSource bufferSource, float partialTick) {
-        return RenderType.entityTranslucent(texture);
-    }
 }

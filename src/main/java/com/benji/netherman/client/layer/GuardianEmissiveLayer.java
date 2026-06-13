@@ -23,7 +23,7 @@ public class GuardianEmissiveLayer extends GeoRenderLayer<GuardianEntity> {
                        RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer,
                        float partialTick, int packedLight, int packedOverlay) {
         if (!animatable.isBuffed()) return;
-        RenderType glowRenderType = RenderType.entityTranslucentEmissive(this.emissiveTexture);
+        RenderType glowRenderType = RenderType.eyes(this.emissiveTexture);
         VertexConsumer glowBuffer = bufferSource.getBuffer(glowRenderType);
         getRenderer().reRender(bakedModel, poseStack, bufferSource, animatable, glowRenderType,
                 glowBuffer, partialTick, 15728880, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);

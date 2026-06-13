@@ -21,7 +21,8 @@ public class BelieverPrayEmissiveLayer extends GeoRenderLayer<BelieverEntity> {
     @Override
     public void render(PoseStack poseStack, BelieverEntity animatable, BakedGeoModel bakedModel, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
         if (animatable.getEntityData().get(BelieverEntity.IS_PROTECTED)) {
-            RenderType emissiveRenderType = RenderType.entityTranslucentEmissive(EMISSIVE);
+            RenderType emissiveRenderType = RenderType.eyes(EMISSIVE);
+
             getRenderer().reRender(bakedModel, poseStack, bufferSource, animatable, emissiveRenderType, bufferSource.getBuffer(emissiveRenderType), partialTick, 15728880, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
         }
     }

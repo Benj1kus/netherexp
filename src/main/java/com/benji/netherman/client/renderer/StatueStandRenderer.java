@@ -11,7 +11,5 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 public class StatueStandRenderer extends GeoBlockRenderer<StatueStandBlockEntity> {
     public StatueStandRenderer(BlockEntityRendererProvider.Context context) {
         super(new StatueStandModel());
-        ResourceLocation emissiveTexture = new ResourceLocation(NetherExp.MODID, "textures/block/blackstone_column_emissive.png");
-        addRenderLayer(new GenericEmissiveLayer<>(this, emissiveTexture));
     }
 }

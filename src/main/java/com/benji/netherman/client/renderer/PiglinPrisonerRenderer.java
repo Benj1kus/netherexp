@@ -13,6 +13,5 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class PiglinPrisonerRenderer extends GeoEntityRenderer<PiglinPrisonerEntity> {
     public PiglinPrisonerRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new PiglinPrisonerModel());
-        addRenderLayer(new GenericEmissiveLayer<>(this, new ResourceLocation(NetherExp.MODID, "textures/entity/piglin_prisoner_emissive.png")));
     }
 }

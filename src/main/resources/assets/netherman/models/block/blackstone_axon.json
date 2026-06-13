@@ -1,6 +1,8 @@
 {
-  "parent": "block/block",
+  "parent": "minecraft:block/cross",
+  "render_type": "minecraft:cutout",
   "textures": {
+    "cross": "netherman:block/blackstone_axon",
     "particle": "netherman:block/nether_spawner_particles"
   }
 }

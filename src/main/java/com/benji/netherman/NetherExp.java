@@ -150,15 +150,9 @@ public class NetherExp {
             () -> new EntranceBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_WART_BLOCK)
                     .strength(-1.0F, 3600000.0F)
                     .noOcclusion()));
+
     public static final RegistryObject<Item> ENTRANCE_ITEM = ITEMS.register("entrance",
-            () -> new GeoBlockItem(
-                    ENTRANCE.get(),
-                    new Item.Properties(),
-                    new ResourceLocation(MODID, "geo/entrance.geo.json"),
-                    new ResourceLocation(MODID, "textures/block/entrance.png"),
-                    new ResourceLocation(MODID, "animations/entrance.animation.json"),
-                    new ResourceLocation(MODID, "textures/block/entrance_emissive.png")
-            ));
+            () -> new BlockItem(ENTRANCE.get(), new Item.Properties()));
 
 
     public static final RegistryObject<Block> CRIMSON_WEB = BLOCKS.register("crimson_web",
@@ -328,11 +322,6 @@ public class NetherExp {
     public static final RegistryObject<BlockEntityType<TraphiveBlockEntity>> TRAPHIVE_BE = BLOCK_ENTITIES.register("traphive",
             () -> BlockEntityType.Builder.of(TraphiveBlockEntity::new, TRAPHIVE.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<CrimsonWebBlockEntity>> CRIMSON_WEB_BE = BLOCK_ENTITIES.register("crimson_web",
-            () -> BlockEntityType.Builder.of(CrimsonWebBlockEntity::new, CRIMSON_WEB.get()).build(null));
-
-    public static final RegistryObject<BlockEntityType<EntranceBlockEntity>> ENTRANCE_BE = BLOCK_ENTITIES.register("entrance",
-            () -> BlockEntityType.Builder.of(EntranceBlockEntity::new, ENTRANCE.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<GrandDoorBlockEntity>> GRAND_DOOR_BE = BLOCK_ENTITIES.register("grand_door",
             () -> BlockEntityType.Builder.of(GrandDoorBlockEntity::new, GRAND_DOOR.get()).build(null));
@@ -340,11 +329,6 @@ public class NetherExp {
     public static final RegistryObject<BlockEntityType<NetherSpawnerBlockEntity>> NETHER_SPAWNER_BE = BLOCK_ENTITIES.register("nether_spawner",
             () -> BlockEntityType.Builder.of(NetherSpawnerBlockEntity::new, NETHER_SPAWNER.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<BlackstonePlantBlockEntity>> BLACKSTONE_PLANT_BE = BLOCK_ENTITIES.register("blackstone_plant",
-            () -> BlockEntityType.Builder.of(BlackstonePlantBlockEntity::new, BLACKSTONE_PLANT.get()).build(null));
-
-    public static final RegistryObject<BlockEntityType<BlackstoneAxonBlockEntity>> BLACKSTONE_AXON_BE = BLOCK_ENTITIES.register("blackstone_axon",
-            () -> BlockEntityType.Builder.of(BlackstoneAxonBlockEntity::new, BLACKSTONE_AXON.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<PointedBlackstoneBlockEntity>> POINTED_BLACKSTONE_BE = BLOCK_ENTITIES.register("pointed_blackstone",
             () -> BlockEntityType.Builder.of(PointedBlackstoneBlockEntity::new, POINTED_BLACKSTONE.get()).build(null));
@@ -636,12 +620,8 @@ public class NetherExp {
             event.registerBlockEntityRenderer(TRAPHIVE_BE.get(), TraphiveRenderer::new);
             event.registerBlockEntityRenderer(STATUE_STAND_BE.get(), StatueStandRenderer::new);
             event.registerBlockEntityRenderer(EYE_BE.get(), EyeRenderer::new);
-            event.registerBlockEntityRenderer(CRIMSON_WEB_BE.get(), CrimsonWebRenderer::new);
-            event.registerBlockEntityRenderer(ENTRANCE_BE.get(), EntranceRenderer::new);
             event.registerBlockEntityRenderer(GRAND_DOOR_BE.get(), GrandDoorRenderer::new);
             event.registerBlockEntityRenderer(POINTED_BLACKSTONE_BE.get(), PointedBlackstoneRenderer::new);
-            event.registerBlockEntityRenderer(BLACKSTONE_PLANT_BE.get(), BlackstonePlantRenderer::new);
-            event.registerBlockEntityRenderer(BLACKSTONE_AXON_BE.get(), BlackstoneAxonRenderer::new);
             event.registerEntityRenderer(GILDED_GOLEM.get(), GildedGolemRenderer::new);
             event.registerEntityRenderer(CRIMSON_ARROW_ENTITY.get(), com.benji.netherman.client.renderer.entity.CrimsonArrowRenderer::new);
             event.registerEntityRenderer(AZAZEL.get(), AzazelRenderer::new);

@@ -2,6 +2,7 @@ package com.benji.netherman.client.renderer;
 
 import com.benji.netherman.NetherExp;
 import com.benji.netherman.client.layer.GenericEmissiveLayer;
+import com.benji.netherman.client.layer.GlowmaskLayer;
 import com.benji.netherman.client.model.LaserModel;
 import com.benji.netherman.entity.LaserEntity;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -14,7 +15,7 @@ public class LaserRenderer extends GeoEntityRenderer<LaserEntity> {
         super(renderManager, new LaserModel());
         this.shadowRadius = 0.0f; // У лазера не должно быть черной тени под собой
         ResourceLocation emissiveTexture = new ResourceLocation(NetherExp.MODID, "textures/entity/laser_emissive.png");
-        addRenderLayer(new GenericEmissiveLayer<>(this, emissiveTexture));
+        addRenderLayer(new GlowmaskLayer<>(this, emissiveTexture));
     }
     @Override
     public boolean shouldRender(LaserEntity entity, Frustum camera, double camX, double camY, double camZ) {

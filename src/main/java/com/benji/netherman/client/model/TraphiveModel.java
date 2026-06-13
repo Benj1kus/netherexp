@@ -1,7 +1,6 @@
 package com.benji.netherman.client.model;
 
 import com.benji.netherman.NetherExp;
-import com.benji.netherman.block.entity.EntranceBlockEntity;
 import com.benji.netherman.block.entity.TraphiveBlockEntity;
 import com.benji.netherman.entity.TraderEntity;
 import net.minecraft.resources.ResourceLocation;

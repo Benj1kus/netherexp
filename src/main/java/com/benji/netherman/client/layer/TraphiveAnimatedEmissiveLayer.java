@@ -32,13 +32,13 @@ public class TraphiveAnimatedEmissiveLayer extends GeoRenderLayer<TraphiveBlockE
         int currentFrame = (int) Math.floor(exactFrame) % 7;
         int nextFrame = (currentFrame + 1) % 7;
         float blendFactor = exactFrame - (float) Math.floor(exactFrame);
-        RenderType currentRenderType = RenderType.entityTranslucentEmissive(FRAMES[currentFrame]);
+        RenderType currentRenderType = RenderType.eyes(FRAMES[currentFrame]);
         VertexConsumer currentBuffer = bufferSource.getBuffer(currentRenderType);
         this.getRenderer().reRender(bakedModel, poseStack, bufferSource, animatable, currentRenderType, currentBuffer, partialTick,
                 15728880,
                 packedOverlay,
                 1.0F, 1.0F, 1.0F, 1.0F - blendFactor);
-        RenderType nextRenderType = RenderType.entityTranslucentEmissive(FRAMES[nextFrame]);
+        RenderType nextRenderType = RenderType.eyes(FRAMES[nextFrame]);
         VertexConsumer nextBuffer = bufferSource.getBuffer(nextRenderType);
         this.getRenderer().reRender(bakedModel, poseStack, bufferSource, animatable, nextRenderType, nextBuffer, partialTick,
                 15728880,

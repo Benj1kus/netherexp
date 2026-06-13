@@ -1,5 +1,15 @@
 {
   "variants": {
-    "": { "model": "netherman:block/entrance" }
+    "closing=false,stage=0": { "model": "netherman:block/entrance_full" },
+    "closing=true,stage=0":  { "model": "netherman:block/entrance_full" },
+
+    "closing=false,stage=1": { "model": "netherman:block/entrance_stage_1" },
+    "closing=true,stage=1":  { "model": "netherman:block/entrance_stage_1" },
+
+    "closing=false,stage=2": { "model": "netherman:block/entrance_stage_2" },
+    "closing=true,stage=2":  { "model": "netherman:block/entrance_stage_2" },
+
+    "closing=false,stage=3": { "model": "minecraft:block/air" },
+    "closing=true,stage=3":  { "model": "minecraft:block/air" }
   }
 }

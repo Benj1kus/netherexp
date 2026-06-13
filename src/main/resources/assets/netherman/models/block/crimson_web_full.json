@@ -1,0 +1,17 @@
+{
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "texture": "netherman:block/crimson_web",
+    "particle": "netherman:block/crimson_web"
+  },
+  "elements": [
+    {
+      "from": [ 0, 0, 7 ],
+      "to": [ 16, 16, 9 ],
+      "faces": {
+        "north": { "texture": "#texture" },
+        "south": { "texture": "#texture" }
+      }
+    }
+  ]
+}

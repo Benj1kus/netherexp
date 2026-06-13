@@ -63,7 +63,7 @@ public class ClientZoneAmbientEvents {
                     currentAmbientSound = new ZoneAmbientSoundInstance(ModSounds.BOSS_FIGHT.get(), player, activeEffect, false); // false = не зацикливать интро!
                     Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
 
-                    bossMusicTimer = 6020;
+                    bossMusicTimer = 2900;
                     isPlayingBossIntro = true;
                 } else {
                     var soundEvent = switch (currentZoneType) {

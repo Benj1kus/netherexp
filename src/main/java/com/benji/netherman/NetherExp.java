@@ -2,6 +2,9 @@ package com.benji.netherman;
 
 import com.benji.netherman.block.*;
 import com.benji.netherman.block.entity.*;
+import com.benji.netherman.config.AzazelConfig;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 import com.benji.netherman.client.ManipulationOverlay;
 import com.benji.netherman.client.renderer.*;
 import com.benji.netherman.client.renderer.entity.GhastlyRenderer;
@@ -171,6 +174,12 @@ public class NetherExp {
                     new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
             ));
 
+    public static final RegistryObject<Block> AZAZEL_TROPHY = BLOCKS.register("azazel_trophy",
+            () -> new AzazelTrophyBlock(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Item> AZAZEL_TROPHY_ITEM = ITEMS.register("azazel_trophy",
+            () -> new BlockItem(AZAZEL_TROPHY.get(), new Item.Properties()));
 
     public static final RegistryObject<Block> TRAPHIVE = BLOCKS.register("traphive",
             () -> new TraphiveBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_WART_BLOCK)
@@ -518,6 +527,8 @@ public class NetherExp {
 
     public NetherExp(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
+        context.registerConfig(ModConfig.Type.COMMON, AzazelConfig.SPEC);
+
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
@@ -544,6 +555,7 @@ public class NetherExp {
             event.accept(GRAND_DOOR_ITEM);
             event.accept(BLACKSTONE_COLUMN_ITEM);
             event.accept(ENTRANCE_ITEM);
+            event.accept(AZAZEL_TROPHY_ITEM);
             event.accept(CRIMSON_WEB_ITEM);
             event.accept(TRAPHIVE_ITEM);
             event.accept(VOIDMID_ITEM);

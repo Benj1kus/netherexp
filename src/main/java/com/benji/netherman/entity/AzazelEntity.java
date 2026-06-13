@@ -2,6 +2,7 @@ package com.benji.netherman.entity;
 
 import com.benji.netherman.ModSounds;
 import com.benji.netherman.NetherExp;
+import com.benji.netherman.config.AzazelConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -74,9 +75,9 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 800.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.2D)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
+                .add(Attributes.MAX_HEALTH, AzazelConfig.MAX_HEALTH.get())
+                .add(Attributes.MOVEMENT_SPEED, AzazelConfig.MOVEMENT_SPEED.get())
+                .add(Attributes.KNOCKBACK_RESISTANCE, AzazelConfig.KNOCKBACK_RESISTANCE.get());
     }
 
     @Override
@@ -366,6 +367,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
                                         new ItemStack(NetherExp.CHANCE_TOTEM.get(), 2),
                                         new ItemStack(net.minecraft.world.item.Items.TOTEM_OF_UNDYING, 1),
                                         new ItemStack(NetherExp.NOTE.get(), 1),
+                                        new ItemStack(NetherExp.AZAZEL_TROPHY_ITEM.get(), 1),
                                         new ItemStack(net.minecraft.world.item.Items.DIAMOND, 25),
                                         new ItemStack(net.minecraft.world.item.Items.NETHERITE_SCRAP, 12),
                                         new ItemStack(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE, 4),
@@ -441,7 +443,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
                     if (this.attackTimer <= 0) this.entityData.set(ATTACK_STATE, 0);
                 } else {
-                    if (this.getTarget() != null && this.random.nextInt(80) == 0) {
+                    if (this.getTarget() != null && this.random.nextInt(AzazelConfig.ATTACK_CHANCE.get()) == 0) {
                         if (!this.hasOfferedMercy && this.totalAttacksPerformed >= 5) {
                             startMercyPhase();
                             this.hasOfferedMercy = true;
@@ -476,7 +478,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
             List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(10.0D));
 
             for (Player player : players) {
-                player.hurt(this.damageSources().mobAttack(this), 8.0F);
+                player.hurt(this.damageSources().mobAttack(this), AzazelConfig.LAUNCH_ATTACK_DAMAGE.get().floatValue());
                 player.setDeltaMovement(player.getDeltaMovement().x, 2.5D, player.getDeltaMovement().z);
                 player.hurtMarked = true;
                 if (this.level() instanceof ServerLevel serverLevel) {
@@ -499,7 +501,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
             } else if (this.attackTimer == 15) {
                 player.setDeltaMovement(player.getDeltaMovement().x, 1.5D, player.getDeltaMovement().z);
                 player.hurtMarked = true;
-                player.hurt(this.damageSources().mobAttack(this), 5.0F);
+                player.hurt(this.damageSources().mobAttack(this), AzazelConfig.PULL_ATTACK_DAMAGE.get().floatValue());
             }
         }
         if (this.level() instanceof ServerLevel serverLevel) {
@@ -528,7 +530,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
             player.setDeltaMovement(player.getDeltaMovement().add(knockbackVec.x, 0.2D, knockbackVec.z));
             player.hurtMarked = true;
 
-            if (this.attackTimer == 30) player.hurt(this.damageSources().mobAttack(this), 5.0F);
+            if (this.attackTimer == 30) player.hurt(this.damageSources().mobAttack(this), AzazelConfig.WIND_ATTACK_DAMAGE.get().floatValue());
         }
 
         if (this.level() instanceof ServerLevel serverLevel) {
@@ -548,7 +550,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
             if (this.tickCount % 3 == 0) {
                 List<Player> hitPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(1.0D));
                 for (Player player : hitPlayers) {
-                    player.hurt(this.damageSources().mobAttack(this), 4.0F);
+                    player.hurt(this.damageSources().mobAttack(this), AzazelConfig.WHEEL_ATTACK_DAMAGE.get().floatValue());
                     player.setDeltaMovement(dashVec.scale(1.5D));
                     player.hurtMarked = true;
                 }
@@ -612,7 +614,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
     }
 
     private void handlePassiveSummons() {
-        if (this.random.nextInt(600) == 0 && this.level() instanceof ServerLevel serverLevel) {
+        if (this.random.nextInt(AzazelConfig.PASSIVE_SUMMON_CHANCE.get()) == 0 && this.level() instanceof ServerLevel serverLevel) {
             this.playSound(ModSounds.SPAWN_UNIT.get(), 1.0F, 1.0F);
             serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY() + 2.0D, this.getZ(), 30, 1.5, 1.5, 1.5, 0.05);
 

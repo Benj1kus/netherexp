@@ -494,7 +494,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
     private void performLaunchAttack() {
 
         if (this.attackTimer == 40) {
-            List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(10.0D));
+            List<Player> players = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(5.0D));
 
             for (Player player : players) {
                 player.hurt(this.damageSources().mobAttack(this), AzazelConfig.LAUNCH_ATTACK_DAMAGE.get().floatValue());

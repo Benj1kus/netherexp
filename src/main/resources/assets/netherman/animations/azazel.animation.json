@@ -426,6 +426,28 @@
 					"scale": {
 						"vector": [0, 0, 0]
 					}
+				},
+				"mask": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.6": {
+							"vector": [0, 0, -45],
+							"easing": "easeInBounce",
+							"easingArgs": [0.2]
+						},
+						"1.2": {
+							"vector": [0, 0, 22.5],
+							"easing": "easeInBounce",
+							"easingArgs": [0.2]
+						},
+						"2.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInBounce",
+							"easingArgs": [0.2]
+						}
+					}
 				}
 			}
 		},

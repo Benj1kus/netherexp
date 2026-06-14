@@ -75,9 +75,9 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, AzazelConfig.MAX_HEALTH.get())
-                .add(Attributes.MOVEMENT_SPEED, AzazelConfig.MOVEMENT_SPEED.get())
-                .add(Attributes.KNOCKBACK_RESISTANCE, AzazelConfig.KNOCKBACK_RESISTANCE.get());
+                .add(Attributes.MAX_HEALTH, 800.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
     }
 
     @Override
@@ -95,6 +95,20 @@ public class AzazelEntity extends Monster implements GeoEntity {
         this.goalSelector.addGoal(1, new AzazelMoveGoal(this));
         this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 64.0F));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
+    }
+
+    @Override
+    public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor level, net.minecraft.world.DifficultyInstance difficulty, net.minecraft.world.entity.MobSpawnType reason, @Nullable net.minecraft.world.entity.SpawnGroupData spawnData, @Nullable net.minecraft.nbt.CompoundTag dataTag) {
+
+        if (this.getAttribute(Attributes.MAX_HEALTH) != null) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(AzazelConfig.MAX_HEALTH.get());
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(AzazelConfig.MOVEMENT_SPEED.get());
+            this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(AzazelConfig.KNOCKBACK_RESISTANCE.get());
+        }
+
+        this.setHealth(this.getMaxHealth());
+
+        return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
     }
 
     @Override
@@ -680,6 +694,12 @@ public class AzazelEntity extends Monster implements GeoEntity {
         if (tag.contains("TotalAttacks")) this.totalAttacksPerformed = tag.getInt("TotalAttacks");
         if (tag.contains("HasOfferedMercy")) this.hasOfferedMercy = tag.getBoolean("HasOfferedMercy");
         if (tag.contains("PhaseState")) this.entityData.set(PHASE_STATE, tag.getInt("PhaseState"));
+
+        if (!this.level().isClientSide() && this.getAttribute(Attributes.MAX_HEALTH) != null) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(AzazelConfig.MAX_HEALTH.get());
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(AzazelConfig.MOVEMENT_SPEED.get());
+            this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(AzazelConfig.KNOCKBACK_RESISTANCE.get());
+        }
     }
 
 

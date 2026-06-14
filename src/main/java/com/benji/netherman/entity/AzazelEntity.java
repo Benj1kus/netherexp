@@ -144,6 +144,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
         if (this.level().isClientSide()) return false;
 
         int attackState = this.entityData.get(ATTACK_STATE);
+
         if (attackState >= 7 && attackState <= 10) {
             return false;
         }
@@ -152,15 +153,18 @@ public class AzazelEntity extends Monster implements GeoEntity {
             this.playSound(SoundEvents.SHIELD_BLOCK, 1.0F, 1.5F);
             return false;
         }
+
+        if (this.getHealth() - amount <= this.getMaxHealth() * 0.05F) {
+            startDeathCinematic();
+            return false;
+        }
+
         if (attackState == 6) {
             this.entityData.set(ATTACK_STATE, 0);
             triggerAggro();
             return super.hurt(source, amount);
         }
-        if (this.getHealth() - amount <= this.getMaxHealth() * 0.05F) {
-            startDeathCinematic();
-            return false;
-        }
+
         if (!this.entityData.get(IS_AGGRO)) {
             triggerAggro();
         }
@@ -175,7 +179,6 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
         return super.hurt(source, amount);
     }
-
     private void triggerAggro() {
         this.entityData.set(IS_AGGRO, true);
         this.playSound(ModSounds.AZAZEL_IDLE_4.get(), 1.5F, 1.0F);
@@ -335,6 +338,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
                         if (this.level() instanceof ServerLevel serverLevel) {
                             serverLevel.sendParticles(ParticleTypes.FLASH, this.getX(), this.getY() + 2.0D, this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
                         }
+                        this.bossEvent.removeAllPlayers();
                         this.discard();
                     }
                 }
@@ -393,6 +397,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
                                 }
                             }
                         }
+                        this.bossEvent.removeAllPlayers();
                         this.discard();
                     }
                 }

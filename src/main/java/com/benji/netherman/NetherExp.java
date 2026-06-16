@@ -3,6 +3,9 @@ package com.benji.netherman;
 import com.benji.netherman.block.*;
 import com.benji.netherman.block.entity.*;
 import com.benji.netherman.config.AzazelConfig;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.*;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import com.benji.netherman.client.ManipulationOverlay;
@@ -18,9 +21,6 @@ import com.benji.netherman.item.GeoBlockItem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -55,6 +55,9 @@ public class NetherExp {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
             DeferredRegister.create(net.minecraft.core.registries.Registries.STRUCTURE_TYPE, MODID);
+
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     public static final RegistryObject<Block> NETHER_SPAWNER = BLOCKS.register("nether_spawner",
             () -> new NetherSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
@@ -180,6 +183,18 @@ public class NetherExp {
 
     public static final RegistryObject<Item> AZAZEL_TROPHY_ITEM = ITEMS.register("azazel_trophy",
             () -> new BlockItem(AZAZEL_TROPHY.get(), new Item.Properties()));
+
+    public static final RegistryObject<CreativeModeTab> NETHERMAN_TAB = CREATIVE_MODE_TABS.register("netherman_tab",
+            () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(AZAZEL_TROPHY_ITEM.get()))
+                    .title(Component.translatable("creativetab.netherman_tab"))
+                    .displayItems((parameters, output) -> {
+                        for (RegistryObject<Item> item : ITEMS.getEntries()) {
+                            output.accept(item.get());
+                        }
+                    })
+                    .build()
+    );
 
     public static final RegistryObject<Block> TRAPHIVE = BLOCKS.register("traphive",
             () -> new TraphiveBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_WART_BLOCK)
@@ -534,6 +549,7 @@ public class NetherExp {
         BLOCK_ENTITIES.register(modEventBus);
         ENTITIES.register(modEventBus);
         EFFECTS.register(modEventBus);
+        CREATIVE_MODE_TABS.register(modEventBus);
         RECIPE_SERIALIZERS.register(modEventBus);
         ModSounds.SOUNDS.register(modEventBus);
         STRUCTURE_TYPES.register(modEventBus);

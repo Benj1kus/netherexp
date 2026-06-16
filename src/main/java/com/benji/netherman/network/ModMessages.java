@@ -25,10 +25,18 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
+
+
         net.messageBuilder(FogSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(FogSyncS2CPacket::new)
                 .encoder(FogSyncS2CPacket::toBytes)
                 .consumerMainThread(FogSyncS2CPacket::handle)
+                .add();
+
+        net.messageBuilder(TotemAnimationPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(TotemAnimationPacket::new)
+                .encoder(TotemAnimationPacket::toBytes)
+                .consumerMainThread(TotemAnimationPacket::handle)
                 .add();
     }
 

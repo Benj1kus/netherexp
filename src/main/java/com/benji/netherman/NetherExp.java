@@ -3,10 +3,10 @@ package com.benji.netherman;
 import com.benji.netherman.block.*;
 import com.benji.netherman.block.entity.*;
 import com.benji.netherman.config.AzazelConfig;
+import com.benji.netherman.network.TotemAnimationPacket;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import com.benji.netherman.client.ManipulationOverlay;
 import com.benji.netherman.client.renderer.*;
@@ -565,6 +565,7 @@ public class NetherExp {
             ModMessages.register();
         });
     }
+
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS || event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(NETHER_SPAWNER_ITEM);

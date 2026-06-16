@@ -2,6 +2,8 @@ package com.benji.netherman.event;
 
 import com.benji.netherman.NetherExp;
 import com.benji.netherman.ModSounds;
+import com.benji.netherman.network.ModMessages;
+import com.benji.netherman.network.TotemAnimationPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -40,6 +42,8 @@ public class ChanceTotemEvents {
                 player.setHealth(1.0F);
                 player.removeAllEffects();
                 totem.shrink(1);
+
+                ModMessages.sendToPlayer(new TotemAnimationPacket(), player);
 
                 ServerLevel currentLevel = (ServerLevel) player.level();
                 currentLevel.playSound(null, player.blockPosition(), ModSounds.RESPAWN_TOTEM.get(), SoundSource.PLAYERS, 1.0F, 1.0F);

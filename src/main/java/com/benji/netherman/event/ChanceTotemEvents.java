@@ -9,13 +9,13 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -24,7 +24,7 @@ import java.util.Optional;
 @Mod.EventBusSubscriber(modid = NetherExp.MODID)
 public class ChanceTotemEvents {
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onPlayerDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             ItemStack mainHand = player.getMainHandItem();
@@ -48,6 +48,7 @@ public class ChanceTotemEvents {
                 ServerLevel currentLevel = (ServerLevel) player.level();
                 currentLevel.playSound(null, player.blockPosition(), ModSounds.RESPAWN_TOTEM.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
                 currentLevel.sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 1.0D, player.getZ(), 50, 0.5D, 0.5D, 0.5D, 0.05D);
+
                 ServerLevel respawnLevel = currentLevel.getServer().getLevel(player.getRespawnDimension());
                 if (respawnLevel == null) respawnLevel = currentLevel.getServer().overworld();
 
@@ -66,12 +67,14 @@ public class ChanceTotemEvents {
                     BlockPos sharedSpawn = respawnLevel.getSharedSpawnPos();
                     player.teleportTo(respawnLevel, sharedSpawn.getX(), sharedSpawn.getY(), sharedSpawn.getZ(), respawnAngle, 0.0F);
                 }
+
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 4));
                 player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 600, 0));
                 player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 600, 1));
                 player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 600, 2));
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 600, 4));
                 player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 600, 0));
+
                 respawnLevel.playSound(null, player.blockPosition(), ModSounds.RESPAWN_TOTEM.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
                 respawnLevel.sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 1.0D, player.getZ(), 50, 0.5D, 0.5D, 0.5D, 0.05D);
             }

@@ -1,0 +1,9 @@
+{
+  "parent": "netherman:block/azazel_trophy",
+  "textures": {
+    "0": "netherman:block/azazel_trophy_stage3",
+    "all": "netherman:block/azazel_trophy_stage3",
+    "texture": "netherman:block/azazel_trophy_stage3",
+    "particle": "netherman:block/azazel_trophy_stage3"
+  }
+}

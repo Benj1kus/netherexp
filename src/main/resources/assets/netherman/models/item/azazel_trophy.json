@@ -1,4 +1,9 @@
 {
   "parent": "netherman:block/azazel_trophy",
-  "gui_light": "front"
+  "gui_light": "front",
+  "overrides": [
+    { "predicate": { "netherman:stage": 1.0 }, "model": "netherman:block/azazel_trophy" },
+    { "predicate": { "netherman:stage": 2.0 }, "model": "netherman:item/azazel_trophy_stage2" },
+    { "predicate": { "netherman:stage": 3.0 }, "model": "netherman:item/azazel_trophy_stage3" }
+  ]
 }

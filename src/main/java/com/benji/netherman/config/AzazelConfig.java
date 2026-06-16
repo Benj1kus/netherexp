@@ -16,6 +16,9 @@ public class AzazelConfig {
     public static final ForgeConfigSpec.IntValue ATTACK_CHANCE;
     public static final ForgeConfigSpec.IntValue PASSIVE_SUMMON_CHANCE;
 
+    public static final ForgeConfigSpec.IntValue MASK_REGEN_COOLDOWN;
+    public static final ForgeConfigSpec.BooleanValue MASK_FIRE_IMMUNITY;
+
     public static final ForgeConfigSpec.DoubleValue PLAYER_DETECTION_RADIUS;
     public static final ForgeConfigSpec.IntValue MINI_BOSS_COOLDOWN;
     public static final ForgeConfigSpec.IntValue CIVILIAN_NPC_COOLDOWN;
@@ -26,6 +29,7 @@ public class AzazelConfig {
     public static final ForgeConfigSpec.IntValue BELIEVERS_FAIL_COOLDOWN;
 
     static {
+
         // boss
         BUILDER.push("Azazel Boss Configuration");
         MAX_HEALTH = BUILDER.comment("Maximum health of Azazel").defineInRange("maxHealth", 800.0, 100.0, 10000.0);
@@ -73,6 +77,15 @@ public class AzazelConfig {
                 .defineInRange("believersFailCooldown", 600, 20, 72000);
 
         BUILDER.pop();
+
+        BUILDER.push("Azazel Trophy Mask Configuration");
+        MASK_REGEN_COOLDOWN = BUILDER.comment("Time (in ticks) to regenerate 1 totem charge in the mask [2400 ticks = 2 minutes].")
+                .defineInRange("maskRegenCooldown", 2400, 200, 72000);
+
+        MASK_FIRE_IMMUNITY = BUILDER.comment("Does wearing the Azazel Trophy mask grant fire immunity?")
+                .define("maskFireImmunity", true);
+        BUILDER.pop();
+
         SPEC = BUILDER.build();
     }
 }

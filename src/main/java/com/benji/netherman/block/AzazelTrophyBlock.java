@@ -21,7 +21,6 @@ public class AzazelTrophyBlock extends Block {
 
     public AzazelTrophyBlock(Properties properties) {
         super(properties);
-        // По умолчанию смотрит на север
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 

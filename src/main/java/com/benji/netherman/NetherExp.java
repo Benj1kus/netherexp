@@ -3,6 +3,7 @@ package com.benji.netherman;
 import com.benji.netherman.block.*;
 import com.benji.netherman.block.entity.*;
 import com.benji.netherman.config.AzazelConfig;
+import com.benji.netherman.item.AzazelTrophyItem;
 import com.benji.netherman.network.TotemAnimationPacket;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -182,7 +183,7 @@ public class NetherExp {
                     .noOcclusion()));
 
     public static final RegistryObject<Item> AZAZEL_TROPHY_ITEM = ITEMS.register("azazel_trophy",
-            () -> new BlockItem(AZAZEL_TROPHY.get(), new Item.Properties()));
+            () -> new AzazelTrophyItem(AZAZEL_TROPHY.get(), new Item.Properties()));
 
     public static final RegistryObject<CreativeModeTab> NETHERMAN_TAB = CREATIVE_MODE_TABS.register("netherman_tab",
             () -> CreativeModeTab.builder()
@@ -640,6 +641,17 @@ public class NetherExp {
     }
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
+
+        @SubscribeEvent
+        public static void onClientSetup(net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent event) {
+            event.enqueueWork(() -> {
+                net.minecraft.client.renderer.item.ItemProperties.register(
+                        NetherExp.AZAZEL_TROPHY_ITEM.get(),
+                        new net.minecraft.resources.ResourceLocation(NetherExp.MODID, "stage"),
+                        com.benji.netherman.item.AzazelTrophyItem::getMaskStageProperty
+                );
+            });
+        }
 
         @SubscribeEvent
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {

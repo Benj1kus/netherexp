@@ -17,6 +17,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
+import com.benji.netherman.compat.CuriosCompat;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.Optional;
@@ -33,8 +35,13 @@ public class ChanceTotemEvents {
             ItemStack totem = null;
             if (mainHand.is(NetherExp.CHANCE_TOTEM.get())) {
                 totem = mainHand;
-            } else if (offHand.is(NetherExp.CHANCE_TOTEM.get())) {
+            }
+            else if (offHand.is(NetherExp.CHANCE_TOTEM.get())) {
                 totem = offHand;
+            }
+
+            else if (ModList.get().isLoaded("curios")) {
+                totem = CuriosCompat.getTotemFromCurios(player);
             }
 
             if (totem != null) {

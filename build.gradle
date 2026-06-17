@@ -114,6 +114,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    maven { url "https://maven.theillusivec4.top/" }
 }
 
 dependencies {
@@ -122,6 +123,9 @@ dependencies {
 
     // Добавляем процессор, чтобы не было ошибок компиляции Mixin
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

@@ -149,6 +149,10 @@ public class AzazelEntity extends Monster implements GeoEntity {
     public boolean hurt(DamageSource source, float amount) {
         if (this.level().isClientSide()) return false;
 
+        if (source.is(net.minecraft.world.damagesource.DamageTypes.IN_WALL)) {
+            return false;
+        }
+
         int attackState = this.entityData.get(ATTACK_STATE);
 
         if (attackState >= 7 && attackState <= 10) {

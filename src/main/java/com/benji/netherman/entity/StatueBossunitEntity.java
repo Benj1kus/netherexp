@@ -34,7 +34,7 @@ public class StatueBossunitEntity extends Monster implements GeoEntity {
     private static final MobEffect[] DEBUFFS = {
             MobEffects.MOVEMENT_SLOWDOWN,
             MobEffects.POISON,
-            MobEffects.WEAKNESS,
+            MobEffects.UNLUCK,
             MobEffects.WITHER,
             MobEffects.DARKNESS
     };

@@ -61,8 +61,14 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
     private final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(Component.literal("The Divine Chariot Azazel"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
 
+    private final java.util.Map<java.util.UUID, Integer> midasProximityTracker = new java.util.HashMap<>();
+    private final java.util.List<net.minecraft.core.BlockPos> prisonBlocks = new java.util.ArrayList<>();
+    private net.minecraft.core.BlockPos prisonCenter = null;
+    private Player prisonTarget = null;
+
     private int hitCounter = 0;
     private int attackTimer = 0;
+    private int nextShieldThreshold = -1;
     private boolean playedPraySound = false;
 
     private int arrowAttackVariant = 0;
@@ -170,9 +176,22 @@ public class AzazelEntity extends Monster implements GeoEntity {
         }
 
         if (source.getEntity() instanceof LivingEntity) {
+
+            if (this.nextShieldThreshold == -1) {
+                int minInit = Math.min(AzazelConfig.SHIELD_HITS_MIN.get(), AzazelConfig.SHIELD_HITS_MAX.get());
+                int maxInit = Math.max(AzazelConfig.SHIELD_HITS_MIN.get(), AzazelConfig.SHIELD_HITS_MAX.get());
+                this.nextShieldThreshold = minInit + this.random.nextInt((maxInit - minInit) + 1);
+            }
+
             this.hitCounter++;
-            if (this.hitCounter >= 10 && attackState == 0) {
+
+            if (this.hitCounter >= this.nextShieldThreshold && attackState == 0) {
                 this.hitCounter = 0;
+
+                int minHits = Math.min(AzazelConfig.SHIELD_HITS_MIN.get(), AzazelConfig.SHIELD_HITS_MAX.get());
+                int maxHits = Math.max(AzazelConfig.SHIELD_HITS_MIN.get(), AzazelConfig.SHIELD_HITS_MAX.get());
+                this.nextShieldThreshold = minHits + this.random.nextInt((maxHits - minHits) + 1);
+
                 startDefenseStun();
             }
         }
@@ -234,6 +253,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
         }
     }
     private void startDeathCinematic() {
+        if (this.level() instanceof ServerLevel sl) clearPrison(sl);
         this.entityData.set(ATTACK_STATE, 9);
         this.entityData.set(MERCY_TICK, 0);
         this.getNavigation().stop();
@@ -242,6 +262,12 @@ public class AzazelEntity extends Monster implements GeoEntity {
         for (Player p : nearbyPlayers) {
             p.removeEffect(NetherExp.ANXIETY_EFFECT.get());
         }
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        if (this.level() instanceof ServerLevel sl) clearPrison(sl);
+        super.remove(reason);
     }
 
     private void startMercyPhase() {
@@ -459,6 +485,8 @@ public class AzazelEntity extends Monster implements GeoEntity {
                     else if (attackState == 4) performArrowAttack();
                     else if (attackState == 11) performPullAttack();
                     else if (attackState == 12) performLaunchAttack();
+                    else if (attackState == 13) performMidasAttack();
+                    else if (attackState == 14) performPrisonAttack();
 
                     if (this.attackTimer <= 0) this.entityData.set(ATTACK_STATE, 0);
                 } else {
@@ -467,19 +495,35 @@ public class AzazelEntity extends Monster implements GeoEntity {
                             startMercyPhase();
                             this.hasOfferedMercy = true;
                         } else {
-                            boolean hasClosePlayers = !this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(6.0D)).isEmpty();
-                            if (hasClosePlayers && this.random.nextBoolean()) {
-                                startLaunchAttack();
-                            } else {
-                                boolean hasBelievers = !this.level().getEntitiesOfClass(BelieverEntity.class, this.getBoundingBox().inflate(40.0D)).isEmpty();
-                                int maxAttacks = hasBelievers ? 5 : 4;
-                                int randAtk = this.random.nextInt(maxAttacks);
+                            boolean hasClosePlayers = !this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(AzazelConfig.MELEE_ATTACK_RADIUS.get())).isEmpty();
+                            boolean hasBelievers = !this.level().getEntitiesOfClass(BelieverEntity.class, this.getBoundingBox().inflate(40.0D)).isEmpty();
 
-                                if (randAtk == 0) startWindAttack();
-                                else if (randAtk == 1) startWheelAttack();
-                                else if (randAtk == 2) startArrowAttack();
-                                else if (randAtk == 3) startPullAttack();
-                                else startPrayAttack();
+                            if (hasClosePlayers && this.random.nextInt(100) < AzazelConfig.MELEE_ATTACK_CHANCE.get()) {
+                                if (this.random.nextBoolean()) {
+                                    startLaunchAttack();
+                                } else {
+                                    startMidasAttack();
+                                }
+                            } else {
+                                java.util.List<Integer> availableAttacks = new java.util.ArrayList<>();
+                                availableAttacks.add(0); // Wind Attack
+                                availableAttacks.add(1); // Wheel Attack
+                                availableAttacks.add(2); // Arrow Attack
+                                availableAttacks.add(3); // Pull Attack
+                                availableAttacks.add(5); // Prison Attack
+
+                                if (hasBelievers) {
+                                    availableAttacks.add(4);
+                                }
+
+                                int choice = availableAttacks.get(this.random.nextInt(availableAttacks.size()));
+
+                                if (choice == 0) startWindAttack();
+                                else if (choice == 1) startWheelAttack();
+                                else if (choice == 2) startArrowAttack();
+                                else if (choice == 3) startPullAttack();
+                                else if (choice == 4) startPrayAttack();
+                                else if (choice == 5) startPrisonAttack();
                             }
 
                             this.totalAttacksPerformed++;
@@ -505,6 +549,206 @@ public class AzazelEntity extends Monster implements GeoEntity {
                     serverLevel.playSound(null, player.blockPosition(), SoundEvents.GENERIC_EXPLODE, net.minecraft.sounds.SoundSource.HOSTILE, 1.0F, 1.2F);
                 }
             }
+        }
+    }
+
+    private void startPrisonAttack() {
+        this.prisonTarget = this.getTarget() instanceof Player ? (Player) this.getTarget() : this.level().getNearestPlayer(this, 40.0D);
+        if (this.prisonTarget == null) return;
+
+        this.entityData.set(ATTACK_STATE, 14);
+        this.attackTimer = AzazelConfig.PRISON_DURATION.get();
+        this.prisonCenter = this.prisonTarget.blockPosition();
+        this.prisonBlocks.clear();
+        this.playSound(ModSounds.AZAZEL_IDLE_4.get(), 1.5F, 1.0F);
+    }
+
+    private void performPrisonAttack() {
+        if (!(this.level() instanceof ServerLevel serverLevel) || this.prisonCenter == null) return;
+
+        if (this.attackTimer <= 0) {
+            clearPrison(serverLevel);
+            return;
+        }
+
+        int maxTime = AzazelConfig.PRISON_DURATION.get();
+        int elapsed = maxTime - this.attackTimer;
+
+        if (elapsed >= 10 && elapsed <= 50 && elapsed % 4 == 0) {
+            int step = (elapsed - 10) / 4;
+            int radius = AzazelConfig.PRISON_RADIUS.get();
+            int configMaxHeight = AzazelConfig.PRISON_MAX_HEIGHT.get();
+
+            for (int x = -radius; x <= radius; x++) {
+                for (int z = -radius; z <= radius; z++) {
+                    if (Math.round(Math.sqrt(x * x + z * z)) == radius) {
+                        int maxH = Math.max(3, configMaxHeight - (Math.abs(x * 31 + z * 17) % 4));
+                        int currentYOffset = step;
+
+                        if (currentYOffset <= maxH) {
+                            net.minecraft.core.BlockPos pos = new net.minecraft.core.BlockPos(this.prisonCenter.getX() + x, this.prisonCenter.getY() + currentYOffset, this.prisonCenter.getZ() + z);
+
+                            if (serverLevel.getBlockState(pos).canBeReplaced()) {
+                                serverLevel.setBlockAndUpdate(pos, NetherExp.BLACKSTONE_COLUMN.get().defaultBlockState());
+                                this.prisonBlocks.add(pos);
+                                serverLevel.sendParticles(ParticleTypes.REVERSE_PORTAL, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 5, 0.2, 0.2, 0.2, 0.02);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (elapsed > 50 && this.prisonTarget != null) {
+            int highestBlockY = getHighestPrisonBlock();
+            int radius = AzazelConfig.PRISON_RADIUS.get();
+
+            if (this.prisonTarget.getY() + 1 > highestBlockY) {
+                serverLevel.playSound(null, this.prisonCenter, SoundEvents.WITHER_BREAK_BLOCK, net.minecraft.sounds.SoundSource.HOSTILE, 1.0F, 0.5F);
+
+                for (int yOffset = 1; yOffset <= 5; yOffset++) {
+                    int buildY = highestBlockY + yOffset;
+                    for (int x = -radius; x <= radius; x++) {
+                        for (int z = -radius; z <= radius; z++) {
+                            if (Math.round(Math.sqrt(x * x + z * z)) == radius) {
+                                net.minecraft.core.BlockPos pos = new net.minecraft.core.BlockPos(this.prisonCenter.getX() + x, buildY, this.prisonCenter.getZ() + z);
+                                if (serverLevel.getBlockState(pos).canBeReplaced()) {
+                                    serverLevel.setBlockAndUpdate(pos, NetherExp.GRAND_DOOR_PART.get().defaultBlockState());
+                                    this.prisonBlocks.add(pos);
+                                    serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 2, 0.2, 0.2, 0.2, 0.0);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void clearPrison(ServerLevel level) {
+        for (net.minecraft.core.BlockPos pos : this.prisonBlocks) {
+            net.minecraft.world.level.block.state.BlockState state = level.getBlockState(pos);
+
+            if (state.getBlock() == NetherExp.BLACKSTONE_COLUMN.get() || state.getBlock() == NetherExp.GRAND_DOOR_PART.get()) {
+
+                level.setBlock(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
+
+                if (state.getBlock() == NetherExp.BLACKSTONE_COLUMN.get()) {
+                    level.levelEvent(2001, pos, net.minecraft.world.level.block.Block.getId(state));
+                }
+            }
+        }
+        this.prisonBlocks.clear();
+    }
+
+    private int getHighestPrisonBlock() {
+        if (this.prisonBlocks.isEmpty()) return this.prisonCenter != null ? this.prisonCenter.getY() : 0;
+        int highest = this.prisonBlocks.get(0).getY();
+        for (net.minecraft.core.BlockPos pos : this.prisonBlocks) {
+            if (pos.getY() > highest) highest = pos.getY();
+        }
+        return highest;
+    }
+
+    private void startMidasAttack() {
+        this.entityData.set(ATTACK_STATE, 13);
+        this.attackTimer = 120;
+        this.midasProximityTracker.clear();
+        this.playSound(SoundEvents.EVOKER_PREPARE_WOLOLO, 2.0F, 1.0F);
+    }
+
+    private void performMidasAttack() {
+        if (this.level() instanceof ServerLevel serverLevel) {
+            int maxTime = 120;
+            int currentAttackTick = maxTime - this.attackTimer;
+
+            if (this.attackTimer == 110) {
+                boolean spawnStatues = this.random.nextBoolean();
+
+                if (spawnStatues && NetherExp.STATUE_BOSSUNIT.isPresent()) {
+                    int bossUnitCount = AzazelConfig.MIDAS_BOSSUNIT_COUNT.get();
+                    for (int i = 0; i < bossUnitCount; i++) {
+                        double angle = (2 * Math.PI / Math.max(1, bossUnitCount)) * i;
+                        double offsetX = Math.cos(angle) * 4.0D;
+                        double offsetZ = Math.sin(angle) * 4.0D;
+                        StatueBossunitEntity unit = NetherExp.STATUE_BOSSUNIT.get().create(serverLevel);
+                        if (unit != null) {
+                            unit.setPos(this.getX() + offsetX, this.getY(), this.getZ() + offsetZ);
+                            serverLevel.addFreshEntity(unit);
+                        }
+                    }
+                } else if (!spawnStatues && NetherExp.GUARDIAN.isPresent()) {
+                    LivingEntity currentTarget = this.getTarget();
+                    if (currentTarget == null) currentTarget = serverLevel.getNearestPlayer(this, 40.0D);
+
+                    int guardianCount = AzazelConfig.MIDAS_GUARDIAN_COUNT.get();
+                    for (int i = 0; i < guardianCount; i++) {
+                        double angle = (2 * Math.PI / Math.max(1, guardianCount)) * i;
+                        double offsetX = Math.cos(angle) * 4.0D;
+                        double offsetZ = Math.sin(angle) * 4.0D;
+
+                        GuardianEntity guardian = NetherExp.GUARDIAN.get().create(serverLevel);
+                        if (guardian != null) {
+                            guardian.moveTo(this.getX() + offsetX, this.getY(), this.getZ() + offsetZ, this.getYRot(), 0);
+                            if (currentTarget != null) guardian.setTarget(currentTarget);
+                            guardian.startSpawning();
+                            serverLevel.addFreshEntity(guardian);
+                        }
+                    }
+                }
+            }
+
+            double radius = (currentAttackTick / (double) maxTime) * 30.0D;
+            if (radius > 0) {
+                for (int i = 0; i < 50; i++) {
+                    double angle = this.random.nextDouble() * 2 * Math.PI;
+                    double offsetX = Math.cos(angle) * radius;
+                    double offsetZ = Math.sin(angle) * radius;
+                    serverLevel.sendParticles(ParticleTypes.FLAME, this.getX() + offsetX, this.getY() + 0.2D, this.getZ() + offsetZ, 2, 0.1D, 0.1D, 0.1D, 0.05D);
+                }
+            }
+
+            List<Player> allPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(35.0D));
+            for (Player player : allPlayers) {
+                double dist = player.distanceTo(this);
+
+                if (Math.abs(dist - radius) <= 1.5D) {
+                    player.hurt(this.damageSources().inFire(), AzazelConfig.MIDAS_FIRE_DAMAGE.get().floatValue());
+                    player.setSecondsOnFire(5);
+                }
+
+                if (dist <= 6.0D) {
+                    java.util.UUID uuid = player.getUUID();
+                    int ticks = this.midasProximityTracker.getOrDefault(uuid, 0) + 1;
+
+                    if (ticks >= AzazelConfig.MIDAS_GOLD_TIME.get()) {
+                        turnRandomItemToGold(player);
+                        ticks = 0;
+                        serverLevel.sendParticles(ParticleTypes.WAX_ON, player.getX(), player.getY() + 1.0D, player.getZ(), 15, 0.5D, 0.5D, 0.5D, 0.1D);
+                        serverLevel.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, net.minecraft.sounds.SoundSource.HOSTILE, 1.0F, 1.0F);
+                    }
+                    this.midasProximityTracker.put(uuid, ticks);
+                } else {
+                    this.midasProximityTracker.put(player.getUUID(), 0);
+                }
+            }
+        }
+    }
+
+    private void turnRandomItemToGold(Player player) {
+        java.util.List<Integer> validSlots = new java.util.ArrayList<>();
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (!stack.isEmpty() && stack.getItem() != net.minecraft.world.item.Items.RAW_GOLD) {
+                validSlots.add(i);
+            }
+        }
+
+        if (!validSlots.isEmpty()) {
+            int randomSlot = validSlots.get(this.random.nextInt(validSlots.size()));
+            ItemStack oldStack = player.getInventory().getItem(randomSlot);
+            int count = oldStack.getCount();
+            player.getInventory().setItem(randomSlot, new ItemStack(net.minecraft.world.item.Items.RAW_GOLD, count));
         }
     }
 
@@ -755,6 +999,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
             if (state == 1 || state == 11) return event.setAndContinue(WIND_ATTACK_ANIM);
             if (state == 2) return event.setAndContinue(DEFENCE_STUN_ANIM);
             if (state == 3) return event.setAndContinue(WHEEL_ANIM);
+            if (state == 13 || state == 14) return event.setAndContinue(IDLE_ANIM);
             if (state == 4) return event.setAndContinue(ARROW_ATTACK_ANIM);
             if (state == 5 || state == 12) return event.setAndContinue(PRAY_ANIM);
             if (state == 8) return event.setAndContinue(CINEMATIC_MERCY_ANIM);

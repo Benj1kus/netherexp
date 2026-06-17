@@ -28,6 +28,20 @@ public class AzazelConfig {
     public static final ForgeConfigSpec.IntValue BELIEVERS_SUCCESS_COOLDOWN;
     public static final ForgeConfigSpec.IntValue BELIEVERS_FAIL_COOLDOWN;
 
+    public static final ForgeConfigSpec.DoubleValue MELEE_ATTACK_RADIUS;
+    public static final ForgeConfigSpec.IntValue SHIELD_HITS_MIN;
+    public static final ForgeConfigSpec.IntValue SHIELD_HITS_MAX;
+
+    public static final ForgeConfigSpec.IntValue MIDAS_GUARDIAN_COUNT;
+    public static final ForgeConfigSpec.IntValue MIDAS_BOSSUNIT_COUNT;
+    public static final ForgeConfigSpec.DoubleValue MIDAS_FIRE_DAMAGE;
+    public static final ForgeConfigSpec.IntValue MIDAS_GOLD_TIME;
+    public static final ForgeConfigSpec.IntValue MELEE_ATTACK_CHANCE;
+
+    public static final ForgeConfigSpec.IntValue PRISON_RADIUS;
+    public static final ForgeConfigSpec.IntValue PRISON_DURATION;
+    public static final ForgeConfigSpec.IntValue PRISON_MAX_HEIGHT;
+
     static {
 
         // boss
@@ -84,6 +98,26 @@ public class AzazelConfig {
 
         MASK_FIRE_IMMUNITY = BUILDER.comment("Does wearing the Azazel Trophy mask grant fire immunity?")
                 .define("maskFireImmunity", true);
+        BUILDER.pop();
+
+        BUILDER.push("Azazel Defense & Melee");
+        MELEE_ATTACK_RADIUS = BUILDER.comment("Radius to trigger close-combat attacks (Launch, Midas)").defineInRange("meleeAttackRadius", 6.0, 1.0, 20.0);
+        MELEE_ATTACK_CHANCE = BUILDER.comment("Chance (0-100%) to perform a melee attack when a player is close").defineInRange("meleeAttackChance", 30, 0, 100);
+        SHIELD_HITS_MIN = BUILDER.comment("Minimum hits required to trigger the defense shield").defineInRange("shieldHitsMin", 5, 1, 100);
+        SHIELD_HITS_MAX = BUILDER.comment("Maximum hits required to trigger the defense shield").defineInRange("shieldHitsMax", 20, 1, 100);
+        BUILDER.pop();
+
+        BUILDER.push("Azazel Midas Attack");
+        MIDAS_BOSSUNIT_COUNT = BUILDER.comment("Number of BossUnits spawned during Midas attack").defineInRange("midasBossUnitCount", 3, 0, 10);
+        MIDAS_GUARDIAN_COUNT = BUILDER.comment("Number of Guardians spawned during Midas attack").defineInRange("midasGuardianCount", 2, 0, 10);
+        MIDAS_FIRE_DAMAGE = BUILDER.comment("Fire damage dealt per tick on the fire ring").defineInRange("midasFireDamage", 8.0, 0.0, 100.0);
+        MIDAS_GOLD_TIME = BUILDER.comment("Ticks required near the boss to turn an item into gold (40 = 2 seconds)").defineInRange("midasGoldTime", 40, 1, 600);
+        BUILDER.pop();
+
+        BUILDER.push("Azazel Prison Attack");
+        PRISON_RADIUS = BUILDER.comment("Radius of the blackstone prison").defineInRange("prisonRadius", 5, 2, 15);
+        PRISON_DURATION = BUILDER.comment("Time in ticks before the prison breaks (200 = 10 seconds)").defineInRange("prisonDuration", 200, 60, 1200);
+        PRISON_MAX_HEIGHT = BUILDER.comment("Maximum random height of the prison walls").defineInRange("prisonMaxHeight", 6, 3, 15);
         BUILDER.pop();
 
         SPEC = BUILDER.build();

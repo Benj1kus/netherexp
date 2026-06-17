@@ -290,7 +290,7 @@ public class NetherExp {
             ));
     public static final RegistryObject<Block> GRAND_DOOR_PART = BLOCKS.register("grand_door_part",
             () -> new GrandDoorPartBlock(BlockBehaviour.Properties.copy(Blocks.POLISHED_BLACKSTONE_BRICKS)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(500.0F, 500.0F)
                     .noOcclusion()
                     .noLootTable()));
     public static final RegistryObject<Block> CRIMSON_HONEY_BLOCK = BLOCKS.register("crimson_honey_block",

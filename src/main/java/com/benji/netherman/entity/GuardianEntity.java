@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.stats.Stat;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -322,8 +323,18 @@ public class GuardianEntity extends Monster implements GeoEntity {
         float damage = this.isBuffed() ? 15.0F : 10.0F;
 
         AABB hitBox = this.getBoundingBox().inflate(inflateSize);
-        List<LivingEntity> targets = this.level().getEntitiesOfClass(LivingEntity.class, hitBox,
-                e -> e != this && !(e instanceof WelcomerEntity) && !(e instanceof ManipulatorEntity));
+        List<LivingEntity> targets = this.level().getEntitiesOfClass(
+                LivingEntity.class,
+                hitBox,
+                e -> e != this
+                        && !(e instanceof WelcomerEntity)
+                        && !(e instanceof ManipulatorEntity)
+                        && !(e instanceof BelieverEntity)
+                        && !(e instanceof GuardianEntity)
+                        && !(e instanceof StatueBossunitEntity)
+                        && !(e instanceof StatueEntity)
+                        && !(e instanceof AzazelEntity)
+        );
 
         for (LivingEntity e : targets) {
             if (this.distanceToSqr(e) <= attackRadiusSq) {

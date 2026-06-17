@@ -9,6 +9,7 @@ public class AzazelModel extends GeoModel<AzazelEntity> {
 
     private static final ResourceLocation MODEL_NORMAL = new ResourceLocation(NetherExp.MODID, "geo/azazel.geo.json");
     private static final ResourceLocation MODEL_LOW_HP = new ResourceLocation(NetherExp.MODID, "geo/azazel_lowhp.geo.json");
+    private static final ResourceLocation TEX_GOLD = new ResourceLocation(NetherExp.MODID, "textures/entity/azazel_gold.png");
 
     private static final ResourceLocation TEX_PRAY = new ResourceLocation(NetherExp.MODID, "textures/entity/azazel_pray.png");
     private static final ResourceLocation TEX_NORMAL = new ResourceLocation(NetherExp.MODID, "textures/entity/azazel.png");
@@ -24,6 +25,10 @@ public class AzazelModel extends GeoModel<AzazelEntity> {
 
     @Override
     public ResourceLocation getTextureResource(AzazelEntity animatable) {
+        if (animatable.getEntityData().get(AzazelEntity.ATTACK_STATE) == 13) {
+            return TEX_GOLD;
+        }
+
         if (!animatable.getEntityData().get(AzazelEntity.IS_AGGRO)) {
             return TEX_PRAY;
         }

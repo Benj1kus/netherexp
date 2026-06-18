@@ -1,0 +1,13 @@
+﻿{
+  "variants": {
+    "type=bottom": {
+      "model": "netherman:block/polished_samsonit_slab"
+    },
+    "type=double": {
+      "model": "netherman:block/polished_samsonit"
+    },
+    "type=top": {
+      "model": "netherman:block/polished_samsonit_slab_top"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "netherman:cobbled_samsonit_wall",
+    "netherman:samsonit_bricks_wall",
+    "netherman:polished_samsonit_wall"
+  ]
+}

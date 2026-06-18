@@ -55,6 +55,71 @@
   "wing2": { "sounds": [ "netherman:wing2" ] },
   "wing3": { "sounds": [ "netherman:wing3" ] },
 
+  "block.samsonit.break": {
+    "category": "block",
+    "sounds": [
+      "netherman:block/samsonit/break1",
+      "netherman:block/samsonit/break2",
+      "netherman:block/samsonit/break3",
+      "netherman:block/samsonit/break4",
+      "netherman:block/samsonit/break5",
+      "netherman:block/samsonit/break6",
+      "netherman:block/samsonit/break7"
+    ]
+  },
+  "block.samsonit.step": {
+    "category": "block",
+    "sounds": [
+      "netherman:block/samsonit/step1",
+      "netherman:block/samsonit/step2",
+      "netherman:block/samsonit/step3",
+      "netherman:block/samsonit/step4",
+      "netherman:block/samsonit/step5",
+      "netherman:block/samsonit/step6",
+      "netherman:block/samsonit/step7"
+    ]
+  },
+  "block.samsonit.place": {
+    "category": "block",
+    "sounds": [
+      "netherman:block/samsonit/place1",
+      "netherman:block/samsonit/place2",
+      "netherman:block/samsonit/place3",
+      "netherman:block/samsonit/place4",
+      "netherman:block/samsonit/place5",
+      "netherman:block/samsonit/place6",
+      "netherman:block/samsonit/place7"
+    ]
+  },
+  "block.samsonit.hit": {
+    "category": "block",
+    "sounds": [
+      "netherman:block/samsonit/hit1",
+      "netherman:block/samsonit/hit2",
+      "netherman:block/samsonit/hit3"
+    ]
+  },
+  "block.samsonit_bricks.step": {
+    "category": "block",
+    "sounds": [
+      "netherman:block/samsonit_bricks/step1",
+      "netherman:block/samsonit_bricks/step2",
+      "netherman:block/samsonit_bricks/step3",
+      "netherman:block/samsonit_bricks/step4",
+      "netherman:block/samsonit_bricks/step5"
+    ]
+  },
+  "block.samsonit_bricks.place": {
+    "category": "block",
+    "sounds": [
+      "netherman:block/samsonit_bricks/place1",
+      "netherman:block/samsonit_bricks/place2",
+      "netherman:block/samsonit_bricks/place3",
+      "netherman:block/samsonit_bricks/place4",
+      "netherman:block/samsonit_bricks/place5",
+      "netherman:block/samsonit_bricks/place6"
+    ]
+  },
 
   "weakness": { "sounds": [ "netherman:weakness" ] },
   "entrance": { "sounds": [ "netherman:entrance" ] },

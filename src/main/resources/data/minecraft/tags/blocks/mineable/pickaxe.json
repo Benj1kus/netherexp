@@ -6,6 +6,21 @@
     "netherman:pointed_blackstone",
     "netherman:statue_stand",
     "netherman:totemus",
-    "netherman:azazel_trophy"
+    "netherman:azazel_trophy",
+    "netherman:samsonit",
+    "netherman:chiseled_samsonit",
+    "netherman:cobbled_samsonit",
+    "netherman:polished_samsonit",
+    "netherman:samsonit_bricks",
+    "netherman:samsonit_tiles",
+    "netherman:cobbled_samsonit_slab",
+    "netherman:cobbled_samsonit_stairs",
+    "netherman:cobbled_samsonit_wall",
+    "netherman:polished_samsonit_slab",
+    "netherman:polished_samsonit_stairs",
+    "netherman:polished_samsonit_wall",
+    "netherman:samsonit_bricks_wall",
+    "netherman:samsonit_bricks_slab",
+    "netherman:samsonit_bricks_stairs"
   ]
 }

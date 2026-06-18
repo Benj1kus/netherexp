@@ -1,0 +1,8 @@
+﻿{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "netherman:block/polished_samsonit",
+    "side": "netherman:block/polished_samsonit",
+    "top": "netherman:block/polished_samsonit"
+  }
+}

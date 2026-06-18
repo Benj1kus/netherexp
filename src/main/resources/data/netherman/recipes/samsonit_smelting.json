@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "netherman:cobbled_samsonit"
+  },
+  "result": "netherman:samsonit",
+  "experience": 0.5,
+  "cookingtime": 200
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "netherman:polished_samsonit"
+    }
+  },
+  "result": {
+    "item": "netherman:polished_samsonit_slab",
+    "count": 6
+  }
+}

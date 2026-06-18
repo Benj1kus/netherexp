@@ -1,3 +1,4 @@
 {
-  "parent": "netherman:block/totemus_cave"
+  "parent": "netherman:block/totemus_cave",
+  "gui_light": "front"
 }

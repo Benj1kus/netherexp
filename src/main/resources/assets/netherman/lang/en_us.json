@@ -22,6 +22,22 @@
   "block.netherman.ghastly_nest": "Ghastly Nest",
   "block.netherman.azazel_trophy": "§4Azazel Mask",
 
+  "block.netherman.samsonit": "Samsonit",
+  "block.netherman.chiseled_samsonit": "Chiseled samsonit",
+  "block.netherman.cobbled_samsonit": "Cobbled samsonit",
+  "block.netherman.cobbled_samsonit_slab": "Cobbled samsonit slab",
+  "block.netherman.cobbled_samsonit_stairs": "Cobbled samsonit stairs",
+  "block.netherman.cobbled_samsonit_wall": "Cobbled samsonit wall",
+  "block.netherman.polished_samsonit": "Polished samsonit",
+  "block.netherman.polished_samsonit_slab": "Polished samsonit slab",
+  "block.netherman.polished_samsonit_stairs": "Polished samsonit stairs",
+  "block.netherman.polished_samsonit_wall": "Polished samsonit wall",
+  "block.netherman.samsonit_bricks": "Samsonit bricks",
+  "block.netherman.samsonit_bricks_slab": "Samsonit brick slab",
+  "block.netherman.samsonit_bricks_stairs": "Samsonit brick stairs",
+  "block.netherman.samsonit_bricks_wall": "Samsonit brick wall",
+  "block.netherman.samsonit_tiles": "Samsonit tiles",
+
   "creativetab.netherman_tab": "Cult of Azazel",
 
   "entity.netherman.welcomer": "Welcomer",

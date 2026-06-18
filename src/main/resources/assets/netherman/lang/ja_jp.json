@@ -22,6 +22,22 @@
   "block.netherman.ghastly_nest": "Ghastlyの巣",
   "block.netherman.azazel_trophy": "§4アザゼルの仮面",
 
+  "block.netherman.samsonit": "サムソニット",
+  "block.netherman.chiseled_samsonit": "模様入りサムソニット",
+  "block.netherman.cobbled_samsonit": "丸石サムソニット",
+  "block.netherman.cobbled_samsonit_slab": "丸石サムソニットのハーフブロック",
+  "block.netherman.cobbled_samsonit_stairs": "丸石サムソニットの階段",
+  "block.netherman.cobbled_samsonit_wall": "丸石サムソニットの塀",
+  "block.netherman.polished_samsonit": "磨かれたサムソニット",
+  "block.netherman.polished_samsonit_slab": "磨かれたサムソニットのハーフブロック",
+  "block.netherman.polished_samsonit_stairs": "磨かれたサムソニットの階段",
+  "block.netherman.polished_samsonit_wall": "磨かれたサムソニットの塀",
+  "block.netherman.samsonit_bricks": "サムソニットレンガ",
+  "block.netherman.samsonit_bricks_slab": "サムソニットレンガのハーフブロック",
+  "block.netherman.samsonit_bricks_stairs": "サムソニットレンガの階段",
+  "block.netherman.samsonit_bricks_wall": "サムソニットレンガの塀",
+  "block.netherman.samsonit_tiles": "サムソニットタイル",
+
   "creativetab.netherman_tab": "Cult of Azazel",
 
   "entity.netherman.welcomer": "歓迎者",

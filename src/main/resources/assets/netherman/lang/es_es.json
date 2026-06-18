@@ -22,6 +22,22 @@
   "block.netherman.ghastly_nest": "Ghastly Nido",
   "block.netherman.azazel_trophy": "§4Máscara de Azazel",
 
+  "block.netherman.samsonit": "Samsonit",
+  "block.netherman.chiseled_samsonit": "Samsonit cincelado",
+  "block.netherman.cobbled_samsonit": "Samsonit adoquinado",
+  "block.netherman.cobbled_samsonit_slab": "Losa de Samsonit adoquinado",
+  "block.netherman.cobbled_samsonit_stairs": "Escaleras de Samsonit adoquinado",
+  "block.netherman.cobbled_samsonit_wall": "Muro de Samsonit adoquinado",
+  "block.netherman.polished_samsonit": "Samsonit pulido",
+  "block.netherman.polished_samsonit_slab": "Losa de Samsonit pulido",
+  "block.netherman.polished_samsonit_stairs": "Escaleras de Samsonit pulido",
+  "block.netherman.polished_samsonit_wall": "Muro de Samsonit pulido",
+  "block.netherman.samsonit_bricks": "Ladrillos de Samsonit",
+  "block.netherman.samsonit_bricks_slab": "Losa de ladrillos de Samsonit",
+  "block.netherman.samsonit_bricks_stairs": "Escaleras de ladrillos de Samsonit",
+  "block.netherman.samsonit_bricks_wall": "Muro de ladrillos de Samsonit",
+  "block.netherman.samsonit_tiles": "Baldosas de Samsonit",
+
   "creativetab.netherman_tab": "Cult of Azazel",
 
   "entity.netherman.welcomer": "Recepcionista",

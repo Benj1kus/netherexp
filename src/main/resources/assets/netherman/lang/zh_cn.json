@@ -22,6 +22,22 @@
   "block.netherman.ghastly_nest": "Ghastly巢穴",
   "block.netherman.azazel_trophy": "§4阿撒泻勒面具",
 
+  "block.netherman.samsonit": "薩姆索尼特",
+  "block.netherman.chiseled_samsonit": "雕紋薩姆索尼特",
+  "block.netherman.cobbled_samsonit": "圓石薩姆索尼特",
+  "block.netherman.cobbled_samsonit_slab": "圓石薩姆索尼特階梯",
+  "block.netherman.cobbled_samsonit_stairs": "圓石薩姆索尼特樓梯",
+  "block.netherman.cobbled_samsonit_wall": "圓石薩姆索尼特牆",
+  "block.netherman.polished_samsonit": "拋光薩姆索尼特",
+  "block.netherman.polished_samsonit_slab": "拋光薩姆索尼特階梯",
+  "block.netherman.polished_samsonit_stairs": "拋光薩姆索尼特樓梯",
+  "block.netherman.polished_samsonit_wall": "拋光薩姆索尼特牆",
+  "block.netherman.samsonit_bricks": "薩姆索尼特磚",
+  "block.netherman.samsonit_bricks_slab": "薩姆索尼特磚階梯",
+  "block.netherman.samsonit_bricks_stairs": "薩姆索尼特磚樓梯",
+  "block.netherman.samsonit_bricks_wall": "薩姆索尼特磚牆",
+  "block.netherman.samsonit_tiles": "薩姆索尼特瓷磚",
+
   "creativetab.netherman_tab": "Cult of Azazel",
 
   "entity.netherman.welcomer": "迎接者",

@@ -1,3 +1,4 @@
 {
-  "parent": "netherman:block/mosaic_church"
+  "parent": "netherman:block/mosaic_church",
+  "gui_light": "front"
 }

@@ -1,3 +1,4 @@
 {
-  "parent": "netherman:block/entrance_full"
+  "parent": "netherman:block/entrance_full",
+  "gui_light": "front"
 }

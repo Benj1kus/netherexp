@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "netherman:samsonit_bricks"
+    }
+  },
+  "result": {
+    "item": "netherman:samsonit_bricks_stairs",
+    "count": 4
+  }
+}

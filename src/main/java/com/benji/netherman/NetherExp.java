@@ -5,6 +5,8 @@ import com.benji.netherman.block.entity.*;
 import com.benji.netherman.config.AzazelConfig;
 import com.benji.netherman.item.AzazelTrophyItem;
 import com.benji.netherman.network.TotemAnimationPacket;
+import net.minecraft.world.level.block.*;
+import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
@@ -22,8 +24,6 @@ import com.benji.netherman.item.GeoBlockItem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import com.benji.netherman.network.ModMessages;
@@ -60,6 +60,24 @@ public class NetherExp {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
+    public static final SoundType SAMSONIT_SOUNDS = new ForgeSoundType(
+            1.0F, 1.0F,
+            ModSounds.SAMSONIT_BREAK, // Передаем твои RegistryObject
+            ModSounds.SAMSONIT_STEP,
+            ModSounds.SAMSONIT_PLACE,
+            ModSounds.SAMSONIT_HIT,
+            ModSounds.SAMSONIT_STEP   // Используем звук шагов вместо отсутствующего звука падения
+    );
+
+    public static final SoundType SAMSONIT_BRICKS_SOUNDS = new ForgeSoundType(
+            1.0F, 1.0F,
+            ModSounds.SAMSONIT_BREAK,        // Ломание берем от обычного
+            ModSounds.SAMSONIT_BRICKS_STEP,  // Шаги кастомные кирпичные
+            ModSounds.SAMSONIT_BRICKS_PLACE, // Установка кастомная кирпичная
+            ModSounds.SAMSONIT_HIT,          // Удар берем от обычного
+            ModSounds.SAMSONIT_BRICKS_STEP   // Падение кирпичное
+    );
+
     public static final RegistryObject<Block> NETHER_SPAWNER = BLOCKS.register("nether_spawner",
             () -> new NetherSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
                     .lightLevel(state -> 15) // Излучает свет
@@ -76,6 +94,156 @@ public class NetherExp {
 
     public static final RegistryObject<Item> BLACKSTONE_COLUMN_ITEM = ITEMS.register("blackstone_column",
             () -> new BlockItem(BLACKSTONE_COLUMN.get(), new Item.Properties()));
+
+    // DECORATIVE BLOCKS:
+    public static final RegistryObject<Block> SAMSONIT = BLOCKS.register("samsonit",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Item> SAMSONIT_ITEM = ITEMS.register("samsonit",
+            () -> new BlockItem(SAMSONIT.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> COBBLED_SAMSONIT = BLOCKS.register("cobbled_samsonit",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Item> COBBLED_SAMSONIT_ITEM = ITEMS.register("cobbled_samsonit",
+            () -> new BlockItem(COBBLED_SAMSONIT.get(), new Item.Properties()));
+
+
+    public static final RegistryObject<Block> SAMSONIT_BRICKS = BLOCKS.register("samsonit_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_BRICKS_SOUNDS)));
+
+    public static final RegistryObject<Item> SAMSONIT_BRICKS_ITEM = ITEMS.register("samsonit_bricks",
+            () -> new BlockItem(SAMSONIT_BRICKS.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> POLISHED_SAMSONIT = BLOCKS.register("polished_samsonit",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_BRICKS_SOUNDS)));
+
+    public static final RegistryObject<Item> POLISHED_SAMSONIT_ITEM = ITEMS.register("polished_samsonit",
+            () -> new BlockItem(POLISHED_SAMSONIT.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> SAMSONIT_TILES = BLOCKS.register("samsonit_tiles",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_BRICKS_SOUNDS)));
+
+    public static final RegistryObject<Item> SAMSONIT_TILES_ITEM = ITEMS.register("samsonit_tiles",
+            () -> new BlockItem(SAMSONIT_TILES.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> CHISELED_SAMSONIT = BLOCKS.register("chiseled_samsonit",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_BRICKS_SOUNDS)));
+
+    public static final RegistryObject<Item> CHISELED_SAMSONIT_ITEM = ITEMS.register("chiseled_samsonit",
+            () -> new BlockItem(CHISELED_SAMSONIT.get(), new Item.Properties()));
+
+//SLAB
+
+    public static final RegistryObject<Block> COBBLED_SAMSONIT_SLAB = BLOCKS.register("cobbled_samsonit_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Item> COBBLED_SAMSONIT_SLAB_ITEM = ITEMS.register("cobbled_samsonit_slab",
+            () -> new BlockItem(COBBLED_SAMSONIT_SLAB.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> POLISHED_SAMSONIT_SLAB = BLOCKS.register("polished_samsonit_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_BRICKS_SOUNDS)));
+
+    public static final RegistryObject<Item> POLISHED_SAMSONIT_SLAB_ITEM = ITEMS.register("polished_samsonit_slab",
+            () -> new BlockItem(POLISHED_SAMSONIT_SLAB.get(), new Item.Properties()));
+
+
+    public static final RegistryObject<Block> SAMSONIT_BRICKS_SLAB = BLOCKS.register("samsonit_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_BRICKS_SOUNDS)));
+
+    public static final RegistryObject<Item> SAMSONIT_BRICKS_SLAB_ITEM = ITEMS.register("samsonit_bricks_slab",
+            () -> new BlockItem(SAMSONIT_BRICKS_SLAB.get(), new Item.Properties()));
+
+    //STAIRS
+
+    public static final RegistryObject<Block> COBBLED_SAMSONIT_STAIRS = BLOCKS.register("cobbled_samsonit_stairs",
+            () -> new StairBlock(() -> COBBLED_SAMSONIT.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Item> COBBLED_SAMSONIT_STAIRS_ITEM = ITEMS.register("cobbled_samsonit_stairs",
+            () -> new BlockItem(COBBLED_SAMSONIT_STAIRS.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> POLISHED_SAMSONIT_STAIRS = BLOCKS.register("polished_samsonit_stairs",
+            () -> new StairBlock(() -> POLISHED_SAMSONIT.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_BRICKS_SOUNDS)));
+
+    public static final RegistryObject<Item> POLISHED_SAMSONIT_STAIRS_ITEM = ITEMS.register("polished_samsonit_stairs",
+            () -> new BlockItem(POLISHED_SAMSONIT_STAIRS.get(), new Item.Properties()));
+
+
+    public static final RegistryObject<Block> SAMSONIT_BRICKS_STAIRS = BLOCKS.register("samsonit_bricks_stairs",
+            () -> new StairBlock(() -> SAMSONIT_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_BRICKS_SOUNDS)));
+
+    public static final RegistryObject<Item> SAMSONIT_BRICKS_STAIRS_ITEM = ITEMS.register("samsonit_bricks_stairs",
+            () -> new BlockItem(SAMSONIT_BRICKS_STAIRS.get(), new Item.Properties()));
+
+//WALL
+
+    public static final RegistryObject<Block> COBBLED_SAMSONIT_WALL = BLOCKS.register("cobbled_samsonit_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Item> COBBLED_SAMSONIT_WALL_ITEM = ITEMS.register("cobbled_samsonit_wall",
+            () -> new BlockItem(COBBLED_SAMSONIT_WALL.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> POLISHED_SAMSONIT_WALL = BLOCKS.register("polished_samsonit_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_BRICKS_SOUNDS)));
+
+    public static final RegistryObject<Item> POLISHED_SAMSONIT_WALL_ITEM = ITEMS.register("polished_samsonit_wall",
+            () -> new BlockItem(POLISHED_SAMSONIT_WALL.get(), new Item.Properties()));
+
+
+    public static final RegistryObject<Block> SAMSONIT_BRICKS_WALL = BLOCKS.register("samsonit_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_BRICKS_SOUNDS)));
+
+    public static final RegistryObject<Item> SAMSONIT_BRICKS_WALL_ITEM = ITEMS.register("samsonit_bricks_wall",
+            () -> new BlockItem(SAMSONIT_BRICKS_WALL.get(), new Item.Properties()));
+
+    //=========================================================================================== - visual border it more convient for me
+
+
     public static final RegistryObject<Block> POINTED_BLACKSTONE = BLOCKS.register("pointed_blackstone",
             () -> new PointedBlackstoneBlock(BlockBehaviour.Properties.copy(Blocks.POINTED_DRIPSTONE)
                     .requiresCorrectToolForDrops()
@@ -586,6 +754,22 @@ public class NetherExp {
             event.accept(TOTEMUS_ITEM);
             event.accept(EYE_ITEM);
             event.accept(VOIDMIDCORNERNETHER_ITEM);
+            event.accept(SAMSONIT_ITEM);
+            event.accept(SAMSONIT_BRICKS_ITEM);
+            event.accept(SAMSONIT_TILES_ITEM);
+            event.accept(POLISHED_SAMSONIT_ITEM);
+            event.accept(COBBLED_SAMSONIT_ITEM);
+            event.accept(CHISELED_SAMSONIT_ITEM);
+            event.accept(COBBLED_SAMSONIT_SLAB_ITEM);
+            event.accept(COBBLED_SAMSONIT_STAIRS_ITEM);
+            event.accept(COBBLED_SAMSONIT_WALL_ITEM);
+            event.accept(POLISHED_SAMSONIT_SLAB_ITEM);
+            event.accept(POLISHED_SAMSONIT_STAIRS_ITEM);
+            event.accept(POLISHED_SAMSONIT_WALL_ITEM);
+            event.accept(SAMSONIT_BRICKS_SLAB_ITEM);
+            event.accept(SAMSONIT_BRICKS_STAIRS_ITEM);
+            event.accept(SAMSONIT_BRICKS_WALL_ITEM);
+
         }
         if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
             event.accept(CRIMSON_HONEY_BOTTLE);

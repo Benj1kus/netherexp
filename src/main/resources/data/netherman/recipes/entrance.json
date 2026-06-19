@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "experience": 5.0,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "minecraft:crimson_hyphae"
+  },
+  "result": "netherman:entrance",
+  "count": 2
+}

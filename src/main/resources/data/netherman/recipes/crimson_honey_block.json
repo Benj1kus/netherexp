@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:honey_block"
+    },
+    {
+      "item": "netherman:crimson_honey_bottle"
+    }
+  ],
+  "result": {
+    "item": "netherman:crimson_honey_block"
+  }
+}

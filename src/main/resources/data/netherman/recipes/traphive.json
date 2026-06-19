@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "experience": 5.0,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "netherman:entrance"
+  },
+  "result": "netherman:traphive"
+}

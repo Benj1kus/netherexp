@@ -21,6 +21,7 @@
   "block.netherman.crimson_honey_block": "深紅の蜂蜜ブロック",
   "block.netherman.ghastly_nest": "Ghastlyの巣",
   "block.netherman.azazel_trophy": "§4アザゼルの仮面",
+  "block.netherman.potent_magma": "強力なマグマ",
 
   "block.netherman.samsonit": "サムソニット",
   "block.netherman.chiseled_samsonit": "模様入りサムソニット",
@@ -76,6 +77,7 @@
   "advancement.netherman.tame_ghastly.title": "新しい友達：D",
   "advancement.netherman.tame_ghastly.description": "あれ、ミツバチ？",
 
+  "item.netherman.azazel_guide_book": "§4Cult of Azazel Guidebook",
   "item.netherman.manipulator_stick": "§4操りの杖",
   "item.netherman.crimson_arrow": "§4深紅の矢",
   "item.netherman.chance_totem": "§6再生のトーテム",

@@ -21,6 +21,7 @@
   "block.netherman.crimson_honey_block": "Bloque de miel carmesí",
   "block.netherman.ghastly_nest": "Ghastly Nido",
   "block.netherman.azazel_trophy": "§4Máscara de Azazel",
+  "block.netherman.potent_magma": "Magma potente",
 
   "block.netherman.samsonit": "Samsonit",
   "block.netherman.chiseled_samsonit": "Samsonit cincelado",
@@ -76,6 +77,7 @@
   "advancement.netherman.tame_ghastly.title": "¿Un nuevo amigo?:D",
   "advancement.netherman.tame_ghastly.description": "¿Son abejas?",
 
+  "item.netherman.azazel_guide_book": "§4Cult of Azazel Guidebook",
   "item.netherman.manipulator_stick": "§4Bastón de manipulación",
   "item.netherman.crimson_arrow": "§4Flecha carmesí",
   "item.netherman.chance_totem": "§6Tótem del renacimiento",

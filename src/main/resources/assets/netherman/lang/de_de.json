@@ -21,7 +21,7 @@
   "block.netherman.crimson_honey_block": "Purpurhonigblock",
   "block.netherman.ghastly_nest": "Ghastly-Nest",
   "block.netherman.azazel_trophy": "§4Maske des Azazel",
-
+  "block.netherman.potent_magma": "Mächtiges Magma",
 
   "block.netherman.samsonit": "Samsonit",
   "block.netherman.chiseled_samsonit": "Gemeißelter Samsonit",
@@ -77,6 +77,7 @@
   "advancement.netherman.tame_ghastly.title": "Neuer Freund:D",
   "advancement.netherman.tame_ghastly.description": "Sind das Bienen?",
 
+  "item.netherman.azazel_guide_book": "§4Cult of Azazel Guidebook",
   "item.netherman.manipulator_stick": "§4Stab der Manipulation",
   "item.netherman.crimson_arrow": "§4Purpurpfeil",
   "item.netherman.chance_totem": "§6Totem der Wiedergeburt",

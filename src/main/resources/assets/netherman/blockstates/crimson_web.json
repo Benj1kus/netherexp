@@ -4,16 +4,22 @@
     "facing=south,stage=0": { "model": "netherman:block/crimson_web_full", "y": 180 },
     "facing=west,stage=0":  { "model": "netherman:block/crimson_web_full", "y": 270 },
     "facing=east,stage=0":  { "model": "netherman:block/crimson_web_full", "y": 90 },
+    "facing=up,stage=0":    { "model": "netherman:block/crimson_web_full", "x": 90 },
+    "facing=down,stage=0":  { "model": "netherman:block/crimson_web_full", "x": 270 },
 
     "facing=north,stage=1": { "model": "netherman:block/crimson_web_stage_1" },
     "facing=south,stage=1": { "model": "netherman:block/crimson_web_stage_1", "y": 180 },
     "facing=west,stage=1":  { "model": "netherman:block/crimson_web_stage_1", "y": 270 },
     "facing=east,stage=1":  { "model": "netherman:block/crimson_web_stage_1", "y": 90 },
+    "facing=up,stage=1":    { "model": "netherman:block/crimson_web_stage_1", "x": 90 },
+    "facing=down,stage=1":  { "model": "netherman:block/crimson_web_stage_1", "x": 270 },
 
     "facing=north,stage=2": { "model": "netherman:block/crimson_web_stage_2" },
     "facing=south,stage=2": { "model": "netherman:block/crimson_web_stage_2", "y": 180 },
     "facing=west,stage=2":  { "model": "netherman:block/crimson_web_stage_2", "y": 270 },
     "facing=east,stage=2":  { "model": "netherman:block/crimson_web_stage_2", "y": 90 },
+    "facing=up,stage=2":    { "model": "netherman:block/crimson_web_stage_2", "x": 90 },
+    "facing=down,stage=2":  { "model": "netherman:block/crimson_web_stage_2", "x": 270 },
 
     "stage=3": { "model": "minecraft:block/air" }
   }

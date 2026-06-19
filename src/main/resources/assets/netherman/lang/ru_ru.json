@@ -21,6 +21,7 @@
   "block.netherman.crimson_honey_block": "Блок Багряного мёда",
   "block.netherman.ghastly_nest": "Улей Гастли",
   "block.netherman.azazel_trophy": "§4Маска Азазеля",
+  "block.netherman.potent_magma": "Активная магма",
 
   "block.netherman.samsonit": "Самсонит",
   "block.netherman.chiseled_samsonit": "Резной самсонит",
@@ -76,6 +77,7 @@
   "advancement.netherman.tame_ghastly.title": "Новый дружок:D",
   "advancement.netherman.tame_ghastly.description": "Это пчёлы?",
 
+  "item.netherman.azazel_guide_book": "§4Cult of Azazel Guidebook",
   "item.netherman.manipulator_stick": "§4Жезл Манипуляции",
   "item.netherman.crimson_arrow": "§4Багрянная стрела",
   "item.netherman.chance_totem": "§6Тотем перерождения",

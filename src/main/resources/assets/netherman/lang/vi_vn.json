@@ -37,6 +37,7 @@
   "block.netherman.samsonit_bricks_stairs": "Cầu thang gạch Samsonit",
   "block.netherman.samsonit_bricks_wall": "Tường gạch Samsonit",
   "block.netherman.samsonit_tiles": "Gạch lát Samsonit",
+  "block.netherman.potent_magma": "Dung nham cường hóa",
 
   "creativetab.netherman_tab": "Cult of Azazel",
 
@@ -76,6 +77,7 @@
   "advancement.netherman.tame_ghastly.title": "Bạn mới:D",
   "advancement.netherman.tame_ghastly.description": "Đây.. là ong á?",
 
+  "item.netherman.azazel_guide_book": "§4Cult of Azazel Guidebook",
   "item.netherman.manipulator_stick": "§4Gậy thao túng",
   "item.netherman.crimson_arrow": "§4Cung tên đỏ thẫm",
   "item.netherman.chance_totem": "§6Vật tổ tái sinh",

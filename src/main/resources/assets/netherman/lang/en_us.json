@@ -37,6 +37,7 @@
   "block.netherman.samsonit_bricks_stairs": "Samsonit brick stairs",
   "block.netherman.samsonit_bricks_wall": "Samsonit brick wall",
   "block.netherman.samsonit_tiles": "Samsonit tiles",
+  "block.netherman.potent_magma": "Potent Magma",
 
   "creativetab.netherman_tab": "Cult of Azazel",
 
@@ -78,6 +79,7 @@
 
   "item.netherman.manipulator_stick": "§4Staff of Manipulation",
   "item.netherman.crimson_arrow": "§4Crimson Arrow",
+  "item.netherman.azazel_guide_book": "§4Cult of Azazel Guidebook",
   "item.netherman.chance_totem": "§6Totem of Rebirth",
   "item.netherman.note": "Instruction?",
   "item.netherman.gilded_golem_spawn_egg": "Gilded Golem Spawn egg",

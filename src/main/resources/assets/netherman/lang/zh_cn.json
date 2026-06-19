@@ -21,6 +21,7 @@
   "block.netherman.crimson_honey_block": "猩红蜂蜜块",
   "block.netherman.ghastly_nest": "Ghastly巢穴",
   "block.netherman.azazel_trophy": "§4阿撒泻勒面具",
+  "block.netherman.potent_magma": "强效岩浆",
 
   "block.netherman.samsonit": "薩姆索尼特",
   "block.netherman.chiseled_samsonit": "雕紋薩姆索尼特",
@@ -76,6 +77,7 @@
   "advancement.netherman.tame_ghastly.title": "新朋友：D",
   "advancement.netherman.tame_ghastly.description": "它们是蜜蜂吗？",
 
+  "item.netherman.azazel_guide_book": "§4Cult of Azazel Guidebook",
   "item.netherman.manipulator_stick": "§4操纵之杖",
   "item.netherman.crimson_arrow": "§4猩红箭",
   "item.netherman.chance_totem": "§6重生图腾",

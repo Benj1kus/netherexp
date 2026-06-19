@@ -3,6 +3,7 @@ package com.benji.netherman;
 import com.benji.netherman.block.*;
 import com.benji.netherman.block.entity.*;
 import com.benji.netherman.config.AzazelConfig;
+import com.benji.netherman.item.AzazelGuideBookItem;
 import com.benji.netherman.item.AzazelTrophyItem;
 import com.benji.netherman.network.TotemAnimationPacket;
 import net.minecraft.world.level.block.*;
@@ -94,6 +95,15 @@ public class NetherExp {
 
     public static final RegistryObject<Item> BLACKSTONE_COLUMN_ITEM = ITEMS.register("blackstone_column",
             () -> new BlockItem(BLACKSTONE_COLUMN.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> POTENT_MAGMA = BLOCKS.register("potent_magma",
+            () -> new PotentMagmaBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+                    .strength(2.0F)
+                    .lightLevel(state -> 10)
+                    .requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Item> POTENT_MAGMA_ITEM = ITEMS.register("potent_magma",
+            () -> new BlockItem(POTENT_MAGMA.get(), new Item.Properties()));
 
     // DECORATIVE BLOCKS:
     public static final RegistryObject<Block> SAMSONIT = BLOCKS.register("samsonit",
@@ -585,6 +595,7 @@ public class NetherExp {
                     .sized(0.6F, 1.95F)
                     .build(new ResourceLocation(MODID, "blacksmith").toString()));
 
+
     public static final RegistryObject<EntityType<BelieverEntity>> BELIEVER = ENTITIES.register("believer",
             () -> EntityType.Builder.of(BelieverEntity::new, MobCategory.CREATURE)
                     .sized(0.6F, 1.95F)
@@ -594,6 +605,16 @@ public class NetherExp {
             () -> EntityType.Builder.of(VillagerPrisonerEntity::new, MobCategory.CREATURE) // Мирный
                     .sized(0.6F, 1.95F)
                     .build("villager_prisoner"));
+
+    public static final RegistryObject<Item> AZAZEL_GUIDE_BOOK_ITEM = ITEMS.register("azazel_guide_book",
+            () -> new AzazelGuideBookItem(new Item.Properties().stacksTo(1))); // Ограничим стак до 1 штуки
+
+    public static final RegistryObject<EntityType<AzazelGuideBookEntity>> AZAZEL_GUIDE_BOOK_ENTITY = ENTITIES.register("azazel_guide_book",
+            () -> EntityType.Builder.of(AzazelGuideBookEntity::new, MobCategory.MISC)
+                    .sized(1.0F, 1.0F)
+                    .fireImmune()
+                    .build("azazel_guide_book"));
+
 
     public static final RegistryObject<EntityType<PiglinPrisonerEntity>> PIGLIN_PRISONER = ENTITIES.register("piglin_prisoner",
             () -> EntityType.Builder.of(PiglinPrisonerEntity::new, MobCategory.CREATURE) // Мирный
@@ -799,6 +820,7 @@ public class NetherExp {
             event.accept(CRIMSON_HONEY_BLOCK_ITEM);
             event.accept(GHASTLY_NEST_ITEM);
             event.accept(POINTED_BLACKSTONE_ITEM);
+            event.accept(POTENT_MAGMA_ITEM);
         }
     }
 
@@ -806,6 +828,7 @@ public class NetherExp {
     public static class ModEvents {
         @SubscribeEvent
         public static void registerAttributes(EntityAttributeCreationEvent event) {
+            event.put(AZAZEL_GUIDE_BOOK_ENTITY.get(), AzazelGuideBookEntity.createAttributes().build());
             event.put(GILDED_GOLEM.get(), GildedGolemEntity.createAttributes().build());
             event.put(AZAZEL.get(), AzazelEntity.createAttributes().build());
             event.put(LASER.get(), LaserEntity.createAttributes().build());
@@ -857,6 +880,7 @@ public class NetherExp {
             event.registerEntityRenderer(TRADER.get(), TraderRenderer::new);
             event.registerEntityRenderer(STATUE.get(), StatueRenderer::new);
             event.registerEntityRenderer(BELIEVER.get(), BelieverRenderer::new);
+            event.registerEntityRenderer(AZAZEL_GUIDE_BOOK_ENTITY.get(), AzazelGuideBookRenderer::new);
             event.registerEntityRenderer(PIGLIN_PRISONER.get(), PiglinPrisonerRenderer::new);
             event.registerEntityRenderer(VILLAGER_PRISONER.get(), VillagerPrisonerRenderer::new);
             event.registerEntityRenderer(MANIPULATOR.get(), ManipulatorRenderer::new);

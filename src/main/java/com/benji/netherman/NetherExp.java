@@ -601,6 +601,11 @@ public class NetherExp {
                     .sized(0.6F, 1.95F)
                     .build(new ResourceLocation(MODID, "believer").toString()));
 
+    public static final RegistryObject<EntityType<BelieverVillagerEntity>> BELIEVER_VILLAGER = ENTITIES.register("believer_villager",
+            () -> EntityType.Builder.of(BelieverVillagerEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.95F)
+                    .build(new ResourceLocation(MODID, "believer_villager").toString()));
+
     public static final RegistryObject<EntityType<VillagerPrisonerEntity>> VILLAGER_PRISONER = ENTITIES.register("villager_prisoner",
             () -> EntityType.Builder.of(VillagerPrisonerEntity::new, MobCategory.CREATURE) // Мирный
                     .sized(0.6F, 1.95F)
@@ -669,6 +674,14 @@ public class NetherExp {
     public static final RegistryObject<Item> BELIEVER_SPAWN_EGG = ITEMS.register("believer_spawn_egg",
             () -> new net.minecraftforge.common.ForgeSpawnEggItem(
                     BELIEVER,
+                    0xFFFFFF,
+                    0xFFFFFF,
+                    new Item.Properties()
+            ));
+
+    public static final RegistryObject<Item> BELIEVER_VILLAGER_SPAWN_EGG = ITEMS.register("believer_villager_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(
+                    BELIEVER_VILLAGER,
                     0xFFFFFF,
                     0xFFFFFF,
                     new Item.Properties()
@@ -800,6 +813,7 @@ public class NetherExp {
             event.accept(GHASTLY_SPAWN_EGG);
             event.accept(GUARDIAN_SPAWN_EGG);
             event.accept(BELIEVER_SPAWN_EGG);
+            event.accept(BELIEVER_VILLAGER_SPAWN_EGG);
             event.accept(BLACKSMITH_SPAWN_EGG);
             event.accept(DOCTOR_SPAWN_EGG);
             event.accept(MANIPULATOR_SPAWN_EGG);
@@ -813,6 +827,7 @@ public class NetherExp {
             event.accept(CRIMSON_ARROW_ITEM);
             event.accept(CHANCE_TOTEM);
             event.accept(NOTE);
+            event.accept(AZAZEL_GUIDE_BOOK_ITEM);
         }
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(BLACKSTONE_PLANT_ITEM);
@@ -838,6 +853,7 @@ public class NetherExp {
             event.put(TRADER.get(), TraderEntity.createAttributes().build());
             event.put(STATUE.get(), StatueEntity.createAttributes().build());
             event.put(BELIEVER.get(), BelieverEntity.createAttributes().build());
+            event.put(BELIEVER_VILLAGER.get(), BelieverVillagerEntity.createAttributes().build());
             event.put(PIGLIN_PRISONER.get(), PiglinPrisonerEntity.createAttributes().build());
             event.put(VILLAGER_PRISONER.get(), VillagerPrisonerEntity.createAttributes().build());
             event.put(MANIPULATOR.get(), ManipulatorEntity.createAttributes().build());
@@ -879,6 +895,7 @@ public class NetherExp {
             event.registerEntityRenderer(DOCTOR.get(), DoctorRenderer::new);
             event.registerEntityRenderer(TRADER.get(), TraderRenderer::new);
             event.registerEntityRenderer(STATUE.get(), StatueRenderer::new);
+            event.registerEntityRenderer(BELIEVER_VILLAGER.get(), BelieverVillagerRenderer::new);
             event.registerEntityRenderer(BELIEVER.get(), BelieverRenderer::new);
             event.registerEntityRenderer(AZAZEL_GUIDE_BOOK_ENTITY.get(), AzazelGuideBookRenderer::new);
             event.registerEntityRenderer(PIGLIN_PRISONER.get(), PiglinPrisonerRenderer::new);

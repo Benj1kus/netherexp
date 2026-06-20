@@ -99,6 +99,7 @@
   "creativetab.netherman_tab": "Cult of Azazel",
 
   "entity.netherman.welcomer": "Recepcionista",
+  "entity.netherman.believer_villager": "Predicador",
   "entity.netherman.trader": "Comerciante",
   "entity.netherman.gilded_golem": "Golem dorado",
   "entity.netherman.azazel": "La Carroza Divina Azazel",
@@ -145,6 +146,7 @@
   "item.netherman.doctor_spawn_egg": "Huevo de Médico",
   "item.netherman.manipulator_spawn_egg": "Huevo de Manipulador",
   "item.netherman.statue_bossunit_spawn_egg": "Huevo de Beller",
+  "item.netherman.believer_villager_spawn_egg": "Huevo de aparición de predicador",
   "item.netherman.statue_entity_spawn_egg": "Huevo de Estatua",
   "item.netherman.believer_spawn_egg": "Huevo de Creyente",
   "item.netherman.trader_spawn_egg": "Huevo de Comerciante",

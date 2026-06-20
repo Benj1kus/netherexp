@@ -100,6 +100,7 @@
 
   "entity.netherman.welcomer": "歓迎者",
   "entity.netherman.trader": "商人",
+  "entity.netherman.believer_villager": "説教師",
   "entity.netherman.gilded_golem": "金装ゴーレム",
   "entity.netherman.azazel": "神聖なる戦車アザゼル",
   "entity.netherman.blacksmith": "鍛冶屋",
@@ -147,6 +148,7 @@
   "item.netherman.statue_bossunit_spawn_egg": "Bellerのスポーンエッグ",
   "item.netherman.statue_entity_spawn_egg": "石像のスポーンエッグ",
   "item.netherman.believer_spawn_egg": "信者のスポーンエッグ",
+  "item.netherman.believer_villager_spawn_egg": "司祭のスポーンエッグ",
   "item.netherman.trader_spawn_egg": "商人のスポーンエッグ",
   "item.netherman.azazel_spawn_egg": "§4アザゼルのスポーンエッグ",
   "item.netherman.guardian_spawn_egg": "§6ゲヒノムの守護者のスポーンエッグ",

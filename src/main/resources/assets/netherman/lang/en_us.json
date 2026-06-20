@@ -41,6 +41,7 @@
 
   "creativetab.netherman_tab": "Cult of Azazel",
 
+  "entity.netherman.believer_villager": "Preacher",
   "entity.netherman.welcomer": "Welcomer",
   "entity.netherman.trader": "Trader",
   "entity.netherman.gilded_golem": "Gilded Golem",
@@ -148,6 +149,7 @@
   "item.netherman.statue_bossunit_spawn_egg": "Beller Spawn egg",
   "item.netherman.statue_entity_spawn_egg": "Statue Spawn egg",
   "item.netherman.believer_spawn_egg": "Believer Spawn egg",
+  "item.netherman.believer_villager_spawn_egg": "Preacher Spawn egg",
   "item.netherman.trader_spawn_egg": "Trader Spawn egg",
   "item.netherman.azazel_spawn_egg": "§4Azazel Spawn egg",
   "item.netherman.guardian_spawn_egg": "§6Gehinnom Spawn egg",

@@ -111,6 +111,7 @@
   "entity.netherman.guardian": "欣嫩谷守衛",
   "entity.netherman.villager_prisoner": "囚禁村民",
   "entity.netherman.piglin_prisoner": "囚禁豬布林",
+  "entity.netherman.believer_villager": "傳教士",
   "entity.netherman.ghastly": "Ghastly",
   "entity.netherman.manipulator": "操縱者",
 
@@ -148,6 +149,7 @@
   "item.netherman.statue_entity_spawn_egg": "雕像生怪蛋",
   "item.netherman.believer_spawn_egg": "信徒生怪蛋",
   "item.netherman.trader_spawn_egg": "商人生怪蛋",
+  "item.netherman.believer_villager_spawn_egg": "傳教士生成蛋",
   "item.netherman.azazel_spawn_egg": "§4阿撒瀉勒生怪蛋",
   "item.netherman.guardian_spawn_egg": "§6欣嫩谷守衛生怪蛋",
   "item.netherman.crimson_honey_bottle": "緋紅蜂蜜瓶",

@@ -41,6 +41,7 @@
 
   "creativetab.netherman_tab": "Cult of Azazel",
 
+  "entity.netherman.believer_villager": "Prediger",
   "entity.netherman.welcomer": "Willkommensbote",
   "entity.netherman.trader": "Händler",
   "entity.netherman.gilded_golem": "Vergoldeter Golem",
@@ -146,6 +147,7 @@
   "item.netherman.manipulator_spawn_egg": "Manipulator-Spawn-Ei",
   "item.netherman.statue_bossunit_spawn_egg": "Beller-Spawn-Ei",
   "item.netherman.statue_entity_spawn_egg": "Statuen-Spawn-Ei",
+  "item.netherman.believer_villager_spawn_egg": "Prediger-Spawn-Ei",
   "item.netherman.believer_spawn_egg": "Gläubigen-Spawn-Ei",
   "item.netherman.trader_spawn_egg": "Händler-Spawn-Ei",
   "item.netherman.azazel_spawn_egg": "§4Azazel-Spawn-Ei",

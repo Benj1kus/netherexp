@@ -22,6 +22,12 @@
   "block.netherman.ghastly_nest": "Ghastly Nido",
   "block.netherman.azazel_trophy": "§4Máscara de Azazel",
   "block.netherman.potent_magma": "Magma potente",
+  "block.netherman.a_puzzle": "§6[ᔑ]",
+  "block.netherman.z_puzzle": "§6[⨅]",
+  "block.netherman.e_puzzle": "§6[ᒷ]",
+  "block.netherman.l_puzzle": "§6[ꖎ]",
+  "block.netherman.altar": "Altar",
+  "block.netherman.labyrinth_teleport": "Teletransportador de portal",
 
   "book.netherman.page1.line1": "¡Bienvenido al mod §4§lCult of Azazel§f§l!",
   "book.netherman.page1.line2": "Aquí tienes una guía rápida del mod.",

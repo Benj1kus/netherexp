@@ -24,6 +24,12 @@
   "item.netherman.azazel_trophy": "§4Mặt nạ Azazel",
   "item.netherman.azazel_guide_book": "§4Cult of Azazel Guidebook",
   "block.netherman.potent_magma": "Potent Magma",
+  "block.netherman.a_puzzle": "§6[ᔑ]",
+  "block.netherman.z_puzzle": "§6[⨅]",
+  "block.netherman.e_puzzle": "§6[ᒷ]",
+  "block.netherman.l_puzzle": "§6[ꖎ]",
+  "block.netherman.altar": "Bàn thờ",
+  "block.netherman.labyrinth_teleport": "Máy dịch chuyển cổng",
   
   "block.netherman.samsonit": "Samsonit",
   "block.netherman.chiseled_samsonit": "Khối samsonit được đục",

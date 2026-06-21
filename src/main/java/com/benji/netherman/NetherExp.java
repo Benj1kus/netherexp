@@ -63,30 +63,40 @@ public class NetherExp {
 
     public static final SoundType SAMSONIT_SOUNDS = new ForgeSoundType(
             1.0F, 1.0F,
-            ModSounds.SAMSONIT_BREAK, // Передаем твои RegistryObject
+            ModSounds.SAMSONIT_BREAK,
             ModSounds.SAMSONIT_STEP,
             ModSounds.SAMSONIT_PLACE,
             ModSounds.SAMSONIT_HIT,
-            ModSounds.SAMSONIT_STEP   // Используем звук шагов вместо отсутствующего звука падения
+            ModSounds.SAMSONIT_STEP
     );
 
     public static final SoundType SAMSONIT_BRICKS_SOUNDS = new ForgeSoundType(
             1.0F, 1.0F,
-            ModSounds.SAMSONIT_BREAK,        // Ломание берем от обычного
-            ModSounds.SAMSONIT_BRICKS_STEP,  // Шаги кастомные кирпичные
-            ModSounds.SAMSONIT_BRICKS_PLACE, // Установка кастомная кирпичная
-            ModSounds.SAMSONIT_HIT,          // Удар берем от обычного
-            ModSounds.SAMSONIT_BRICKS_STEP   // Падение кирпичное
+            ModSounds.SAMSONIT_BREAK,
+            ModSounds.SAMSONIT_BRICKS_STEP,
+            ModSounds.SAMSONIT_BRICKS_PLACE,
+            ModSounds.SAMSONIT_HIT,
+            ModSounds.SAMSONIT_BRICKS_STEP
     );
 
     public static final RegistryObject<Block> NETHER_SPAWNER = BLOCKS.register("nether_spawner",
             () -> new NetherSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
-                    .lightLevel(state -> 15) // Излучает свет
+                    .lightLevel(state -> 15)
                     .requiresCorrectToolForDrops()
                     .strength(2.0F)
                     .noOcclusion()));
     public static final RegistryObject<Item> NETHER_SPAWNER_ITEM = ITEMS.register("nether_spawner",
             () -> new BlockItem(NETHER_SPAWNER.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> LABYRINTH_TELEPORT = BLOCKS.register("labyrinth_teleport",
+            () -> new LabyrinthTeleportBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
+                    .lightLevel(state -> 15)
+                    .requiresCorrectToolForDrops()
+                    .strength(20.0F)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Item> LABYRINTH_TELEPORT_ITEM = ITEMS.register("labyrinth_teleport",
+            () -> new BlockItem(LABYRINTH_TELEPORT.get(), new Item.Properties()));
 
     public static final RegistryObject<Block> BLACKSTONE_COLUMN = BLOCKS.register("blackstone_column",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)
@@ -111,6 +121,42 @@ public class NetherExp {
                     .strength(6.0F)
                     .requiresCorrectToolForDrops()
                     .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Block> A_PUZZLE = BLOCKS.register("a_puzzle",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Block> Z_PUZZLE = BLOCKS.register("z_puzzle",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Block> E_PUZZLE = BLOCKS.register("e_puzzle",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Block> L_PUZZLE = BLOCKS.register("l_puzzle",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Item> A_PUZZLE_ITEM = ITEMS.register("a_puzzle",
+            () -> new BlockItem(A_PUZZLE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> Z_PUZZLE_ITEM = ITEMS.register("z_puzzle",
+            () -> new BlockItem(Z_PUZZLE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> E_PUZZLE_ITEM = ITEMS.register("e_puzzle",
+            () -> new BlockItem(E_PUZZLE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> L_PUZZLE_ITEM = ITEMS.register("l_puzzle",
+            () -> new BlockItem(L_PUZZLE.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> SAMSONIT_ITEM = ITEMS.register("samsonit",
             () -> new BlockItem(SAMSONIT.get(), new Item.Properties()));
@@ -435,6 +481,23 @@ public class NetherExp {
                     new ResourceLocation(MODID, "textures/block/eye_block_emissive.png")
             ));
 
+    public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar",
+            () -> new AltarBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE)
+                    .lightLevel(state -> state.getValue(AltarBlock.LIT) ? 10 : 0)
+                    .strength(10.0F)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()));
+
+    public static final RegistryObject<Item> ALTAR_ITEM = ITEMS.register("altar",
+            () -> new GeoBlockItem(
+                    ALTAR.get(),
+                    new Item.Properties(),
+                    new ResourceLocation(MODID, "geo/altar.geo.json"),
+                    new ResourceLocation(MODID, "textures/block/altar.png"),
+                    new ResourceLocation(MODID, "animations/altar.animation.json"),
+                    new ResourceLocation(MODID, "textures/block/altar_emissive.png")
+            ));
+
 
     public static final RegistryObject<Block> MOSAIC_CHURCH = BLOCKS.register("mosaic_church",
             () -> new MosaicChurchBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
@@ -475,7 +538,7 @@ public class NetherExp {
             () -> new CrimsonHoneyBlock(BlockBehaviour.Properties.copy(Blocks.HONEY_BLOCK)
                     .instabreak()
                     .lightLevel(state -> 5)
-                    .noOcclusion())); // noOcclusion жизненно важен для прозрачных блоков
+                    .noOcclusion()));
 
     public static final RegistryObject<Item> CRIMSON_HONEY_BLOCK_ITEM = ITEMS.register("crimson_honey_block",
             () -> new BlockItem(CRIMSON_HONEY_BLOCK.get(), new Item.Properties()));
@@ -493,17 +556,19 @@ public class NetherExp {
             () -> new GhastlyNestBlock(BlockBehaviour.Properties.copy(Blocks.BEEHIVE)
                     .strength(2.0F)
                     .requiresCorrectToolForDrops()
-                    .noOcclusion())); // Для кастомного рендера и прозрачности
+                    .noOcclusion()));
     public static final RegistryObject<Item> GHASTLY_NEST_ITEM = ITEMS.register("ghastly_nest",
             () -> new BlockItem(GHASTLY_NEST.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> CRIMSON_HONEY_BOTTLE = ITEMS.register("crimson_honey_bottle",
             () -> new com.benji.netherman.item.CrimsonHoneyBottleItem(new Item.Properties()
-                    .stacksTo(16) // Как у обычного мёда
+                    .stacksTo(16) //
                     .craftRemainder(net.minecraft.world.item.Items.GLASS_BOTTLE)
                     .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(6).saturationMod(0.1F).alwaysEat().build())));
+
     public static final RegistryObject<BlockEntityType<GhastlyNestBlockEntity>> GHASTLY_NEST_BE = BLOCK_ENTITIES.register("ghastly_nest",
             () -> BlockEntityType.Builder.of(GhastlyNestBlockEntity::new, GHASTLY_NEST.get()).build(null));
+
     public static final RegistryObject<BlockEntityType<VoidNetherMidCornerBlockEntity>> VOIDMIDCORNERNETHER_BE = BLOCK_ENTITIES.register("voidnether_midcorner",
             () -> BlockEntityType.Builder.of(VoidNetherMidCornerBlockEntity::new, VOIDMIDCORNERNETHER.get()).build(null));
 
@@ -515,6 +580,12 @@ public class NetherExp {
 
     public static final RegistryObject<BlockEntityType<EyeBlockEntity>> EYE_BE = BLOCK_ENTITIES.register("eye_block",
             () -> BlockEntityType.Builder.of(EyeBlockEntity::new, EYE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<LabyrinthTeleportBlockEntity>> LABYRINTH_TELEPORT_BE = BLOCK_ENTITIES.register("labyrinth_teleport",
+            () -> BlockEntityType.Builder.of(LabyrinthTeleportBlockEntity::new, LABYRINTH_TELEPORT.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<AltarBlockEntity>> ALTAR_BE = BLOCK_ENTITIES.register("altar",
+            () -> BlockEntityType.Builder.of(AltarBlockEntity::new, ALTAR.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<StatueStandBlockEntity>> STATUE_STAND_BE = BLOCK_ENTITIES.register("statue_stand",
             () -> BlockEntityType.Builder.of(StatueStandBlockEntity::new, STATUE_STAND.get()).build(null));
@@ -787,6 +858,8 @@ public class NetherExp {
             event.accept(STATUE_STAND_ITEM);
             event.accept(TOTEMUS_ITEM);
             event.accept(EYE_ITEM);
+            event.accept(ALTAR_ITEM);
+            event.accept(LABYRINTH_TELEPORT_ITEM);
             event.accept(VOIDMIDCORNERNETHER_ITEM);
             event.accept(SAMSONIT_ITEM);
             event.accept(SAMSONIT_BRICKS_ITEM);
@@ -803,6 +876,10 @@ public class NetherExp {
             event.accept(SAMSONIT_BRICKS_SLAB_ITEM);
             event.accept(SAMSONIT_BRICKS_STAIRS_ITEM);
             event.accept(SAMSONIT_BRICKS_WALL_ITEM);
+            event.accept (A_PUZZLE_ITEM);
+            event.accept (Z_PUZZLE_ITEM);
+            event.accept (E_PUZZLE_ITEM);
+            event.accept (L_PUZZLE_ITEM);
 
         }
         if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
@@ -884,6 +961,7 @@ public class NetherExp {
             event.registerBlockEntityRenderer(TRAPHIVE_BE.get(), TraphiveRenderer::new);
             event.registerBlockEntityRenderer(STATUE_STAND_BE.get(), StatueStandRenderer::new);
             event.registerBlockEntityRenderer(EYE_BE.get(), EyeRenderer::new);
+            event.registerBlockEntityRenderer(ALTAR_BE.get(), AltarRenderer::new);
             event.registerBlockEntityRenderer(GRAND_DOOR_BE.get(), GrandDoorRenderer::new);
             event.registerBlockEntityRenderer(POINTED_BLACKSTONE_BE.get(), PointedBlackstoneRenderer::new);
             event.registerEntityRenderer(GILDED_GOLEM.get(), GildedGolemRenderer::new);

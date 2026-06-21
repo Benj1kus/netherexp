@@ -23,6 +23,12 @@
 	"block.netherman.azazel_trophy": "§4아자젤의 가면",
 	"item.netherman.azazel_guide_book": "§4아자젤 숭배단 안내서",
 	"block.netherman.potent_magma": "강력한 마그마",
+	"block.netherman.a_puzzle": "§6[ᔑ]",
+	"block.netherman.z_puzzle": "§6[⨅]",
+	"block.netherman.e_puzzle": "§6[ᒷ]",
+	"block.netherman.l_puzzle": "§6[ꖎ]",
+	"block.netherman.altar": "제단",
+	"block.netherman.labyrinth_teleport": "게이트 텔레포터",
 
 	"block.netherman.samsonit": "샘소나이트",
 	"block.netherman.chiseled_samsonit": "조각된 샘소나이트",

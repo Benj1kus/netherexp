@@ -1,0 +1,20 @@
+{
+  "multipart": [
+    {
+      "when": { "facing": "north" },
+      "apply": { "model": "netherman:block/altar" }
+    },
+    {
+      "when": { "facing": "east" },
+      "apply": { "model": "netherman:block/altar", "y": 90 }
+    },
+    {
+      "when": { "facing": "south" },
+      "apply": { "model": "netherman:block/altar", "y": 180 }
+    },
+    {
+      "when": { "facing": "west" },
+      "apply": { "model": "netherman:block/altar", "y": 270 }
+    }
+  ]
+}

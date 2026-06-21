@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "mode=0": { "model": "netherman:block/labyrinth_teleport_off" },
+    "mode=1": { "model": "netherman:block/labyrinth_teleport" },
+    "mode=2": { "model": "netherman:block/labyrinth_teleport" }
+  }
+}

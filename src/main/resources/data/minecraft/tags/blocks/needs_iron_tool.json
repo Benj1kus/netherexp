@@ -16,6 +16,11 @@
     "netherman:polished_samsonit_wall",
     "netherman:samsonit_bricks_wall",
     "netherman:samsonit_bricks_slab",
-    "netherman:samsonit_bricks_stairs"
+    "netherman:samsonit_bricks_stairs",
+    "netherman:a_puzzle",
+    "netherman:z_puzzle",
+    "netherman:e_puzzle",
+    "netherman:l_puzzle",
+    "netherman:altar"
   ]
 }

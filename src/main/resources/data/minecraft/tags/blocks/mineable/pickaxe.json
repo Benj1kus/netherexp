@@ -22,6 +22,11 @@
     "netherman:samsonit_bricks_wall",
     "netherman:samsonit_bricks_slab",
     "netherman:samsonit_bricks_stairs",
-    "netherman:potent_magma"
+    "netherman:potent_magma",
+    "netherman:a_puzzle",
+    "netherman:z_puzzle",
+    "netherman:e_puzzle",
+    "netherman:l_puzzle",
+    "netherman:altar"
   ]
 }

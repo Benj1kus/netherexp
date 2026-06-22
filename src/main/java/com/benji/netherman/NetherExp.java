@@ -6,6 +6,8 @@ import com.benji.netherman.config.AzazelConfig;
 import com.benji.netherman.item.AzazelGuideBookItem;
 import com.benji.netherman.item.AzazelTrophyItem;
 import com.benji.netherman.network.TotemAnimationPacket;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraft.core.registries.Registries;
@@ -755,6 +757,9 @@ public class NetherExp {
                     .sized(0.6F, 1.95F)
                     .build("villager_prisoner"));
 
+    public static final RegistryObject<Item> ALTAR_COMPASS_KEY = ITEMS.register("altar_compass_key",
+            () -> new com.benji.netherman.item.AltarCompassKeyItem(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> AZAZEL_GUIDE_BOOK_ITEM = ITEMS.register("azazel_guide_book",
             () -> new AzazelGuideBookItem(new Item.Properties().stacksTo(1))); // Ограничим стак до 1 штуки
 
@@ -1030,6 +1035,37 @@ public class NetherExp {
                         new net.minecraft.resources.ResourceLocation(NetherExp.MODID, "stage"),
                         com.benji.netherman.item.AzazelTrophyItem::getMaskStageProperty
                 );
+
+                ItemProperties.register(NetherExp.ALTAR_COMPASS_KEY.get(), new ResourceLocation("angle"), (stack, level, entity, seed) -> {
+                    if (entity == null && !stack.isFramed()) return 0.0F;
+
+                    // Если компас не настроен - крутим стрелку
+                    if (!stack.getOrCreateTag().contains("TargetX")) {
+                        return (float) ((System.currentTimeMillis() % 4000L) / 4000.0);
+                    }
+
+                    double targetX = stack.getTag().getInt("TargetX");
+                    double targetZ = stack.getTag().getInt("TargetZ");
+
+                    Entity player = entity != null ? entity : stack.getFrame();
+                    if (player == null) return 0.0F;
+
+                    // 1. Вычисляем "глобальный" угол к цели в градусах (как в самом Майнкрафте: Юг = 0, Запад = 90)
+                    double targetYaw = Math.toDegrees(Math.atan2(targetZ - player.getZ(), targetX - player.getX())) - 90.0;
+
+                    // 2. Текущий угол поворота головы игрока
+                    double playerYaw = player.getYRot();
+
+                    // 3. Находим разницу (где находится цель относительно взгляда игрока)
+                    double relativeYaw = targetYaw - playerYaw;
+
+                    // 4. Переводим градусы в твой формат от 0.0 до 1.0:
+                    // 0.5 = Прямо (Кадр 16), 0.75 = Направо (Кадр 24), 0.0 = Назад (Кадр 00), 0.25 = Налево (Кадр 08)
+                    double angle = 0.5 + (relativeYaw / 360.0);
+
+                    // Нормализация через ванильный метод (чтобы число всегда было строго от 0.0 до 1.0)
+                    return (float) net.minecraft.util.Mth.positiveModulo(angle, 1.0D);
+                });
             });
         }
 

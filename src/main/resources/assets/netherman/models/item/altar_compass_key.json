@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "netherman:item/altar_compass_16"
+  },
+  "overrides": [
+    { "predicate": { "angle": 0.000000 }, "model": "netherman:item/altar_compass_00" },
+    { "predicate": { "angle": 0.031250 }, "model": "netherman:item/altar_compass_01" },
+    { "predicate": { "angle": 0.062500 }, "model": "netherman:item/altar_compass_02" },
+    { "predicate": { "angle": 0.093750 }, "model": "netherman:item/altar_compass_03" },
+    { "predicate": { "angle": 0.125000 }, "model": "netherman:item/altar_compass_04" },
+    { "predicate": { "angle": 0.156250 }, "model": "netherman:item/altar_compass_05" },
+    { "predicate": { "angle": 0.187500 }, "model": "netherman:item/altar_compass_06" },
+    { "predicate": { "angle": 0.218750 }, "model": "netherman:item/altar_compass_07" },
+    { "predicate": { "angle": 0.250000 }, "model": "netherman:item/altar_compass_08" },
+    { "predicate": { "angle": 0.281250 }, "model": "netherman:item/altar_compass_09" },
+    { "predicate": { "angle": 0.312500 }, "model": "netherman:item/altar_compass_10" },
+    { "predicate": { "angle": 0.343750 }, "model": "netherman:item/altar_compass_11" },
+    { "predicate": { "angle": 0.375000 }, "model": "netherman:item/altar_compass_12" },
+    { "predicate": { "angle": 0.406250 }, "model": "netherman:item/altar_compass_13" },
+    { "predicate": { "angle": 0.437500 }, "model": "netherman:item/altar_compass_14" },
+    { "predicate": { "angle": 0.468750 }, "model": "netherman:item/altar_compass_15" },
+    { "predicate": { "angle": 0.500000 }, "model": "netherman:item/altar_compass_16" },
+    { "predicate": { "angle": 0.531250 }, "model": "netherman:item/altar_compass_17" },
+    { "predicate": { "angle": 0.562500 }, "model": "netherman:item/altar_compass_18" },
+    { "predicate": { "angle": 0.593750 }, "model": "netherman:item/altar_compass_19" },
+    { "predicate": { "angle": 0.625000 }, "model": "netherman:item/altar_compass_20" },
+    { "predicate": { "angle": 0.656250 }, "model": "netherman:item/altar_compass_21" },
+    { "predicate": { "angle": 0.687500 }, "model": "netherman:item/altar_compass_22" },
+    { "predicate": { "angle": 0.718750 }, "model": "netherman:item/altar_compass_23" },
+    { "predicate": { "angle": 0.750000 }, "model": "netherman:item/altar_compass_24" },
+    { "predicate": { "angle": 0.781250 }, "model": "netherman:item/altar_compass_25" },
+    { "predicate": { "angle": 0.812500 }, "model": "netherman:item/altar_compass_26" },
+    { "predicate": { "angle": 0.843750 }, "model": "netherman:item/altar_compass_27" },
+    { "predicate": { "angle": 0.875000 }, "model": "netherman:item/altar_compass_28" },
+    { "predicate": { "angle": 0.906250 }, "model": "netherman:item/altar_compass_29" },
+    { "predicate": { "angle": 0.937500 }, "model": "netherman:item/altar_compass_30" },
+    { "predicate": { "angle": 0.968750 }, "model": "netherman:item/altar_compass_31" }
+  ]
+}

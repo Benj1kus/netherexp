@@ -55,7 +55,7 @@ public class LockerNetherBlock extends HorizontalDirectionalBlock {
             }
 
             if (brokenCount >= 3) {
-                player.getInventory().add(new ItemStack(NetherExp.CRIMSON_HONEY_BOTTLE.get()));
+                player.getInventory().add(new ItemStack(NetherExp.ALTAR_COMPASS_KEY.get()));
                 playerData.putInt("LockerQuestProgress", 0);
             } else {
                 playerData.putInt("LockerQuestProgress", brokenCount);

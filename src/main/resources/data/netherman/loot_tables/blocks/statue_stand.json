@@ -3,11 +3,19 @@
   "pools": [
     {
       "rolls": 1.0,
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "netherman:statue_stand"
+          "name": "netherman:statue_stand",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "netherman:statue_stand",
+              "properties": {
+                "half": "lower"
+              }
+            }
+          ]
         }
       ],
       "conditions": [

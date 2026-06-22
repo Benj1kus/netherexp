@@ -1,0 +1,84 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
+	"ambientocclusion": false,
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "netherman:block/statue_stand",
+		"particle": "netherman:block/nether_spawner_particles"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 7, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [2, 2, 4, 2.875], "texture": "#0"},
+				"east": {"uv": [0, 2, 2, 2.875], "texture": "#0"},
+				"south": {"uv": [6, 2, 8, 2.875], "texture": "#0"},
+				"west": {"uv": [4, 2, 6, 2.875], "texture": "#0"},
+				"up": {"uv": [4, 2, 2, 0], "texture": "#0"},
+				"down": {"uv": [6, 0, 4, 2], "texture": "#0"}
+			}
+		},
+		{
+			"from": [2, 7, 2],
+			"to": [14, 12, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 15, 8]},
+			"faces": {
+				"north": {"uv": [1.5, 4.375, 3, 5], "texture": "#0"},
+				"east": {"uv": [0, 4.375, 1.5, 5], "texture": "#0"},
+				"south": {"uv": [4.5, 4.375, 6, 5], "texture": "#0"},
+				"west": {"uv": [3, 4.375, 4.5, 5], "texture": "#0"},
+				"up": {"uv": [3, 4.375, 1.5, 2.875], "texture": "#0"},
+				"down": {"uv": [4.5, 2.875, 3, 4.375], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6, 12, 6],
+			"to": [10, 23, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 20, 8]},
+			"faces": {
+				"north": {"uv": [7.25, 8.25, 7.75, 9.625], "texture": "#0"},
+				"east": {"uv": [6.75, 8.25, 7.25, 9.625], "texture": "#0"},
+				"south": {"uv": [8.25, 8.25, 8.75, 9.625], "texture": "#0"},
+				"west": {"uv": [7.75, 8.25, 8.25, 9.625], "texture": "#0"},
+				"up": {"uv": [7.75, 8.25, 7.25, 7.75], "texture": "#0"},
+				"down": {"uv": [8.25, 7.75, 7.75, 8.25], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 13, 5],
+			"to": [11, 22, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 20, 8]},
+			"faces": {
+				"north": {"uv": [6.75, 3.625, 7.5, 4.75], "texture": "#0"},
+				"east": {"uv": [6, 3.625, 6.75, 4.75], "texture": "#0"},
+				"south": {"uv": [8.25, 3.625, 9, 4.75], "texture": "#0"},
+				"west": {"uv": [7.5, 3.625, 8.25, 4.75], "texture": "#0"},
+				"up": {"uv": [7.5, 3.625, 6.75, 2.875], "texture": "#0"},
+				"down": {"uv": [8.25, 2.875, 7.5, 3.625], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "main",
+			"origin": [8, 28.98557, 6.0676],
+			"scope": 0,
+			"color": 0,
+			"children": [
+				0,
+				1,
+				{
+					"name": "statue",
+					"origin": [8, 11.65714, 8.03286],
+					"scope": 0,
+					"color": 0,
+					"children": [2, 3]
+				}
+			]
+		}
+	]
+}

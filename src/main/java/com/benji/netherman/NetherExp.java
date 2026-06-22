@@ -514,16 +514,8 @@ public class NetherExp {
                     .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
-
     public static final RegistryObject<Item> STATUE_STAND_ITEM = ITEMS.register("statue_stand",
-            () -> new GeoBlockItem(
-                    STATUE_STAND.get(),
-                    new Item.Properties(),
-                    new ResourceLocation(MODID, "geo/statue_stand.geo.json"),
-                    new ResourceLocation(MODID, "textures/block/statue_stand.png"),
-                    new ResourceLocation(MODID, "animations/statue_stand.animation.json"),
-                    new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
-            ));
+            () -> new BlockItem(STATUE_STAND.get(), new Item.Properties()));
 
     public static final RegistryObject<Block> TOTEMUS = BLOCKS.register("totemus",
             () -> new TotemusBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_BRICKS)
@@ -538,7 +530,8 @@ public class NetherExp {
 
     public static final RegistryObject<Block> EYE = BLOCKS.register("eye_block",
             () -> new EyeBlock(BlockBehaviour.Properties.copy(Blocks.HONEY_BLOCK)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(5.0F)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
 
@@ -662,8 +655,6 @@ public class NetherExp {
     public static final RegistryObject<BlockEntityType<AltarBlockEntity>> ALTAR_BE = BLOCK_ENTITIES.register("altar",
             () -> BlockEntityType.Builder.of(AltarBlockEntity::new, ALTAR.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<StatueStandBlockEntity>> STATUE_STAND_BE = BLOCK_ENTITIES.register("statue_stand",
-            () -> BlockEntityType.Builder.of(StatueStandBlockEntity::new, STATUE_STAND.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<TotemusBlockEntity>> TOTEMUS_BE = BLOCK_ENTITIES.register("totemus",
             () -> BlockEntityType.Builder.of(TotemusBlockEntity::new, TOTEMUS.get()).build(null));
@@ -1076,7 +1067,6 @@ public class NetherExp {
             event.registerBlockEntityRenderer(VOIDCORNERNETHER_BE.get(), VoidNetherCornerRenderer::new);
             event.registerBlockEntityRenderer(VOIDMIDNETHER_BE.get(), VoidNetherMidRenderer::new);
             event.registerBlockEntityRenderer(TRAPHIVE_BE.get(), TraphiveRenderer::new);
-            event.registerBlockEntityRenderer(STATUE_STAND_BE.get(), StatueStandRenderer::new);
             event.registerBlockEntityRenderer(EYE_BE.get(), EyeRenderer::new);
             event.registerBlockEntityRenderer(ALTAR_BE.get(), AltarRenderer::new);
             event.registerBlockEntityRenderer(GRAND_DOOR_BE.get(), GrandDoorRenderer::new);

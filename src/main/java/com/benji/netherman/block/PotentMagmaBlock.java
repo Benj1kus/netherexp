@@ -25,7 +25,18 @@ public class PotentMagmaBlock extends Block {
         super(properties);
     }
 
-    // Запускаем цикл гейзера сразу при установке блока
+    @Override
+    public boolean isRandomlyTicking(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
+            level.scheduleTick(pos, this, 2);
+        }
+    }
+
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (!level.isClientSide()) {
@@ -63,10 +74,10 @@ public class PotentMagmaBlock extends Block {
                 for (int i = 1; i <= 10; i++) {
                     BlockPos checkPos = pos.above(i);
                     BlockState checkState = level.getBlockState(checkPos);
-                    if (checkState.getBlock() instanceof CrimsonWebBlock) {
-                        BlockHitResult hit = new BlockHitResult(Vec3.ZERO, Direction.DOWN, checkPos, false);
-                        checkState.use(level, null, InteractionHand.MAIN_HAND, hit);
-                        break; // Активируем цепную реакцию паутины
+
+                    if (checkState.getBlock() instanceof CrimsonWebBlock webBlock) {
+                        webBlock.triggerChainReaction(checkState, level, checkPos);
+                        break;
                     }
                 }
             }

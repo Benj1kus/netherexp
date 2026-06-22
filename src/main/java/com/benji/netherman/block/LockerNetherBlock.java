@@ -40,7 +40,7 @@ public class LockerNetherBlock extends HorizontalDirectionalBlock {
     @Override
     public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide()) {
-            
+
             CompoundTag playerData = player.getPersistentData();
             int brokenCount = playerData.getInt("LockerQuestProgress") + 1;
 

@@ -100,36 +100,39 @@ public class CrimsonWebBlock extends DirectionalBlock {
         }
     }
 
-    // ... (Остальные методы use, tick, animateTick и getRenderShape остаются абсолютно без изменений)
+    public void triggerChainReaction(BlockState state, Level level, BlockPos pos) {
+        if (state.getValue(STAGE) != 0) return;
+
+        Map<BlockPos, Integer> distances = new HashMap<>();
+        Queue<BlockPos> queue = new LinkedList<>();
+
+        queue.add(pos);
+        distances.put(pos, 0);
+
+        while (!queue.isEmpty() && distances.size() < 1000) {
+            BlockPos current = queue.poll();
+            int currentDist = distances.get(current);
+
+            for (Direction dir : Direction.values()) {
+                BlockPos neighbor = current.relative(dir);
+                if (!distances.containsKey(neighbor) && level.getBlockState(neighbor).is(this)) {
+                    distances.put(neighbor, currentDist + 1);
+                    queue.add(neighbor);
+                }
+            }
+        }
+
+        for (Map.Entry<BlockPos, Integer> entry : distances.entrySet()) {
+            int delay = (int) (Math.pow(entry.getValue(), 0.8) * 3);
+            level.scheduleTick(entry.getKey(), this, Math.max(1, delay));
+        }
+    }
+
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide() && hand == InteractionHand.MAIN_HAND) {
-            if (state.getValue(STAGE) != 0) return InteractionResult.PASS;
-
-            Map<BlockPos, Integer> distances = new HashMap<>();
-            Queue<BlockPos> queue = new LinkedList<>();
-
-            queue.add(pos);
-            distances.put(pos, 0);
-
-            while (!queue.isEmpty() && distances.size() < 1000) {
-                BlockPos current = queue.poll();
-                int currentDist = distances.get(current);
-
-                for (Direction dir : Direction.values()) {
-                    BlockPos neighbor = current.relative(dir);
-                    if (!distances.containsKey(neighbor) && level.getBlockState(neighbor).is(this)) {
-                        distances.put(neighbor, currentDist + 1);
-                        queue.add(neighbor);
-                    }
-                }
-            }
-
-            for (Map.Entry<BlockPos, Integer> entry : distances.entrySet()) {
-                int delay = (int) (Math.pow(entry.getValue(), 0.8) * 3);
-                level.scheduleTick(entry.getKey(), this, Math.max(1, delay));
-            }
+            triggerChainReaction(state, level, pos);
         }
         return InteractionResult.SUCCESS;
     }
@@ -165,6 +168,7 @@ public class CrimsonWebBlock extends DirectionalBlock {
             }
         }
     }
+
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {

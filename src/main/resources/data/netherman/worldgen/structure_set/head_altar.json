@@ -1,0 +1,13 @@
+{
+  "structures": [
+    { "structure": "netherman:head_altar", "weight": 1 }
+  ],
+  "placement": {
+    "type": "minecraft:concentric_rings",
+    "distance": 80,
+    "spread": 10,
+    "count": 2,
+    "salt": 445566,
+    "preferred_biomes": "#minecraft:is_overworld"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "netherman:nether_geyser",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": { "element_type": "minecraft:single_pool_element", "location": "netherman:nether_geyser_big", "projection": "rigid", "processors": "minecraft:empty" }
+    },
+    {
+      "weight": 1,
+      "element": { "element_type": "minecraft:single_pool_element", "location": "netherman:nether_geyser_mid", "projection": "rigid", "processors": "minecraft:empty" }
+    },
+    {
+      "weight": 1,
+      "element": { "element_type": "minecraft:single_pool_element", "location": "netherman:nether_geyser_little", "projection": "rigid", "processors": "minecraft:empty" }
+    }
+  ]
+}

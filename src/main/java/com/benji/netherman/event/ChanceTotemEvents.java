@@ -50,7 +50,7 @@ public class ChanceTotemEvents {
                 player.removeAllEffects();
                 totem.shrink(1);
 
-                ModMessages.sendToPlayer(new TotemAnimationPacket(), player);
+                ModMessages.sendToPlayer(new TotemAnimationPacket(new ItemStack(NetherExp.CHANCE_TOTEM.get())), player);
 
                 ServerLevel currentLevel = (ServerLevel) player.level();
                 currentLevel.playSound(null, player.blockPosition(), ModSounds.RESPAWN_TOTEM.get(), SoundSource.PLAYERS, 1.0F, 1.0F);

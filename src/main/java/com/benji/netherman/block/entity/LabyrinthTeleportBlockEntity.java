@@ -5,7 +5,6 @@ import com.benji.netherman.block.AltarBlock;
 import com.benji.netherman.block.LabyrinthTeleportBlock;
 import com.benji.netherman.world.data.TeleportDestinationData;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -15,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -25,6 +23,11 @@ public class LabyrinthTeleportBlockEntity extends BlockEntity {
 
     public LabyrinthTeleportBlockEntity(BlockPos pos, BlockState state) {
         super(NetherExp.LABYRINTH_TELEPORT_BE.get(), pos, state);
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(worldPosition).expandTowards(0.0D, 256.0D, 0.0D);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, LabyrinthTeleportBlockEntity entity) {
@@ -65,17 +68,6 @@ public class LabyrinthTeleportBlockEntity extends BlockEntity {
             }
         }
 
-        if (level.isClientSide() && currentMode == 1) {
-            if (level.random.nextBoolean()) {
-                DustParticleOptions redDust = new DustParticleOptions(new Vector3f(1.0F, 0.0F, 0.0F), 1.5F);
-                level.addParticle(redDust,
-                        pos.getX() + level.random.nextFloat(),
-                        pos.getY() + 1.0D + level.random.nextFloat() * 2.0D,
-                        pos.getZ() + level.random.nextFloat(),
-                        0.0D, 0.05D, 0.0D);
-            }
-        }
-
         if (!level.isClientSide() && currentMode == 1) {
             AABB detectionBox = new AABB(pos).move(0, 1, 0);
             List<Player> players = level.getEntitiesOfClass(Player.class, detectionBox);
@@ -90,7 +82,7 @@ public class LabyrinthTeleportBlockEntity extends BlockEntity {
                     if (dest != null && !dest.equals(pos)) {
                         p.teleportTo(dest.getX() + 0.5, dest.getY() + 1.0, dest.getZ() + 0.5);
 
-                        level.playSound(null, pos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 0.5F, 0.5F); // Приглушенный
+                        level.playSound(null, pos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 0.5F, 0.5F);
 
                         level.playSound(null, dest, SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.BLOCKS, 1.5F, 0.8F);
                         ((ServerLevel) level).sendParticles(ParticleTypes.REVERSE_PORTAL, dest.getX() + 0.5, dest.getY() + 1.5, dest.getZ() + 0.5, 100, 0.5, 1.0, 0.5, 0.2);

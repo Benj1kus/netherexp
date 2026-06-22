@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "netherman:block/void_cave_corner" },
+    "facing=east":  { "model": "netherman:block/void_cave_corner", "y": 90 },
+    "facing=south": { "model": "netherman:block/void_cave_corner", "y": 180 },
+    "facing=west":  { "model": "netherman:block/void_cave_corner", "y": 270 }
+  }
+}

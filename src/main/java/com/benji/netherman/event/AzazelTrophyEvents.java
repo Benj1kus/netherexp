@@ -49,7 +49,6 @@ public class AzazelTrophyEvents {
         }
     }
 
-    // ВЫСШИЙ ПРИОРИТЕТ: Маска спасает игрока до того, как сработают любые тотемы в руках
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onPlayerDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
@@ -74,17 +73,16 @@ public class AzazelTrophyEvents {
                     player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
 
                     ServerLevel level = (ServerLevel) player.level();
-                    ModMessages.sendToPlayer(new TotemAnimationPacket(), player);
+                    ModMessages.sendToPlayer(new TotemAnimationPacket(new ItemStack(NetherExp.CHANCE_TOTEM.get())), player);
 
                     level.playSound(null, player.blockPosition(), ModSounds.AZAZEL_DAMAGE_1.get(), SoundSource.PLAYERS, 1.2F, 1.0F);
                     level.playSound(null, player.blockPosition(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
                     level.sendParticles(ParticleTypes.TOTEM_OF_UNDYING, player.getX(), player.getY() + 1.0D, player.getZ(), 64, 0.3D, 0.3D, 0.3D, 0.5D);
                 }
-                // 4-й УДАР: Маска ломается и вызывает эффект CHANCE_TOTEM
                 else if (stage == 3) {
                     event.setCanceled(true);
 
-                    mask.shrink(1); // Уничтожаем маску
+                    mask.shrink(1);
                     player.setHealth(1.0F);
                     player.removeAllEffects();
 
@@ -98,7 +96,7 @@ public class AzazelTrophyEvents {
     }
 
     private static void triggerChanceTotemTeleport(ServerPlayer player, ServerLevel currentLevel) {
-        ModMessages.sendToPlayer(new TotemAnimationPacket(), player);
+        ModMessages.sendToPlayer(new TotemAnimationPacket(new ItemStack(NetherExp.CHANCE_TOTEM.get())), player);
         currentLevel.sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 1.0D, player.getZ(), 50, 0.5D, 0.5D, 0.5D, 0.05D);
 
         ServerLevel respawnLevel = currentLevel.getServer().getLevel(player.getRespawnDimension());

@@ -21,6 +21,9 @@
     "netherman:z_puzzle",
     "netherman:e_puzzle",
     "netherman:l_puzzle",
-    "netherman:altar"
+    "netherman:altar",
+    "netherman:samsonit_eye",
+    "netherman:samsonit_bell",
+    "netherman:samsonit_key"
   ]
 }

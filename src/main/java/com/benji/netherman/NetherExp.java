@@ -99,7 +99,7 @@ public class NetherExp {
             () -> new BlockItem(LABYRINTH_TELEPORT.get(), new Item.Properties()));
 
     public static final RegistryObject<Block> BLACKSTONE_COLUMN = BLOCKS.register("blackstone_column",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)
+            () -> new BlackstoneColumnBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
                     .strength(2.0F)
                     .requiresCorrectToolForDrops()));
 
@@ -121,6 +121,45 @@ public class NetherExp {
                     .strength(6.0F)
                     .requiresCorrectToolForDrops()
                     .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Item> SAMSONIT_ITEM = ITEMS.register("samsonit",
+            () -> new BlockItem(SAMSONIT.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> LOCKER_NETHER = BLOCKS.register("locker_nether",
+            () -> new LockerNetherBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
+                    .strength(2.0F)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()));
+
+    public static final RegistryObject<Item> LOCKER_NETHER_ITEM = ITEMS.register("locker_nether",
+            () -> new BlockItem(LOCKER_NETHER.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> SAMSONIT_EYE = BLOCKS.register("samsonit_eye",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Item> SAMSONIT_EYE_ITEM = ITEMS.register("samsonit_eye",
+            () -> new BlockItem(SAMSONIT_EYE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> SAMSONIT_BELL = BLOCKS.register("samsonit_bell",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Item> SAMSONIT_BELL_ITEM = ITEMS.register("samsonit_bell",
+            () -> new BlockItem(SAMSONIT_BELL.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> SAMSONIT_KEY = BLOCKS.register("samsonit_key",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+                    .strength(6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SAMSONIT_SOUNDS)));
+
+    public static final RegistryObject<Item> SAMSONIT_KEY_ITEM = ITEMS.register("samsonit_key",
+            () -> new BlockItem(SAMSONIT_KEY.get(), new Item.Properties()));
 
     public static final RegistryObject<Block> A_PUZZLE = BLOCKS.register("a_puzzle",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
@@ -158,8 +197,6 @@ public class NetherExp {
     public static final RegistryObject<Item> L_PUZZLE_ITEM = ITEMS.register("l_puzzle",
             () -> new BlockItem(L_PUZZLE.get(), new Item.Properties()));
 
-    public static final RegistryObject<Item> SAMSONIT_ITEM = ITEMS.register("samsonit",
-            () -> new BlockItem(SAMSONIT.get(), new Item.Properties()));
 
     public static final RegistryObject<Block> COBBLED_SAMSONIT = BLOCKS.register("cobbled_samsonit",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
@@ -317,6 +354,7 @@ public class NetherExp {
 
     public static final RegistryObject<StructureType<com.benji.netherman.worldgen.structure.MegaJigsawStructure>> MEGA_JIGSAW_STRUCTURE =
             STRUCTURE_TYPES.register("mega_jigsaw", () -> () -> com.benji.netherman.worldgen.structure.MegaJigsawStructure.CODEC);
+
     public static final RegistryObject<Block> VOIDMID = BLOCKS.register("void_mid",
             () -> new VoidMidBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
                     .strength(-1.0F, 3600000.0F)
@@ -341,10 +379,41 @@ public class NetherExp {
 
     public static final RegistryObject<Item> VOIDMIDCORNER_ITEM = ITEMS.register("void_midcorner",
             () -> new BlockItem(VOIDMIDCORNER.get(), new Item.Properties()));
+
     public static final RegistryObject<Block> VOIDMIDNETHER = BLOCKS.register("voidnether_mid",
             () -> new VoidNetherMidBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
                     .strength(-1.0F, 3600000.0F)
                     .noOcclusion()));
+
+
+    public static final RegistryObject<Block> VOIDMID_CAVE = BLOCKS.register("void_cave_mid",
+            () -> new VoidCaveMidBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
+                    .strength(-1.0F, 3600000.0F)
+                    .lightLevel(state -> 10)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Item> VOIDMID_CAVE_ITEM = ITEMS.register("void_cave_mid",
+            () -> new BlockItem(VOIDMID_CAVE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Block> VOIDCORNER_CAVE = BLOCKS.register("void_cave_corner",
+            () -> new VoidCaveCornerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
+                    .strength(-1.0F, 3600000.0F)
+                    .lightLevel(state -> 10)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Item> VOIDCORNER_CAVE_ITEM = ITEMS.register("void_cave_corner",
+            () -> new BlockItem(VOIDCORNER_CAVE.get(), new Item.Properties()));
+
+
+    public static final RegistryObject<Block> VOIDMIDCORNER_CAVE = BLOCKS.register("void_cave_midcorner",
+            () -> new VoidCaveMidCornerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
+                    .strength(-1.0F, 3600000.0F)
+                    .lightLevel(state -> 10)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Item> VOIDMIDCORNER_CAVE_ITEM = ITEMS.register("void_cave_midcorner",
+            () -> new BlockItem(VOIDMIDCORNER_CAVE.get(), new Item.Properties()));
+
 
     public static final RegistryObject<Item> VOIDMIDNETHER_ITEM = ITEMS.register("voidnether_mid",
             () -> new BlockItem(VOIDMIDNETHER.get(), new Item.Properties()));
@@ -565,6 +634,10 @@ public class NetherExp {
                     .stacksTo(16) //
                     .craftRemainder(net.minecraft.world.item.Items.GLASS_BOTTLE)
                     .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(6).saturationMod(0.1F).alwaysEat().build())));
+
+    public static final RegistryObject<Item> QUEST_ICON_1 = ITEMS.register("locker_quest1", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> QUEST_ICON_2 = ITEMS.register("locker_quest2", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> QUEST_ICON_3 = ITEMS.register("locker_quest3", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<BlockEntityType<GhastlyNestBlockEntity>> GHASTLY_NEST_BE = BLOCK_ENTITIES.register("ghastly_nest",
             () -> BlockEntityType.Builder.of(GhastlyNestBlockEntity::new, GHASTLY_NEST.get()).build(null));
@@ -850,6 +923,9 @@ public class NetherExp {
             event.accept(CRIMSON_WEB_ITEM);
             event.accept(TRAPHIVE_ITEM);
             event.accept(VOIDMID_ITEM);
+            event.accept(VOIDMID_CAVE_ITEM);
+            event.accept(VOIDCORNER_CAVE_ITEM);
+            event.accept(VOIDMIDCORNER_CAVE_ITEM);
             event.accept(VOIDCORNER_ITEM);
             event.accept(VOIDMIDCORNER_ITEM);
             event.accept(VOIDMIDNETHER_ITEM);
@@ -876,6 +952,10 @@ public class NetherExp {
             event.accept(SAMSONIT_BRICKS_SLAB_ITEM);
             event.accept(SAMSONIT_BRICKS_STAIRS_ITEM);
             event.accept(SAMSONIT_BRICKS_WALL_ITEM);
+            event.accept(SAMSONIT_EYE_ITEM);
+            event.accept(SAMSONIT_BELL_ITEM);
+            event.accept(LOCKER_NETHER_ITEM);
+            event.accept(SAMSONIT_KEY_ITEM);
             event.accept (A_PUZZLE_ITEM);
             event.accept (Z_PUZZLE_ITEM);
             event.accept (E_PUZZLE_ITEM);
@@ -955,6 +1035,7 @@ public class NetherExp {
 
         @SubscribeEvent
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(NetherExp.LABYRINTH_TELEPORT_BE.get(), LabyrinthTeleportRenderer::new);
             event.registerBlockEntityRenderer(VOIDMIDCORNERNETHER_BE.get(), VoidNetherMidCornerRenderer::new);
             event.registerBlockEntityRenderer(VOIDCORNERNETHER_BE.get(), VoidNetherCornerRenderer::new);
             event.registerBlockEntityRenderer(VOIDMIDNETHER_BE.get(), VoidNetherMidRenderer::new);

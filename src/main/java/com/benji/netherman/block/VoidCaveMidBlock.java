@@ -3,6 +3,7 @@ package com.benji.netherman.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -21,9 +22,13 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import com.benji.netherman.ModSounds;
+
 public class VoidCaveMidBlock extends HorizontalDirectionalBlock {
 
     private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+
+    private static long lastSoundTime = 0;
 
     public VoidCaveMidBlock(Properties properties) {
         super(properties);
@@ -58,6 +63,25 @@ public class VoidCaveMidBlock extends HorizontalDirectionalBlock {
             double y = pos.getY() + random.nextDouble() * 4.0;
             double z = pos.getZ() + random.nextDouble();
             level.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.01D, 0.0D);
+        }
+
+        //ambient
+        long currentTime = level.getGameTime();
+
+        if (currentTime - lastSoundTime > 160) {
+
+            if (random.nextInt(5) == 0) {
+                lastSoundTime = currentTime;
+
+                level.playLocalSound(
+                        pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                        ModSounds.RIFTSOUND.get(),
+                        SoundSource.BLOCKS,
+                        1.0F, // Громкость
+                        random.nextFloat() * 0.2F + 0.9F, // Искажение
+                        false
+                );
+            }
         }
     }
 

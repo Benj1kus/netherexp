@@ -16,6 +16,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> UNIT_IDLE = registerSoundEvent("unit_idle");
     public static final RegistryObject<SoundEvent> SPINNING_WHEEL = registerSoundEvent("spinning_wheel");
 
+    public static final RegistryObject<SoundEvent> RIFTSOUND = registerSoundEvent("riftsound");
 
     public static final RegistryObject<SoundEvent> BLACKSMITH_IDLE = registerSoundEvent("blacksmith_idle");
 

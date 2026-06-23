@@ -53,6 +53,18 @@
   "block.netherman.samsonit_bricks_stairs": "Cầu thang gạch samsonit",
   "block.netherman.samsonit_bricks_wall": "Tường gạch samsonit",
   "block.netherman.samsonit_tiles": "Đá lát sansonit",
+  "block.netherman.grand_door_part": "Mảnh cổng lớn",
+  "tooltip.netherman.compass": "Giúp tìm các công trình của mod",
+  "tooltip.netherman.guide": "Sách hướng dẫn",
+  "tooltip.netherman.trophy": "Chứa 3 Vật tổ Bất tử",
+  "tooltip.netherman.trophy.line1": "Miễn nhiễm lửa",
+  "tooltip.netherman.manipulator": "[RMB] để kéo",
+  "tooltip.netherman.manipulator.line1": "[SHIFT+RMB] để triệu hồi",
+  "tooltip.netherman.arrow": "Mũi tên dội",
+  "tooltip.netherman.honey": "[RMB] lên khối mật ong",
+  "tooltip.netherman.chance_totem.spawnpoint": "điểm hồi sinh",
+  "tooltip.netherman.chance_totem.line1": "Dịch chuyển đến %s sau khi chịu đòn chí mạng",
+  "tooltip.netherman.chance_totem.line2": "[SHIFT+RMB] - triệu hồi Gehinnom",
 
   "creativetab.netherman_tab": "Cult of Azazel - Giáo phái của Azazel",
   

@@ -108,6 +108,18 @@
   "block.netherman.samsonit_bricks_stairs": "Escadas de tijolos de Samsonit",
   "block.netherman.samsonit_bricks_wall": "Muro de tijolos de Samsonit",
   "block.netherman.samsonit_tiles": "Ladrilhos de Samsonit",
+  "block.netherman.grand_door_part": "Parte do grande portão",
+  "tooltip.netherman.compass": "Ajuda a encontrar estruturas do mod",
+  "tooltip.netherman.guide": "Guia",
+  "tooltip.netherman.trophy": "Contém 3 Totens da Imortalidade",
+  "tooltip.netherman.trophy.line1": "Imune ao fogo",
+  "tooltip.netherman.manipulator": "[RMB] para puxar",
+  "tooltip.netherman.manipulator.line1": "[SHIFT+RMB] para invocar",
+  "tooltip.netherman.arrow": "Flecha ricocheteante",
+  "tooltip.netherman.honey": "[RMB] em bloco de mel",
+  "tooltip.netherman.chance_totem.spawnpoint": "ponto de surgimento",
+  "tooltip.netherman.chance_totem.line1": "Teletransporta para o %s após dano fatal",
+  "tooltip.netherman.chance_totem.line2": "[SHIFT+RMB] - invocar Gehinnom",
 
   "creativetab.netherman_tab": "Cult of Azazel",
 

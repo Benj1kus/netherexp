@@ -34,6 +34,7 @@
   "block.netherman.samsonit_bell": "Samsonite Carving Bell",
   "block.netherman.samsonit_eye": "Samsonite Carving Eye",
   "block.netherman.samsonit_key": "Keyhole",
+  "block.netherman.grand_door_part": "Grand Door Part",
 
   "block.netherman.samsonit": "Samsonite",
   "block.netherman.chiseled_samsonit": "Chiseled samsonite",
@@ -75,6 +76,18 @@
   "entity.netherman.azazel.surrender": "Hand over your weapon if you want to live!",
   "entity.netherman.azazel.mercy": "You made the right decision.",
   "entity.netherman.azazel.death": "I’m sorry I failed to meet your expectations, my lord...",
+
+  "tooltip.netherman.compass": "Helps you find mod structures",
+  "tooltip.netherman.guide": "Guidebook",
+  "tooltip.netherman.trophy": "Contains 3 Totem of Undying",
+  "tooltip.netherman.trophy.line1": "Fire immune",
+  "tooltip.netherman.manipulator": "[RMB] for pulling",
+  "tooltip.netherman.manipulator.line1": "[SHIFT+RMB] for summon",
+  "tooltip.netherman.arrow": "Ricochet arrow",
+  "tooltip.netherman.honey": "[RMB] on honey block",
+  "tooltip.netherman.chance_totem.spawnpoint": "spawnpoint",
+  "tooltip.netherman.chance_totem.line1": "Teleports to the %s after fatal hit",
+  "tooltip.netherman.chance_totem.line2": "[SHIFT+RMB] - summon Gehinnom",
 
   "book.netherman.page1.line1": "Welcome to §4§lCult of Azazel§f§l mod!",
   "book.netherman.page1.line2": "Here's a quick guide to what's in the mod.",

@@ -111,6 +111,20 @@
   "book.netherman.page6.line7": "§e§lСПАСИБО ЗА ИГРУ!",
   "book.netherman.page6.line8": "Автор: §4Benj1kus",
 
+  "block.netherman.grand_door_part": "Часть великих врат",
+  "tooltip.netherman.compass": "Помогает находить структуры мода",
+  "tooltip.netherman.guide": "Путеводитель",
+  "tooltip.netherman.trophy": "Содержит 3 тотема бессмертия",
+  "tooltip.netherman.trophy.line1": "Неуязвим к огню",
+  "tooltip.netherman.manipulator": "[ПКМ] — притянуть",
+  "tooltip.netherman.manipulator.line1": "[SHIFT+ПКМ] — призвать",
+  "tooltip.netherman.arrow": "Стрела с рикошетом",
+  "tooltip.netherman.honey": "[ПКМ] по медовому блоку",
+  "tooltip.netherman.chance_totem.spawnpoint": "точке возрождения",
+  "tooltip.netherman.chance_totem.line1": "Телепортирует к %s после смертельного удара",
+  "tooltip.netherman.chance_totem.line2": "[SHIFT+ПКМ] — призвать Геиннома",
+
+
   "entity.netherman.welcomer": "Приветствующий",
   "entity.netherman.trader": "Багряный Торговец",
   "entity.netherman.gilded_golem": "Позолоченный голем",

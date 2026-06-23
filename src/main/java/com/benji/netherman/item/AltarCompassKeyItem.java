@@ -1,6 +1,7 @@
 package com.benji.netherman.item;
 
 import com.benji.netherman.NetherExp;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -20,10 +21,14 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import com.mojang.datafixers.util.Pair;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class AltarCompassKeyItem extends Item {
 
@@ -69,6 +74,13 @@ public class AltarCompassKeyItem extends Item {
 
         return super.useOn(context);
     }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
+        Component compass = Component.translatable("tooltip.netherman.compass")
+                .withStyle(ChatFormatting.GOLD);
+        tooltipComponents.add(compass);
+}
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {

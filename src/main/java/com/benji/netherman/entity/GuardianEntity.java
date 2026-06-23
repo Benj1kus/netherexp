@@ -6,6 +6,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.stats.Stat;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,13 +38,17 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class GuardianEntity extends Monster implements GeoEntity {
+public class
+GuardianEntity extends Monster implements GeoEntity {
+    private java.util.UUID ownerUUID = null;
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(GuardianEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> IS_BUFFED = SynchedEntityData.defineId(GuardianEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> GREETING_PHASE = SynchedEntityData.defineId(GuardianEntity.class, EntityDataSerializers.INT);
     private int greetingCooldown = 0;
 
+    public void setOwnerUUID(java.util.UUID uuid) { this.ownerUUID = uuid; }
+    public java.util.UUID getOwnerUUID() { return this.ownerUUID; }
     public static final int STATE_NEUTRAL = 0;
     public static final int STATE_ANGRY = 1;
     public static final int STATE_WALK = 2;
@@ -117,13 +124,20 @@ public class GuardianEntity extends Monster implements GeoEntity {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("GreetingCooldown", this.greetingCooldown);
+        if (this.ownerUUID != null) {
+            compound.putUUID("SummonerUUID", this.ownerUUID);
+        }
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.greetingCooldown = compound.getInt("GreetingCooldown");
+        if (compound.hasUUID("SummonerUUID")) {
+            this.ownerUUID = compound.getUUID("SummonerUUID");
+        }
     }
+
     @Override
     public void die(DamageSource cause) {
         if (!this.level().isClientSide()) {
@@ -269,6 +283,18 @@ public class GuardianEntity extends Monster implements GeoEntity {
     @Override
     protected void registerGoals() {
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, 0, false, false, (entity) -> {
+            if (this.ownerUUID == null) return false;
+            if (entity instanceof Player) return false;
+            if (entity instanceof GuardianEntity otherGuardian) {
+                if (otherGuardian.getOwnerUUID() != null && otherGuardian.getOwnerUUID().equals(this.ownerUUID)) {
+                    return false;
+                }
+            }
+            return entity instanceof Enemy;
+        }));
+
         this.goalSelector.addGoal(1, new GuardianBehaviorGoal(this));
     }
 

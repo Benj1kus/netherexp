@@ -585,7 +585,8 @@ public class NetherExp {
             () -> new com.benji.netherman.item.ManipulatorStickItem());
 
     public static final RegistryObject<Item> CHANCE_TOTEM = ITEMS.register("chance_totem",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new com.benji.netherman.item.ChanceTotemItem(new Item.Properties()));
+
     public static final RegistryObject<Item> NOTE = ITEMS.register("note",
             () -> new com.benji.netherman.item.NoteItem(new Item.Properties().stacksTo(1)));
 

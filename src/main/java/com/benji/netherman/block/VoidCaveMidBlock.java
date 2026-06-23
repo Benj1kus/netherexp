@@ -27,7 +27,7 @@ import com.benji.netherman.ModSounds;
 public class VoidCaveMidBlock extends HorizontalDirectionalBlock {
 
     private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    
+
     private static long lastSoundTime = 0;
 
     public VoidCaveMidBlock(Properties properties) {

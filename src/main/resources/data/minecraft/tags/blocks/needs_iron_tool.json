@@ -24,6 +24,16 @@
     "netherman:altar",
     "netherman:samsonit_eye",
     "netherman:samsonit_bell",
-    "netherman:samsonit_key"
+    "netherman:samsonit_key",
+    "netherman:grand_door",
+    "netherman:void_mid",
+    "netherman:void_corner",
+    "netherman:void_midcorner",
+    "netherman:voidnether_mid",
+    "netherman:void_cave_mid",
+    "netherman:void_cave_corner",
+    "netherman:void_cave_midcorner",
+    "netherman:voidnether_corner",
+    "netherman:voidnether_midcorner"
   ]
 }

@@ -359,7 +359,8 @@ public class NetherExp {
 
     public static final RegistryObject<Block> VOIDMID = BLOCKS.register("void_mid",
             () -> new VoidMidBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
     public static final RegistryObject<Item> VOIDMID_ITEM = ITEMS.register("void_mid",
@@ -367,7 +368,8 @@ public class NetherExp {
 
     public static final RegistryObject<Block> VOIDCORNER = BLOCKS.register("void_corner",
             () -> new VoidCornerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
     public static final RegistryObject<Item> VOIDCORNER_ITEM = ITEMS.register("void_corner",
@@ -376,7 +378,8 @@ public class NetherExp {
 
     public static final RegistryObject<Block> VOIDMIDCORNER = BLOCKS.register("void_midcorner",
             () -> new VoidMidCornerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
     public static final RegistryObject<Item> VOIDMIDCORNER_ITEM = ITEMS.register("void_midcorner",
@@ -384,13 +387,15 @@ public class NetherExp {
 
     public static final RegistryObject<Block> VOIDMIDNETHER = BLOCKS.register("voidnether_mid",
             () -> new VoidNetherMidBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
 
     public static final RegistryObject<Block> VOIDMID_CAVE = BLOCKS.register("void_cave_mid",
             () -> new VoidCaveMidBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
                     .lightLevel(state -> 10)
                     .noOcclusion()));
 
@@ -399,7 +404,8 @@ public class NetherExp {
 
     public static final RegistryObject<Block> VOIDCORNER_CAVE = BLOCKS.register("void_cave_corner",
             () -> new VoidCaveCornerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
                     .lightLevel(state -> 10)
                     .noOcclusion()));
 
@@ -409,7 +415,8 @@ public class NetherExp {
 
     public static final RegistryObject<Block> VOIDMIDCORNER_CAVE = BLOCKS.register("void_cave_midcorner",
             () -> new VoidCaveMidCornerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
                     .lightLevel(state -> 10)
                     .noOcclusion()));
 
@@ -422,7 +429,8 @@ public class NetherExp {
 
     public static final RegistryObject<Block> VOIDCORNERNETHER = BLOCKS.register("voidnether_corner",
             () -> new VoidNetherCornerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
     public static final RegistryObject<Item> VOIDCORNERNETHER_ITEM = ITEMS.register("voidnether_corner",
@@ -431,7 +439,8 @@ public class NetherExp {
 
     public static final RegistryObject<Block> VOIDMIDCORNERNETHER = BLOCKS.register("voidnether_midcorner",
             () -> new VoidNetherMidCornerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
     public static final RegistryObject<Item> VOIDMIDCORNERNETHER_ITEM = ITEMS.register("voidnether_midcorner",
@@ -582,7 +591,8 @@ public class NetherExp {
 
     public static final RegistryObject<Block> GRAND_DOOR = BLOCKS.register("grand_door",
             () -> new GrandDoorBlock(BlockBehaviour.Properties.copy(Blocks.POLISHED_BLACKSTONE_BRICKS)
-                    .strength(-1.0F, 3600000.0F)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
     public static final RegistryObject<Item> GRAND_DOOR_ITEM = ITEMS.register("grand_door",
             () -> new GeoBlockItem(

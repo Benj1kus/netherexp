@@ -1,5 +1,6 @@
 package com.benji.netherman.block.entity;
 
+import com.benji.netherman.ModSounds;
 import com.benji.netherman.NetherExp;
 import com.benji.netherman.block.FacePuzzleBlock;
 import net.minecraft.core.BlockPos;
@@ -99,7 +100,7 @@ public class FacePuzzleBlockEntity extends BlockEntity implements GeoBlockEntity
             }
         }
 
-        level.playSound(null, this.worldPosition, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.playSound(null, this.worldPosition, ModSounds.GIANT_BELL.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.TOTEM_OF_UNDYING,

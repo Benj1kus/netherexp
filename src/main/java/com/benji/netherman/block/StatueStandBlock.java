@@ -1,6 +1,7 @@
 package com.benji.netherman.block;
 
 import com.benji.netherman.NetherExp;
+import com.benji.netherman.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -124,7 +125,7 @@ public class StatueStandBlock extends HorizontalDirectionalBlock {
                 }
 
                 if (allPaired) {
-                    level.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.playSound(null, pos, ModSounds.GIANT_BELL.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 
                     ItemEntity key = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, new ItemStack(NetherExp.MAZE_KEY.get()));
                     level.addFreshEntity(key);

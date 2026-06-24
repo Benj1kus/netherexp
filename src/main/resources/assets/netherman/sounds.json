@@ -24,6 +24,7 @@
   "spinning_wheel": { "sounds": [ "netherman:spinning_wheel" ] },
   "doctor": { "sounds": [ "netherman:doctor" ] },
   "blacksmith_idle": { "sounds": [ "netherman:blacksmith_idle" ] },
+  "giant_bell": { "sounds": [ "netherman:giant_bell" ] },
 
   "spring1": { "sounds": [ "netherman:spring1" ] },
   "spring2": { "sounds": [ "netherman:spring2" ] },

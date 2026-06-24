@@ -35,6 +35,15 @@
   "block.netherman.altar": "Altar",
   "block.netherman.labyrinth_teleport": "Teletransportador de portal",
 
+  "block.netherman.maze_door": "Porta do labirinto",
+  "item.netherman.maze_key": "Chave de Sansão",
+  "block.netherman.totemus_hole": "Quebra-cabeça arco-íris",
+  "block.netherman.face_puzzle_right_down": "Quebra-cabeça facial",
+  "block.netherman.face_puzzle_right_up": "Quebra-cabeça facial",
+  "block.netherman.face_puzzle_left_down": "Quebra-cabeça facial",
+  "block.netherman.face_puzzle_left_up": "Quebra-cabeça facial",
+  "message.netherman.door_locked": "§4Resolva o quebra-cabeça!",
+
   "block.netherman.samsonit": "Samsonit",
   "block.netherman.chiseled_samsonit": "Samsonit talhado",
   "block.netherman.cobbled_samsonit": "Samsonit de pedra",

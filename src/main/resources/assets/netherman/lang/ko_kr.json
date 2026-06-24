@@ -37,6 +37,15 @@
 	"block.netherman.altar": "제단",
 	"block.netherman.labyrinth_teleport": "게이트 텔레포터",
 
+	"block.netherman.maze_door": "미로 문",
+	"item.netherman.maze_key": "삼손의 열쇠",
+	"block.netherman.totemus_hole": "무지개 퍼즐",
+	"block.netherman.face_puzzle_right_down": "얼굴 퍼즐",
+	"block.netherman.face_puzzle_right_up": "얼굴 퍼즐",
+	"block.netherman.face_puzzle_left_down": "얼굴 퍼즐",
+	"block.netherman.face_puzzle_left_up": "얼굴 퍼즐",
+	"message.netherman.door_locked": "§4퍼즐을 푸세요!",
+
 	"block.netherman.samsonit": "샘소나이트",
 	"block.netherman.chiseled_samsonit": "조각된 샘소나이트",
 	"block.netherman.cobbled_samsonit": "조약돌 샘소나이트",

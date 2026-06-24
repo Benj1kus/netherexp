@@ -53,7 +53,7 @@ public class GrandDoorPartBlock extends HorizontalDirectionalBlock {
             for (int x = -5; x <= 5; x++) {
                 for (int z = -5; z <= 5; z++) {
                     BlockPos checkPos = pos.offset(x, -y, z);
-                    if (level.getBlockState(checkPos).is(NetherExp.GRAND_DOOR.get())) {
+                    if (level.getBlockState(checkPos).is(NetherExp.GRAND_DOOR.get()) || level.getBlockState(checkPos).is(NetherExp.MAZE_DOOR.get())) {
                         return level.getBlockState(checkPos).use(level, player, hand, new BlockHitResult(hit.getLocation(), hit.getDirection(), checkPos, hit.isInside()));
                     }
                 }

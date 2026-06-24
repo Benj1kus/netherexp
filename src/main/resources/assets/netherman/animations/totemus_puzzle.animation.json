@@ -1,0 +1,32 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"idle": {
+			"loop": true,
+			"bones": {
+				"totems": {
+					"position": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"spawn": {
+			"animation_length": 1.25,
+			"bones": {
+				"totems": {
+					"position": {
+						"0.0": {
+							"vector": [0, -36, 0]
+						},
+						"1.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInElastic",
+							"easingArgs": [2]
+						}
+					}
+				}
+			}
+		}
+	}
+}

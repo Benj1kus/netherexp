@@ -36,6 +36,15 @@
   "block.netherman.samsonit_eye": "Глаз самсонитовой резьбы",
   "block.netherman.samsonit_key": "Замочная скважина",
 
+  "block.netherman.maze_door": "Дверь лабиринта",
+  "item.netherman.maze_key": "Ключ Самсона",
+  "block.netherman.totemus_hole": "Радужная головоломка",
+  "block.netherman.face_puzzle_right_down": "Головоломка с лицом",
+  "block.netherman.face_puzzle_right_up": "Головоломка с лицом",
+  "block.netherman.face_puzzle_left_down": "Головоломка с лицом",
+  "block.netherman.face_puzzle_left_up": "Головоломка с лицом",
+  "message.netherman.door_locked": "§4Решите головоломку!",
+
   "block.netherman.samsonit": "Самсонит",
   "block.netherman.chiseled_samsonit": "Резной самсонит",
   "block.netherman.cobbled_samsonit": "Колотый самсонит",

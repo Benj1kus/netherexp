@@ -1,0 +1,6 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "netherman:block/labyrinth_teleport_side"
+  }
+}

@@ -37,7 +37,16 @@
   "block.netherman.l_puzzle": "§6[ꖎ]",
   "block.netherman.altar": "Bàn thờ",
   "block.netherman.labyrinth_teleport": "Máy dịch chuyển cổng",
-  
+
+  "block.netherman.maze_door": "Cửa mê cung",
+  "item.netherman.maze_key": "Chìa khóa Samson",
+  "block.netherman.totemus_hole": "Câu đố cầu vồng",
+  "block.netherman.face_puzzle_right_down": "Câu đố khuôn mặt",
+  "block.netherman.face_puzzle_right_up": "Câu đố khuôn mặt",
+  "block.netherman.face_puzzle_left_down": "Câu đố khuôn mặt",
+  "block.netherman.face_puzzle_left_up": "Câu đố khuôn mặt",
+  "message.netherman.door_locked": "§4Hãy giải câu đố!",
+
   "block.netherman.samsonit": "Samsonit",
   "block.netherman.chiseled_samsonit": "Khối samsonit được đục",
   "block.netherman.cobbled_samsonit": "Samsonit cuội",

@@ -1,13 +1,23 @@
 {
   "variants": {
-    "facing=north,half=lower": { "model": "netherman:block/statue_stand_part_down" },
-    "facing=east,half=lower":  { "model": "netherman:block/statue_stand_part_down", "y": 90 },
-    "facing=south,half=lower": { "model": "netherman:block/statue_stand_part_down", "y": 180 },
-    "facing=west,half=lower":  { "model": "netherman:block/statue_stand_part_down", "y": 270 },
+    "facing=north,half=lower,solved=false": { "model": "netherman:block/statue_stand_part_down" },
+    "facing=east,half=lower,solved=false":  { "model": "netherman:block/statue_stand_part_down", "y": 90 },
+    "facing=south,half=lower,solved=false": { "model": "netherman:block/statue_stand_part_down", "y": 180 },
+    "facing=west,half=lower,solved=false":  { "model": "netherman:block/statue_stand_part_down", "y": 270 },
 
-    "facing=north,half=upper": { "model": "netherman:block/statue_stand_part_up" },
-    "facing=east,half=upper":  { "model": "netherman:block/statue_stand_part_up", "y": 90 },
-    "facing=south,half=upper": { "model": "netherman:block/statue_stand_part_up", "y": 180 },
-    "facing=west,half=upper":  { "model": "netherman:block/statue_stand_part_up", "y": 270 }
+    "facing=north,half=upper,solved=false": { "model": "netherman:block/statue_stand_part_up" },
+    "facing=east,half=upper,solved=false":  { "model": "netherman:block/statue_stand_part_up", "y": 90 },
+    "facing=south,half=upper,solved=false": { "model": "netherman:block/statue_stand_part_up", "y": 180 },
+    "facing=west,half=upper,solved=false":  { "model": "netherman:block/statue_stand_part_up", "y": 270 },
+
+    "facing=north,half=lower,solved=true": { "model": "netherman:block/statue_stand_part_down" },
+    "facing=east,half=lower,solved=true":  { "model": "netherman:block/statue_stand_part_down", "y": 90 },
+    "facing=south,half=lower,solved=true": { "model": "netherman:block/statue_stand_part_down", "y": 180 },
+    "facing=west,half=lower,solved=true":  { "model": "netherman:block/statue_stand_part_down", "y": 270 },
+
+    "facing=north,half=upper,solved=true": { "model": "netherman:block/statue_stand_part_up" },
+    "facing=east,half=upper,solved=true":  { "model": "netherman:block/statue_stand_part_up", "y": 90 },
+    "facing=south,half=upper,solved=true": { "model": "netherman:block/statue_stand_part_up", "y": 180 },
+    "facing=west,half=upper,solved=true":  { "model": "netherman:block/statue_stand_part_up", "y": 270 }
   }
 }

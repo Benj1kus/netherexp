@@ -42,6 +42,12 @@
     "netherman:void_cave_corner",
     "netherman:void_cave_midcorner",
     "netherman:voidnether_corner",
-    "netherman:voidnether_midcorner"
+    "netherman:voidnether_midcorner",
+    "netherman:totemus_hole",
+    "netherman:maze_door",
+    "netherman:face_puzzle_left_down",
+    "netherman:face_puzzle_left_up",
+    "netherman:face_puzzle_right_up",
+    "netherman:face_puzzle_right_down"
   ]
 }

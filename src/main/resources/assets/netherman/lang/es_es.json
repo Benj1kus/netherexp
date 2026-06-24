@@ -36,6 +36,15 @@
   "block.netherman.altar": "Altar",
   "block.netherman.labyrinth_teleport": "Teletransportador de portal",
 
+  "block.netherman.maze_door": "Puerta del laberinto",
+  "item.netherman.maze_key": "Llave de Sansón",
+  "block.netherman.totemus_hole": "Rompecabezas arcoíris",
+  "block.netherman.face_puzzle_right_down": "Rompecabezas facial",
+  "block.netherman.face_puzzle_right_up": "Rompecabezas facial",
+  "block.netherman.face_puzzle_left_down": "Rompecabezas facial",
+  "block.netherman.face_puzzle_left_up": "Rompecabezas facial",
+  "message.netherman.door_locked": "§4¡Resuelve el rompecabezas!",
+
   "book.netherman.page1.line1": "¡Bienvenido al mod §4§lCult of Azazel§f§l!",
   "book.netherman.page1.line2": "Aquí tienes una guía rápida del mod.",
   "book.netherman.page1.line3": "¡Gracias por jugar!",

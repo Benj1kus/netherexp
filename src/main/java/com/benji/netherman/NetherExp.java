@@ -90,6 +90,15 @@ public class NetherExp {
     public static final RegistryObject<Item> NETHER_SPAWNER_ITEM = ITEMS.register("nether_spawner",
             () -> new BlockItem(NETHER_SPAWNER.get(), new Item.Properties()));
 
+    public static final RegistryObject<Block> TOTEMUS_HOLE = BLOCKS.register("totemus_hole",
+            () -> new TotemusHoleBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICKS)
+                    .requiresCorrectToolForDrops()
+                    .strength(2.0F)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Item> TOTEMUS_HOLE_ITEM = ITEMS.register("totemus_hole",
+            () -> new BlockItem(TOTEMUS_HOLE.get(), new Item.Properties()));
+
     public static final RegistryObject<Block> LABYRINTH_TELEPORT = BLOCKS.register("labyrinth_teleport",
             () -> new LabyrinthTeleportBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
                     .lightLevel(state -> 15)
@@ -116,6 +125,36 @@ public class NetherExp {
 
     public static final RegistryObject<Item> POTENT_MAGMA_ITEM = ITEMS.register("potent_magma",
             () -> new BlockItem(POTENT_MAGMA.get(), new Item.Properties()));
+    //PUZZLE:
+    public static final RegistryObject<Block> FACE_PUZZLE_RIGHT_DOWN = BLOCKS.register("face_puzzle_right_down",
+            () -> new FacePuzzleBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(2.0F).requiresCorrectToolForDrops().noOcclusion(), 2, NetherExp.FACE_PUZZLE_RIGHT_DOWN_BE));
+
+    public static final RegistryObject<Block> FACE_PUZZLE_LEFT_UP = BLOCKS.register("face_puzzle_left_up",
+            () -> new FacePuzzleBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(2.0F).requiresCorrectToolForDrops().noOcclusion(), 2, NetherExp.FACE_PUZZLE_LEFT_UP_BE));
+
+    public static final RegistryObject<Block> FACE_PUZZLE_RIGHT_UP = BLOCKS.register("face_puzzle_right_up",
+            () -> new FacePuzzleBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(2.0F).requiresCorrectToolForDrops().noOcclusion(), 3, NetherExp.FACE_PUZZLE_RIGHT_UP_BE));
+
+    public static final RegistryObject<Block> FACE_PUZZLE_LEFT_DOWN = BLOCKS.register("face_puzzle_left_down",
+            () -> new FacePuzzleBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(2.0F).requiresCorrectToolForDrops().noOcclusion(), 3, NetherExp.FACE_PUZZLE_LEFT_DOWN_BE));
+
+    public static final RegistryObject<Item> FACE_PUZZLE_RIGHT_DOWN_ITEM = ITEMS.register("face_puzzle_right_down", () -> new BlockItem(FACE_PUZZLE_RIGHT_DOWN.get(), new Item.Properties()));
+    public static final RegistryObject<Item> FACE_PUZZLE_LEFT_UP_ITEM = ITEMS.register("face_puzzle_left_up", () -> new BlockItem(FACE_PUZZLE_LEFT_UP.get(), new Item.Properties()));
+    public static final RegistryObject<Item> FACE_PUZZLE_RIGHT_UP_ITEM = ITEMS.register("face_puzzle_right_up", () -> new BlockItem(FACE_PUZZLE_RIGHT_UP.get(), new Item.Properties()));
+    public static final RegistryObject<Item> FACE_PUZZLE_LEFT_DOWN_ITEM = ITEMS.register("face_puzzle_left_down", () -> new BlockItem(FACE_PUZZLE_LEFT_DOWN.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockEntityType<FacePuzzleBlockEntity>> FACE_PUZZLE_RIGHT_DOWN_BE = BLOCK_ENTITIES.register("face_puzzle_right_down",
+            () -> BlockEntityType.Builder.of((pos, state) -> new FacePuzzleBlockEntity(NetherExp.FACE_PUZZLE_RIGHT_DOWN_BE.get(), pos, state), FACE_PUZZLE_RIGHT_DOWN.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<FacePuzzleBlockEntity>> FACE_PUZZLE_LEFT_UP_BE = BLOCK_ENTITIES.register("face_puzzle_left_up",
+            () -> BlockEntityType.Builder.of((pos, state) -> new FacePuzzleBlockEntity(NetherExp.FACE_PUZZLE_LEFT_UP_BE.get(), pos, state), FACE_PUZZLE_LEFT_UP.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<FacePuzzleBlockEntity>> FACE_PUZZLE_RIGHT_UP_BE = BLOCK_ENTITIES.register("face_puzzle_right_up",
+            () -> BlockEntityType.Builder.of((pos, state) -> new FacePuzzleBlockEntity(NetherExp.FACE_PUZZLE_RIGHT_UP_BE.get(), pos, state), FACE_PUZZLE_RIGHT_UP.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<FacePuzzleBlockEntity>> FACE_PUZZLE_LEFT_DOWN_BE = BLOCK_ENTITIES.register("face_puzzle_left_down",
+            () -> BlockEntityType.Builder.of((pos, state) -> new FacePuzzleBlockEntity(NetherExp.FACE_PUZZLE_LEFT_DOWN_BE.get(), pos, state), FACE_PUZZLE_LEFT_DOWN.get()).build(null));
+
 
     // DECORATIVE BLOCKS:
     public static final RegistryObject<Block> SAMSONIT = BLOCKS.register("samsonit",
@@ -604,6 +643,23 @@ public class NetherExp {
                     new ResourceLocation(MODID, "animations/grand_door.animation.json"),
                     new ResourceLocation(MODID, "textures/block/grand_door_emissive.png")
             ));
+
+    public static final RegistryObject<Block> MAZE_DOOR = BLOCKS.register("maze_door",
+            () -> new MazeDoorBlock(BlockBehaviour.Properties.copy(Blocks.POLISHED_BLACKSTONE_BRICKS)
+                    .strength(20.0F)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()));
+
+    public static final RegistryObject<Item> MAZE_DOOR_ITEM = ITEMS.register("maze_door",
+            () -> new GeoBlockItem(
+                    MAZE_DOOR.get(),
+                    new Item.Properties(),
+                    new ResourceLocation(MODID, "geo/maze_door.geo.json"),
+                    new ResourceLocation(MODID, "textures/block/maze_door.png"),
+                    new ResourceLocation(MODID, "animations/maze_door.animation.json"),
+                    new ResourceLocation(MODID, "textures/block/blackstone_column_emissive.png")
+            ));
+
     public static final RegistryObject<Block> GRAND_DOOR_PART = BLOCKS.register("grand_door_part",
             () -> new GrandDoorPartBlock(BlockBehaviour.Properties.copy(Blocks.POLISHED_BLACKSTONE_BRICKS)
                     .strength(500.0F, 500.0F)
@@ -666,6 +722,8 @@ public class NetherExp {
     public static final RegistryObject<BlockEntityType<AltarBlockEntity>> ALTAR_BE = BLOCK_ENTITIES.register("altar",
             () -> BlockEntityType.Builder.of(AltarBlockEntity::new, ALTAR.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<TotemusHoleBlockEntity>> TOTEMUS_HOLE_BE = BLOCK_ENTITIES.register("totemus_hole",
+            () -> BlockEntityType.Builder.of(TotemusHoleBlockEntity::new, TOTEMUS_HOLE.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<TotemusBlockEntity>> TOTEMUS_BE = BLOCK_ENTITIES.register("totemus",
             () -> BlockEntityType.Builder.of(TotemusBlockEntity::new, TOTEMUS.get()).build(null));
@@ -676,6 +734,9 @@ public class NetherExp {
 
     public static final RegistryObject<BlockEntityType<GrandDoorBlockEntity>> GRAND_DOOR_BE = BLOCK_ENTITIES.register("grand_door",
             () -> BlockEntityType.Builder.of(GrandDoorBlockEntity::new, GRAND_DOOR.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<MazeDoorBlockEntity>> MAZE_DOOR_BE = BLOCK_ENTITIES.register("maze_door",
+            () -> BlockEntityType.Builder.of(MazeDoorBlockEntity::new, MAZE_DOOR.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<NetherSpawnerBlockEntity>> NETHER_SPAWNER_BE = BLOCK_ENTITIES.register("nether_spawner",
             () -> BlockEntityType.Builder.of(NetherSpawnerBlockEntity::new, NETHER_SPAWNER.get()).build(null));
@@ -714,6 +775,12 @@ public class NetherExp {
                     .sized(0.625F, 2.125F)
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "statue_bossunit").toString()));
+
+    public static final RegistryObject<EntityType<TotemusPuzzleEntity>> TOTEMUS_PUZZLE = ENTITIES.register("totemus_puzzle",
+            () -> EntityType.Builder.of(TotemusPuzzleEntity::new, MobCategory.MONSTER)
+                    .sized(0.5F, 2.25F)
+                    .fireImmune()
+                    .build(new ResourceLocation(MODID, "totemus_puzzle").toString()));
 
     public static final RegistryObject<EntityType<LaserEntity>> LASER = ENTITIES.register("laser",
             () -> EntityType.Builder.of(LaserEntity::new, MobCategory.MISC)
@@ -764,6 +831,9 @@ public class NetherExp {
 
     public static final RegistryObject<Item> AZAZEL_GUIDE_BOOK_ITEM = ITEMS.register("azazel_guide_book",
             () -> new AzazelGuideBookItem(new Item.Properties().stacksTo(1))); // Ограничим стак до 1 штуки
+
+    public static final RegistryObject<Item> MAZE_KEY = ITEMS.register("maze_key",
+            () -> new Item(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<EntityType<AzazelGuideBookEntity>> AZAZEL_GUIDE_BOOK_ENTITY = ENTITIES.register("azazel_guide_book",
             () -> EntityType.Builder.of(AzazelGuideBookEntity::new, MobCategory.MISC)
@@ -954,6 +1024,8 @@ public class NetherExp {
             event.accept(COBBLED_SAMSONIT_STAIRS_ITEM);
             event.accept(COBBLED_SAMSONIT_WALL_ITEM);
             event.accept(POLISHED_SAMSONIT_SLAB_ITEM);
+            event.accept(TOTEMUS_HOLE_ITEM);
+            event.accept(MAZE_DOOR_ITEM);
             event.accept(POLISHED_SAMSONIT_STAIRS_ITEM);
             event.accept(POLISHED_SAMSONIT_WALL_ITEM);
             event.accept(SAMSONIT_BRICKS_SLAB_ITEM);
@@ -991,6 +1063,7 @@ public class NetherExp {
             event.accept(CRIMSON_ARROW_ITEM);
             event.accept(CHANCE_TOTEM);
             event.accept(NOTE);
+            event.accept(MAZE_KEY);
             event.accept(AZAZEL_GUIDE_BOOK_ITEM);
         }
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
@@ -1009,6 +1082,7 @@ public class NetherExp {
         public static void registerAttributes(EntityAttributeCreationEvent event) {
             event.put(AZAZEL_GUIDE_BOOK_ENTITY.get(), AzazelGuideBookEntity.createAttributes().build());
             event.put(GILDED_GOLEM.get(), GildedGolemEntity.createAttributes().build());
+            event.put(TOTEMUS_PUZZLE.get(), TotemusPuzzleEntity.createAttributes().build());
             event.put(AZAZEL.get(), AzazelEntity.createAttributes().build());
             event.put(LASER.get(), LaserEntity.createAttributes().build());
             event.put(STATUE_BOSSUNIT.get(), StatueBossunitEntity.createAttributes().build());
@@ -1041,7 +1115,6 @@ public class NetherExp {
                 ItemProperties.register(NetherExp.ALTAR_COMPASS_KEY.get(), new ResourceLocation("angle"), (stack, level, entity, seed) -> {
                     if (entity == null && !stack.isFramed()) return 0.0F;
 
-                    // Если компас не настроен - крутим стрелку
                     if (!stack.getOrCreateTag().contains("TargetX")) {
                         return (float) ((System.currentTimeMillis() % 4000L) / 4000.0);
                     }
@@ -1052,20 +1125,14 @@ public class NetherExp {
                     Entity player = entity != null ? entity : stack.getFrame();
                     if (player == null) return 0.0F;
 
-                    // 1. Вычисляем "глобальный" угол к цели в градусах (как в самом Майнкрафте: Юг = 0, Запад = 90)
                     double targetYaw = Math.toDegrees(Math.atan2(targetZ - player.getZ(), targetX - player.getX())) - 90.0;
 
-                    // 2. Текущий угол поворота головы игрока
                     double playerYaw = player.getYRot();
 
-                    // 3. Находим разницу (где находится цель относительно взгляда игрока)
                     double relativeYaw = targetYaw - playerYaw;
 
-                    // 4. Переводим градусы в твой формат от 0.0 до 1.0:
-                    // 0.5 = Прямо (Кадр 16), 0.75 = Направо (Кадр 24), 0.0 = Назад (Кадр 00), 0.25 = Налево (Кадр 08)
                     double angle = 0.5 + (relativeYaw / 360.0);
 
-                    // Нормализация через ванильный метод (чтобы число всегда было строго от 0.0 до 1.0)
                     return (float) net.minecraft.util.Mth.positiveModulo(angle, 1.0D);
                 });
             });
@@ -1081,8 +1148,14 @@ public class NetherExp {
             event.registerBlockEntityRenderer(EYE_BE.get(), EyeRenderer::new);
             event.registerBlockEntityRenderer(ALTAR_BE.get(), AltarRenderer::new);
             event.registerBlockEntityRenderer(GRAND_DOOR_BE.get(), GrandDoorRenderer::new);
+            event.registerBlockEntityRenderer(MAZE_DOOR_BE.get(), MazeDoorRenderer::new);
             event.registerBlockEntityRenderer(POINTED_BLACKSTONE_BE.get(), PointedBlackstoneRenderer::new);
             event.registerEntityRenderer(GILDED_GOLEM.get(), GildedGolemRenderer::new);
+            event.registerEntityRenderer(TOTEMUS_PUZZLE.get(), TotemusPuzzleRenderer::new);
+            event.registerBlockEntityRenderer(FACE_PUZZLE_LEFT_DOWN_BE.get(), FacePuzzleLeftDownRenderer::new);
+            event.registerBlockEntityRenderer(FACE_PUZZLE_RIGHT_DOWN_BE.get(), FacePuzzleRightDownRenderer::new);
+            event.registerBlockEntityRenderer(FACE_PUZZLE_LEFT_UP_BE.get(), FacePuzzleLeftUpRenderer::new);
+            event.registerBlockEntityRenderer(FACE_PUZZLE_RIGHT_UP_BE.get(), FacePuzzleRightUpRenderer::new);
             event.registerEntityRenderer(CRIMSON_ARROW_ENTITY.get(), com.benji.netherman.client.renderer.entity.CrimsonArrowRenderer::new);
             event.registerEntityRenderer(AZAZEL.get(), AzazelRenderer::new);
             event.registerEntityRenderer(LASER.get(), LaserRenderer::new);

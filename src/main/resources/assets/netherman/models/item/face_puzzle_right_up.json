@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "netherman:item/face_puzzle_right_up"
+  }
+}

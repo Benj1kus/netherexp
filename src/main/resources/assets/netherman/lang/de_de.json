@@ -36,6 +36,15 @@
   "block.netherman.altar": "Altar",
   "block.netherman.labyrinth_teleport": "Tor-Teleporter",
 
+  "block.netherman.maze_door": "Labyrinthtür",
+  "item.netherman.maze_key": "Samson-Schlüssel",
+  "block.netherman.totemus_hole": "Regenbogenrätsel",
+  "block.netherman.face_puzzle_right_down": "Gesichtsrätsel",
+  "block.netherman.face_puzzle_right_up": "Gesichtsrätsel",
+  "block.netherman.face_puzzle_left_down": "Gesichtsrätsel",
+  "block.netherman.face_puzzle_left_up": "Gesichtsrätsel",
+  "message.netherman.door_locked": "§4Löse das Rätsel!",
+
   "block.netherman.samsonit": "Samsonit",
   "block.netherman.chiseled_samsonit": "Gemeißelter Samsonit",
   "block.netherman.cobbled_samsonit": "Bruchstein-Samsonit",

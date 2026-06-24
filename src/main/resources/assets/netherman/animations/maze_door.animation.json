@@ -1,0 +1,51 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"idle_close": {
+			"loop": true
+		},
+		"open": {
+			"animation_length": 1.75,
+			"bones": {
+				"maze_door": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.5": {
+							"vector": [0, 75, 0],
+							"easing": "easeInElastic"
+						}
+					}
+				}
+			}
+		},
+		"idle_open": {
+			"loop": true,
+			"bones": {
+				"maze_door": {
+					"position": {
+						"vector": [0, 75, 0],
+						"easing": "easeInElastic"
+					}
+				}
+			}
+		},
+		"close": {
+			"animation_length": 1.75,
+			"bones": {
+				"maze_door": {
+					"position": {
+						"0.0": {
+							"vector": [0, 75, 0]
+						},
+						"1.5": {
+							"vector": [0, 0, 0],
+							"easing": "easeInElastic"
+						}
+					}
+				}
+			}
+		}
+	}
+}

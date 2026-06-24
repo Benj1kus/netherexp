@@ -36,6 +36,15 @@
   "block.netherman.altar": "祭坛",
   "block.netherman.labyrinth_teleport": "传送门传送器",
 
+  "block.netherman.maze_door": "迷宫门",
+  "item.netherman.maze_key": "参孙之钥",
+  "block.netherman.totemus_hole": "彩虹谜题",
+  "block.netherman.face_puzzle_right_down": "面孔谜题",
+  "block.netherman.face_puzzle_right_up": "面孔谜题",
+  "block.netherman.face_puzzle_left_down": "面孔谜题",
+  "block.netherman.face_puzzle_left_up": "面孔谜题",
+  "message.netherman.door_locked": "§4解开谜题！",
+
   "book.netherman.page1.line1": "欢迎来到 §4§lCult of Azazel§f§l 模组！",
   "book.netherman.page1.line2": "这是本模组的快速指南。",
   "book.netherman.page1.line3": "感谢游玩！",

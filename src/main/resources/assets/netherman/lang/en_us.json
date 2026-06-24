@@ -36,6 +36,16 @@
   "block.netherman.samsonit_key": "Keyhole",
   "block.netherman.grand_door_part": "Grand Door Part",
 
+  "block.netherman.maze_door": "Maze Door",
+  "item.netherman.maze_key": "Samson Key",
+  "block.netherman.totemus_hole": "Rainbow puzzle",
+  "block.netherman.face_puzzle_right_down": "Face Puzzle",
+  "block.netherman.face_puzzle_right_up": "Face Puzzle",
+  "block.netherman.face_puzzle_left_down": "Face Puzzle",
+  "block.netherman.face_puzzle_left_up": "Face Puzzle",
+  "message.netherman.door_locked": "§4Solve the Puzzle!",
+
+
   "block.netherman.samsonit": "Samsonite",
   "block.netherman.chiseled_samsonit": "Chiseled samsonite",
   "block.netherman.cobbled_samsonit": "Cobbled samsonite",

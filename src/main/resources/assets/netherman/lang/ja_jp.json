@@ -36,6 +36,15 @@
   "block.netherman.altar": "祭壇",
   "block.netherman.labyrinth_teleport": "ゲートテレポーター",
 
+  "block.netherman.maze_door": "迷宮の扉",
+  "item.netherman.maze_key": "サムソンの鍵",
+  "block.netherman.totemus_hole": "虹のパズル",
+  "block.netherman.face_puzzle_right_down": "顔のパズル",
+  "block.netherman.face_puzzle_right_up": "顔のパズル",
+  "block.netherman.face_puzzle_left_down": "顔のパズル",
+  "block.netherman.face_puzzle_left_up": "顔のパズル",
+  "message.netherman.door_locked": "§4パズルを解け！",
+
   "block.netherman.samsonit": "サムソニット",
   "block.netherman.chiseled_samsonit": "模様入りサムソニット",
   "block.netherman.cobbled_samsonit": "丸石サムソニット",

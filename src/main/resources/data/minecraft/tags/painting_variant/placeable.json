@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "netherman:angel_painting",
+    "netherman:face_painting",
+    "netherman:village_painting",
+    "netherman:king_painting",
+    "netherman:throne_painting"
+  ]
+}

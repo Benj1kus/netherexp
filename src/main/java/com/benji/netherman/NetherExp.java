@@ -8,6 +8,7 @@ import com.benji.netherman.item.AzazelTrophyItem;
 import com.benji.netherman.network.TotemAnimationPacket;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraft.core.registries.Registries;
@@ -60,6 +61,8 @@ public class NetherExp {
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
             DeferredRegister.create(net.minecraft.core.registries.Registries.STRUCTURE_TYPE, MODID);
 
+    public static final DeferredRegister<PaintingVariant> PAINTING_VARIANTS = DeferredRegister.create(ForgeRegistries.PAINTING_VARIANTS, MODID);
+
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
@@ -80,6 +83,12 @@ public class NetherExp {
             ModSounds.SAMSONIT_HIT,
             ModSounds.SAMSONIT_BRICKS_STEP
     );
+
+    public static final RegistryObject<PaintingVariant> ANGEL_PAINTING = PAINTING_VARIANTS.register("angel_painting", () -> new PaintingVariant(48, 64));
+    public static final RegistryObject<PaintingVariant> FACE_PAINTING = PAINTING_VARIANTS.register("face_painting", () -> new PaintingVariant(48, 64));
+    public static final RegistryObject<PaintingVariant> VILLAGE_PAINTING = PAINTING_VARIANTS.register("village_painting", () -> new PaintingVariant(48, 64));
+    public static final RegistryObject<PaintingVariant> KING_PAINTING = PAINTING_VARIANTS.register("king_painting", () -> new PaintingVariant(48, 64));
+    public static final RegistryObject<PaintingVariant> THRONE_PAINTING = PAINTING_VARIANTS.register("throne_painting", () -> new PaintingVariant(48, 64));
 
     public static final RegistryObject<Block> NETHER_SPAWNER = BLOCKS.register("nether_spawner",
             () -> new NetherSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
@@ -977,6 +986,7 @@ public class NetherExp {
         RECIPE_SERIALIZERS.register(modEventBus);
         ModSounds.SOUNDS.register(modEventBus);
         STRUCTURE_TYPES.register(modEventBus);
+        PAINTING_VARIANTS.register(modEventBus);
 
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::addCreative);

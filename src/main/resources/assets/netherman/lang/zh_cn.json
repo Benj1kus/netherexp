@@ -128,9 +128,11 @@
   "block.netherman.samsonit_bricks_stairs": "薩姆索尼特磚樓梯",
   "block.netherman.samsonit_bricks_wall": "薩姆索尼特磚牆",
   "block.netherman.samsonit_tiles": "薩姆索尼特瓷磚",
+  "block.netherman.labyrinth_bellspawn": "Gate Teleporter",
 
   "creativetab.netherman_tab": "Cult of Azazel",
 
+  "entity.netherman.bell_guardian": "钟蛾魔",
   "entity.netherman.welcomer": "迎接者",
   "entity.netherman.trader": "商人",
   "entity.netherman.gilded_golem": "镀金傀儡",

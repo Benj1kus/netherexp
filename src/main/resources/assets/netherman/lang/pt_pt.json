@@ -87,6 +87,7 @@
   "entity.netherman.piglin_prisoner": "Piglin Prisioneiro",
   "entity.netherman.ghastly": "Ghastly",
   "entity.netherman.manipulator": "Manipulador",
+  "entity.netherman.bell_guardian": "Bellemoth",
 
   "entity.netherman.azazel.mistake": "ISSO FOI UM ERRO",
   "entity.netherman.azazel.surrender": "Entregue a sua arma se quiser viver!",
@@ -100,6 +101,8 @@
   "block.netherman.totemus.zone.quarries": "AS PEDREIRAS MALDITAS",
   "block.netherman.azazel_trophy": "§4Máscara de Azazel",
   "block.netherman.grand_door_part": "Parte do grande portão",
+  "block.netherman.labyrinth_bellspawn": "Gate Teleporter",
+
   "tooltip.netherman.compass": "Ajuda a encontrar estruturas do mod",
   "tooltip.netherman.guide": "Guia",
   "tooltip.netherman.trophy": "Contém 3 Totens da Imortalidade",

@@ -35,6 +35,7 @@
   "block.netherman.samsonit_eye": "Samsonite Carving Eye",
   "block.netherman.samsonit_key": "Keyhole",
   "block.netherman.grand_door_part": "Grand Door Part",
+  "block.netherman.labyrinth_bellspawn": "Gate Teleporter",
 
   "painting.netherman.face_painting.title": "Azazel",
   "painting.netherman.face_painting.author": "§kAZRIEL",
@@ -77,6 +78,7 @@
   "creativetab.netherman_tab": "Cult of Azazel",
 
   "entity.netherman.believer_villager": "Preacher",
+  "entity.netherman.bell_guardian": "Bellemoth",
   "entity.netherman.welcomer": "Welcomer",
   "entity.netherman.trader": "Trader",
   "entity.netherman.gilded_golem": "Gilded Golem",

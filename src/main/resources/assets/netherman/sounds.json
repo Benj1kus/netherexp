@@ -42,6 +42,18 @@
   "azazel_idle3": { "sounds": [ "netherman:azazel_idle3" ] },
   "azazel_idle4": { "sounds": [ "netherman:azazel_idle4" ] },
 
+  "bell_beast1": { "sounds": [ "netherman:bell_beast1" ] },
+  "bell_beast2": { "sounds": [ "netherman:bell_beast2" ] },
+  "bell_beast3": { "sounds": [ "netherman:bell_beast3" ] },
+  "bell_beast4": { "sounds": [ "netherman:bell_beast4" ] },
+
+  "bell_beast5": { "sounds": [ "netherman:bell_beast5" ] },
+  "bell_beast6": { "sounds": [ "netherman:bell_beast6" ] },
+  "bell_beast7": { "sounds": [ "netherman:bell_beast7" ] },
+  "bell_beast8": { "sounds": [ "netherman:bell_beast8" ] },
+  "bell_beast9": { "sounds": [ "netherman:bell_beast9" ] },
+  "bell_beast_laugh": { "sounds": [ "netherman:bell_beast_laugh" ] },
+
   "azazel_damage1": { "sounds": [ "netherman:azazel_damage1" ] },
   "azazel_damage2": { "sounds": [ "netherman:azazel_damage2" ] },
 

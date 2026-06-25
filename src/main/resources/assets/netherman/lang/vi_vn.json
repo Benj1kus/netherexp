@@ -74,6 +74,8 @@
   "block.netherman.samsonit_bricks_wall": "Tường gạch samsonit",
   "block.netherman.samsonit_tiles": "Đá lát sansonit",
   "block.netherman.grand_door_part": "Mảnh cổng lớn",
+  "block.netherman.labyrinth_bellspawn": "Gate Teleporter",
+
   "tooltip.netherman.compass": "Giúp tìm các công trình của mod",
   "tooltip.netherman.guide": "Sách hướng dẫn",
   "tooltip.netherman.trophy": "Chứa 3 Vật tổ Bất tử",
@@ -87,7 +89,8 @@
   "tooltip.netherman.chance_totem.line2": "[SHIFT+RMB] - triệu hồi Gehinnom",
 
   "creativetab.netherman_tab": "Cult of Azazel - Giáo phái của Azazel",
-  
+
+  "entity.netherman.bell_guardian": "Bellemoth",
   "entity.netherman.welcomer": "Người đón tiếp",
   "entity.netherman.trader": "Người trao đổi",
   "entity.netherman.gilded_golem": "Người mạ vàng",

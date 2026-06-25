@@ -129,6 +129,8 @@
   "block.netherman.samsonit_bricks_wall": "Muro de tijolos de Samsonit",
   "block.netherman.samsonit_tiles": "Ladrilhos de Samsonit",
   "block.netherman.grand_door_part": "Parte do grande portão",
+  "block.netherman.labyrinth_bellspawn": "Gate Teleporter",
+
   "tooltip.netherman.compass": "Ajuda a encontrar estruturas do mod",
   "tooltip.netherman.guide": "Guia",
   "tooltip.netherman.trophy": "Contém 3 Totens da Imortalidade",
@@ -143,6 +145,7 @@
 
   "creativetab.netherman_tab": "Cult of Azazel",
 
+  "entity.netherman.bell_guardian": "Bellemoth",
   "entity.netherman.welcomer": "Saudador",
   "entity.netherman.trader": "Mercador",
   "entity.netherman.believer_villager": "Pregador",

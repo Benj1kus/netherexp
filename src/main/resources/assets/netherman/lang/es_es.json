@@ -128,9 +128,11 @@
   "block.netherman.samsonit_bricks_stairs": "Escaleras de ladrillos de Samsonit",
   "block.netherman.samsonit_bricks_wall": "Muro de ladrillos de Samsonit",
   "block.netherman.samsonit_tiles": "Baldosas de Samsonit",
+  "block.netherman.labyrinth_bellspawn": "Gate Teleporter",
 
   "creativetab.netherman_tab": "Cult of Azazel",
 
+  "entity.netherman.bell_guardian": "Bellemoth",
   "entity.netherman.welcomer": "Recepcionista",
   "entity.netherman.believer_villager": "Predicador",
   "entity.netherman.trader": "Comerciante",

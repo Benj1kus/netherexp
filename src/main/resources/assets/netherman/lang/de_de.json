@@ -71,9 +71,11 @@
   "block.netherman.samsonit_bricks_stairs": "Samsonitziegeltreppe",
   "block.netherman.samsonit_bricks_wall": "Samsonitziegelmauer",
   "block.netherman.samsonit_tiles": "Samsonitfliesen",
+  "block.netherman.labyrinth_bellspawn": "Gate Teleporter",
 
   "creativetab.netherman_tab": "Cult of Azazel",
 
+  "entity.netherman.bell_guardian": "Bellemoth",
   "entity.netherman.believer_villager": "Prediger",
   "entity.netherman.welcomer": "Willkommensbote",
   "entity.netherman.trader": "Händler",

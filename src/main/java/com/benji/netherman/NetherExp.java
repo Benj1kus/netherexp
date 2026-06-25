@@ -118,6 +118,16 @@ public class NetherExp {
     public static final RegistryObject<Item> LABYRINTH_TELEPORT_ITEM = ITEMS.register("labyrinth_teleport",
             () -> new BlockItem(LABYRINTH_TELEPORT.get(), new Item.Properties()));
 
+    public static final RegistryObject<Block> LABYRINTH_BELLSPAWN = BLOCKS.register("labyrinth_bellspawn",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)
+                    .lightLevel(state -> 15)
+                    .requiresCorrectToolForDrops()
+                    .strength(20.0F)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Item> LABYRINTH_BELLSPAWN_ITEM = ITEMS.register("labyrinth_bellspawn",
+            () -> new BlockItem(LABYRINTH_BELLSPAWN.get(), new Item.Properties()));
+
     public static final RegistryObject<Block> BLACKSTONE_COLUMN = BLOCKS.register("blackstone_column",
             () -> new BlackstoneColumnBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
                     .strength(2.0F)
@@ -165,9 +175,15 @@ public class NetherExp {
             () -> BlockEntityType.Builder.of((pos, state) -> new FacePuzzleBlockEntity(NetherExp.FACE_PUZZLE_LEFT_DOWN_BE.get(), pos, state), FACE_PUZZLE_LEFT_DOWN.get()).build(null));
 
 
+    public static final RegistryObject<Block> SAMSONITE_BELL = BLOCKS.register("samsonite_bell",
+            () -> new SamsoniteBellBlock(BlockBehaviour.Properties.copy(Blocks.BELL)));
+
+    public static final RegistryObject<BlockEntityType<SamsoniteBellBlockEntity>> SAMSONITE_BELL_BE = BLOCK_ENTITIES.register("samsonite_bell",
+            () -> BlockEntityType.Builder.of(SamsoniteBellBlockEntity::new, SAMSONITE_BELL.get()).build(null));
+
     // DECORATIVE BLOCKS:
     public static final RegistryObject<Block> SAMSONIT = BLOCKS.register("samsonit",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+            () -> new SamsonitBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
                     .strength(6.0F)
                     .requiresCorrectToolForDrops()
                     .sound(SAMSONIT_SOUNDS)));
@@ -185,7 +201,7 @@ public class NetherExp {
             () -> new BlockItem(LOCKER_NETHER.get(), new Item.Properties()));
 
     public static final RegistryObject<Block> SAMSONIT_EYE = BLOCKS.register("samsonit_eye",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TUFF)
+            () -> new SamsonitEyeBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
                     .strength(6.0F)
                     .requiresCorrectToolForDrops()
                     .sound(SAMSONIT_SOUNDS)));
@@ -803,6 +819,10 @@ public class NetherExp {
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "statue_entity").toString()));
 
+    public static final RegistryObject<EntityType<BellGuardianEntity>> BELL_GUARDIAN = ENTITIES.register("bell_guardian",
+            () -> EntityType.Builder.of(BellGuardianEntity::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.8F)
+                    .build(new ResourceLocation(MODID, "bell_guardian").toString()));
 
     public static final RegistryObject<EntityType<TraderEntity>> TRADER = ENTITIES.register("trader",
             () -> EntityType.Builder.of(TraderEntity::new, MobCategory.CREATURE)
@@ -831,7 +851,7 @@ public class NetherExp {
                     .build(new ResourceLocation(MODID, "believer_villager").toString()));
 
     public static final RegistryObject<EntityType<VillagerPrisonerEntity>> VILLAGER_PRISONER = ENTITIES.register("villager_prisoner",
-            () -> EntityType.Builder.of(VillagerPrisonerEntity::new, MobCategory.CREATURE) // Мирный
+            () -> EntityType.Builder.of(VillagerPrisonerEntity::new, MobCategory.CREATURE)
                     .sized(0.6F, 1.95F)
                     .build("villager_prisoner"));
 
@@ -839,7 +859,7 @@ public class NetherExp {
             () -> new com.benji.netherman.item.AltarCompassKeyItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> AZAZEL_GUIDE_BOOK_ITEM = ITEMS.register("azazel_guide_book",
-            () -> new AzazelGuideBookItem(new Item.Properties().stacksTo(1))); // Ограничим стак до 1 штуки
+            () -> new AzazelGuideBookItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> MAZE_KEY = ITEMS.register("maze_key",
             () -> new Item(new Item.Properties().stacksTo(1)));
@@ -1028,6 +1048,7 @@ public class NetherExp {
             event.accept(SAMSONIT_BRICKS_ITEM);
             event.accept(SAMSONIT_TILES_ITEM);
             event.accept(POLISHED_SAMSONIT_ITEM);
+            event.accept(LABYRINTH_BELLSPAWN_ITEM);
             event.accept(COBBLED_SAMSONIT_ITEM);
             event.accept(CHISELED_SAMSONIT_ITEM);
             event.accept(COBBLED_SAMSONIT_SLAB_ITEM);
@@ -1092,6 +1113,7 @@ public class NetherExp {
         public static void registerAttributes(EntityAttributeCreationEvent event) {
             event.put(AZAZEL_GUIDE_BOOK_ENTITY.get(), AzazelGuideBookEntity.createAttributes().build());
             event.put(GILDED_GOLEM.get(), GildedGolemEntity.createAttributes().build());
+            event.put(BELL_GUARDIAN.get(), BellGuardianEntity.createAttributes().build());
             event.put(TOTEMUS_PUZZLE.get(), TotemusPuzzleEntity.createAttributes().build());
             event.put(AZAZEL.get(), AzazelEntity.createAttributes().build());
             event.put(LASER.get(), LaserEntity.createAttributes().build());
@@ -1158,6 +1180,8 @@ public class NetherExp {
             event.registerBlockEntityRenderer(EYE_BE.get(), EyeRenderer::new);
             event.registerBlockEntityRenderer(ALTAR_BE.get(), AltarRenderer::new);
             event.registerBlockEntityRenderer(GRAND_DOOR_BE.get(), GrandDoorRenderer::new);
+            event.registerBlockEntityRenderer(SAMSONITE_BELL_BE.get(), SamsoniteBellRenderer::new);
+            event.registerEntityRenderer(BELL_GUARDIAN.get(), BellGuardianRenderer::new);
             event.registerBlockEntityRenderer(MAZE_DOOR_BE.get(), MazeDoorRenderer::new);
             event.registerBlockEntityRenderer(POINTED_BLACKSTONE_BE.get(), PointedBlackstoneRenderer::new);
             event.registerEntityRenderer(GILDED_GOLEM.get(), GildedGolemRenderer::new);

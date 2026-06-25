@@ -13,6 +13,7 @@
     "netherman:face_puzzle_left_down",
     "netherman:face_puzzle_left_up",
     "netherman:face_puzzle_right_up",
-    "netherman:face_puzzle_right_down"
+    "netherman:face_puzzle_right_down",
+    "netherman:labyrinth_bellspawn"
   ]
 }

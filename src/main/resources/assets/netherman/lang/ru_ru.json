@@ -130,6 +130,7 @@
   "book.netherman.page6.line6": "притягивать существ и призывать визер-скелетов.",
   "book.netherman.page6.line7": "§e§lСПАСИБО ЗА ИГРУ!",
   "book.netherman.page6.line8": "Автор: §4Benj1kus",
+  "block.netherman.labyrinth_bellspawn": "Gate Teleporter",
 
   "block.netherman.grand_door_part": "Часть великих врат",
   "tooltip.netherman.compass": "Помогает находить структуры мода",
@@ -144,7 +145,7 @@
   "tooltip.netherman.chance_totem.line1": "Телепортирует к %s после смертельного удара",
   "tooltip.netherman.chance_totem.line2": "[SHIFT+ПКМ] — призвать Геиннома",
 
-
+  "entity.netherman.bell_guardian": "Беллемот",
   "entity.netherman.welcomer": "Приветствующий",
   "entity.netherman.trader": "Багряный Торговец",
   "entity.netherman.gilded_golem": "Позолоченный голем",

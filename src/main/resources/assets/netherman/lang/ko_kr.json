@@ -72,9 +72,11 @@
 	"block.netherman.samsonit_bricks_stairs": "샘소나이트 벽돌 계단",
 	"block.netherman.samsonit_bricks_wall": "샘소나이트 벽돌 담장",
 	"block.netherman.samsonit_tiles": "샘소나이트 타일",
+	"block.netherman.labyrinth_bellspawn": "Gate Teleporter",
 
 	"creativetab.netherman_tab": "아자젤 교단",
 
+	"entity.netherman.bell_guardian": "벨러모스",
 	"entity.netherman.welcomer": "환영자",
 	"entity.netherman.believer_villager": "설교자",
 	"entity.netherman.trader": "상인",

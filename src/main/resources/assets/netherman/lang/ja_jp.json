@@ -71,6 +71,7 @@
   "block.netherman.samsonit_bricks_stairs": "サムソニットレンガの階段",
   "block.netherman.samsonit_bricks_wall": "サムソニットレンガの塀",
   "block.netherman.samsonit_tiles": "サムソニットタイル",
+  "block.netherman.labyrinth_bellspawn": "Gate Teleporter",
 
   "book.netherman.page1.line1": "§4§lCult of Azazel§f§l MODへようこそ！",
   "book.netherman.page1.line2": "このMODの簡単なガイドです。",
@@ -131,6 +132,7 @@
 
   "creativetab.netherman_tab": "Cult of Azazel",
 
+  "entity.netherman.bell_guardian": "ベルモス",
   "entity.netherman.welcomer": "歓迎者",
   "entity.netherman.trader": "商人",
   "entity.netherman.believer_villager": "説教師",

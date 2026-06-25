@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "netherman:block/labyrinth_bell_top",
+    "bottom": "netherman:block/labyrinth_teleport_bottom",
+    "side": "netherman:block/labyrinth_teleport_side",
+    "particle": "netherman:block/labyrinth_teleport_side"
+  }
+}

@@ -99,6 +99,8 @@
   "block.netherman.totemus.zone.azazel": "O COVIL DE AZAZEL",
   "block.netherman.totemus.zone.city": "A CIDADE SAGRADA",
   "block.netherman.totemus.zone.quarries": "AS PEDREIRAS MALDITAS",
+  "block.netherman.totemus.zone.maze": "LABIRINTO DE AZAZEL",
+
   "block.netherman.azazel_trophy": "§4Máscara de Azazel",
   "block.netherman.grand_door_part": "Parte do grande portão",
   "block.netherman.labyrinth_bellspawn": "Gate Teleporter",
@@ -209,5 +211,6 @@
   "effect.netherman.fear": "Medo?",
   "effect.netherman.faith": "Fé?",
   "effect.netherman.anxiety": "Não temas",
+  "effect.netherman.alertness": "Alerta?",
   "effect.netherman.excitement": "Entusiasmo?"
 }

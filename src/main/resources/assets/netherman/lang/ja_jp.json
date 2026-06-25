@@ -160,6 +160,8 @@
   "block.netherman.totemus.zone.azazel": "アザゼルの隠れ家",
   "block.netherman.totemus.zone.city": "聖なる都市",
   "block.netherman.totemus.zone.quarries": "呪われた採石場",
+  "block.netherman.totemus.zone.maze": "アザゼルの迷宮",
+
   "block.netherman.grand_door_part": "大扉の一部",
   "tooltip.netherman.compass": "MODの構造物を見つけるのに役立つ",
   "tooltip.netherman.guide": "ガイドブック",
@@ -204,6 +206,7 @@
 
   "effect.netherman.manipulation": "操り",
   "effect.netherman.fear": "恐怖？",
+  "effect.netherman.alertness": "警戒？",
   "effect.netherman.faith": "信仰？",
   "effect.netherman.anxiety": "恐れるな",
   "effect.netherman.excitement": "高揚？"

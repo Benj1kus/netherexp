@@ -173,6 +173,7 @@
   "block.netherman.totemus.arrived": "YOU ARRIVED",
   "block.netherman.totemus.zone": "ZONE",
   "block.netherman.totemus.zone.azazel": "AZAZELS LAIR",
+  "block.netherman.totemus.zone.maze": "AZAZEL MAZE",
   "block.netherman.totemus.zone.city": "THE SACRED CITY",
   "block.netherman.totemus.zone.quarries": "THE CURSED QUARRIES",
 
@@ -211,5 +212,6 @@
   "effect.netherman.fear": "Fear?",
   "effect.netherman.faith": "Faith?",
   "effect.netherman.anxiety": "Don't be afraid",
-  "effect.netherman.excitement": "Excitement?"
+  "effect.netherman.excitement": "Excitement?",
+  "effect.netherman.alertness": "Alertness?"
 }

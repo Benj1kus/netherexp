@@ -104,6 +104,8 @@
 	"block.netherman.totemus.zone.azazel": "아자젤의 소굴",
 	"block.netherman.totemus.zone.city": "성스러운 도시",
 	"block.netherman.totemus.zone.quarries": "저주받은 채석장",
+	"block.netherman.totemus.zone.maze": "아자젤의 미로",
+
 	"block.netherman.grand_door_part": "거대한 문의 일부",
 	"tooltip.netherman.compass": "모드 구조물을 찾는 데 도움을 줍니다",
 	"tooltip.netherman.guide": "가이드북",
@@ -205,6 +207,7 @@
 	"effect.netherman.manipulation": "조종",
 	"effect.netherman.fear": "공포?",
 	"effect.netherman.faith": "신앙?",
+	"effect.netherman.alertness": "경계?",
 	"effect.netherman.anxiety": "두려워하지 마라",
 	"effect.netherman.excitement": "흥분?"
 }

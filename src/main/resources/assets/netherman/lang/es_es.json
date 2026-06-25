@@ -159,7 +159,9 @@
   "block.netherman.totemus.zone": "ZONA",
   "block.netherman.totemus.zone.azazel": "GUARIDA DE AZAZEL",
   "block.netherman.totemus.zone.city": "LA CIUDAD SAGRADA",
+  "block.netherman.totemus.zone.maze": "LABERINTO DE AZAZEL",
   "block.netherman.totemus.zone.quarries": "LAS CANTERAS MALDITAS",
+
   "block.netherman.grand_door_part": "Parte de la gran puerta",
   "tooltip.netherman.compass": "Ayuda a encontrar estructuras del mod",
   "tooltip.netherman.guide": "Guía",
@@ -207,6 +209,7 @@
   "effect.netherman.manipulation": "¿Manipulación?",
   "effect.netherman.fear": "¿Miedo?",
   "effect.netherman.faith": "¿Fe?",
+  "effect.netherman.alertness": "¿Alerta?",
   "effect.netherman.anxiety": "No tengas miedo",
   "effect.netherman.excitement": "¿Emoción?"
 }

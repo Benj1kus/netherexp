@@ -18,7 +18,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class TotemusBlock extends BaseEntityBlock {
-    public static final IntegerProperty TYPE = IntegerProperty.create("type", 0, 3);
+
+    public static final IntegerProperty TYPE = IntegerProperty.create("type", 0, 4);
 
     private static final VoxelShape SHAPE =
             Block.box(4.0D, 0.0D, 4.0D,

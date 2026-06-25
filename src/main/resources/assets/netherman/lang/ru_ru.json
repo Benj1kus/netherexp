@@ -170,6 +170,7 @@
 
   "block.netherman.totemus.arrived": "ТЫ ПРИБЫЛ",
   "block.netherman.totemus.zone": "ЗОНА",
+  \,"block.netherman.totemus.zone.maze": "ЛАБИРИНТ АЗАЗЕЛЯ",
   "block.netherman.totemus.zone.azazel": "ЛОГОВО АЗАЗЕЛЯ",
   "block.netherman.totemus.zone.city": "СВЯЩЕННЫЙ ГОРОД",
   "block.netherman.totemus.zone.quarries": "ПРОКЛЯТЫЕ КАМЕНОЛОМНИ",
@@ -208,6 +209,7 @@
   "effect.netherman.manipulation": "Манипуляция",
   "effect.netherman.fear": "Страх?",
   "effect.netherman.faith": "Вера?",
+  "effect.netherman.alertness": "Бдительность?",
   "effect.netherman.anxiety": "Не бойся",
   "effect.netherman.excitement": "Волнение?"
 }

@@ -159,7 +159,9 @@
   "block.netherman.totemus.zone": "ZONE",
   "block.netherman.totemus.zone.azazel": "AZAZELS VERSTECK",
   "block.netherman.totemus.zone.city": "DIE HEILIGE STADT",
+  "block.netherman.totemus.zone.maze": "AZAZEL-LABYRINTH",
   "block.netherman.totemus.zone.quarries": "DIE VERFLUCHTEN STEINBRÜCHE",
+
   "block.netherman.grand_door_part": "Teil des großen Tores",
   "tooltip.netherman.compass": "Hilft beim Finden von Mod-Strukturen",
   "tooltip.netherman.guide": "Handbuch",
@@ -205,6 +207,7 @@
   "effect.netherman.manipulation": "Manipulation",
   "effect.netherman.fear": "Angst?",
   "effect.netherman.faith": "Glaube?",
+  "effect.netherman.alertness": "Wachsamkeit?",
   "effect.netherman.anxiety": "Fürchte dich nicht",
   "effect.netherman.excitement": "Aufregung?"
 }

@@ -160,6 +160,8 @@
   "block.netherman.totemus.zone.azazel": "阿撒茲勒的巢穴",
   "block.netherman.totemus.zone.city": "神聖之城",
   "block.netherman.totemus.zone.quarries": "被詛咒的採石場",
+  "block.netherman.totemus.zone.maze": "阿撒瀉勒迷宮",
+
   "block.netherman.grand_door_part": "巨門部件",
   "tooltip.netherman.compass": "幫助你尋找模組結構",
   "tooltip.netherman.guide": "指南書",
@@ -206,5 +208,6 @@
   "effect.netherman.fear": "恐懼？",
   "effect.netherman.faith": "信仰？",
   "effect.netherman.anxiety": "不要害怕",
+  "effect.netherman.alertness": "警覺？",
   "effect.netherman.excitement": "興奮？"
 }

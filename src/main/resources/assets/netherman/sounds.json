@@ -53,6 +53,7 @@
   "bell_beast8": { "sounds": [ "netherman:bell_beast8" ] },
   "bell_beast9": { "sounds": [ "netherman:bell_beast9" ] },
   "bell_beast_laugh": { "sounds": [ "netherman:bell_beast_laugh" ] },
+  "maze_ambient": { "sounds": [ "netherman:maze_ambient" ] },
 
   "azazel_damage1": { "sounds": [ "netherman:azazel_damage1" ] },
   "azazel_damage2": { "sounds": [ "netherman:azazel_damage2" ] },

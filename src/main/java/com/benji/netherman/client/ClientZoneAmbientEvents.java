@@ -26,7 +26,11 @@ public class ClientZoneAmbientEvents {
 
         int currentZoneType = -1;
         MobEffect activeEffect = null;
-        if (player.hasEffect(NetherExp.ANXIETY_EFFECT.get())) {
+
+        if (player.hasEffect(NetherExp.ALERTNESS_EFFECT.get())) {
+            currentZoneType = 4;
+            activeEffect = NetherExp.ALERTNESS_EFFECT.get();
+        } else if (player.hasEffect(NetherExp.ANXIETY_EFFECT.get())) {
             currentZoneType = 3;
             activeEffect = NetherExp.ANXIETY_EFFECT.get();
         } else if (player.hasEffect(NetherExp.FAITH_EFFECT.get())) {
@@ -39,6 +43,7 @@ public class ClientZoneAmbientEvents {
             currentZoneType = 0;
             activeEffect = NetherExp.FEAR_EFFECT.get();
         }
+
         if (currentZoneType == 3 && isPlayingBossIntro) {
             bossMusicTimer--;
             if (bossMusicTimer <= 0) {
@@ -60,19 +65,20 @@ public class ClientZoneAmbientEvents {
 
             if (currentZoneType != -1) {
                 if (currentZoneType == 3) {
-                    currentAmbientSound = new ZoneAmbientSoundInstance(ModSounds.BOSS_FIGHT.get(), player, activeEffect, false); // false = не зацикливать интро!
+                    currentAmbientSound = new ZoneAmbientSoundInstance(ModSounds.BOSS_FIGHT.get(), player, activeEffect, false);
                     Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
 
                     bossMusicTimer = 2900;
                     isPlayingBossIntro = true;
                 } else {
                     var soundEvent = switch (currentZoneType) {
+                        case 4 -> ModSounds.MAZE_AMBIENT.get();
                         case 2 -> ModSounds.CHURCH_AMBIENT.get();
                         case 1 -> ModSounds.CITY_AMBIENT.get();
                         default -> ModSounds.CAVE_AMBIENT.get();
                     };
                     isPlayingBossIntro = false;
-                    currentAmbientSound = new ZoneAmbientSoundInstance(soundEvent, player, activeEffect, true); // true = зациклить
+                    currentAmbientSound = new ZoneAmbientSoundInstance(soundEvent, player, activeEffect, true);
                     Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
                 }
             } else {

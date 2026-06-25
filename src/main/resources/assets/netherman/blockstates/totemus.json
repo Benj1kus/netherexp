@@ -3,6 +3,7 @@
     "type=0": { "model": "netherman:block/totemus_cave" },
     "type=1": { "model": "netherman:block/totemus_city" },
     "type=2": { "model": "netherman:block/totemus_church" },
-    "type=3": { "model": "netherman:block/totemus_church" }
+    "type=3": { "model": "netherman:block/totemus_church" },
+    "type=4": { "model": "netherman:block/totemus_cave" }
   }
 }

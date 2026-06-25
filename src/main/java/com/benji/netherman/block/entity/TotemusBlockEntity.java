@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
+
 public class TotemusBlockEntity extends BlockEntity {
 
     private int totemType = 0;
@@ -42,9 +43,12 @@ public class TotemusBlockEntity extends BlockEntity {
             int newType = 0;
             for (BlockPos checkPos : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
                 BlockState neighbor = level.getBlockState(checkPos);
-                if (neighbor.is(NetherExp.BLACKSTONE_COLUMN.get())) {
-                    newType = 3;
+
+                if (neighbor.is(NetherExp.CHISELED_SAMSONIT.get())) {
+                    newType = 4;
                     break;
+                } else if (neighbor.is(NetherExp.BLACKSTONE_COLUMN.get()) && newType < 3) {
+                    newType = 3;
                 } else if (neighbor.is(Blocks.ANCIENT_DEBRIS) && newType < 2) {
                     newType = 2;
                 } else if (neighbor.is(Blocks.GOLD_BLOCK) && newType < 1) {
@@ -64,14 +68,16 @@ public class TotemusBlockEntity extends BlockEntity {
             List<ServerPlayer> players = level.getEntitiesOfClass(ServerPlayer.class, box);
 
             for (ServerPlayer player : players) {
-                if (entity.totemType == 3) {
+                if (entity.totemType == 3) { // Босс Зона
                     if (player.hasEffect(NetherExp.FEAR_EFFECT.get()) ||
                             player.hasEffect(NetherExp.EXCITEMENT_EFFECT.get()) ||
-                            player.hasEffect(NetherExp.FAITH_EFFECT.get())) {
+                            player.hasEffect(NetherExp.FAITH_EFFECT.get()) ||
+                            player.hasEffect(NetherExp.ALERTNESS_EFFECT.get())) {
 
                         player.removeEffect(NetherExp.FEAR_EFFECT.get());
                         player.removeEffect(NetherExp.EXCITEMENT_EFFECT.get());
                         player.removeEffect(NetherExp.FAITH_EFFECT.get());
+                        player.removeEffect(NetherExp.ALERTNESS_EFFECT.get());
 
                         level.playSound(null, player.blockPosition(), ModSounds.BIG_TEXT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
@@ -84,6 +90,7 @@ public class TotemusBlockEntity extends BlockEntity {
                     }
                 } else {
                     MobEffect targetEffect = switch (entity.totemType) {
+                        case 4 -> NetherExp.ALERTNESS_EFFECT.get();
                         case 2 -> NetherExp.FAITH_EFFECT.get();
                         case 1 -> NetherExp.EXCITEMENT_EFFECT.get();
                         default -> NetherExp.FEAR_EFFECT.get();
@@ -93,6 +100,7 @@ public class TotemusBlockEntity extends BlockEntity {
                         player.removeEffect(NetherExp.FEAR_EFFECT.get());
                         player.removeEffect(NetherExp.EXCITEMENT_EFFECT.get());
                         player.removeEffect(NetherExp.FAITH_EFFECT.get());
+                        player.removeEffect(NetherExp.ALERTNESS_EFFECT.get());
 
                         player.addEffect(new MobEffectInstance(targetEffect, Integer.MAX_VALUE, 0, false, false, true));
 
@@ -100,6 +108,7 @@ public class TotemusBlockEntity extends BlockEntity {
 
                         Component title = Component.translatable("block.netherman.totemus.zone").withStyle(ChatFormatting.YELLOW);
                         Component subtitle = switch (entity.totemType) {
+                            case 4 -> Component.translatable("block.netherman.totemus.zone.maze").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
                             case 2 -> Component.translatable("block.netherman.totemus.zone.azazel").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);
                             case 1 -> Component.translatable("block.netherman.totemus.zone.city").withStyle(ChatFormatting.RED, ChatFormatting.BOLD);
                             default -> Component.translatable("block.netherman.totemus.zone.quarries").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);

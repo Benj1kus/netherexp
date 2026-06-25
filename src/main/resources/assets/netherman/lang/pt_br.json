@@ -173,6 +173,7 @@
   "block.netherman.totemus.zone.azazel": "O COVIL DE AZAZEL",
   "block.netherman.totemus.zone.city": "A CIDADE SAGRADA",
   "block.netherman.totemus.zone.quarries": "AS PEDREIRAS MALDITAS",
+  "block.netherman.totemus.zone.maze": "LABIRINTO DE AZAZEL",
 
   "advancement.netherman.enter_mansion.title": "Caramba...",
   "advancement.netherman.enter_mansion.description": "Isso sim é luxo!",
@@ -209,5 +210,6 @@
   "effect.netherman.fear": "Medo?",
   "effect.netherman.faith": "Fé?",
   "effect.netherman.anxiety": "Não temas",
+  "effect.netherman.alertness": "Alerta?",
   "effect.netherman.excitement": "Entusiasmo?"
 }

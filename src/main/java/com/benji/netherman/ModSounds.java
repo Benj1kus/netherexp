@@ -59,6 +59,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> SAMSONIT_BRICKS_STEP = registerSoundEvent("block.samsonit_bricks.step");
     public static final RegistryObject<SoundEvent> SAMSONIT_BRICKS_PLACE = registerSoundEvent("block.samsonit_bricks.place");
 
+    public static final RegistryObject<SoundEvent> MAZE_AMBIENT = registerSoundEvent("maze_ambient");
+
     public static final RegistryObject<SoundEvent> CAVE_AMBIENT = registerSoundEvent("cave_ambient");
     public static final RegistryObject<SoundEvent> CHURCH_AMBIENT = registerSoundEvent("church_ambient");
     public static final RegistryObject<SoundEvent> CITY_AMBIENT = registerSoundEvent("city_ambient");

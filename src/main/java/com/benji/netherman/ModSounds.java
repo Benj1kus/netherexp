@@ -25,6 +25,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> WHISPER = registerSoundEvent("whisper");
     public static final RegistryObject<SoundEvent> FLASH = registerSoundEvent("flash");
 
+    public static final RegistryObject<SoundEvent> TOTEMUS_PUZZLE = registerSoundEvent("totemus_puzzle");
+    public static final RegistryObject<SoundEvent> HIRRING = registerSoundEvent("hirring");
 
     public static final RegistryObject<SoundEvent> GIANT_BELL = registerSoundEvent("giant_bell");
 

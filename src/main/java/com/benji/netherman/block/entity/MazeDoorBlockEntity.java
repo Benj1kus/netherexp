@@ -134,7 +134,7 @@ public class MazeDoorBlockEntity extends BlockEntity implements GeoBlockEntity {
                 LocalPlayer player = Minecraft.getInstance().player;
                 if (player != null) {
                     double distSq = player.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
-                    if (distSq <= 200.0) { // Радиус тряски поменьше, чем у Гранд Двери
+                    if (distSq <= 200.0) {
                         float intensity = (float) (1.0 - (distSq / 200.0)) * 2.0F;
                         player.setXRot(player.getXRot() + (level.random.nextFloat() - 0.5F) * intensity);
                         player.setYRot(player.getYRot() + (level.random.nextFloat() - 0.5F) * intensity);

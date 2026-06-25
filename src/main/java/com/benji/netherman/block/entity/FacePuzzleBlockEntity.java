@@ -54,7 +54,7 @@ public class FacePuzzleBlockEntity extends BlockEntity implements GeoBlockEntity
             this.clickState = 0;
         }
 
-        this.level.playSound(null, this.worldPosition, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 1.0F, 0.8F);
+        this.level.playSound(null, this.worldPosition, ModSounds.HIRRING.get(), SoundSource.BLOCKS, 1.0F, 0.8F);
 
         this.setChanged();
         this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);

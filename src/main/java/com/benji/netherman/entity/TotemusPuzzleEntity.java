@@ -1,11 +1,13 @@
 package com.benji.netherman.entity;
 
+import com.benji.netherman.ModSounds;
 import com.benji.netherman.block.entity.TotemusHoleBlockEntity;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -92,6 +95,9 @@ public class TotemusPuzzleEntity extends Monster implements GeoEntity {
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return this.cache; }
+
+    @Nullable
+    @Override protected SoundEvent getDeathSound() { return ModSounds.TOTEMUS_PUZZLE.get(); }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {

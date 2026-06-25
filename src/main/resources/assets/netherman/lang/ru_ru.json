@@ -36,6 +36,17 @@
   "block.netherman.samsonit_eye": "Глаз самсонитовой резьбы",
   "block.netherman.samsonit_key": "Замочная скважина",
 
+  "painting.netherman.face_painting.title": "Азазель",
+  "painting.netherman.face_painting.author": "§kAZRIEL",
+  "painting.netherman.king_painting.title": "Король",
+  "painting.netherman.king_painting.author": "§kAZRIEL",
+  "painting.netherman.village_painting.title": "Пожар",
+  "painting.netherman.village_painting.author": "§kAZRIEL",
+  "painting.netherman.angel_painting.title": "Падший",
+  "painting.netherman.angel_painting.author": "§kAZRIEL",
+  "painting.netherman.throne_painting.title": "Владычество",
+  "painting.netherman.throne_painting.author": "§kAZRIEL",
+
   "block.netherman.maze_door": "Дверь лабиринта",
   "item.netherman.maze_key": "Ключ Самсона",
   "block.netherman.totemus_hole": "Радужная головоломка",

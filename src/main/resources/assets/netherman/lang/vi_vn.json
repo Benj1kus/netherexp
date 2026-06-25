@@ -38,6 +38,17 @@
   "block.netherman.altar": "Bàn thờ",
   "block.netherman.labyrinth_teleport": "Máy dịch chuyển cổng",
 
+  "painting.netherman.face_painting.title": "Azazel",
+  "painting.netherman.face_painting.author": "§kAZRIEL",
+  "painting.netherman.king_painting.title": "Vua",
+  "painting.netherman.king_painting.author": "§kAZRIEL",
+  "painting.netherman.village_painting.title": "Thiêu rụi",
+  "painting.netherman.village_painting.author": "§kAZRIEL",
+  "painting.netherman.angel_painting.title": "Sa ngã",
+  "painting.netherman.angel_painting.author": "§kAZRIEL",
+  "painting.netherman.throne_painting.title": "Cai trị",
+  "painting.netherman.throne_painting.author": "§kAZRIEL",
+
   "block.netherman.maze_door": "Cửa mê cung",
   "item.netherman.maze_key": "Chìa khóa Samson",
   "block.netherman.totemus_hole": "Câu đố cầu vồng",

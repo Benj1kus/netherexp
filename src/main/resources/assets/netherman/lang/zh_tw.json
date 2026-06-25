@@ -36,6 +36,17 @@
   "block.netherman.altar": "祭坛",
   "block.netherman.labyrinth_teleport": "傳送門傳送器",
 
+  "painting.netherman.face_painting.title": "阿撒瀉勒",
+  "painting.netherman.face_painting.author": "§kAZRIEL",
+  "painting.netherman.king_painting.title": "王",
+  "painting.netherman.king_painting.author": "§kAZRIEL",
+  "painting.netherman.village_painting.title": "燃燒",
+  "painting.netherman.village_painting.author": "§kAZRIEL",
+  "painting.netherman.angel_painting.title": "墮落",
+  "painting.netherman.angel_painting.author": "§kAZRIEL",
+  "painting.netherman.throne_painting.title": "統治",
+  "painting.netherman.throne_painting.author": "§kAZRIEL",
+
   "block.netherman.maze_door": "迷宮門",
   "item.netherman.maze_key": "參孫之鑰",
   "block.netherman.totemus_hole": "彩虹謎題",

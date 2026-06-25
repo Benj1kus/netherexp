@@ -36,6 +36,17 @@
   "block.netherman.altar": "Altar",
   "block.netherman.labyrinth_teleport": "Tor-Teleporter",
 
+  "painting.netherman.face_painting.title": "Azazel",
+  "painting.netherman.face_painting.author": "§kAZRIEL",
+  "painting.netherman.king_painting.title": "König",
+  "painting.netherman.king_painting.author": "§kAZRIEL",
+  "painting.netherman.village_painting.title": "Brand",
+  "painting.netherman.village_painting.author": "§kAZRIEL",
+  "painting.netherman.angel_painting.title": "Gefallen",
+  "painting.netherman.angel_painting.author": "§kAZRIEL",
+  "painting.netherman.throne_painting.title": "Herrschaft",
+  "painting.netherman.throne_painting.author": "§kAZRIEL",
+
   "block.netherman.maze_door": "Labyrinthtür",
   "item.netherman.maze_key": "Samson-Schlüssel",
   "block.netherman.totemus_hole": "Regenbogenrätsel",

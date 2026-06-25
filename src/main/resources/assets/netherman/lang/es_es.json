@@ -36,6 +36,17 @@
   "block.netherman.altar": "Altar",
   "block.netherman.labyrinth_teleport": "Teletransportador de portal",
 
+  "painting.netherman.face_painting.title": "Azazel",
+  "painting.netherman.face_painting.author": "§kAZRIEL",
+  "painting.netherman.king_painting.title": "Rey",
+  "painting.netherman.king_painting.author": "§kAZRIEL",
+  "painting.netherman.village_painting.title": "Arder",
+  "painting.netherman.village_painting.author": "§kAZRIEL",
+  "painting.netherman.angel_painting.title": "Caído",
+  "painting.netherman.angel_painting.author": "§kAZRIEL",
+  "painting.netherman.throne_painting.title": "Dominio",
+  "painting.netherman.throne_painting.author": "§kAZRIEL",
+
   "block.netherman.maze_door": "Puerta del laberinto",
   "item.netherman.maze_key": "Llave de Sansón",
   "block.netherman.totemus_hole": "Rompecabezas arcoíris",

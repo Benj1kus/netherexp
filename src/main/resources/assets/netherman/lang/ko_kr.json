@@ -37,6 +37,17 @@
 	"block.netherman.altar": "제단",
 	"block.netherman.labyrinth_teleport": "게이트 텔레포터",
 
+	"painting.netherman.face_painting.title": "아자젤",
+	"painting.netherman.face_painting.author": "§kAZRIEL",
+	"painting.netherman.king_painting.title": "왕",
+	"painting.netherman.king_painting.author": "§kAZRIEL",
+	"painting.netherman.village_painting.title": "불길",
+	"painting.netherman.village_painting.author": "§kAZRIEL",
+	"painting.netherman.angel_painting.title": "타락",
+	"painting.netherman.angel_painting.author": "§kAZRIEL",
+	"painting.netherman.throne_painting.title": "지배",
+	"painting.netherman.throne_painting.author": "§kAZRIEL",
+
 	"block.netherman.maze_door": "미로 문",
 	"item.netherman.maze_key": "삼손의 열쇠",
 	"block.netherman.totemus_hole": "무지개 퍼즐",

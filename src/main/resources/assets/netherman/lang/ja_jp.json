@@ -36,6 +36,17 @@
   "block.netherman.altar": "祭壇",
   "block.netherman.labyrinth_teleport": "ゲートテレポーター",
 
+  "painting.netherman.face_painting.title": "アザゼル",
+  "painting.netherman.face_painting.author": "§kAZRIEL",
+  "painting.netherman.king_painting.title": "王",
+  "painting.netherman.king_painting.author": "§kAZRIEL",
+  "painting.netherman.village_painting.title": "炎上",
+  "painting.netherman.village_painting.author": "§kAZRIEL",
+  "painting.netherman.angel_painting.title": "堕天",
+  "painting.netherman.angel_painting.author": "§kAZRIEL",
+  "painting.netherman.throne_painting.title": "支配",
+  "painting.netherman.throne_painting.author": "§kAZRIEL",
+
   "block.netherman.maze_door": "迷宮の扉",
   "item.netherman.maze_key": "サムソンの鍵",
   "block.netherman.totemus_hole": "虹のパズル",

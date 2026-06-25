@@ -36,6 +36,17 @@
   "block.netherman.samsonit_key": "Keyhole",
   "block.netherman.grand_door_part": "Grand Door Part",
 
+  "painting.netherman.face_painting.title": "Azazel",
+  "painting.netherman.face_painting.author": "§kAZRIEL",
+  "painting.netherman.king_painting.title": "King",
+  "painting.netherman.king_painting.author": "§kAZRIEL",
+  "painting.netherman.village_painting.title": "Burn",
+  "painting.netherman.village_painting.author": "§kAZRIEL",
+  "painting.netherman.angel_painting.title": "Fallen",
+  "painting.netherman.angel_painting.author": "§kAZRIEL",
+  "painting.netherman.throne_painting.title": "Rule",
+  "painting.netherman.throne_painting.author": "§kAZRIEL",
+
   "block.netherman.maze_door": "Maze Door",
   "item.netherman.maze_key": "Samson Key",
   "block.netherman.totemus_hole": "Rainbow puzzle",

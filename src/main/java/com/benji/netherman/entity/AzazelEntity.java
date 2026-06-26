@@ -412,6 +412,8 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
                                 ItemStack[] loot = new ItemStack[] {
                                         new ItemStack(NetherExp.MANIPULATOR_STICK.get(), 1),
+                                        new ItemStack(NetherExp.MUSIC_DISC_AZAZEL.get(), 1),
+                                        new ItemStack(NetherExp.MUSIC_DISC_BOSS.get(), 1),
                                         new ItemStack(NetherExp.CHANCE_TOTEM.get(), 2),
                                         new ItemStack(net.minecraft.world.item.Items.TOTEM_OF_UNDYING, 1),
                                         new ItemStack(NetherExp.NOTE.get(), 1),

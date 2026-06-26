@@ -53,6 +53,11 @@ public class SamsoniteBellBlockEntity extends BellBlockEntity {
 
                             AABB mobBox = new AABB(pos).inflate(50.0D);
 
+                            List<Player> players = level.getEntitiesOfClass(Player.class, playerBox);
+                            for (Player player : players) {
+                                player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 200, 2));
+                            }
+
                             List<BellGuardianEntity> mobs = level.getEntitiesOfClass(BellGuardianEntity.class, mobBox);
 
                             for (BellGuardianEntity mob : mobs) {

@@ -668,6 +668,26 @@ public class NetherExp {
                     new ResourceLocation(MODID, "animations/grand_door.animation.json"),
                     new ResourceLocation(MODID, "textures/block/grand_door_emissive.png")
             ));
+//DISCS
+    public static final RegistryObject<Item> MUSIC_DISC_BOSS = ITEMS.register("music_disc_boss",
+            () -> new RecordItem(15, ModSounds.BOSS_FIGHT,
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 2900)); //HOW LONG
+
+    public static final RegistryObject<Item> MUSIC_DISC_QUAR = ITEMS.register("music_disc_quar",
+            () -> new RecordItem(6, ModSounds.CAVE_AMBIENT,
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 660));
+
+    public static final RegistryObject<Item> MUSIC_DISC_MAZE = ITEMS.register("music_disc_maze",
+            () -> new RecordItem(7, ModSounds.MAZE_AMBIENT,
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 720));
+
+    public static final RegistryObject<Item> MUSIC_DISC_SACRED = ITEMS.register("music_disc_sacred",
+            () -> new RecordItem(8, ModSounds.CITY_AMBIENT,
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 700));
+
+    public static final RegistryObject<Item> MUSIC_DISC_AZAZEL = ITEMS.register("music_disc_azazel",
+            () -> new RecordItem(15, ModSounds.CHURCH_AMBIENT,
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 360));
 
     public static final RegistryObject<Block> MAZE_DOOR = BLOCKS.register("maze_door",
             () -> new MazeDoorBlock(BlockBehaviour.Properties.copy(Blocks.POLISHED_BLACKSTONE_BRICKS)
@@ -1095,6 +1115,11 @@ public class NetherExp {
             event.accept(CRIMSON_ARROW_ITEM);
             event.accept(CHANCE_TOTEM);
             event.accept(NOTE);
+            event.accept(MUSIC_DISC_AZAZEL);
+            event.accept(MUSIC_DISC_BOSS);
+            event.accept(MUSIC_DISC_QUAR);
+            event.accept(MUSIC_DISC_SACRED);
+            event.accept(MUSIC_DISC_MAZE);
             event.accept(MAZE_KEY);
             event.accept(AZAZEL_GUIDE_BOOK_ITEM);
         }

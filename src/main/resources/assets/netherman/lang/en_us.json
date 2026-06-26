@@ -206,7 +206,17 @@
   "item.netherman.crimson_honey_bottle": "Crimson Honey Bottle",
   "item.netherman.altar_compass_key": "Altar Compass-Key",
 
+  "item.netherman.music_disc_boss": "§bMusic Disc",
+  "item.netherman.music_disc_quar": "§bMusic Disc",
+  "item.netherman.music_disc_sacred": "§bMusic Disc",
+  "item.netherman.music_disc_maze": "§bMusic Disc",
+  "item.netherman.music_disc_azazel": "§bMusic Disc",
 
+  "item.netherman.music_disc_boss.desc": "Toby Fox - GUARDIAN",
+  "item.netherman.music_disc_quar.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_sacred.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_maze.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_azazel.desc": "Casmox - §kGUARDIAN",
 
   "effect.netherman.manipulation": "Manipulation",
   "effect.netherman.fear": "Fear?",

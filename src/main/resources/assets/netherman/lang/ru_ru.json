@@ -204,7 +204,17 @@
   "item.netherman.guardian_spawn_egg": "§6Яйцо призыва Геенны",
   "item.netherman.crimson_honey_bottle": "Бутылка багряного мёда",
 
+  "item.netherman.music_disc_boss": "§bМузыкальный диск",
+  "item.netherman.music_disc_quar": "§bМузыкальный диск",
+  "item.netherman.music_disc_azazel": "§bМузыкальный диск",
+  "item.netherman.music_disc_maze": "§bМузыкальный диск",
+  "item.netherman.music_disc_sacred": "§bМузыкальный диск",
 
+  "item.netherman.music_disc_boss.desc": "Toby Fox - GUARDIAN",
+  "item.netherman.music_disc_quar.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_sacred.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_maze.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_azazel.desc": "Casmox - §kGUARDIAN",
 
   "effect.netherman.manipulation": "Манипуляция",
   "effect.netherman.fear": "Страх?",

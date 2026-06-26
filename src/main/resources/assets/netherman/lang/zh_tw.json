@@ -204,6 +204,18 @@
   "item.netherman.guardian_spawn_egg": "§6欣嫩谷守衛生怪蛋",
   "item.netherman.crimson_honey_bottle": "緋紅蜂蜜瓶",
 
+  "item.netherman.music_disc_boss": "§b音樂唱片",
+  "item.netherman.music_disc_quar": "§b音樂唱片",
+  "item.netherman.music_disc_azazel": "§b音樂唱片",
+  "item.netherman.music_disc_sacred": "§b音樂唱片",
+  "item.netherman.music_disc_maze": "§b音樂唱片",
+
+  "item.netherman.music_disc_boss.desc": "Toby Fox - GUARDIAN",
+  "item.netherman.music_disc_quar.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_sacred.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_maze.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_azazel.desc": "Casmox - §kGUARDIAN",
+
   "effect.netherman.manipulation": "操縱",
   "effect.netherman.fear": "恐懼？",
   "effect.netherman.faith": "信仰？",

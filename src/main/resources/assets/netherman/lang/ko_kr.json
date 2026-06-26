@@ -204,6 +204,18 @@
 	"item.netherman.guardian_spawn_egg": "§6게힌놈 생성 알",
 	"item.netherman.crimson_honey_bottle": "진홍빛 꿀 병",
 
+	"item.netherman.music_disc_boss": "§b음악 디스크",
+	"item.netherman.music_disc_quar": "§b음악 디스크",
+	"item.netherman.music_disc_sacred": "§b음악 디스크",
+	"item.netherman.music_disc_maze": "§b음악 디스크",
+	"item.netherman.music_disc_azazel": "§b음악 디스크",
+
+	"item.netherman.music_disc_boss.desc": "Toby Fox - GUARDIAN",
+	"item.netherman.music_disc_quar.desc": "Casmox - §kGUARDIAN",
+	"item.netherman.music_disc_sacred.desc": "Casmox - §kGUARDIAN",
+	"item.netherman.music_disc_maze.desc": "Casmox - §kGUARDIAN",
+	"item.netherman.music_disc_azazel.desc": "Casmox - §kGUARDIAN",
+
 	"effect.netherman.manipulation": "조종",
 	"effect.netherman.fear": "공포?",
 	"effect.netherman.faith": "신앙?",

@@ -184,6 +184,18 @@
   "advancement.netherman.tame_ghastly.title": "Neuer Freund:D",
   "advancement.netherman.tame_ghastly.description": "Sind das Bienen?",
 
+  "item.netherman.music_disc_boss": "§bMusikscheibe",
+  "item.netherman.music_disc_quar": "§bMusikscheibe",
+  "item.netherman.music_disc_azazel": "§bMusikscheibe",
+  "item.netherman.music_disc_maze": "§bMusikscheibe",
+  "item.netherman.music_disc_sacred": "§bMusikscheibe",
+
+  "item.netherman.music_disc_boss.desc": "Toby Fox - GUARDIAN",
+  "item.netherman.music_disc_quar.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_sacred.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_maze.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_azazel.desc": "Casmox - §kGUARDIAN",
+
   "item.netherman.azazel_guide_book": "§4Cult of Azazel Guidebook",
   "item.netherman.manipulator_stick": "§4Stab der Manipulation",
   "item.netherman.crimson_arrow": "§4Purpurpfeil",

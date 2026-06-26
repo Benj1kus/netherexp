@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "netherman:music_disc_boss",
+    "netherman:music_disc_quar",
+    "netherman:music_disc_sacred",
+    "netherman:music_disc_azazel",
+    "netherman:music_disc_maze"
+  ]
+}

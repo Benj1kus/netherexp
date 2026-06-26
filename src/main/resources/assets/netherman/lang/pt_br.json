@@ -204,7 +204,17 @@
   "item.netherman.guardian_spawn_egg": "§6Ovo Gerador de Geena",
   "item.netherman.crimson_honey_bottle": "Frasco de Mel Carmesim",
 
+  "item.netherman.music_disc_boss": "§bDisco de música",
+  "item.netherman.music_disc_azazel": "§bDisco de música",
+  "item.netherman.music_disc_sacred": "§bDisco de música",
+  "item.netherman.music_disc_quar": "§bDisco de música",
+  "item.netherman.music_disc_maze": "§bDisco de música",
 
+  "item.netherman.music_disc_boss.desc": "Toby Fox - GUARDIAN",
+  "item.netherman.music_disc_quar.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_sacred.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_maze.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_azazel.desc": "Casmox - §kGUARDIAN",
 
   "effect.netherman.manipulation": "Manipulação",
   "effect.netherman.fear": "Medo?",

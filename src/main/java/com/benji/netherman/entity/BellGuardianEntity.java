@@ -65,7 +65,7 @@ public class BellGuardianEntity extends Monster implements GeoEntity {
             boolean isMovingOrAggressive = this.getDeltaMovement().horizontalDistanceSqr() > 0.001D || this.getTarget() != null;
             if (isMovingOrAggressive) {
                 soundTimer++;
-                if (soundTimer >= 50) {
+                if (soundTimer >= 52) {
                     playRandomBeastSound();
                     soundTimer = 0;
                 }
@@ -151,7 +151,6 @@ public class BellGuardianEntity extends Monster implements GeoEntity {
     private void playRandomBeastSound() {
         SoundEvent[] sounds = {
                 ModSounds.BELL_BEAST_1.get(),
-                ModSounds.BELL_BEAST_2.get(),
                 ModSounds.BELL_BEAST_3.get(),
                 ModSounds.BELL_BEAST_4.get(),
                 ModSounds.BELL_BEAST_5.get(),
@@ -159,7 +158,6 @@ public class BellGuardianEntity extends Monster implements GeoEntity {
                 ModSounds.BELL_BEAST_7.get(),
                 ModSounds.BELL_BEAST_8.get(),
                 ModSounds.BELL_BEAST_9.get(),
-                ModSounds.BELL_BEAST_LAUGH.get()
         };
         SoundEvent randomSound = sounds[this.random.nextInt(sounds.length)];
         this.playSound(randomSound, 1.0F, 1.0F);

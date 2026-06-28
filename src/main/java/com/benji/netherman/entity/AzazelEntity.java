@@ -24,6 +24,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -127,6 +128,14 @@ public class AzazelEntity extends Monster implements GeoEntity {
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.bossEvent.removePlayer(player);
+    }
+
+    @Override
+    public boolean addEffect(MobEffectInstance effect, @Nullable Entity source) {
+        if (effect.getEffect() == NetherExp.MANIPULATION_EFFECT.get()) {
+            return false;
+        }
+        return super.addEffect(effect, source);
     }
 
     @Override

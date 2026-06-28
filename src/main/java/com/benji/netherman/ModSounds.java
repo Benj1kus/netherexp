@@ -16,6 +16,14 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> UNIT_IDLE = registerSoundEvent("unit_idle");
     public static final RegistryObject<SoundEvent> SPINNING_WHEEL = registerSoundEvent("spinning_wheel");
 
+    public static final RegistryObject<SoundEvent> SPEECH_1 = registerSoundEvent("speech_1");
+    public static final RegistryObject<SoundEvent> SPEECH_2 = registerSoundEvent("speech_2");
+    public static final RegistryObject<SoundEvent> SPEECH_3 = registerSoundEvent("speech_3");
+    public static final RegistryObject<SoundEvent> SPEECH_4 = registerSoundEvent("speech_4");
+
+    public static final RegistryObject<SoundEvent> LAUGH = registerSoundEvent("laugh");
+
+
     public static final RegistryObject<SoundEvent> RIFTSOUND = registerSoundEvent("riftsound");
 
     public static final RegistryObject<SoundEvent> BLACKSMITH_IDLE = registerSoundEvent("blacksmith_idle");

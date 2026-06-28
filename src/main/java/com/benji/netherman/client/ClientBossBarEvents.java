@@ -22,6 +22,9 @@ public class ClientBossBarEvents {
     private static final ResourceLocation CINEMATIC_TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/gui/cinematic.png");
     private static final ResourceLocation SUN_LOWHP_TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_frame_sun_lowhp.png");
 
+    private static final ResourceLocation HUMAN_SUN_TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_human_sun.png");
+    private static final ResourceLocation HUMAN_SUN_LOWHP_TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_human_sun_lowhp.png");
+
     @SubscribeEvent
     public static void onRenderMercyText(RenderGuiOverlayEvent.Post event) {
         if (event.getOverlay() != VanillaGuiOverlay.HOTBAR.type()) return;
@@ -80,6 +83,12 @@ public class ClientBossBarEvents {
                 azazel = (com.benji.netherman.entity.AzazelEntity) entity;
                 break;
             }
+            //AZAZEL HUMAN
+            com.benji.netherman.entity.AzazelHumanEntity azazelHuman = null;
+            for (Entity entity : mc.level.getEntitiesOfClass(com.benji.netherman.entity.AzazelHumanEntity.class, mc.player.getBoundingBox().inflate(100.0D))) {
+                azazelHuman = (com.benji.netherman.entity.AzazelHumanEntity) entity;
+                break;
+            }
 
             GuiGraphics guiGraphics = event.getGuiGraphics();
             int screenWidth = guiGraphics.guiWidth();
@@ -88,23 +97,43 @@ public class ClientBossBarEvents {
             int frameHeight = 42;
             int frameX = (screenWidth / 2) - (frameWidth / 2);
             int frameY = y;
-            guiGraphics.blit(FRAME_TEXTURE, frameX, frameY, 0, 0, frameWidth, frameHeight, frameWidth, frameHeight);
+            //AZAZEL HUMAN
+            ResourceLocation frameToUse = (azazelHuman != null) ?
+                    new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_human_frame.png") : FRAME_TEXTURE;
+
+            if (azazelHuman != null && (azazelHuman.getHealth() / azazelHuman.getMaxHealth()) < 0.3F) {
+                frameToUse = new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_human_frame_lowhp.png");
+            }
+
+            guiGraphics.blit(frameToUse, frameX, frameY, 0, 0, frameWidth, frameHeight, frameWidth, frameHeight);
+
             float progress = event.getBossEvent().getProgress();
             int progressMaxWidth = 182;
             int progressHeight = 5;
-
             int currentProgressWidth = (int) (progressMaxWidth * progress);
-            int progressX = frameX + 8;
-            int progressOffsetY = 18;
-            int progressY = frameY + progressOffsetY;
+
             if (currentProgressWidth > 0) {
-                guiGraphics.blit(PROGRESS_TEXTURE, progressX, progressY, 0, 0, currentProgressWidth, progressHeight, progressMaxWidth, progressHeight);
+                guiGraphics.blit(PROGRESS_TEXTURE, frameX + 8, frameY + 18, 0, 0, currentProgressWidth, progressHeight, progressMaxWidth, progressHeight);
             }
-            ResourceLocation currentSunTexture = SUN_TEXTURE;
-            if (azazel != null && azazel.getEntityData().get(com.benji.netherman.entity.AzazelEntity.PHASE_STATE) == 2) {
-                currentSunTexture = SUN_LOWHP_TEXTURE;
+
+            ResourceLocation currentSunTexture = null;
+
+            if (azazel != null) {
+                currentSunTexture = SUN_TEXTURE;
+                if (azazel.getEntityData().get(com.benji.netherman.entity.AzazelEntity.PHASE_STATE) == 2) {
+                    currentSunTexture = SUN_LOWHP_TEXTURE;
+                }
+            } else if (azazelHuman != null) {
+                currentSunTexture = HUMAN_SUN_TEXTURE;
+                if ((azazelHuman.getHealth() / azazelHuman.getMaxHealth()) < 0.3F) {
+                    currentSunTexture = HUMAN_SUN_LOWHP_TEXTURE;
+                }
             }
-            guiGraphics.blit(currentSunTexture, frameX, frameY, 0, 0, frameWidth, frameHeight, frameWidth, frameHeight);
+
+            if (currentSunTexture != null) {
+                guiGraphics.blit(currentSunTexture, frameX, frameY, 0, 0, frameWidth, frameHeight, frameWidth, frameHeight);
+            }
+
             event.setIncrement(frameHeight + 5);
         }
     }

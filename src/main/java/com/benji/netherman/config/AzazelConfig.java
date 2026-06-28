@@ -16,6 +16,10 @@ public class AzazelConfig {
     public static final ForgeConfigSpec.IntValue ATTACK_CHANCE;
     public static final ForgeConfigSpec.IntValue PASSIVE_SUMMON_CHANCE;
 
+    public static final ForgeConfigSpec.DoubleValue HUMAN_MAX_HEALTH;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_MOVEMENT_SPEED;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_KNOCKBACK_RESISTANCE;
+
     public static final ForgeConfigSpec.IntValue MASK_REGEN_COOLDOWN;
     public static final ForgeConfigSpec.BooleanValue MASK_FIRE_IMMUNITY;
 
@@ -49,6 +53,12 @@ public class AzazelConfig {
         MAX_HEALTH = BUILDER.comment("Maximum health of Azazel").defineInRange("maxHealth", 800.0, 100.0, 10000.0);
         MOVEMENT_SPEED = BUILDER.comment("Movement speed of Azazel").defineInRange("movementSpeed", 0.2, 0.05, 1.0);
         KNOCKBACK_RESISTANCE = BUILDER.comment("Knockback resistance (1.0 = completely immune)").defineInRange("knockbackResistance", 1.0, 0.0, 1.0);
+        BUILDER.pop();
+//AZAZEL HUMAN
+        BUILDER.push("Azazel Human Configuration");
+        HUMAN_MAX_HEALTH = BUILDER.comment("Maximum health of Azazel Human").defineInRange("humanMaxHealth", 1000.0, 100.0, 10000.0);
+        HUMAN_MOVEMENT_SPEED = BUILDER.comment("Movement speed of Azazel Human").defineInRange("humanMovementSpeed", 0.25, 0.05, 1.0);
+        HUMAN_KNOCKBACK_RESISTANCE = BUILDER.comment("Knockback resistance (1.0 = completely immune)").defineInRange("humanKnockbackResistance", 1.0, 0.0, 1.0);
         BUILDER.pop();
 
         BUILDER.push("Azazel Attack Damage");

@@ -14,6 +14,13 @@
   "prison3": { "sounds": [ "netherman:prison3" ] },
   "prison4": { "sounds": [ "netherman:prison4" ] },
 
+  "speech_1": { "sounds": [ "netherman:speech_1" ] },
+  "speech_2": { "sounds": [ "netherman:speech_2" ] },
+  "speech_3": { "sounds": [ "netherman:speech_3" ] },
+  "speech_4": { "sounds": [ "netherman:speech_4" ] },
+  "laugh": { "sounds": [ "netherman:laugh" ] },
+
+
   "riftsound": { "sounds": [ "netherman:riftsound" ] },
   "statue_hurt1": { "sounds": [ "netherman:statue_hurt1" ] },
   "statue_hurt2": { "sounds": [ "netherman:statue_hurt2" ] },

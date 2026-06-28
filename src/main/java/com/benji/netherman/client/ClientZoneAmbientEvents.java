@@ -24,6 +24,17 @@ public class ClientZoneAmbientEvents {
         if (event.phase != TickEvent.Phase.START || event.player != Minecraft.getInstance().player) return;
         LocalPlayer player = (LocalPlayer) event.player;
 
+//cutscene
+        if (Minecraft.getInstance().screen == null) {
+            for (com.benji.netherman.entity.AzazelHumanEntity boss : player.level().getEntitiesOfClass(com.benji.netherman.entity.AzazelHumanEntity.class, player.getBoundingBox().inflate(20.0D))) {
+                int state = boss.getEntityData().get(com.benji.netherman.entity.AzazelHumanEntity.BOSS_STATE);
+                if (state == 2 || state == 3) {
+                    Minecraft.getInstance().setScreen(new com.benji.netherman.client.gui.AzazelHumanCutsceneScreen(boss));
+                    break;
+                }
+            }
+        }
+
         int currentZoneType = -1;
         MobEffect activeEffect = null;
 

@@ -809,6 +809,12 @@ public class NetherExp {
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "azazel").toString()));
 
+    public static final RegistryObject<EntityType<AzazelHumanEntity>> AZAZEL_HUMAN = ENTITIES.register("azazel_human",
+            () -> EntityType.Builder.of(AzazelHumanEntity::new, MobCategory.MONSTER)
+                    .sized(2.5F, 12.75F)
+                    .fireImmune()
+                    .build(new ResourceLocation(MODID, "azazel_human").toString()));
+
 
     public static final RegistryObject<EntityType<GildedGolemEntity>> GILDED_GOLEM = ENTITIES.register("gilded_golem",
             () -> EntityType.Builder.of(GildedGolemEntity::new, MobCategory.MISC)
@@ -1142,6 +1148,7 @@ public class NetherExp {
             event.put(BELL_GUARDIAN.get(), BellGuardianEntity.createAttributes().build());
             event.put(TOTEMUS_PUZZLE.get(), TotemusPuzzleEntity.createAttributes().build());
             event.put(AZAZEL.get(), AzazelEntity.createAttributes().build());
+            event.put(AZAZEL_HUMAN.get(), AzazelHumanEntity.createAttributes().build());
             event.put(LASER.get(), LaserEntity.createAttributes().build());
             event.put(STATUE_BOSSUNIT.get(), StatueBossunitEntity.createAttributes().build());
             event.put(BLACKSMITH.get(), BlacksmithEntity.createAttributes().build());
@@ -1218,6 +1225,7 @@ public class NetherExp {
             event.registerBlockEntityRenderer(FACE_PUZZLE_RIGHT_UP_BE.get(), FacePuzzleRightUpRenderer::new);
             event.registerEntityRenderer(CRIMSON_ARROW_ENTITY.get(), com.benji.netherman.client.renderer.entity.CrimsonArrowRenderer::new);
             event.registerEntityRenderer(AZAZEL.get(), AzazelRenderer::new);
+            event.registerEntityRenderer(AZAZEL_HUMAN.get(), AzazelHumanRenderer::new);
             event.registerEntityRenderer(LASER.get(), LaserRenderer::new);
             event.registerEntityRenderer(STATUE_BOSSUNIT.get(), StatueBossunitRenderer::new);
             event.registerEntityRenderer(BLACKSMITH.get(), BlacksmithRenderer::new);

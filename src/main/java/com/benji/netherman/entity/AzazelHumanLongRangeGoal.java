@@ -2,6 +2,7 @@ package com.benji.netherman.entity;
 
 import com.benji.netherman.ModSounds;
 import com.benji.netherman.NetherExp;
+import com.benji.netherman.config.AzazelConfig;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,7 +40,9 @@ public class AzazelHumanLongRangeGoal extends Goal {
         LivingEntity target = boss.getTarget();
         if (target == null) return false;
 
-        if (boss.distanceToSqr(target) > 64.0D && cooldown <= 0) {
+        double longRadiusMin = AzazelConfig.HUMAN_LONG_ATTACK_RADIUS_MIN.get();
+
+        if (boss.distanceToSqr(target) > (longRadiusMin * longRadiusMin) && cooldown <= 0) {
             return boss.getRandom().nextBoolean();
         }
         return false;

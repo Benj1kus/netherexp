@@ -36,7 +36,10 @@ public class AzazelHumanMeleeGoal extends Goal {
         LivingEntity target = boss.getTarget();
         if (target == null) return false;
 
-        return boss.distanceToSqr(target) <= 25.0D || (boss.getDamageTakenRecently() >= 25.0F && boss.getDefendCooldown() <= 0);
+        double meleeRadius = AzazelConfig.HUMAN_MELEE_ATTACK_RADIUS.get();
+        double meleeRadiusSq = meleeRadius * meleeRadius;
+
+        return boss.distanceToSqr(target) <= meleeRadiusSq || (boss.getDamageTakenRecently() >= 25.0F && boss.getDefendCooldown() <= 0);
     }
 
     @Override

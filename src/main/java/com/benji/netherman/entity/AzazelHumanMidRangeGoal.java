@@ -38,8 +38,11 @@ public class AzazelHumanMidRangeGoal extends Goal {
         if (target == null) return false;
 
         double distSq = boss.distanceToSqr(target);
-        
-        return distSq > 25.0D && distSq <= 100.0D;
+
+        double minRadius = AzazelConfig.HUMAN_MELEE_ATTACK_RADIUS.get();
+        double maxRadius = AzazelConfig.HUMAN_MID_ATTACK_RADIUS_MAX.get();
+
+        return distSq > (minRadius * minRadius) && distSq <= (maxRadius * maxRadius);
     }
 
     @Override

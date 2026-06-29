@@ -32,7 +32,9 @@ public class AzazelHumanMovementGoal extends Goal {
         LivingEntity target = boss.getTarget();
         if (target == null) return false;
 
-        return boss.distanceToSqr(target) > 100.0D; 
+        double stopRadius = AzazelConfig.HUMAN_MOVEMENT_STOP_RADIUS.get();
+
+        return boss.distanceToSqr(target) > (stopRadius * stopRadius);
     }
 
     
@@ -115,7 +117,8 @@ public class AzazelHumanMovementGoal extends Goal {
                 this.pathUpdateTimer--;
             }
 
-            if (boss.distanceToSqr(target) <= 100.0D) {
+            double stopRadius = AzazelConfig.HUMAN_MOVEMENT_STOP_RADIUS.get();
+            if (boss.distanceToSqr(target) <= (stopRadius * stopRadius)) {
                 boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 5);
             }
         }

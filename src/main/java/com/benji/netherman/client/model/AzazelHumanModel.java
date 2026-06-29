@@ -8,6 +8,9 @@ import software.bernie.geckolib.model.GeoModel;
 public class AzazelHumanModel extends GeoModel<AzazelHumanEntity> {
     @Override
     public ResourceLocation getModelResource(AzazelHumanEntity animatable) {
+        if (animatable.getEntityData().get(AzazelHumanEntity.IS_PHASE_2)) {
+            return new ResourceLocation(NetherExp.MODID, "geo/azazel_human_lowhp.geo.json");
+        }
         return new ResourceLocation(NetherExp.MODID, "geo/azazel_human.geo.json");
     }
 

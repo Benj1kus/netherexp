@@ -124,9 +124,14 @@ public class AzazelSpikesProjectileEntity extends Projectile implements GeoEntit
             
             if (player.isInvulnerable()) return;
 
-            player.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 5.0F);
-            player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 1)); 
+            float projDamage = com.benji.netherman.config.AzazelConfig.HUMAN_PROJECTILE_SPIKE_DAMAGE.get().floatValue();
+            int witherDuration = com.benji.netherman.config.AzazelConfig.HUMAN_PROJECTILE_SPIKE_WITHER_DURATION.get();
 
+            player.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), projDamage);
+
+            if (witherDuration > 0) {
+                player.addEffect(new MobEffectInstance(MobEffects.WITHER, witherDuration, 1));
+            }
             spawnDisappearParticles();
             this.discard(); 
         }

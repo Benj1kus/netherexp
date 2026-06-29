@@ -820,6 +820,10 @@ public class NetherExp {
             () -> EntityType.Builder.<AzazelSplashEntity>of(AzazelSplashEntity::new, MobCategory.MISC)
                     .sized(3.5F, 6.5F).clientTrackingRange(64).build("azazel_splash"));
 
+    public static final RegistryObject<EntityType<AzazelEarthquakeEntity>> EARTHQUAKE_ENTITY = ENTITIES.register("azazel_earthquake",
+            () -> EntityType.Builder.<AzazelEarthquakeEntity>of(AzazelEarthquakeEntity::new, MobCategory.MISC)
+                    .sized(1.0F, 1.0F).clientTrackingRange(64).build("azazel_earthquake"));
+
     public static final RegistryObject<EntityType<AzazelSpikesProjectileEntity>> SPIKE_PROJECTILE_ENTITY = ENTITIES.register("azazel_spike_projectile",
             () -> EntityType.Builder.<AzazelSpikesProjectileEntity>of(AzazelSpikesProjectileEntity::new, MobCategory.MISC)
                     .sized(1.0F, 1.5F).clientTrackingRange(64).build("azazel_spike_projectile"));
@@ -1237,6 +1241,7 @@ public class NetherExp {
             event.registerBlockEntityRenderer(FACE_PUZZLE_RIGHT_UP_BE.get(), FacePuzzleRightUpRenderer::new);
             event.registerEntityRenderer(CRIMSON_ARROW_ENTITY.get(), com.benji.netherman.client.renderer.entity.CrimsonArrowRenderer::new);
             event.registerEntityRenderer(AZAZEL.get(), AzazelRenderer::new);
+            event.registerEntityRenderer(EARTHQUAKE_ENTITY.get(), AzazelEarthquakeRenderer::new);
             event.registerEntityRenderer(AZAZEL_HUMAN.get(), AzazelHumanRenderer::new);
             event.registerEntityRenderer(SPLASH_ENTITY.get(), AzazelSplashRenderer::new);
             event.registerEntityRenderer(SPIKE_PROJECTILE_ENTITY.get(), AzazelSpikeProjectileRenderer::new);

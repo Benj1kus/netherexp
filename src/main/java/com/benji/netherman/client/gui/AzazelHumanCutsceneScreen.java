@@ -36,12 +36,21 @@ public class AzazelHumanCutsceneScreen extends Screen {
         super.tick();
         if (this.minecraft == null || this.minecraft.player == null) return;
 
-        if (!boss.isAlive() || boss.getEntityData().get(AzazelHumanEntity.BOSS_STATE) > 3) {
+        int state = boss.getEntityData().get(AzazelHumanEntity.BOSS_STATE);
+
+        if (!boss.isAlive() || (state > 3 && state != 100 && state != 101)) {
             this.minecraft.setScreen(null);
             return;
         }
 
-        this.minecraft.player.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, boss.position().add(0, 12.0D, 0));
+        if (state == 2 || state == 3) {
+            this.minecraft.player.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, boss.position().add(0, 12.0D, 0));
+        }
+        else if (state == 100 || state == 101) {
+            if (!this.minecraft.mouseHandler.isMouseGrabbed()) {
+                this.minecraft.mouseHandler.grabMouse();
+            }
+        }
     }
 
     @Override
@@ -55,7 +64,8 @@ public class AzazelHumanCutsceneScreen extends Screen {
 
         int state = boss.getEntityData().get(AzazelHumanEntity.BOSS_STATE);
         int tick = boss.getEntityData().get(AzazelHumanEntity.DIALOGUE_TICK);
-        
+
+        // dialogue
         if (state == 2) {
             int currentLine = tick / 90;
             if (currentLine > 9) currentLine = 9;
@@ -67,6 +77,18 @@ public class AzazelHumanCutsceneScreen extends Screen {
 
             int textWidth = this.font.width(visibleText);
             graphics.drawString(this.font, visibleText, (width - textWidth) / 2, height - 40, 0xFFFFFF, true);
+        }
+
+        if (state == 100 || state == 101) {
+            if (tick > 45) {
+                int charsVisible = (tick - 45) / 2;
+
+                String fullText = I18n.get("boss.netherman.azazel_human.death_line");
+                String visibleText = fullText.substring(0, Math.min(charsVisible, fullText.length()));
+
+                int textWidth = this.font.width(visibleText);
+                graphics.drawString(this.font, visibleText, (width - textWidth) / 2, height - 40, 0xFFFFFF, true);
+            }
         }
 
         if (state == 3) {

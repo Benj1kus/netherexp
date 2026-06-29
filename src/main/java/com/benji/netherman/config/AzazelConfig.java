@@ -20,6 +20,27 @@ public class AzazelConfig {
     public static final ForgeConfigSpec.DoubleValue HUMAN_MOVEMENT_SPEED;
     public static final ForgeConfigSpec.DoubleValue HUMAN_KNOCKBACK_RESISTANCE;
 
+    public static final ForgeConfigSpec.DoubleValue HUMAN_STOMP_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_STOMP_KNOCKBACK;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SCYTHE_1_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SCYTHE_1_KNOCKBACK;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SCYTHE_2_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SCYTHE_2_KNOCKBACK;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SPEAR_MELEE_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SPEAR_MELEE_KNOCKBACK;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SPEAR_MID_PUSH_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SPEAR_MID_PUSH_KNOCKBACK;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SPEAR_MID_PULL_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SPEAR_MID_PULL_KNOCKBACK;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_CHARGE_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_CHARGE_KNOCKBACK;
+
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SPLASH_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_SPIKE_DAMAGE;
+    public static final ForgeConfigSpec.IntValue HUMAN_SPIKE_WITHER_DURATION;
+    public static final ForgeConfigSpec.DoubleValue HUMAN_PROJECTILE_SPIKE_DAMAGE;
+    public static final ForgeConfigSpec.IntValue HUMAN_PROJECTILE_SPIKE_WITHER_DURATION;
+
     public static final ForgeConfigSpec.IntValue MASK_REGEN_COOLDOWN;
     public static final ForgeConfigSpec.BooleanValue MASK_FIRE_IMMUNITY;
 
@@ -59,6 +80,36 @@ public class AzazelConfig {
         HUMAN_MAX_HEALTH = BUILDER.comment("Maximum health of Azazel Human").defineInRange("humanMaxHealth", 1000.0, 100.0, 10000.0);
         HUMAN_MOVEMENT_SPEED = BUILDER.comment("Movement speed of Azazel Human").defineInRange("humanMovementSpeed", 0.25, 0.05, 1.0);
         HUMAN_KNOCKBACK_RESISTANCE = BUILDER.comment("Knockback resistance (1.0 = completely immune)").defineInRange("humanKnockbackResistance", 1.0, 0.0, 1.0);
+        BUILDER.pop();
+
+        // attacks
+        BUILDER.push("Azazel Human Attack Config");
+        HUMAN_STOMP_DAMAGE = BUILDER.comment("Damage for the leg stomp attack").defineInRange("humanStompDamage", 25.0, 0.0, 200.0);
+        HUMAN_STOMP_KNOCKBACK = BUILDER.comment("Knockback strength for the leg stomp attack").defineInRange("humanStompKnockback", 1.2, 0.0, 10.0);
+
+        HUMAN_SCYTHE_1_DAMAGE = BUILDER.comment("Damage for the first scythe swing").defineInRange("humanScythe1Damage", 15.0, 0.0, 200.0);
+        HUMAN_SCYTHE_1_KNOCKBACK = BUILDER.comment("Knockback for the first scythe swing").defineInRange("humanScythe1Knockback", 0.5, 0.0, 10.0);
+        HUMAN_SCYTHE_2_DAMAGE = BUILDER.comment("Damage for the second scythe swing").defineInRange("humanScythe2Damage", 25.0, 0.0, 200.0);
+        HUMAN_SCYTHE_2_KNOCKBACK = BUILDER.comment("Knockback for the second scythe swing").defineInRange("humanScythe2Knockback", 6.0, 0.0, 20.0);
+
+        HUMAN_SPEAR_MELEE_DAMAGE = BUILDER.comment("Damage for the melee spear attack").defineInRange("humanSpearMeleeDamage", 20.0, 0.0, 200.0);
+        HUMAN_SPEAR_MELEE_KNOCKBACK = BUILDER.comment("Knockback for the melee spear attack").defineInRange("humanSpearMeleeKnockback", 8.0, 0.0, 20.0);
+
+        HUMAN_SPEAR_MID_PUSH_DAMAGE = BUILDER.comment("Damage for the mid-range spear push attack").defineInRange("humanSpearMidPushDamage", 10.0, 0.0, 200.0);
+        HUMAN_SPEAR_MID_PUSH_KNOCKBACK = BUILDER.comment("Knockback for the mid-range spear push attack").defineInRange("humanSpearMidPushKnockback", 8.0, 0.0, 20.0);
+        HUMAN_SPEAR_MID_PULL_DAMAGE = BUILDER.comment("Damage for the mid-range spear pull attack").defineInRange("humanSpearMidPullDamage", 20.0, 0.0, 200.0);
+        HUMAN_SPEAR_MID_PULL_KNOCKBACK = BUILDER.comment("Pull strength for the mid-range spear pull attack").defineInRange("humanSpearMidPullKnockback", 5.0, 0.0, 20.0);
+
+        HUMAN_CHARGE_DAMAGE = BUILDER.comment("Damage dealt to players in the path of the charge").defineInRange("humanChargeDamage", 30.0, 0.0, 200.0);
+        HUMAN_CHARGE_KNOCKBACK = BUILDER.comment("Knockback for the charge attack").defineInRange("humanChargeKnockback", 1.5, 0.0, 10.0);
+
+        HUMAN_SPLASH_DAMAGE = BUILDER.comment("Damage for the scythe splash projectile").defineInRange("humanSplashDamage", 20.0, 0.0, 200.0);
+
+        HUMAN_SPIKE_DAMAGE = BUILDER.comment("Damage for the ground spikes").defineInRange("humanSpikeDamage", 10.0, 0.0, 200.0);
+        HUMAN_SPIKE_WITHER_DURATION = BUILDER.comment("Wither effect duration (in ticks) for ground spikes. 100 = 5 seconds. 0 = disable.").defineInRange("humanSpikeWitherDuration", 100, 0, 1200);
+
+        HUMAN_PROJECTILE_SPIKE_DAMAGE = BUILDER.comment("Damage for the flying spike projectiles").defineInRange("humanProjectileSpikeDamage", 10.0, 0.0, 200.0);
+        HUMAN_PROJECTILE_SPIKE_WITHER_DURATION = BUILDER.comment("Wither effect duration (in ticks) for flying spike projectiles. 100 = 5 sec.").defineInRange("humanProjectileSpikeWitherDuration", 100, 0, 1200);
         BUILDER.pop();
 
         BUILDER.push("Azazel Attack Damage");

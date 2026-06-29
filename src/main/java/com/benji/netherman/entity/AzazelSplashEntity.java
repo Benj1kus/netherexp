@@ -67,8 +67,9 @@ public class AzazelSplashEntity extends Projectile implements GeoEntity {
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         if (!this.level().isClientSide() && result.getEntity() instanceof Player player) {
-            
-            player.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 60.0F);
+
+            float damage = com.benji.netherman.config.AzazelConfig.HUMAN_SPLASH_DAMAGE.get().floatValue();
+            player.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), damage);
 
             
             ((ServerLevel) this.level()).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 30, 1.0, 1.0, 1.0, 0.2);

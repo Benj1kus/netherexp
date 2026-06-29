@@ -2,6 +2,7 @@ package com.benji.netherman.entity;
 
 import com.benji.netherman.ModSounds;
 import com.benji.netherman.NetherExp;
+import com.benji.netherman.config.AzazelConfig;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -86,7 +87,7 @@ public class AzazelHumanMidRangeGoal extends Goal {
             
             if (currentAnimTick == 8) {
                 boss.level().playSound(null, boss.blockPosition(), ModSounds.SWING_1.get(), SoundSource.HOSTILE, 2.0F, 1.0F);
-                executeSpearAttack(40.0F, 2.0D, false);
+                executeSpearAttack(AzazelConfig.HUMAN_SPEAR_MID_PUSH_DAMAGE.get().floatValue(), AzazelConfig.HUMAN_SPEAR_MID_PUSH_KNOCKBACK.get(), false);
             }
         }
         else if (attackState == 31) {
@@ -94,7 +95,7 @@ public class AzazelHumanMidRangeGoal extends Goal {
             
             if (currentAnimTick == 10) {
                 boss.level().playSound(null, boss.blockPosition(), ModSounds.SWING_2.get(), SoundSource.HOSTILE, 2.0F, 1.0F);
-                executeSpearAttack(25.0F, 2.0D, true);
+                executeSpearAttack(AzazelConfig.HUMAN_SPEAR_MID_PULL_DAMAGE.get().floatValue(), AzazelConfig.HUMAN_SPEAR_MID_PULL_KNOCKBACK.get(), true);
             }
         }
 

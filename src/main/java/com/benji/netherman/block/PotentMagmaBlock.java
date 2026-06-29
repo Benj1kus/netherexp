@@ -89,6 +89,10 @@ public class PotentMagmaBlock extends Block {
             List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, launchBox);
 
             for (LivingEntity entity : entities) {
+                if (entity instanceof com.benji.netherman.entity.AzazelHumanEntity) {
+                    continue;
+                }
+
                 entity.hurt(level.damageSources().inFire(), 3.0F);
                 entity.setSecondsOnFire(5);
 

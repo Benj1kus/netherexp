@@ -51,12 +51,18 @@ public class AzazelSpikeEntity extends Projectile implements GeoEntity {
             return;
         }
 
-        
+
         if (lifeTicks < 25 && !this.level().isClientSide() && this.tickCount % 5 == 0) {
             AABB hitbox = this.getBoundingBox().inflate(0.2D);
+            float spikeDamage = com.benji.netherman.config.AzazelConfig.HUMAN_SPIKE_DAMAGE.get().floatValue();
+            int witherDuration = com.benji.netherman.config.AzazelConfig.HUMAN_SPIKE_WITHER_DURATION.get();
+
             for (Player player : this.level().getEntitiesOfClass(Player.class, hitbox)) {
-                player.hurt(this.damageSources().magic(), 5.0F); 
-                player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 1)); 
+                player.hurt(this.damageSources().magic(), spikeDamage);
+
+                if (witherDuration > 0) {
+                    player.addEffect(new MobEffectInstance(MobEffects.WITHER, witherDuration, 1));
+                }
             }
         }
 

@@ -1,6 +1,7 @@
 package com.benji.netherman.entity;
 
 import com.benji.netherman.ModSounds;
+import com.benji.netherman.config.AzazelConfig;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -40,37 +41,59 @@ public class AzazelHumanMovementGoal extends Goal {
 
     @Override
     public void start() {
-        this.pathUpdateTimer = 0; 
+        this.pathUpdateTimer = 0;
 
+        boolean isPhase2 = boss.getEntityData().get(AzazelHumanEntity.IS_PHASE_2);
         int rand = boss.getRandom().nextInt(100);
 
-        if (rand < 40) {
-            moveMode = 0;
-            boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 10);
-        } else if (rand < 70) {
-            moveMode = 1;
-            boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 11);
-        } else if (rand < 90) {
-            moveMode = 2;
-            boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 12);
-            actionTimer = 60;
-
-            LivingEntity target = boss.getTarget();
-            if (target != null) {
-                chargeDirection = target.position().subtract(boss.position()).normalize();
-                
-                boss.getLookControl().setLookAt(target.getX(), boss.getEyeY(), target.getZ());
+        if (isPhase2) {
+            if (rand < 10) {
+                moveMode = 0; // Walk (10%)
+                boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 10);
+            } else if (rand < 15) {
+                moveMode = 1; // DefendWalk (5%)
+                boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 11);
+            } else if (rand < 55) {
+                moveMode = 2; // Charge (40%)
+                startCharge();
+            } else {
+                moveMode = 3; // Jump (45%)
+                startJump();
             }
         } else {
-            moveMode = 3;
-            boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 13);
-            actionTimer = 43;
-
-            LivingEntity target = boss.getTarget();
-            if (target != null) {
-                Vec3 jumpVec = target.position().subtract(boss.position()).normalize().scale(1.5D);
-                boss.setDeltaMovement(jumpVec.x, 1.2D, jumpVec.z);
+            if (rand < 40) {
+                moveMode = 0;
+                boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 10);
+            } else if (rand < 70) {
+                moveMode = 1;
+                boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 11);
+            } else if (rand < 90) {
+                moveMode = 2;
+                startCharge();
+            } else {
+                moveMode = 3;
+                startJump();
             }
+        }
+    }
+
+    private void startCharge() {
+        boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 12);
+        actionTimer = 60;
+        LivingEntity target = boss.getTarget();
+        if (target != null) {
+            chargeDirection = target.position().subtract(boss.position()).normalize();
+            boss.getLookControl().setLookAt(target.getX(), boss.getEyeY(), target.getZ());
+        }
+    }
+
+    private void startJump() {
+        boss.getEntityData().set(AzazelHumanEntity.BOSS_STATE, 13);
+        actionTimer = 43;
+        LivingEntity target = boss.getTarget();
+        if (target != null) {
+            Vec3 jumpVec = target.position().subtract(boss.position()).normalize().scale(1.5D);
+            boss.setDeltaMovement(jumpVec.x, 1.2D, jumpVec.z);
         }
     }
 
@@ -105,10 +128,12 @@ public class AzazelHumanMovementGoal extends Goal {
             boss.yBodyRot = targetYaw;
             boss.yHeadRot = targetYaw;
 
+            float chargeDamage = AzazelConfig.HUMAN_CHARGE_DAMAGE.get().floatValue();
+            double chargeKb = AzazelConfig.HUMAN_CHARGE_KNOCKBACK.get();
             
             for (Player p : boss.level().getEntitiesOfClass(Player.class, boss.getBoundingBox().inflate(1.5D))) {
-                
-                p.setDeltaMovement(chargeDirection.x * 1.5, 0.2D, chargeDirection.z * 1.5);
+
+                p.setDeltaMovement(chargeDirection.x * chargeKb, 0.2D, chargeDirection.z * chargeKb);
                 p.hurtMarked = true;
 
                 

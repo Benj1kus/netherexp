@@ -99,7 +99,7 @@ public class MazeDoorBlock extends HorizontalDirectionalBlock implements EntityB
                         level.playSound(null, pos, ModSounds.HIRRING.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
                         entity.openTemporary();
                     } else {
-                        level.playSound(null, pos, SoundEvents.IRON_DOOR_CLOSE, SoundSource.BLOCKS, 1.0F, 0.5F); // Звук отказа
+                        level.playSound(null, pos, SoundEvents.IRON_DOOR_CLOSE, SoundSource.BLOCKS, 1.0F, 0.5F); 
                         player.displayClientMessage(Component.translatable("message.netherman.door_locked"), true);
                     }
                 } else {

@@ -60,11 +60,11 @@ public class AltarCompassKeyItem extends Item {
                     level.playSound(null, pos, SoundEvents.RESPAWN_ANCHOR_CHARGE, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 1.0F, 0.7F);
 
-                    // Спавним БЕЗОПАСНУЮ молнию (только визуал)
+                    
                     LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
                     if (lightning != null) {
                         lightning.moveTo(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5);
-                        lightning.setVisualOnly(true); // Запрещаем молнии поджигать блоки и бить игрока
+                        lightning.setVisualOnly(true); 
                         level.addFreshEntity(lightning);
                     }
                 }

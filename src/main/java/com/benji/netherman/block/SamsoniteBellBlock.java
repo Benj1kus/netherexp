@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-// ДЛЯ 1.21.1: Не забудь добавить CODEC, как мы делали в других блоках!
+
 public class SamsoniteBellBlock extends BellBlock {
 
     public SamsoniteBellBlock(Properties properties) {

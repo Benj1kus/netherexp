@@ -68,7 +68,7 @@ public class TotemusBlockEntity extends BlockEntity {
             List<ServerPlayer> players = level.getEntitiesOfClass(ServerPlayer.class, box);
 
             for (ServerPlayer player : players) {
-                if (entity.totemType == 3) { // Босс Зона
+                if (entity.totemType == 3) { 
                     if (player.hasEffect(NetherExp.FEAR_EFFECT.get()) ||
                             player.hasEffect(NetherExp.EXCITEMENT_EFFECT.get()) ||
                             player.hasEffect(NetherExp.FAITH_EFFECT.get()) ||

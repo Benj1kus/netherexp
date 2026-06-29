@@ -58,7 +58,7 @@ public class AzazelTrophyEvents {
                 CompoundTag tag = mask.getOrCreateTag();
                 int stage = tag.getInt("TrophyStage");
 
-                // Если есть внутренние заряды (1, 2 и 3 удары)
+                
                 if (stage < 3) {
                     event.setCanceled(true);
 

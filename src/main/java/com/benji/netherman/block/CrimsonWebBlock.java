@@ -14,7 +14,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock; // ИЗМЕНЕНО
+import net.minecraft.world.level.block.DirectionalBlock; 
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -60,7 +60,7 @@ public class CrimsonWebBlock extends DirectionalBlock {
         builder.add(FACING, STAGE, CLOSING);
     }
 
-    // ИЗМЕНЕНО: Логика установки с шифтом
+    
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction dir;

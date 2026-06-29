@@ -45,7 +45,7 @@ public class CrimsonHoneyBlock extends HalfTransparentBlock {
             double pushZ = -dz * 8.0D;
 
             entity.setDeltaMovement(pushX, bounceY, pushZ);
-            entity.hurtMarked = true; // Принудительно обновляем вектор движения на клиенте
+            entity.hurtMarked = true; 
         }
     }
     @Override

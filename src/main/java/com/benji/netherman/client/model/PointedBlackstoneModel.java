@@ -19,23 +19,23 @@ public class PointedBlackstoneModel extends GeoModel<PointedBlackstoneBlockEntit
     public ResourceLocation getTextureResource(PointedBlackstoneBlockEntity animatable) {
         BlockState state = animatable.getBlockState();
 
-        // Защита: проверяем, что у блока есть нужные свойства
+        
         if (state.hasProperty(PointedDripstoneBlock.TIP_DIRECTION) && state.hasProperty(PointedDripstoneBlock.THICKNESS)) {
             Direction dir = state.getValue(PointedDripstoneBlock.TIP_DIRECTION);
             DripstoneThickness thickness = state.getValue(PointedDripstoneBlock.THICKNESS);
 
-            // "down" или "up"
+            
             String dirStr = dir == Direction.DOWN ? "down" : "up";
 
-            // "base", "frustum", "middle", "tip", "merge"
+            
             String thickStr = thickness.getSerializedName();
 
-            // Майнкрафт называет соединение "merge", а твоя текстура "tip_merge". Исправляем:
+            
             if (thickStr.equals("merge")) {
                 thickStr = "tip_merge";
             }
 
-            // Итоговый путь: "netherman:textures/block/pointed_blackstone_down_base.png" и т.д.
+            
             return new ResourceLocation(NetherExp.MODID, "textures/block/pointed_blackstone_" + dirStr + "_" + thickStr + ".png");
         }
 

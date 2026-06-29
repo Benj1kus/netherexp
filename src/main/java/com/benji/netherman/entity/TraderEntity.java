@@ -131,7 +131,7 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
                 if (tradeState == 1 && this.tradeTimer <= 0) {
                     this.giveRewardToPlayer();
 
-                    this.playSound(SoundEvents.ITEM_PICKUP, 1.0F, 1.0F); // Звук BOP
+                    this.playSound(SoundEvents.ITEM_PICKUP, 1.0F, 1.0F); 
                     if (this.level() instanceof ServerLevel serverLevel) {
                         serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY() + 1.0D, this.getZ(), 10, 0.3, 0.3, 0.3, 0.0);
                     }

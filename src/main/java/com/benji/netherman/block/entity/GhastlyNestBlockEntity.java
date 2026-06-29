@@ -65,7 +65,7 @@ public class GhastlyNestBlockEntity extends BlockEntity {
         if (nest.occupants.size() >= 2 && !state.getValue(com.benji.netherman.block.GhastlyNestBlock.HAS_HONEY)) {
             nest.honeyTimer++;
 
-            if (nest.honeyTimer >= 3600) { // 3 минуты
+            if (nest.honeyTimer >= 3600) { 
                 boolean foundRoots = false;
                 for (int x = -5; x <= 5; x++) {
                     for (int y = -3; y <= 3; y++) {

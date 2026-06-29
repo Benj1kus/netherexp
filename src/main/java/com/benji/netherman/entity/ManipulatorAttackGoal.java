@@ -29,7 +29,7 @@ public class ManipulatorAttackGoal extends Goal {
         double distSq = mob.distanceToSqr(target);
         mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
         if (mob.fleeTicks > 0) {
-            mob.getNavigation().moveTo(mob.getX() + (mob.getX() - target.getX()), mob.getY(), mob.getZ() + (mob.getZ() - target.getZ()), 2.0D); // Убегает от цели
+            mob.getNavigation().moveTo(mob.getX() + (mob.getX() - target.getX()), mob.getY(), mob.getZ() + (mob.getZ() - target.getZ()), 2.0D); 
             return;
         }
         if (mob.castTicks > 0) {
@@ -54,7 +54,7 @@ public class ManipulatorAttackGoal extends Goal {
             mob.getNavigation().stop();
             if (mob.manipulationCooldown <= 0 && target instanceof Player player) {
                 mob.setEntityState(ManipulatorEntity.STATE_ATTACK);
-                mob.castTicks = 75; // Общее время каста (1.75 + 2 сек)
+                mob.castTicks = 75; 
                 mob.manipulationCooldown = 1200;
                 player.addEffect(new MobEffectInstance(NetherExp.MANIPULATION_EFFECT.get(), 200, 0));
                 mob.level().getServer().tell(new net.minecraft.server.TickTask(mob.level().getServer().getTickCount() + 35, () -> {

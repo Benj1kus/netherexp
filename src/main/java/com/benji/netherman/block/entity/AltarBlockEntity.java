@@ -65,7 +65,7 @@ public class AltarBlockEntity extends BlockEntity implements GeoBlockEntity {
         }
     }
 
-    // Теперь метод public
+    
     public void performSearch(Level level, BlockPos center) {
         this.needsSearch = false;
         Block targetBlock = getTargetBlockForLetter(this.searchLetter);

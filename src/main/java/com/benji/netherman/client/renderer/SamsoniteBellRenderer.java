@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class SamsoniteBellRenderer implements BlockEntityRenderer<SamsoniteBellBlockEntity> {
-    // В 1.21.1: ResourceLocation.fromNamespaceAndPath(NetherExp.MODID, "textures/entity/samsonite_bell.png");
+    
     public static final ResourceLocation TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/entity/samsonite_bell.png");
     private final ModelPart bellBody;
 

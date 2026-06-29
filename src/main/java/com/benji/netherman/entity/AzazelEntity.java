@@ -234,13 +234,13 @@ public class AzazelEntity extends Monster implements GeoEntity {
     private void startPullAttack() {
         this.entityData.set(ATTACK_STATE, 11);
         this.attackTimer = 60;
-        this.playSound(SoundEvents.PHANTOM_SWOOP, 2.0F, 0.5F); // Можно поменять звук при желании
+        this.playSound(SoundEvents.PHANTOM_SWOOP, 2.0F, 0.5F); 
     }
 
     private void startLaunchAttack() {
         this.entityData.set(ATTACK_STATE, 12);
         this.attackTimer = 80;
-        this.playSound(ModSounds.AZAZEL_PRAY.get(), 1.0F, 1.5F); // Чуть ускоренный звук для агрессии
+        this.playSound(ModSounds.AZAZEL_PRAY.get(), 1.0F, 1.5F); 
     }
 
     private void startWindAttack() {
@@ -521,11 +521,11 @@ public class AzazelEntity extends Monster implements GeoEntity {
                                 }
                             } else {
                                 java.util.List<Integer> availableAttacks = new java.util.ArrayList<>();
-                                availableAttacks.add(0); // Wind Attack
-                                availableAttacks.add(1); // Wheel Attack
-                                availableAttacks.add(2); // Arrow Attack
-                                availableAttacks.add(3); // Pull Attack
-                                availableAttacks.add(5); // Prison Attack
+                                availableAttacks.add(0); 
+                                availableAttacks.add(1); 
+                                availableAttacks.add(2); 
+                                availableAttacks.add(3); 
+                                availableAttacks.add(5); 
 
                                 if (hasBelievers) {
                                     availableAttacks.add(4);

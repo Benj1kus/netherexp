@@ -3,7 +3,7 @@ package com.benji.netherman.client.renderer;
 import com.benji.netherman.NetherExp;
 import com.benji.netherman.client.layer.GlowmaskLayer;
 import com.benji.netherman.client.model.ManipulatorModel;
-import com.benji.netherman.client.layer.GenericEmissiveLayer; // Твой кастомный слой свечения
+import com.benji.netherman.client.layer.GenericEmissiveLayer; 
 import com.benji.netherman.entity.ManipulatorEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

@@ -1,7 +1,7 @@
 package com.benji.netherman.client.renderer;
 
 import com.benji.netherman.block.entity.TraphiveBlockEntity;
-import com.benji.netherman.client.layer.TraphiveAnimatedEmissiveLayer; // Наш новый слой
+import com.benji.netherman.client.layer.TraphiveAnimatedEmissiveLayer; 
 import com.benji.netherman.client.model.TraphiveModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

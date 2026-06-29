@@ -19,31 +19,31 @@ public class LabyrinthTeleportRenderer implements BlockEntityRenderer<LabyrinthT
 
     @Override
     public void render(LabyrinthTeleportBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        // Проверяем состояние блока
+        
         if (blockEntity.getBlockState().hasProperty(LabyrinthTeleportBlock.MODE)) {
-            if (blockEntity.getBlockState().getValue(LabyrinthTeleportBlock.MODE) == 1) { // 1 = Активен
+            if (blockEntity.getBlockState().getValue(LabyrinthTeleportBlock.MODE) == 1) { 
 
                 long gameTime = blockEntity.getLevel().getGameTime();
 
-                // Используем ванильный генератор луча для 1.20.1
+                
                 BeaconRenderer.renderBeaconBeam(
                         poseStack,
                         bufferSource,
                         BEAM_TEXTURE,
                         partialTick,
-                        1.0F,           // Масштаб текстуры
-                        gameTime,       // Время для анимации вращения
-                        0,              // Смещение по Y (откуда начинается луч)
-                        256,            // Высота луча
-                        new float[]{1.0F, 1.0F, 1.0F}, // <--- ИСПРАВЛЕНО: Массив RGB для белого цвета
-                        0.2F,           // Внутренний радиус луча
-                        0.25F           // Внешний радиус луча (Свечение)
+                        1.0F,           
+                        gameTime,       
+                        0,              
+                        256,            
+                        new float[]{1.0F, 1.0F, 1.0F}, 
+                        0.2F,           
+                        0.25F           
                 );
             }
         }
     }
 
-    // Дальность видимости луча (256 блоков)
+    
     @Override
     public int getViewDistance() {
         return 256;

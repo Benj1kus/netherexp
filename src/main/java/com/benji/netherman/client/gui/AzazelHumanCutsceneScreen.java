@@ -55,7 +55,7 @@ public class AzazelHumanCutsceneScreen extends Screen {
 
         int state = boss.getEntityData().get(AzazelHumanEntity.BOSS_STATE);
         int tick = boss.getEntityData().get(AzazelHumanEntity.DIALOGUE_TICK);
-        //DIALOGUE
+        
         if (state == 2) {
             int currentLine = tick / 90;
             if (currentLine > 9) currentLine = 9;

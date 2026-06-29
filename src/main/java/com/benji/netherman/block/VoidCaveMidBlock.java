@@ -65,7 +65,7 @@ public class VoidCaveMidBlock extends HorizontalDirectionalBlock {
             level.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.01D, 0.0D);
         }
 
-        //ambient
+        
         long currentTime = level.getGameTime();
 
         if (currentTime - lastSoundTime > 160) {
@@ -77,8 +77,8 @@ public class VoidCaveMidBlock extends HorizontalDirectionalBlock {
                         pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                         ModSounds.RIFTSOUND.get(),
                         SoundSource.BLOCKS,
-                        1.0F, // Громкость
-                        random.nextFloat() * 0.2F + 0.9F, // Искажение
+                        1.0F, 
+                        random.nextFloat() * 0.2F + 0.9F, 
                         false
                 );
             }

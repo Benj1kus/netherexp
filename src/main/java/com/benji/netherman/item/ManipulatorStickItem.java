@@ -98,7 +98,7 @@ public class ManipulatorStickItem extends SwordItem {
                 }
                 level.playSound(null, player.blockPosition(), ModSounds.SUMMON1.get(), net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.0F);
                 stack.hurtAndBreak(50, player, (p) -> p.broadcastBreakEvent(hand));
-                player.getCooldowns().addCooldown(this, 40); // Кулдаун 2 секунды на призыв
+                player.getCooldowns().addCooldown(this, 40); 
                 return InteractionResultHolder.success(stack);
             }
             if (stack.getDamageValue() + 20 > stack.getMaxDamage()) {

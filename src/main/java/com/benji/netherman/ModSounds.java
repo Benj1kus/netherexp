@@ -20,9 +20,24 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> SPEECH_2 = registerSoundEvent("speech_2");
     public static final RegistryObject<SoundEvent> SPEECH_3 = registerSoundEvent("speech_3");
     public static final RegistryObject<SoundEvent> SPEECH_4 = registerSoundEvent("speech_4");
-
     public static final RegistryObject<SoundEvent> LAUGH = registerSoundEvent("laugh");
+    public static final RegistryObject<SoundEvent> HUMAN_DAMAGE_1 = registerSoundEvent("human_damage1");
+    public static final RegistryObject<SoundEvent> HUMAN_DAMAGE_2 = registerSoundEvent("human_damage2");
+    public static final RegistryObject<SoundEvent> ROAR = registerSoundEvent("roar");
+    public static final RegistryObject<SoundEvent> DODGE = registerSoundEvent("dodge");
+    public static final RegistryObject<SoundEvent> STOMP = registerSoundEvent("stomp");
+    public static final RegistryObject<SoundEvent> SWING_1 = registerSoundEvent("swing1");
+    public static final RegistryObject<SoundEvent> SWING_2 = registerSoundEvent("swing2");
+    public static final RegistryObject<SoundEvent> SMOKE_BREATH = registerSoundEvent("smoke_breath");
 
+    public static final RegistryObject<SoundEvent> GRUNT_1 = registerSoundEvent("grunt1");
+    public static final RegistryObject<SoundEvent> GRUNT_2 = registerSoundEvent("grunt2");
+    public static final RegistryObject<SoundEvent> GRUNT_3 = registerSoundEvent("grunt3");
+    public static final RegistryObject<SoundEvent> GRUNT_4 = registerSoundEvent("grunt4");
+    public static final RegistryObject<SoundEvent> GRUNT_5 = registerSoundEvent("grunt5");
+    public static final RegistryObject<SoundEvent> GRUNT_6 = registerSoundEvent("grunt6");
+    public static final RegistryObject<SoundEvent> GRUNT_7 = registerSoundEvent("grunt7");
+    public static final RegistryObject<SoundEvent> GRUNT_8 = registerSoundEvent("grunt8");
 
     public static final RegistryObject<SoundEvent> RIFTSOUND = registerSoundEvent("riftsound");
 
@@ -57,7 +72,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> DAMNED = registerSoundEvent("damned");
     public static final RegistryObject<SoundEvent> GOODLUCK = registerSoundEvent("goodluck");
 
-    //BLOCKS
+    
 
     public static final RegistryObject<SoundEvent> SAMSONIT_BREAK = registerSoundEvent("block.samsonit.break");
     public static final RegistryObject<SoundEvent> SAMSONIT_STEP = registerSoundEvent("block.samsonit.step");

@@ -48,13 +48,13 @@ public class AzazelConfig {
 
     static {
 
-        // boss
+        
         BUILDER.push("Azazel Boss Configuration");
         MAX_HEALTH = BUILDER.comment("Maximum health of Azazel").defineInRange("maxHealth", 800.0, 100.0, 10000.0);
         MOVEMENT_SPEED = BUILDER.comment("Movement speed of Azazel").defineInRange("movementSpeed", 0.2, 0.05, 1.0);
         KNOCKBACK_RESISTANCE = BUILDER.comment("Knockback resistance (1.0 = completely immune)").defineInRange("knockbackResistance", 1.0, 0.0, 1.0);
         BUILDER.pop();
-//AZAZEL HUMAN
+
         BUILDER.push("Azazel Human Configuration");
         HUMAN_MAX_HEALTH = BUILDER.comment("Maximum health of Azazel Human").defineInRange("humanMaxHealth", 1000.0, 100.0, 10000.0);
         HUMAN_MOVEMENT_SPEED = BUILDER.comment("Movement speed of Azazel Human").defineInRange("humanMovementSpeed", 0.25, 0.05, 1.0);
@@ -73,7 +73,7 @@ public class AzazelConfig {
         PASSIVE_SUMMON_CHANCE = BUILDER.comment("Chance (1 in X ticks) to spawn minions passively while idle.").defineInRange("passiveSummonChance", 600, 100, 2400);
         BUILDER.pop();
 
-        // spawner
+        
         BUILDER.push("Nether Spawner Configuration");
 
         PLAYER_DETECTION_RADIUS = BUILDER.comment("Radius within which the spawner detects players to activate.")

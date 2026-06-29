@@ -13,7 +13,7 @@ public class AzazelGuideBookModel extends GeoModel<AzazelGuideBookEntity> {
 
     @Override
     public ResourceLocation getTextureResource(AzazelGuideBookEntity animatable) {
-        // Если понадобится в будущем менять обложки страниц текстурой - можно привязать к BOOK_STATE
+        
         return new ResourceLocation(NetherExp.MODID, "textures/entity/azazel_guide_book_entity.png");
     }
 

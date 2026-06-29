@@ -13,7 +13,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class LaserRenderer extends GeoEntityRenderer<LaserEntity> {
     public LaserRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new LaserModel());
-        this.shadowRadius = 0.0f; // У лазера не должно быть черной тени под собой
+        this.shadowRadius = 0.0f; 
         ResourceLocation emissiveTexture = new ResourceLocation(NetherExp.MODID, "textures/entity/laser_emissive.png");
         addRenderLayer(new GlowmaskLayer<>(this, emissiveTexture));
     }

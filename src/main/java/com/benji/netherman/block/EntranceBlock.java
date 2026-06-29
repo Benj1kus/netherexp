@@ -29,11 +29,11 @@ import java.util.Map;
 import java.util.Queue;
 
 public class EntranceBlock extends Block {
-    // STAGE: 0 = Закрыт, 1 = Начало сжатия, 2 = Почти сжат, 3 = Полностью открыт (проходимый)
+    
     public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 3);
     public static final BooleanProperty CLOSING = BooleanProperty.create("closing");
 
-    // Динамические хитбоксы для плавного уменьшения куба
+    
     private static final VoxelShape SHAPE_0 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     private static final VoxelShape SHAPE_1 = Block.box(2.0D, 2.0D, 2.0D, 14.0D, 14.0D, 14.0D);
     private static final VoxelShape SHAPE_2 = Block.box(5.0D, 5.0D, 5.0D, 11.0D, 11.0D, 11.0D);
@@ -53,7 +53,7 @@ public class EntranceBlock extends Block {
         return switch (state.getValue(STAGE)) {
             case 1 -> SHAPE_1;
             case 2 -> SHAPE_2;
-            case 3 -> Shapes.empty(); // Полностью проходим
+            case 3 -> Shapes.empty(); 
             default -> SHAPE_0;
         };
     }
@@ -63,7 +63,7 @@ public class EntranceBlock extends Block {
         if (!level.isClientSide() && hand == InteractionHand.MAIN_HAND) {
             if (state.getValue(STAGE) != 0) return InteractionResult.PASS;
 
-            // Наш старый добрый алгоритм поиска соединенных блоков (BFS)
+            
             Map<BlockPos, Integer> distances = new HashMap<>();
             Queue<BlockPos> queue = new LinkedList<>();
 
@@ -85,15 +85,15 @@ public class EntranceBlock extends Block {
                 }
             }
 
-            // Вместо BE планируем тики в планировщике Майнкрафта
+            
             for (Map.Entry<BlockPos, Integer> entry : distances.entrySet()) {
                 BlockPos targetPos = entry.getKey();
                 int distance = entry.getValue();
 
-                // Рассчитываем стартовую задержку для запуска волны на основе дистанции
+                
                 int delay = (int) (Math.pow(distance, 0.8) * 3);
 
-                // Заставляем игру обновить этот блок через 'delay' тиков
+                
                 level.scheduleTick(targetPos, this, Math.max(1, delay));
             }
         }
@@ -106,24 +106,24 @@ public class EntranceBlock extends Block {
         boolean isClosing = state.getValue(CLOSING);
 
         if (!isClosing) {
-            // Процесс ОТКРЫТИЯ (сжатия блока)
+            
             if (currentStage == 0) {
-                // Звук воспроизводим только в самом начале сжатия блока
+                
                 level.playSound(null, pos, ModSounds.ENTRANCE.get(), SoundSource.BLOCKS, 1.0F, 0.9F + random.nextFloat() * 0.2F);
                 level.setBlock(pos, state.setValue(STAGE, 1), 3);
-                level.scheduleTick(pos, this, 3); // Быстрый шаг анимации
+                level.scheduleTick(pos, this, 3); 
             } else if (currentStage == 1) {
                 level.setBlock(pos, state.setValue(STAGE, 2), 3);
                 level.scheduleTick(pos, this, 3);
             } else if (currentStage == 2) {
                 level.setBlock(pos, state.setValue(STAGE, 3), 3);
 
-                // Блок открыт! Задаем задержку перед закрытием (например, 100 тиков = 5 секунд)
+                
                 level.scheduleTick(pos, this, 100);
-                level.setBlock(pos, level.getBlockState(pos).setValue(CLOSING, true), 3); // Меняем вектор на закрытие
+                level.setBlock(pos, level.getBlockState(pos).setValue(CLOSING, true), 3); 
             }
         } else {
-            // Процесс ЗАКРЫТИЯ (возвращения блока)
+            
             if (currentStage == 3) {
                 level.playSound(null, pos, ModSounds.ENTRANCE.get(), SoundSource.BLOCKS, 1.0F, 0.9F + random.nextFloat() * 0.2F);
                 level.setBlock(pos, state.setValue(STAGE, 2), 3);
@@ -132,7 +132,7 @@ public class EntranceBlock extends Block {
                 level.setBlock(pos, state.setValue(STAGE, 1), 3);
                 level.scheduleTick(pos, this, 3);
             } else if (currentStage == 1) {
-                // Полностью вернулся в исходное состояние
+                
                 level.setBlock(pos, state.setValue(STAGE, 0).setValue(CLOSING, false), 3);
             }
         }
@@ -141,7 +141,7 @@ public class EntranceBlock extends Block {
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         int stage = state.getValue(STAGE);
-        // Рисуем партиклы редстоуна на клиенте, если блок находится в процессе изменения размера
+        
         if (stage == 1 || stage == 2) {
             for (int i = 0; i < 2; i++) {
                 double px = pos.getX() + random.nextDouble();
@@ -154,6 +154,6 @@ public class EntranceBlock extends Block {
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL; // Переключаем на рендер обычных JSON моделей!
+        return RenderShape.MODEL; 
     }
 }

@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
-import com.benji.netherman.NetherExp; // Убедись, что импорт твоего главного класса совпадает
+import com.benji.netherman.NetherExp; 
 
 import java.util.Optional;
 

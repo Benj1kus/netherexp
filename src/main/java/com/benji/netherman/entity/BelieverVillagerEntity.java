@@ -147,7 +147,7 @@ public class BelieverVillagerEntity extends PathfinderMob implements GeoEntity, 
             this.offers.add(new MerchantOffer(new ItemStack(Items.STONE, 5), new ItemStack(NetherExp.COBBLED_SAMSONIT_ITEM.get(), 20), 10, 20, 0.05F));
         }
         else if (level == 5) {
-            // Чтобы дать выбор между двумя предметами за один изумруд, мы просто делаем 2 отдельные сделки
+            
             this.offers.add(new MerchantOffer(new ItemStack(Items.EMERALD, 1), new ItemStack(NetherExp.BLACKSTONE_PLANT_ITEM.get(), 1), 5, 30, 0.05F));
             this.offers.add(new MerchantOffer(new ItemStack(Items.EMERALD, 1), new ItemStack(NetherExp.BLACKSTONE_AXON_ITEM.get(), 1), 5, 30, 0.05F));
             this.offers.add(new MerchantOffer(new ItemStack(Items.IRON_INGOT, 2), new ItemStack(NetherExp.BLACKSTONE_PLANT_ITEM.get(), 1), 5, 30, 0.05F));
@@ -205,7 +205,7 @@ public class BelieverVillagerEntity extends PathfinderMob implements GeoEntity, 
     @Override public void overrideOffers(@Nullable MerchantOffers offers) { this.offers = offers; }
     @Override public int getVillagerXp() { return this.villagerXp; }
     @Override public void overrideXp(int xp) { this.villagerXp = xp; }
-    @Override public boolean showProgressBar() { return true; } // Показывать полоску опыта!
+    @Override public boolean showProgressBar() { return true; } 
     @Override public SoundEvent getNotifyTradeSound() { return SoundEvents.VILLAGER_TRADE; }
     @Override public boolean isClientSide() { return this.level().isClientSide(); }
 

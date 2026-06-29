@@ -52,7 +52,7 @@ public class TotemusHoleBlockEntity extends BlockEntity {
         }
 
         if (entity.puzzleState == STATE_INACTIVE) {
-            // Проверяем игроков в радиусе 10 блоков
+            
             AABB detectionBox = new AABB(pos).inflate(10.0D);
             if (!level.getEntitiesOfClass(Player.class, detectionBox).isEmpty()) {
                 entity.initiatePuzzleNetwork();

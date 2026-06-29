@@ -138,7 +138,7 @@ public class WelcomerEntity extends Monster implements GeoEntity {
                     double offsetZ = (this.random.nextDouble() - 0.5) * 1.5;
                     this.level().addParticle(ParticleTypes.ENTITY_EFFECT,
                             this.getX() + offsetX, this.getY() + 2.2, this.getZ() + offsetZ,
-                            1.0D, 0.0D, 0.0D); // Красный цвет
+                            1.0D, 0.0D, 0.0D); 
                 }
             }
         }

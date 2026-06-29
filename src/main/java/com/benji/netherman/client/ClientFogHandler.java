@@ -42,8 +42,8 @@ public class ClientFogHandler {
     public static void onRenderFog(ViewportEvent.RenderFog event) {
         if (fogProgress > 0.0f) {
 
-            float targetFarPlane = 48.0f; // Дистанция, где туман становится 100% непроглядным (попробуй 48 или 64)
-            float targetNearPlane = 12.0f; // Дистанция от игрока, где туман ТОЛЬКО НАЧИНАЕТ появляться
+            float targetFarPlane = 48.0f; 
+            float targetNearPlane = 12.0f; 
 
             float currentFar = event.getFarPlaneDistance();
             float currentNear = event.getNearPlaneDistance();

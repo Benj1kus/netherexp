@@ -152,10 +152,10 @@ public class PiglinPrisonerEntity extends PathfinderMob implements GeoEntity {
                 if (this.miningSoundTimer <= 0) {
                     int randSound = this.random.nextInt(4);
                     switch (randSound) {
-                        case 0 -> { this.playSound(ModSounds.PRISON_1.get(), 1.0F, this.getVoicePitch()); this.miningSoundTimer = 17; } // 862 ms
-                        case 1 -> { this.playSound(ModSounds.PRISON_2.get(), 1.0F, this.getVoicePitch()); this.miningSoundTimer = 38; } // 1901 ms
-                        case 2 -> { this.playSound(ModSounds.PRISON_3.get(), 1.0F, this.getVoicePitch()); this.miningSoundTimer = 14; } // 679 ms
-                        case 3 -> { this.playSound(ModSounds.PRISON_4.get(), 1.0F, this.getVoicePitch()); this.miningSoundTimer = 19; } // 929 ms
+                        case 0 -> { this.playSound(ModSounds.PRISON_1.get(), 1.0F, this.getVoicePitch()); this.miningSoundTimer = 17; } 
+                        case 1 -> { this.playSound(ModSounds.PRISON_2.get(), 1.0F, this.getVoicePitch()); this.miningSoundTimer = 38; } 
+                        case 2 -> { this.playSound(ModSounds.PRISON_3.get(), 1.0F, this.getVoicePitch()); this.miningSoundTimer = 14; } 
+                        case 3 -> { this.playSound(ModSounds.PRISON_4.get(), 1.0F, this.getVoicePitch()); this.miningSoundTimer = 19; } 
                     }
                 } else {
                     this.miningSoundTimer--;

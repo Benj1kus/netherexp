@@ -10,12 +10,12 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class TotemusPuzzleRenderer extends GeoEntityRenderer<TotemusPuzzleEntity> {
 
     private static final ResourceLocation[] TEXTURES = new ResourceLocation[] {
-            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_red.png"),    // 0
-            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_orange.png"), // 1
-            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_yellow.png"), // 2
-            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_green.png"),  // 3
-            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_blue.png"),   // 4
-            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_purple.png")  // 5
+            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_red.png"),    
+            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_orange.png"), 
+            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_yellow.png"), 
+            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_green.png"),  
+            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_blue.png"),   
+            new ResourceLocation(NetherExp.MODID, "textures/entity/totemus_puzzle_purple.png")  
     };
 
     public TotemusPuzzleRenderer(EntityRendererProvider.Context renderManager) {

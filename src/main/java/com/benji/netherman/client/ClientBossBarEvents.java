@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientBossBarEvents {
     private static final ResourceLocation FRAME_TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_frame.png");
     private static final ResourceLocation PROGRESS_TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_progress.png");
-    private static final ResourceLocation SUN_TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_frame_sun.png"); // Новая вставка
+    private static final ResourceLocation SUN_TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_frame_sun.png"); 
     private static final ResourceLocation CINEMATIC_TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/gui/cinematic.png");
     private static final ResourceLocation SUN_LOWHP_TEXTURE = new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_frame_sun_lowhp.png");
 
@@ -83,7 +83,7 @@ public class ClientBossBarEvents {
                 azazel = (com.benji.netherman.entity.AzazelEntity) entity;
                 break;
             }
-            //AZAZEL HUMAN
+            
             com.benji.netherman.entity.AzazelHumanEntity azazelHuman = null;
             for (Entity entity : mc.level.getEntitiesOfClass(com.benji.netherman.entity.AzazelHumanEntity.class, mc.player.getBoundingBox().inflate(100.0D))) {
                 azazelHuman = (com.benji.netherman.entity.AzazelHumanEntity) entity;
@@ -97,7 +97,7 @@ public class ClientBossBarEvents {
             int frameHeight = 42;
             int frameX = (screenWidth / 2) - (frameWidth / 2);
             int frameY = y;
-            //AZAZEL HUMAN
+            
             ResourceLocation frameToUse = (azazelHuman != null) ?
                     new ResourceLocation(NetherExp.MODID, "textures/gui/azazel_human_frame.png") : FRAME_TEXTURE;
 

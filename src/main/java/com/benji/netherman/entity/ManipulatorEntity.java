@@ -1,9 +1,9 @@
 package com.benji.netherman.entity;
 
 import com.benji.netherman.NetherExp;
-import com.benji.netherman.ModSounds; // ИМПОРТ ТВОИХ ЗВУКОВ
+import com.benji.netherman.ModSounds; 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions; // ИМПОРТ РЕДСТОУН ПАРТИКЛОВ
+import net.minecraft.core.particles.DustParticleOptions; 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;

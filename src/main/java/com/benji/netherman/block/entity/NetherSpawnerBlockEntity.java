@@ -87,7 +87,7 @@ public class NetherSpawnerBlockEntity extends BlockEntity {
                     spawnSingleEntity(level, pos, player, NetherExp.TRADER.get().create(level), entity, civilianCD);
                 } else if (spawnBelievers) {
 
-                    double checkRadius = AzazelConfig.BELIEVERS_SPAWN_RADIUS.get() + 9.0D; // Оставляем пропорцию зоны проверки
+                    double checkRadius = AzazelConfig.BELIEVERS_SPAWN_RADIUS.get() + 9.0D; 
                     List<BelieverEntity> currentBelievers = level.getEntitiesOfClass(BelieverEntity.class, new AABB(pos).inflate(checkRadius));
                     int maxAllowed = AzazelConfig.BELIEVERS_MAX_NEARBY.get();
 

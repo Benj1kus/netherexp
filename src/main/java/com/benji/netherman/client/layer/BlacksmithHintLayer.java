@@ -29,7 +29,7 @@ public class BlacksmithHintLayer extends GeoRenderLayer<BlacksmithEntity> {
 
         poseStack.pushPose();
 
-        poseStack.translate(0.0D, 2.5D, 0.0D); // Поднимаем над головой
+        poseStack.translate(0.0D, 2.5D, 0.0D); 
         poseStack.mulPose(Minecraft.getInstance().getEntityRenderDispatcher().cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         poseStack.scale(0.03F, 0.03F, 0.03F);

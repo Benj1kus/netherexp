@@ -144,7 +144,7 @@ public class NetherExp {
 
     public static final RegistryObject<Item> POTENT_MAGMA_ITEM = ITEMS.register("potent_magma",
             () -> new BlockItem(POTENT_MAGMA.get(), new Item.Properties()));
-    //PUZZLE:
+    
     public static final RegistryObject<Block> FACE_PUZZLE_RIGHT_DOWN = BLOCKS.register("face_puzzle_right_down",
             () -> new FacePuzzleBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(2.0F).requiresCorrectToolForDrops().noOcclusion(), 2, NetherExp.FACE_PUZZLE_RIGHT_DOWN_BE));
 
@@ -181,7 +181,7 @@ public class NetherExp {
     public static final RegistryObject<BlockEntityType<SamsoniteBellBlockEntity>> SAMSONITE_BELL_BE = BLOCK_ENTITIES.register("samsonite_bell",
             () -> BlockEntityType.Builder.of(SamsoniteBellBlockEntity::new, SAMSONITE_BELL.get()).build(null));
 
-    // DECORATIVE BLOCKS:
+    
     public static final RegistryObject<Block> SAMSONIT = BLOCKS.register("samsonit",
             () -> new SamsonitBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
                     .strength(6.0F)
@@ -310,7 +310,7 @@ public class NetherExp {
     public static final RegistryObject<Item> CHISELED_SAMSONIT_ITEM = ITEMS.register("chiseled_samsonit",
             () -> new BlockItem(CHISELED_SAMSONIT.get(), new Item.Properties()));
 
-//SLAB
+
 
     public static final RegistryObject<Block> COBBLED_SAMSONIT_SLAB = BLOCKS.register("cobbled_samsonit_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
@@ -340,7 +340,7 @@ public class NetherExp {
     public static final RegistryObject<Item> SAMSONIT_BRICKS_SLAB_ITEM = ITEMS.register("samsonit_bricks_slab",
             () -> new BlockItem(SAMSONIT_BRICKS_SLAB.get(), new Item.Properties()));
 
-    //STAIRS
+    
 
     public static final RegistryObject<Block> COBBLED_SAMSONIT_STAIRS = BLOCKS.register("cobbled_samsonit_stairs",
             () -> new StairBlock(() -> COBBLED_SAMSONIT.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TUFF)
@@ -370,7 +370,7 @@ public class NetherExp {
     public static final RegistryObject<Item> SAMSONIT_BRICKS_STAIRS_ITEM = ITEMS.register("samsonit_bricks_stairs",
             () -> new BlockItem(SAMSONIT_BRICKS_STAIRS.get(), new Item.Properties()));
 
-//WALL
+
 
     public static final RegistryObject<Block> COBBLED_SAMSONIT_WALL = BLOCKS.register("cobbled_samsonit_wall",
             () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
@@ -400,7 +400,7 @@ public class NetherExp {
     public static final RegistryObject<Item> SAMSONIT_BRICKS_WALL_ITEM = ITEMS.register("samsonit_bricks_wall",
             () -> new BlockItem(SAMSONIT_BRICKS_WALL.get(), new Item.Properties()));
 
-    //=========================================================================================== - visual border it more convient for me
+    
 
 
     public static final RegistryObject<Block> POINTED_BLACKSTONE = BLOCKS.register("pointed_blackstone",
@@ -668,10 +668,10 @@ public class NetherExp {
                     new ResourceLocation(MODID, "animations/grand_door.animation.json"),
                     new ResourceLocation(MODID, "textures/block/grand_door_emissive.png")
             ));
-//DISCS
+
     public static final RegistryObject<Item> MUSIC_DISC_BOSS = ITEMS.register("music_disc_boss",
             () -> new RecordItem(15, ModSounds.BOSS_FIGHT,
-                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 2900)); //HOW LONG
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 2900)); 
 
     public static final RegistryObject<Item> MUSIC_DISC_QUAR = ITEMS.register("music_disc_quar",
             () -> new RecordItem(6, ModSounds.CAVE_AMBIENT,
@@ -738,7 +738,7 @@ public class NetherExp {
 
     public static final RegistryObject<Item> CRIMSON_HONEY_BOTTLE = ITEMS.register("crimson_honey_bottle",
             () -> new com.benji.netherman.item.CrimsonHoneyBottleItem(new Item.Properties()
-                    .stacksTo(16) //
+                    .stacksTo(16) 
                     .craftRemainder(net.minecraft.world.item.Items.GLASS_BOTTLE)
                     .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(6).saturationMod(0.1F).alwaysEat().build())));
 
@@ -815,6 +815,18 @@ public class NetherExp {
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "azazel_human").toString()));
 
+
+    public static final RegistryObject<EntityType<AzazelSplashEntity>> SPLASH_ENTITY = ENTITIES.register("azazel_splash",
+            () -> EntityType.Builder.<AzazelSplashEntity>of(AzazelSplashEntity::new, MobCategory.MISC)
+                    .sized(3.5F, 6.5F).clientTrackingRange(64).build("azazel_splash"));
+
+    public static final RegistryObject<EntityType<AzazelSpikesProjectileEntity>> SPIKE_PROJECTILE_ENTITY = ENTITIES.register("azazel_spike_projectile",
+            () -> EntityType.Builder.<AzazelSpikesProjectileEntity>of(AzazelSpikesProjectileEntity::new, MobCategory.MISC)
+                    .sized(1.0F, 1.5F).clientTrackingRange(64).build("azazel_spike_projectile"));
+
+    public static final RegistryObject<EntityType<AzazelSpikeEntity>> SPIKE_ENTITY = ENTITIES.register("azazel_spike",
+            () -> EntityType.Builder.<AzazelSpikeEntity>of(AzazelSpikeEntity::new, MobCategory.MISC)
+                    .sized(0.75F, 3.125F).clientTrackingRange(64).build("azazel_spike"));
 
     public static final RegistryObject<EntityType<GildedGolemEntity>> GILDED_GOLEM = ENTITIES.register("gilded_golem",
             () -> EntityType.Builder.of(GildedGolemEntity::new, MobCategory.MISC)
@@ -899,7 +911,7 @@ public class NetherExp {
 
 
     public static final RegistryObject<EntityType<PiglinPrisonerEntity>> PIGLIN_PRISONER = ENTITIES.register("piglin_prisoner",
-            () -> EntityType.Builder.of(PiglinPrisonerEntity::new, MobCategory.CREATURE) // Мирный
+            () -> EntityType.Builder.of(PiglinPrisonerEntity::new, MobCategory.CREATURE) 
                     .sized(0.6F, 1.95F)
                     .build("piglin_prisoner"));
     public static final RegistryObject<EntityType<ManipulatorEntity>> MANIPULATOR = ENTITIES.register("manipulator",
@@ -1226,6 +1238,9 @@ public class NetherExp {
             event.registerEntityRenderer(CRIMSON_ARROW_ENTITY.get(), com.benji.netherman.client.renderer.entity.CrimsonArrowRenderer::new);
             event.registerEntityRenderer(AZAZEL.get(), AzazelRenderer::new);
             event.registerEntityRenderer(AZAZEL_HUMAN.get(), AzazelHumanRenderer::new);
+            event.registerEntityRenderer(SPLASH_ENTITY.get(), AzazelSplashRenderer::new);
+            event.registerEntityRenderer(SPIKE_PROJECTILE_ENTITY.get(), AzazelSpikeProjectileRenderer::new);
+            event.registerEntityRenderer(SPIKE_ENTITY.get(), AzazelSpikeRenderer::new);
             event.registerEntityRenderer(LASER.get(), LaserRenderer::new);
             event.registerEntityRenderer(STATUE_BOSSUNIT.get(), StatueBossunitRenderer::new);
             event.registerEntityRenderer(BLACKSMITH.get(), BlacksmithRenderer::new);

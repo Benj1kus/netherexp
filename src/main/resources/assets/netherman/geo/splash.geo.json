@@ -7,21 +7,20 @@
 				"texture_width": 256,
 				"texture_height": 256,
 				"visible_bounds_width": 8,
-				"visible_bounds_height": 7.5,
-				"visible_bounds_offset": [0, 3.25, 0]
+				"visible_bounds_height": 8,
+				"visible_bounds_offset": [0, 3, 0]
 			},
 			"bones": [
 				{
 					"name": "all",
-					"pivot": [0, 0, 0],
-					"rotation": [0, -90, 0]
+					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "splash",
 					"parent": "all",
 					"pivot": [0, 0, 0],
 					"cubes": [
-						{"origin": [0, 0, -53], "size": [0, 102, 105], "uv": [0, 0]}
+						{"origin": [0, 0, -53], "size": [0, 102, 105], "pivot": [0, 0, 0], "rotation": [0, -90, 0], "uv": [0, 0]}
 					]
 				}
 			]

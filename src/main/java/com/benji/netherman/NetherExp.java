@@ -3,17 +3,22 @@ package com.benji.netherman;
 import com.benji.netherman.block.*;
 import com.benji.netherman.block.entity.*;
 import com.benji.netherman.config.AzazelConfig;
-import com.benji.netherman.item.AzazelGuideBookItem;
-import com.benji.netherman.item.AzazelTrophyItem;
+import com.benji.netherman.item.*;
 import com.benji.netherman.network.TotemAnimationPacket;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.PaintingVariant;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.config.ModConfig;
 import com.benji.netherman.client.ManipulationOverlay;
 import com.benji.netherman.client.renderer.*;
@@ -24,7 +29,6 @@ import com.benji.netherman.effect.ManipulationEffect;
 import com.benji.netherman.effect.ZoneEffect;
 import com.benji.netherman.entity.*;
 import com.benji.netherman.entity.BelieverEntity;
-import com.benji.netherman.item.GeoBlockItem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -144,7 +148,7 @@ public class NetherExp {
 
     public static final RegistryObject<Item> POTENT_MAGMA_ITEM = ITEMS.register("potent_magma",
             () -> new BlockItem(POTENT_MAGMA.get(), new Item.Properties()));
-    
+
     public static final RegistryObject<Block> FACE_PUZZLE_RIGHT_DOWN = BLOCKS.register("face_puzzle_right_down",
             () -> new FacePuzzleBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(2.0F).requiresCorrectToolForDrops().noOcclusion(), 2, NetherExp.FACE_PUZZLE_RIGHT_DOWN_BE));
 
@@ -181,7 +185,7 @@ public class NetherExp {
     public static final RegistryObject<BlockEntityType<SamsoniteBellBlockEntity>> SAMSONITE_BELL_BE = BLOCK_ENTITIES.register("samsonite_bell",
             () -> BlockEntityType.Builder.of(SamsoniteBellBlockEntity::new, SAMSONITE_BELL.get()).build(null));
 
-    
+
     public static final RegistryObject<Block> SAMSONIT = BLOCKS.register("samsonit",
             () -> new SamsonitBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
                     .strength(6.0F)
@@ -311,7 +315,6 @@ public class NetherExp {
             () -> new BlockItem(CHISELED_SAMSONIT.get(), new Item.Properties()));
 
 
-
     public static final RegistryObject<Block> COBBLED_SAMSONIT_SLAB = BLOCKS.register("cobbled_samsonit_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
                     .strength(6.0F)
@@ -340,7 +343,6 @@ public class NetherExp {
     public static final RegistryObject<Item> SAMSONIT_BRICKS_SLAB_ITEM = ITEMS.register("samsonit_bricks_slab",
             () -> new BlockItem(SAMSONIT_BRICKS_SLAB.get(), new Item.Properties()));
 
-    
 
     public static final RegistryObject<Block> COBBLED_SAMSONIT_STAIRS = BLOCKS.register("cobbled_samsonit_stairs",
             () -> new StairBlock(() -> COBBLED_SAMSONIT.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TUFF)
@@ -371,7 +373,6 @@ public class NetherExp {
             () -> new BlockItem(SAMSONIT_BRICKS_STAIRS.get(), new Item.Properties()));
 
 
-
     public static final RegistryObject<Block> COBBLED_SAMSONIT_WALL = BLOCKS.register("cobbled_samsonit_wall",
             () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)
                     .strength(6.0F)
@@ -399,8 +400,6 @@ public class NetherExp {
 
     public static final RegistryObject<Item> SAMSONIT_BRICKS_WALL_ITEM = ITEMS.register("samsonit_bricks_wall",
             () -> new BlockItem(SAMSONIT_BRICKS_WALL.get(), new Item.Properties()));
-
-    
 
 
     public static final RegistryObject<Block> POINTED_BLACKSTONE = BLOCKS.register("pointed_blackstone",
@@ -671,7 +670,7 @@ public class NetherExp {
 
     public static final RegistryObject<Item> MUSIC_DISC_BOSS = ITEMS.register("music_disc_boss",
             () -> new RecordItem(15, ModSounds.BOSS_FIGHT,
-                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 2900)); 
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 2900));
 
     public static final RegistryObject<Item> MUSIC_DISC_QUAR = ITEMS.register("music_disc_quar",
             () -> new RecordItem(6, ModSounds.CAVE_AMBIENT,
@@ -738,7 +737,7 @@ public class NetherExp {
 
     public static final RegistryObject<Item> CRIMSON_HONEY_BOTTLE = ITEMS.register("crimson_honey_bottle",
             () -> new com.benji.netherman.item.CrimsonHoneyBottleItem(new Item.Properties()
-                    .stacksTo(16) 
+                    .stacksTo(16)
                     .craftRemainder(net.minecraft.world.item.Items.GLASS_BOTTLE)
                     .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(6).saturationMod(0.1F).alwaysEat().build())));
 
@@ -901,6 +900,27 @@ public class NetherExp {
     public static final RegistryObject<Item> ALTAR_COMPASS_KEY = ITEMS.register("altar_compass_key",
             () -> new com.benji.netherman.item.AltarCompassKeyItem(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> AZAZEL_SPEAR = ITEMS.register("azazel_spear",
+            () -> new AzazelSpearItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> AZAZEL_SCYTHE = ITEMS.register("azazel_scythe",
+            () -> new AzazelScytheItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> AZAZEL_HELMET = ITEMS.register("azazel_helmet",
+            () -> new AzazelArmorItem(ArmorItem.Type.HELMET, new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> AZAZEL_CHESTPLATE = ITEMS.register("azazel_chestplate",
+            () -> new AzazelArmorItem(ArmorItem.Type.CHESTPLATE, new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> AZAZEL_LEGGINGS = ITEMS.register("azazel_leggings",
+            () -> new AzazelArmorItem(ArmorItem.Type.LEGGINGS, new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> AZAZEL_BOOTS = ITEMS.register("azazel_boots",
+            () -> new AzazelArmorItem(ArmorItem.Type.BOOTS, new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> AZAZEL_SHIELD = ITEMS.register("azazel_shield",
+            () -> new AzazelShieldItem(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> AZAZEL_GUIDE_BOOK_ITEM = ITEMS.register("azazel_guide_book",
             () -> new AzazelGuideBookItem(new Item.Properties().stacksTo(1)));
 
@@ -915,7 +935,7 @@ public class NetherExp {
 
 
     public static final RegistryObject<EntityType<PiglinPrisonerEntity>> PIGLIN_PRISONER = ENTITIES.register("piglin_prisoner",
-            () -> EntityType.Builder.of(PiglinPrisonerEntity::new, MobCategory.CREATURE) 
+            () -> EntityType.Builder.of(PiglinPrisonerEntity::new, MobCategory.CREATURE)
                     .sized(0.6F, 1.95F)
                     .build("piglin_prisoner"));
     public static final RegistryObject<EntityType<ManipulatorEntity>> MANIPULATOR = ENTITIES.register("manipulator",
@@ -1109,10 +1129,10 @@ public class NetherExp {
             event.accept(SAMSONIT_BELL_ITEM);
             event.accept(LOCKER_NETHER_ITEM);
             event.accept(SAMSONIT_KEY_ITEM);
-            event.accept (A_PUZZLE_ITEM);
-            event.accept (Z_PUZZLE_ITEM);
-            event.accept (E_PUZZLE_ITEM);
-            event.accept (L_PUZZLE_ITEM);
+            event.accept(A_PUZZLE_ITEM);
+            event.accept(Z_PUZZLE_ITEM);
+            event.accept(E_PUZZLE_ITEM);
+            event.accept(L_PUZZLE_ITEM);
 
         }
         if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
@@ -1155,6 +1175,8 @@ public class NetherExp {
         }
     }
 
+
+
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModEvents {
         @SubscribeEvent
@@ -1181,6 +1203,129 @@ public class NetherExp {
             event.put(GUARDIAN.get(), GuardianEntity.createAttributes().build());
         }
     }
+
+    @net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = MODID, bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.FORGE)
+    public static class ForgeEvents {
+
+        @net.minecraftforge.eventbus.api.SubscribeEvent
+        public static void onLivingHurt(net.minecraftforge.event.entity.living.LivingHurtEvent event) {
+            if (event.getEntity() instanceof net.minecraft.world.entity.player.Player player) {
+
+                if (event.getSource().is(net.minecraft.world.damagesource.DamageTypes.FALL)) {
+                    boolean hasFullSet = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD).is(com.benji.netherman.NetherExp.AZAZEL_HELMET.get()) &&
+                            player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST).is(com.benji.netherman.NetherExp.AZAZEL_CHESTPLATE.get()) &&
+                            player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.LEGS).is(com.benji.netherman.NetherExp.AZAZEL_LEGGINGS.get()) &&
+                            player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.FEET).is(com.benji.netherman.NetherExp.AZAZEL_BOOTS.get());
+
+                    if (hasFullSet) {
+                        float originalAmount = event.getAmount();
+                        event.setAmount(originalAmount * 0.2F);
+                    }
+                }
+            }
+        }
+
+        @net.minecraftforge.eventbus.api.SubscribeEvent
+        public static void onPlayerTakeDamage(net.minecraftforge.event.entity.living.LivingDamageEvent event) {
+            if (event.getEntity() instanceof net.minecraft.world.entity.player.Player player) {
+
+                boolean hasShieldInMainHand = player.getMainHandItem().is(com.benji.netherman.NetherExp.AZAZEL_SHIELD.get());
+                boolean hasShieldInOffHand = player.getOffhandItem().is(com.benji.netherman.NetherExp.AZAZEL_SHIELD.get());
+
+                if (hasShieldInMainHand || hasShieldInOffHand) {
+                    if (!event.getSource().is(net.minecraft.world.damagesource.DamageTypes.STARVE) &&
+                            !event.getSource().is(net.minecraft.world.damagesource.DamageTypes.FELL_OUT_OF_WORLD) &&
+                            !event.getSource().is(net.minecraft.world.damagesource.DamageTypes.MAGIC)) {
+
+                        if (event.getSource().getSourcePosition() != null) {
+                            net.minecraft.world.phys.Vec3 damagePos = event.getSource().getSourcePosition();
+                            net.minecraft.world.phys.Vec3 playerLook = player.getLookAngle();
+                            net.minecraft.world.phys.Vec3 toDamage = damagePos.subtract(player.position()).normalize();
+
+                            if (playerLook.dot(toDamage) > 0.0) {
+                                event.setCanceled(true);
+
+                                player.level().playSound(null, player.blockPosition(), com.benji.netherman.ModSounds.DODGE.get(), net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.0F);
+
+                                net.minecraft.world.item.ItemStack shieldStack = hasShieldInMainHand ? player.getMainHandItem() : player.getOffhandItem();
+                                net.minecraft.world.InteractionHand hand = hasShieldInMainHand ? net.minecraft.world.InteractionHand.MAIN_HAND : net.minecraft.world.InteractionHand.OFF_HAND;
+
+                                int durabilityToConsume = Math.max(1, (int) event.getAmount());
+                                shieldStack.hurtAndBreak(durabilityToConsume, player, (p) -> p.broadcastBreakEvent(hand));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        @net.minecraftforge.eventbus.api.SubscribeEvent
+        public static void onPlayerRightClickEmpty(net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickEmpty event) {
+            net.minecraft.world.entity.player.Player player = event.getEntity();
+
+            if (player.isFallFlying()) {
+                net.minecraft.world.item.ItemStack chestStack = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST);
+
+                if (chestStack.is(com.benji.netherman.NetherExp.AZAZEL_CHESTPLATE.get())) {
+                    if (player.getItemInHand(event.getHand()).isEmpty()) {
+
+                        net.minecraft.world.phys.Vec3 look = player.getLookAngle();
+                        player.setDeltaMovement(player.getDeltaMovement().add(look.scale(0.85D)));
+
+                        player.level().playSound(
+                                player,
+                                player.blockPosition(),
+                                SoundEvents.ENDER_DRAGON_FLAP,
+                                SoundSource.PLAYERS,
+                                1.5F,
+                                1.0F
+                        );
+
+                        player.level().playSound(
+                                player,
+                                player.blockPosition(),
+                                SoundEvents.PHANTOM_FLAP,
+                                SoundSource.PLAYERS,
+                                1.0F,
+                                1.3F
+                        );
+
+                        player.getPersistentData().putInt("AzazelBoostTrail", 35);
+                    }
+                }
+            }
+        }
+
+        @net.minecraftforge.eventbus.api.SubscribeEvent
+        public static void onPlayerTick(net.minecraftforge.event.TickEvent.PlayerTickEvent event) {
+            if (event.phase == net.minecraftforge.event.TickEvent.Phase.START && event.player.level().isClientSide()) {
+                net.minecraft.world.entity.player.Player player = event.player;
+
+                if (player.getPersistentData().contains("AzazelBoostTrail")) {
+                    int ticks = player.getPersistentData().getInt("AzazelBoostTrail");
+
+                    if (ticks > 0) {
+                        ticks--;
+                        player.getPersistentData().putInt("AzazelBoostTrail", ticks);
+
+                        net.minecraft.world.phys.Vec3 look = player.getLookAngle();
+                        net.minecraft.world.phys.Vec3 up = new net.minecraft.world.phys.Vec3(0, 1, 0);
+                        net.minecraft.world.phys.Vec3 rightOffset = look.cross(up).normalize().scale(0.65D);
+                        net.minecraft.world.phys.Vec3 centerPos = player.position().add(0, 0.4D, 0);
+
+                        net.minecraft.world.phys.Vec3 leftTrail = centerPos.add(rightOffset).subtract(look.scale(0.4D));
+                        net.minecraft.world.phys.Vec3 rightTrail = centerPos.subtract(rightOffset).subtract(look.scale(0.4D));
+
+                        player.level().addParticle(net.minecraft.core.particles.ParticleTypes.CLOUD,
+                                leftTrail.x, leftTrail.y, leftTrail.z, 0, 0, 0);
+                        player.level().addParticle(net.minecraft.core.particles.ParticleTypes.CLOUD,
+                                rightTrail.x, rightTrail.y, rightTrail.z, 0, 0, 0);
+                    }
+                }
+            }
+        }
+    }
+
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
 

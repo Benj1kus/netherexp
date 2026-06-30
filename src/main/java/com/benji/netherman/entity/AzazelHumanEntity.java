@@ -297,17 +297,19 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
                             java.util.Collections.shuffle(availableSlots);
 
                             net.minecraft.world.item.ItemStack[] loot = new net.minecraft.world.item.ItemStack[] {
-                                    new net.minecraft.world.item.ItemStack(NetherExp.MANIPULATOR_STICK.get(), 1),
+                                    new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_SPEAR.get(), 1),
                                     new net.minecraft.world.item.ItemStack(NetherExp.MUSIC_DISC_QUAR.get(), 1),
                                     new net.minecraft.world.item.ItemStack(NetherExp.MUSIC_DISC_MAZE.get(), 1),
                                     new net.minecraft.world.item.ItemStack(NetherExp.CHANCE_TOTEM.get(), 2),
-                                    new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.TOTEM_OF_UNDYING, 1),
-                                    new net.minecraft.world.item.ItemStack(NetherExp.NOTE.get(), 1),
+                                    new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_SHIELD.get(), 2),
+                                    new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_CHESTPLATE.get(), 1),
+                                    new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_HELMET.get(), 1),
+                                    new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_LEGGINGS.get(), 1),
+                                    new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_BOOTS.get(), 1),
                                     new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_TROPHY_ITEM.get(), 1),
-                                    new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 25),
-                                    new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.NETHERITE_SCRAP, 12),
-                                    new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE, 4),
-                                    new net.minecraft.world.item.ItemStack(NetherExp.NETHER_SPAWNER_ITEM.get(), 1)
+                                    new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 55),
+                                    new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.NETHERITE_SCRAP, 20),
+                                    new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE, 10),
                             };
 
                             for (int i = 0; i < loot.length && i < availableSlots.size(); i++) {

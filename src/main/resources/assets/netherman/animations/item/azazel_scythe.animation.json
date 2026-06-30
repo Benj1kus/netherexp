@@ -1,0 +1,21 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"spear_mode": {
+			"animation_length": 0.75,
+			"bones": {
+				"spear": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, -180],
+							"easing": "easeOutBack"
+						}
+					}
+				}
+			}
+		}
+	}
+}

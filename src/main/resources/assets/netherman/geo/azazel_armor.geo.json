@@ -66,6 +66,14 @@
 					]
 				},
 				{
+					"name": "main_wing_tip_right",
+					"parent": "wing_pp_right",
+					"pivot": [-0.75, 33.25, 57],
+					"cubes": [
+						{"origin": [-1.75, 32.25, 56], "size": [2, 2, 2], "uv": [0, 0]}
+					]
+				},
+				{
 					"name": "dopwing2",
 					"parent": "armorBody",
 					"pivot": [0.875, 19.75, 4.625]
@@ -93,6 +101,14 @@
 					"pivot": [-0.75, 30.75, 38.5],
 					"cubes": [
 						{"origin": [-0.75, 13.25, 38.5], "size": [0, 20.5, 19], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "add_wing_tip_right",
+					"parent": "wing_pp_right2",
+					"pivot": [-0.75, 33.25, 56.5],
+					"cubes": [
+						{"origin": [-1.75, 32.25, 55.5], "size": [2, 2, 2], "uv": [0, 0]}
 					]
 				},
 				{
@@ -126,6 +142,14 @@
 					]
 				},
 				{
+					"name": "main_wing_tip_left",
+					"parent": "wing_pp_left",
+					"pivot": [0.75, 33.5, 56.75],
+					"cubes": [
+						{"origin": [-0.25, 32.5, 55.75], "size": [2, 2, 2], "uv": [0, 0]}
+					]
+				},
+				{
 					"name": "dopwing1",
 					"parent": "armorBody",
 					"pivot": [-0.875, 19.75, 4.625]
@@ -153,6 +177,14 @@
 					"pivot": [0.75, 30.75, 38.5],
 					"cubes": [
 						{"origin": [0.75, 13.25, 38.5], "size": [0, 20.5, 19], "uv": [0, 0], "mirror": true}
+					]
+				},
+				{
+					"name": "add_wing_tip_left",
+					"parent": "wing_pp_left2",
+					"pivot": [0.75, 33.25, 56.5],
+					"cubes": [
+						{"origin": [-0.25, 32.25, 55.5], "size": [2, 2, 2], "uv": [0, 0]}
 					]
 				},
 				{

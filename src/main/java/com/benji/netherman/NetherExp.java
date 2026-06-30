@@ -1222,6 +1222,69 @@ public class NetherExp {
                         event.setAmount(originalAmount * 0.2F);
                     }
                 }
+
+                if (event.getSource().is(net.minecraft.world.damagesource.DamageTypes.FLY_INTO_WALL)) {
+                    if (player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST).is(com.benji.netherman.NetherExp.AZAZEL_CHESTPLATE.get())) {
+
+                        event.setCanceled(true);
+
+                        player.getPersistentData().putInt("AzazelDrillTicks", 12);
+
+                        net.minecraft.world.phys.Vec3 look = player.getLookAngle().normalize();
+                        player.getPersistentData().putDouble("AzazelDrillX", look.x);
+                        player.getPersistentData().putDouble("AzazelDrillY", look.y);
+                        player.getPersistentData().putDouble("AzazelDrillZ", look.z);
+
+                        player.level().playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE, net.minecraft.sounds.SoundSource.PLAYERS, 1.5F, 1.2F);
+                    }
+                }
+            }
+        }
+
+        @net.minecraftforge.eventbus.api.SubscribeEvent
+        public static void onPlayerTick(net.minecraftforge.event.TickEvent.PlayerTickEvent event) {
+            if (event.phase == net.minecraftforge.event.TickEvent.Phase.END) {
+                net.minecraft.world.entity.player.Player player = event.player;
+
+                if (player.getPersistentData().contains("AzazelDrillTicks")) {
+                    int drillTicks = player.getPersistentData().getInt("AzazelDrillTicks");
+
+                    if (drillTicks > 0) {
+                        player.getPersistentData().putInt("AzazelDrillTicks", drillTicks - 1);
+
+                        double dx = player.getPersistentData().getDouble("AzazelDrillX");
+                        double dy = player.getPersistentData().getDouble("AzazelDrillY");
+                        double dz = player.getPersistentData().getDouble("AzazelDrillZ");
+                        net.minecraft.world.phys.Vec3 drillDir = new net.minecraft.world.phys.Vec3(dx, dy, dz);
+
+                        player.setDeltaMovement(drillDir.scale(0.85D));
+                        player.hurtMarked = true;
+
+                        if (!player.level().isClientSide() && player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                            net.minecraft.world.phys.Vec3 targetPos = player.position().add(drillDir.scale(1.2D));
+                            net.minecraft.core.BlockPos centerBlock = net.minecraft.core.BlockPos.containing(targetPos.x, targetPos.y + 0.6D, targetPos.z);
+
+                            int r = 1;
+                            for (int x = -r; x <= r; x++) {
+                                for (int y = -r; y <= r + 1; y++) {
+                                    for (int z = -r; z <= r; z++) {
+                                        net.minecraft.core.BlockPos targetBlock = centerBlock.offset(x, y, z);
+                                        net.minecraft.world.level.block.state.BlockState state = serverLevel.getBlockState(targetBlock);
+
+
+                                        if (!state.isAir() && state.getDestroySpeed(serverLevel, targetBlock) >= 0) {
+                                            serverLevel.destroyBlock(targetBlock, true, player);
+                                        }
+                                    }
+                                }
+                            }
+
+
+                            serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.FLAME, player.getX(), player.getY() + 0.8D, player.getZ(), 6, 0.4D, 0.4D, 0.4D, 0.1D);
+                            serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.LAVA, player.getX(), player.getY() + 0.8D, player.getZ(), 3, 0.3D, 0.3D, 0.3D, 0.1D);
+                        }
+                    }
+                }
             }
         }
 
@@ -1272,54 +1335,11 @@ public class NetherExp {
                         net.minecraft.world.phys.Vec3 look = player.getLookAngle();
                         player.setDeltaMovement(player.getDeltaMovement().add(look.scale(0.85D)));
 
-                        player.level().playSound(
-                                player,
-                                player.blockPosition(),
-                                SoundEvents.ENDER_DRAGON_FLAP,
-                                SoundSource.PLAYERS,
-                                1.5F,
-                                1.0F
-                        );
-
-                        player.level().playSound(
-                                player,
-                                player.blockPosition(),
-                                SoundEvents.PHANTOM_FLAP,
-                                SoundSource.PLAYERS,
-                                1.0F,
-                                1.3F
-                        );
+                        player.level().playSound(player, player.blockPosition(), net.minecraft.sounds.SoundEvents.ENDER_DRAGON_FLAP, net.minecraft.sounds.SoundSource.PLAYERS, 1.5F, 1.0F);
+                        player.level().playSound(player, player.blockPosition(), net.minecraft.sounds.SoundEvents.PHANTOM_FLAP, net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.3F);
 
                         player.getPersistentData().putInt("AzazelBoostTrail", 35);
-                    }
-                }
-            }
-        }
-
-        @net.minecraftforge.eventbus.api.SubscribeEvent
-        public static void onPlayerTick(net.minecraftforge.event.TickEvent.PlayerTickEvent event) {
-            if (event.phase == net.minecraftforge.event.TickEvent.Phase.START && event.player.level().isClientSide()) {
-                net.minecraft.world.entity.player.Player player = event.player;
-
-                if (player.getPersistentData().contains("AzazelBoostTrail")) {
-                    int ticks = player.getPersistentData().getInt("AzazelBoostTrail");
-
-                    if (ticks > 0) {
-                        ticks--;
-                        player.getPersistentData().putInt("AzazelBoostTrail", ticks);
-
-                        net.minecraft.world.phys.Vec3 look = player.getLookAngle();
-                        net.minecraft.world.phys.Vec3 up = new net.minecraft.world.phys.Vec3(0, 1, 0);
-                        net.minecraft.world.phys.Vec3 rightOffset = look.cross(up).normalize().scale(0.65D);
-                        net.minecraft.world.phys.Vec3 centerPos = player.position().add(0, 0.4D, 0);
-
-                        net.minecraft.world.phys.Vec3 leftTrail = centerPos.add(rightOffset).subtract(look.scale(0.4D));
-                        net.minecraft.world.phys.Vec3 rightTrail = centerPos.subtract(rightOffset).subtract(look.scale(0.4D));
-
-                        player.level().addParticle(net.minecraft.core.particles.ParticleTypes.CLOUD,
-                                leftTrail.x, leftTrail.y, leftTrail.z, 0, 0, 0);
-                        player.level().addParticle(net.minecraft.core.particles.ParticleTypes.CLOUD,
-                                rightTrail.x, rightTrail.y, rightTrail.z, 0, 0, 0);
+                        com.benji.netherman.client.renderer.AzazelWingTrails.spawnShockwave(player);
                     }
                 }
             }

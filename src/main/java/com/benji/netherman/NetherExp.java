@@ -930,6 +930,9 @@ public class NetherExp {
     public static final RegistryObject<Item> FAITH_PART = ITEMS.register("faith_part",
             () -> new Item(new Item.Properties().stacksTo(27)));
 
+    public static final RegistryObject<Item> QUOTA = ITEMS.register("quota",
+            () -> new QuotaItem(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> FAITH_ESSENCE = ITEMS.register("faith_essence",
             () -> new FaithEssenceItem(new Item.Properties().stacksTo(27)));
 
@@ -1242,6 +1245,62 @@ public class NetherExp {
                         player.getPersistentData().putDouble("AzazelDrillZ", look.z);
 
                         player.level().playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE, net.minecraft.sounds.SoundSource.PLAYERS, 1.5F, 1.2F);
+                    }
+                }
+            }
+        }
+
+        @net.minecraftforge.eventbus.api.SubscribeEvent
+        public static void onLivingDeath(net.minecraftforge.event.entity.living.LivingDeathEvent event) {
+            if (event.getSource().getEntity() instanceof net.minecraft.world.entity.player.Player player) {
+                net.minecraft.world.entity.LivingEntity victim = event.getEntity();
+
+                if (victim instanceof com.benji.netherman.entity.BelieverEntity || victim instanceof com.benji.netherman.entity.BelieverVillagerEntity) {
+                    com.benji.netherman.QuotaManager.failQuota(player);
+                    return;
+                }
+
+                com.benji.netherman.QuotaManager.addProgress(player, 2, 1);
+
+                if (victim instanceof net.minecraft.world.entity.npc.Villager || victim instanceof net.minecraft.world.entity.animal.IronGolem) {
+                    com.benji.netherman.QuotaManager.addProgress(player, 1, 1);
+                }
+            }
+        }
+
+        @net.minecraftforge.eventbus.api.SubscribeEvent
+        public static void onPlayerTickQuota(net.minecraftforge.event.TickEvent.PlayerTickEvent event) {
+            if (event.phase == net.minecraftforge.event.TickEvent.Phase.END && !event.player.level().isClientSide()) {
+                net.minecraft.world.entity.player.Player player = event.player;
+                net.minecraft.nbt.CompoundTag data = player.getPersistentData();
+
+                if (data.getBoolean("AzazelCultist") && data.contains("QuotaTimeLeft")) {
+                    int timeLeft = data.getInt("QuotaTimeLeft");
+                    if (timeLeft > 0) {
+                        data.putInt("QuotaTimeLeft", timeLeft - 1);
+                    } else {
+                        com.benji.netherman.QuotaManager.failQuota(player);
+                    }
+                }
+
+                if (data.contains("AzazelPenaltyTime")) {
+                    long penaltyTime = data.getLong("AzazelPenaltyTime");
+                    if (player.level().getGameTime() >= penaltyTime) {
+                        com.benji.netherman.QuotaManager.restoreHealth(player);
+                        data.remove("AzazelPenaltyTime");
+                    }
+                }
+            }
+        }
+
+        @net.minecraftforge.eventbus.api.SubscribeEvent
+        public static void onBlockPlace(net.minecraftforge.event.level.BlockEvent.EntityPlaceEvent event) {
+            if (!event.getLevel().isClientSide() && event.getEntity() instanceof net.minecraft.world.entity.player.Player player) {
+                net.minecraft.world.level.block.state.BlockState state = event.getPlacedBlock();
+
+                if (state.is(net.minecraft.world.level.block.Blocks.GOLD_BLOCK) || state.is(net.minecraft.world.level.block.Blocks.BELL)) {
+                    if (com.benji.netherman.QuotaManager.checkAltarStructure((net.minecraft.world.level.Level) event.getLevel(), event.getPos())) {
+                        com.benji.netherman.QuotaManager.addProgress(player, 0, 1);
                     }
                 }
             }

@@ -5,6 +5,7 @@ import com.benji.netherman.NetherExp;
 import com.benji.netherman.config.AzazelConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,6 +17,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
@@ -28,18 +30,22 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
+
+import java.util.Optional;
 
 public class AzazelHumanEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -170,18 +176,74 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
         }
 
         if (state == 3) {
-            this.playSound(ModSounds.BREATH_AZAZEL.get(), 1.0F, 0.8F);
+            if (!this.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+                ServerLevel currentLevel = (ServerLevel) this.level();
+                ServerLevel respawnLevel = currentLevel.getServer().getLevel(serverPlayer.getRespawnDimension());
+                if (respawnLevel == null) respawnLevel = currentLevel.getServer().overworld();
+
+                BlockPos respawnPos = serverPlayer.getRespawnPosition();
+                float respawnAngle = serverPlayer.getRespawnAngle();
+
+                if (respawnPos != null) {
+                    Optional<Vec3> safePos = Player.findRespawnPositionAndUseSpawnBlock(respawnLevel, respawnPos, respawnAngle, serverPlayer.isRespawnForced(), true);
+                    if (safePos.isPresent()) {
+                        serverPlayer.teleportTo(respawnLevel, safePos.get().x, safePos.get().y, safePos.get().z, respawnAngle, 0.0F);
+                    } else {
+                        BlockPos sharedSpawn = respawnLevel.getSharedSpawnPos();
+                        serverPlayer.teleportTo(respawnLevel, sharedSpawn.getX(), sharedSpawn.getY(), sharedSpawn.getZ(), respawnAngle, 0.0F);
+                    }
+                } else {
+                    BlockPos sharedSpawn = respawnLevel.getSharedSpawnPos();
+                    serverPlayer.teleportTo(respawnLevel, sharedSpawn.getX(), sharedSpawn.getY(), sharedSpawn.getZ(), respawnAngle, 0.0F);
+                }
+
+                respawnLevel.playSound(null, serverPlayer.blockPosition(), ModSounds.BELL_BEAST_LAUGH.get(), SoundSource.PLAYERS, 1.5F, 1.0F);
+
+                DustParticleOptions redMagic = new DustParticleOptions(new Vector3f(1.0F, 0.0F, 0.0F), 1.5F);
+                respawnLevel.sendParticles(serverPlayer, redMagic, true, serverPlayer.getX(), serverPlayer.getY() + 1.0D, serverPlayer.getZ(), 80, 0.8D, 1.0D, 0.8D, 0.1D);
+
+                BlockPos barrelPos = serverPlayer.blockPosition();
+                for (int[] offset : new int[][]{{1,0,0}, {-1,0,0}, {0,0,1}, {0,0,-1}, {0,1,0}}) {
+                    BlockPos checkPos = serverPlayer.blockPosition().offset(offset[0], offset[1], offset[2]);
+                    if (respawnLevel.getBlockState(checkPos).canBeReplaced()) {
+                        barrelPos = checkPos;
+                        break;
+                    }
+                }
+                respawnLevel.setBlockAndUpdate(barrelPos, Blocks.BARREL.defaultBlockState());
+
+                respawnLevel.playSound(null, barrelPos, SoundEvents.TOTEM_USE, SoundSource.BLOCKS, 1.0F, 1.5F);
+
+                respawnLevel.sendParticles(serverPlayer, ParticleTypes.TOTEM_OF_UNDYING, true, barrelPos.getX() + 0.5D, barrelPos.getY() + 1.0D, barrelPos.getZ() + 0.5D, 60, 0.4D, 0.5D, 0.4D, 0.2D);
+
+                net.minecraft.world.level.block.entity.BlockEntity blockEntity = respawnLevel.getBlockEntity(barrelPos);
+                if (blockEntity instanceof net.minecraft.world.level.block.entity.BarrelBlockEntity barrel) {
+                    barrel.setItem(0, new ItemStack(NetherExp.AZAZEL_HELMET.get(), 1));
+                    barrel.setItem(1, new ItemStack(NetherExp.AZAZEL_CHESTPLATE.get(), 1));
+                    barrel.setItem(2, new ItemStack(NetherExp.AZAZEL_LEGGINGS.get(), 1));
+                    barrel.setItem(3, new ItemStack(NetherExp.AZAZEL_BOOTS.get(), 1));
+                    barrel.setItem(4, new ItemStack(NetherExp.QUOTA.get(), 1));
+                    barrel.setItem(5, new ItemStack(com.benji.netherman.NetherExp.FAITH_PART.get(), 5));
+                    barrel.setItem(6, new ItemStack(com.benji.netherman.NetherExp.FAITH_ESSENCE.get(), 1));
+                }
+
+                this.bossEvent.removeAllPlayers();
+                serverPlayer.getPersistentData().putBoolean("AzazelCultist", true);
+                com.benji.netherman.QuotaManager.generateNewQuota(serverPlayer);
+                this.discard();
+            }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
+
         return super.mobInteract(player, hand);
     }
-
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (this.level().isClientSide()) return false;
         int state = this.entityData.get(BOSS_STATE);
 
-        if (state == 100 || state == 101) {
+
+        if (state == 100 || state == 101 || state == 110 || state == 111) {
             return false;
         }
 
@@ -246,6 +308,16 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
             p.removeEffect(NetherExp.ANXIETY_EFFECT.get());
         }
     }
+
+    @Override
+    public boolean canAttack(net.minecraft.world.entity.LivingEntity target) {
+        int state = this.entityData.get(BOSS_STATE);
+        if (state >= 100) {
+            return false;
+        }
+        return super.canAttack(target);
+    }
+
 
     @Override
     public void tick() {
@@ -319,6 +391,90 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
                     }
                     this.bossEvent.removeAllPlayers();
                     this.discard();
+                }
+                return;
+            }
+
+            if (state == 110 || state == 111) {
+                this.setTarget(null);
+                tick++;
+                this.entityData.set(DIALOGUE_TICK, tick);
+
+                if (state == 110) {
+                    if (tick == 1) {
+                        this.playSound(SoundEvents.WARDEN_EMERGE, 1.5F, 1.0F);
+                    }
+
+                    if (this.level() instanceof ServerLevel sl) {
+                        BlockState dirt = Blocks.PODZOL.defaultBlockState();
+                        for (int i = 0; i < 4; i++) {
+                            double dx = (this.random.nextDouble() - 0.5) * 4.0;
+                            double dz = (this.random.nextDouble() - 0.5) * 4.0;
+                            sl.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, dirt), this.getX() + dx, this.getY(), this.getZ() + dz, 1, 0.0, 0.3, 0.0, 0.1);
+                            sl.sendParticles(ParticleTypes.LAVA, this.getX() + dx, this.getY(), this.getZ() + dz, 1, 0.0, 0.5, 0.0, 0.1);
+                        }
+                    }
+
+                    if (tick >= 70) {
+                        this.entityData.set(BOSS_STATE, 111);
+                        this.entityData.set(DIALOGUE_TICK, 0);
+                    }
+                }
+                else if (state == 111) {
+                    this.setYRot(180.0F);
+                    this.setYBodyRot(180.0F);
+                    this.setYHeadRot(180.0F);
+
+                    this.setDeltaMovement(0, this.getDeltaMovement().y, -0.2D);
+
+                    if (tick % 26 == 0) {
+                        this.playSound(ModSounds.GUARDIAN_WALK.get(), 4.0F, 0.6F + this.random.nextFloat() * 0.4F);
+                    }
+
+                    if (this.level() instanceof ServerLevel sl) {
+                        java.util.List<Player> nearbyPlayers = sl.getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(20.0D));
+                        for (Player p : nearbyPlayers) {
+                            com.benji.netherman.client.ClientFogHandler.isInsideMansion = true;
+                        }
+
+                        if (tick % 5 == 0) {
+                            BlockPos center = this.blockPosition();
+                            boolean brokeBlocks = false;
+
+                            for (int x = -3; x <= 3; x++) {
+                                for (int y = 0; y <= 14; y++) {
+                                    BlockPos target = center.offset(x, y, -2);
+                                    BlockState block = sl.getBlockState(target);
+
+
+                                    boolean isEdge = (Math.abs(x) == 3 || y >= 12);
+                                    if (isEdge && this.random.nextFloat() > 0.7F) continue;
+
+                                    if (!block.isAir() && block.getDestroySpeed(sl, target) >= 0) {
+                                        sl.destroyBlock(target, false);
+                                        brokeBlocks = true;
+                                    }
+                                }
+                            }
+                            if (brokeBlocks) {
+                                this.playSound(ModSounds.DODGE.get(), 1.0F, 0.8F);
+                            }
+                        }
+
+                        if (tick % 40 == 0 && this.random.nextFloat() < 0.6F) {
+                            var quake = NetherExp.EARTHQUAKE_ENTITY.get().create(sl);
+                            if (quake != null) {
+                                double dx = (this.random.nextDouble() - 0.5) * 20.0D;
+                                double dz = (this.random.nextDouble() - 0.5) * 20.0D;
+                                BlockPos quakePos = BlockPos.containing(this.getX() + dx, this.getY(), this.getZ() + dz);
+                                while (sl.isEmptyBlock(quakePos.below()) && quakePos.getY() > sl.getMinBuildHeight()) {
+                                    quakePos = quakePos.below();
+                                }
+                                quake.moveTo(quakePos.getX() + 0.5D, quakePos.getY(), quakePos.getZ() + 0.5D, 0, 0);
+                                sl.addFreshEntity(quake);
+                            }
+                        }
+                    }
                 }
                 return;
             }
@@ -478,6 +634,15 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
 
                 case 100 -> event.setAndContinue(RawAnimation.begin().thenPlay("fall").thenLoop("fall_idle"));
                 case 101 -> event.setAndContinue(RawAnimation.begin().thenPlay("fall_death"));
+
+                case 110 -> event.setAndContinue(RawAnimation.begin().thenPlay("ground").thenLoop("ground_idle"));
+                case 111 -> {
+                    if (this.getDeltaMovement().lengthSqr() < 0.01D) {
+                        yield event.setAndContinue(RawAnimation.begin().thenLoop("ground_idle"));
+                    } else {
+                        yield event.setAndContinue(RawAnimation.begin().thenLoop("ground_walk"));
+                    }
+                }
 
                 case 20 -> event.setAndContinue(RawAnimation.begin().thenPlay("leg_attack").thenLoop("idle"));
                 case 21 -> event.setAndContinue(RawAnimation.begin().thenPlay("scythe_attack").thenLoop("idle"));

@@ -100,6 +100,7 @@ public class AzazelArmorItem extends ArmorItem implements GeoItem {
             case CHESTPLATE -> {
                 tooltipComponents.add(Component.translatable("tooltip.netherman.azazel_chestplate.line1").withStyle(ChatFormatting.GOLD));
                 tooltipComponents.add(Component.translatable("tooltip.netherman.azazel_chestplate.line2").withStyle(ChatFormatting.YELLOW));
+                tooltipComponents.add(Component.translatable("tooltip.netherman.azazel_chestplate.line3").withStyle(ChatFormatting.AQUA));
             }
             case LEGGINGS -> {
                 tooltipComponents.add(Component.translatable("tooltip.netherman.azazel_leggings.line1").withStyle(ChatFormatting.GOLD));

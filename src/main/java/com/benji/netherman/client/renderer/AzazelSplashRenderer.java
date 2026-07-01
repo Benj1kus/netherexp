@@ -28,7 +28,7 @@ public class AzazelSplashRenderer extends GeoEntityRenderer<AzazelSplashEntity> 
         float yaw = Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
         float pitch = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
 
-        poseStack.mulPose(Axis.YP.rotationDegrees(yaw - 90.0F));
+        poseStack.mulPose(Axis.YP.rotationDegrees(yaw + 0.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(pitch));
 
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);

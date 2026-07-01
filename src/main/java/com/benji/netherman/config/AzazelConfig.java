@@ -182,7 +182,7 @@ public class AzazelConfig {
         MIDAS_BOSSUNIT_COUNT = BUILDER.comment("Number of BossUnits spawned during Midas attack").defineInRange("midasBossUnitCount", 3, 0, 10);
         MIDAS_GUARDIAN_COUNT = BUILDER.comment("Number of Guardians spawned during Midas attack").defineInRange("midasGuardianCount", 2, 0, 10);
         MIDAS_FIRE_DAMAGE = BUILDER.comment("Fire damage dealt per tick on the fire ring").defineInRange("midasFireDamage", 8.0, 0.0, 100.0);
-        MIDAS_GOLD_TIME = BUILDER.comment("Ticks required near the boss to turn an item into gold (40 = 2 seconds)").defineInRange("midasGoldTime", 40, 1, 600);
+        MIDAS_GOLD_TIME = BUILDER.comment("Ticks required near the boss to turn an item into gold (40 = 2 seconds)").defineInRange("midasGoldTime", 40, 1, 2000);
         BUILDER.pop();
 
         BUILDER.push("Azazel Prison Attack");

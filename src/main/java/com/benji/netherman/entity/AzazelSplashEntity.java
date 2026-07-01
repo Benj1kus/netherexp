@@ -47,13 +47,6 @@ public class AzazelSplashEntity extends Projectile implements GeoEntity {
         Vec3 move = this.getDeltaMovement();
         this.setPos(this.getX() + move.x, this.getY() + move.y, this.getZ() + move.z);
 
-        if (move.lengthSqr() > 0.001D) {
-            double d0 = move.horizontalDistance();
-            this.setYRot((float)(Mth.atan2(move.x, move.z) * (double)(180F / (float)Math.PI)));
-            this.setXRot((float)(Mth.atan2(move.y, d0) * (double)(180F / (float)Math.PI)));
-            this.yRotO = this.getYRot();
-            this.xRotO = this.getXRot();
-        }
 
         if (this.level() instanceof ServerLevel sl) {
             sl.sendParticles(ParticleTypes.SOUL, this.getX(), this.getY(), this.getZ(), 2, 0.5D, 0.5D, 0.5D, 0.0D);

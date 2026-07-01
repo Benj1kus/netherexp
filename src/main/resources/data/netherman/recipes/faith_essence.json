@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "netherman:faith_part"
+    }
+  },
+  "result": {
+    "item": "netherman:faith_essence",
+    "count": 1
+  }
+}

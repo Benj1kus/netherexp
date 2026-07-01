@@ -3,7 +3,9 @@ package com.benji.netherman.item;
 import com.benji.netherman.ModSounds;
 import com.benji.netherman.NetherExp;
 import com.benji.netherman.entity.AzazelSplashEntity;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -14,9 +16,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -25,6 +29,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class AzazelScytheItem extends SwordItem implements GeoItem {
@@ -111,6 +116,16 @@ public class AzazelScytheItem extends SwordItem implements GeoItem {
                 return this.renderer;
             }
         });
+    }
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
+        Component scythe = Component.translatable("tooltip.netherman.scythe")
+                .withStyle(ChatFormatting.DARK_RED);
+
+        tooltipComponents.add(Component.translatable("tooltip.netherman.scythe.line1", scythe)
+                .withStyle(ChatFormatting.GOLD));
+
+        tooltipComponents.add(scythe);
     }
 
     @Override

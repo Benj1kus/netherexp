@@ -927,6 +927,12 @@ public class NetherExp {
     public static final RegistryObject<Item> MAZE_KEY = ITEMS.register("maze_key",
             () -> new Item(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> FAITH_PART = ITEMS.register("faith_part",
+            () -> new Item(new Item.Properties().stacksTo(27)));
+
+    public static final RegistryObject<Item> FAITH_ESSENCE = ITEMS.register("faith_essence",
+            () -> new FaithEssenceItem(new Item.Properties().stacksTo(27)));
+
     public static final RegistryObject<EntityType<AzazelGuideBookEntity>> AZAZEL_GUIDE_BOOK_ENTITY = ENTITIES.register("azazel_guide_book",
             () -> EntityType.Builder.of(AzazelGuideBookEntity::new, MobCategory.MISC)
                     .sized(1.0F, 1.0F)
@@ -1239,6 +1245,40 @@ public class NetherExp {
                     }
                 }
             }
+        }
+
+        @net.minecraftforge.eventbus.api.SubscribeEvent
+        public static void onLivingDrops(net.minecraftforge.event.entity.living.LivingDropsEvent event) {
+            if (event.getSource().getEntity() instanceof net.minecraft.world.entity.player.Player player) {
+
+                boolean hasFullSet = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD).is(com.benji.netherman.NetherExp.AZAZEL_HELMET.get()) &&
+                        player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST).is(com.benji.netherman.NetherExp.AZAZEL_CHESTPLATE.get()) &&
+                        player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.LEGS).is(com.benji.netherman.NetherExp.AZAZEL_LEGGINGS.get()) &&
+                        player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.FEET).is(com.benji.netherman.NetherExp.AZAZEL_BOOTS.get());
+
+                if (hasFullSet) {
+                    net.minecraft.world.entity.LivingEntity target = event.getEntity();
+                    net.minecraft.util.RandomSource rand = target.getRandom();
+
+                    net.minecraft.world.item.Item dropItem = com.benji.netherman.NetherExp.FAITH_PART.get();
+
+                    if (target.getMaxHealth() >= 100.0F) {
+                        int amount = 5 + rand.nextInt(8);
+                        addDrop(target, event.getDrops(), dropItem, amount);
+                    }
+                    else {
+                        if (rand.nextFloat() < 0.5F) {
+                            int amount = 1 + rand.nextInt(3);
+                            addDrop(target, event.getDrops(), dropItem, amount);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void addDrop(net.minecraft.world.entity.LivingEntity entity, java.util.Collection<net.minecraft.world.entity.item.ItemEntity> drops, net.minecraft.world.item.Item item, int count) {
+            net.minecraft.world.item.ItemStack stack = new net.minecraft.world.item.ItemStack(item, count);
+            drops.add(new net.minecraft.world.entity.item.ItemEntity(entity.level(), entity.getX(), entity.getY(), entity.getZ(), stack));
         }
 
         @net.minecraftforge.eventbus.api.SubscribeEvent

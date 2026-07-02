@@ -88,6 +88,45 @@ public class NetherExp {
             ModSounds.SAMSONIT_BRICKS_STEP
     );
 
+    public static final RegistryObject<BlockEntityType<PaintingSpawnerBlockEntity>> PAINTING_SPAWNER =
+            BLOCK_ENTITIES.register("painting_spawner", () -> BlockEntityType.Builder.of(PaintingSpawnerBlockEntity::new,
+                    NetherExp.ANGEL_SPAWNER.get(),
+                    NetherExp.FACE_SPAWNER.get(),
+                    NetherExp.VILLAGE_SPAWNER.get(),
+                    NetherExp.KING_SPAWNER.get(),
+                    NetherExp.THRONE_SPAWNER.get()
+            ).build(null));
+
+    public static final RegistryObject<Block> ANGEL_SPAWNER = BLOCKS.register("angel_spawner",
+            () -> new PaintingSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.STRUCTURE_VOID).noCollission().noLootTable(), NetherExp.ANGEL_PAINTING));
+
+    public static final RegistryObject<Block> FACE_SPAWNER = BLOCKS.register("face_spawner",
+            () -> new PaintingSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.STRUCTURE_VOID).noCollission().noLootTable(), NetherExp.FACE_PAINTING));
+
+    public static final RegistryObject<Block> VILLAGE_SPAWNER = BLOCKS.register("village_spawner",
+            () -> new PaintingSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.STRUCTURE_VOID).noCollission().noLootTable(), NetherExp.VILLAGE_PAINTING));
+
+    public static final RegistryObject<Block> KING_SPAWNER = BLOCKS.register("king_spawner",
+            () -> new PaintingSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.STRUCTURE_VOID).noCollission().noLootTable(), NetherExp.KING_PAINTING));
+
+    public static final RegistryObject<Block> THRONE_SPAWNER = BLOCKS.register("throne_spawner",
+            () -> new PaintingSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.STRUCTURE_VOID).noCollission().noLootTable(), NetherExp.THRONE_PAINTING));
+
+    public static final RegistryObject<Item> ANGEL_SPAWNER_ITEM = ITEMS.register("angel_spawner",
+            () -> new net.minecraft.world.item.BlockItem(NetherExp.ANGEL_SPAWNER.get(), new net.minecraft.world.item.Item.Properties()));
+
+    public static final RegistryObject<Item> FACE_SPAWNER_ITEM = ITEMS.register("face_spawner",
+            () -> new net.minecraft.world.item.BlockItem(NetherExp.FACE_SPAWNER.get(), new net.minecraft.world.item.Item.Properties()));
+
+    public static final RegistryObject<Item> VILLAGE_SPAWNER_ITEM = ITEMS.register("village_spawner",
+            () -> new net.minecraft.world.item.BlockItem(NetherExp.VILLAGE_SPAWNER.get(), new net.minecraft.world.item.Item.Properties()));
+
+    public static final RegistryObject<Item> KING_SPAWNER_ITEM = ITEMS.register("king_spawner",
+            () -> new net.minecraft.world.item.BlockItem(NetherExp.KING_SPAWNER.get(), new net.minecraft.world.item.Item.Properties()));
+
+    public static final RegistryObject<Item> THRONE_SPAWNER_ITEM = ITEMS.register("throne_spawner",
+            () -> new net.minecraft.world.item.BlockItem(NetherExp.THRONE_SPAWNER.get(), new net.minecraft.world.item.Item.Properties()));
+
     public static final RegistryObject<PaintingVariant> ANGEL_PAINTING = PAINTING_VARIANTS.register("angel_painting", () -> new PaintingVariant(48, 64));
     public static final RegistryObject<PaintingVariant> FACE_PAINTING = PAINTING_VARIANTS.register("face_painting", () -> new PaintingVariant(48, 64));
     public static final RegistryObject<PaintingVariant> VILLAGE_PAINTING = PAINTING_VARIANTS.register("village_painting", () -> new PaintingVariant(48, 64));

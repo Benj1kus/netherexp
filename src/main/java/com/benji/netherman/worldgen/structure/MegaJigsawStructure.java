@@ -25,7 +25,7 @@ public class MegaJigsawStructure extends Structure {
             HeightProvider.CODEC.fieldOf("start_height").forGetter((structure) -> structure.startHeight),
             Codec.BOOL.fieldOf("use_expansion_hack").forGetter((structure) -> structure.useExpansionHack),
             Heightmap.Types.CODEC.optionalFieldOf("project_start_height").forGetter((structure) -> structure.projectStartHeight),
-            Codec.intRange(1, 512).fieldOf("max_distance_from_center").forGetter((structure) -> structure.maxDistanceFromCenter)
+            Codec.intRange(1, 1024).fieldOf("max_distance_from_center").forGetter((structure) -> structure.maxDistanceFromCenter)
     ).apply(instance, MegaJigsawStructure::new));
 
     private final Holder<StructureTemplatePool> startPool;

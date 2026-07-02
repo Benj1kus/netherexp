@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "netherman:block/king_spawner" },
+    "facing=south": { "model": "netherman:block/king_spawner", "y": 180 },
+    "facing=west":  { "model": "netherman:block/king_spawner", "y": 270 },
+    "facing=east":  { "model": "netherman:block/king_spawner", "y": 90 }
+  }
+}

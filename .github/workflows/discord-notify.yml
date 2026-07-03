@@ -15,6 +15,10 @@ jobs:
           curl -H "Content-Type: application/json" \
           -X POST \
           -d "{
-            \"content\": \"🔥 @git-updates  New updates on git!\n\n📦 Repo: ${{ github.repository }}\n👤 Author: ${{ github.actor }}\n📝 Commit: ${{ github.event.head_commit.message }}\n🔗 https://github.com/${{ github.repository }}/commit/${{ github.sha }}\"
+            \"content\": \"🔥 <@&1521965623322607618> New updates on Git!\n\n📦 Repo: ${{ github.repository }}\n👤 Author: ${{ github.actor }}\n📝 Commit: ${{ github.event.head_commit.message }}\n🔗 https://github.com/${{ github.repository }}/commit/${{ github.sha }}\",
+            \"allowed_mentions\": {
+              \"parse\": [],
+              \"roles\": [\"1521965623322607618\"]
+            }
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}

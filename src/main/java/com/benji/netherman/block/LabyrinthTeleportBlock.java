@@ -2,9 +2,7 @@ package com.benji.netherman.block;
 
 import com.benji.netherman.NetherExp;
 import com.benji.netherman.block.entity.LabyrinthTeleportBlockEntity;
-import com.benji.netherman.world.data.TeleportDestinationData;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -30,14 +28,6 @@ public class LabyrinthTeleportBlock extends Block implements EntityBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(MODE);
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.is(newState.getBlock()) && !level.isClientSide()) {
-            TeleportDestinationData.get((ServerLevel) level).removeDestination(pos);
-        }
-        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Nullable

@@ -1,6 +1,10 @@
 {
   "type": "netherman:mega_jigsaw",
-  "biomes": "#minecraft:is_overworld",
+  "biomes": [
+    "minecraft:taiga",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:old_growth_spruce_taiga"
+  ],
   "step": "underground_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "none",

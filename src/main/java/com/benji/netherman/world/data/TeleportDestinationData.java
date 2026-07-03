@@ -26,15 +26,21 @@ public class TeleportDestinationData extends SavedData {
         }
     }
 
-    public BlockPos getRandomDestination(net.minecraft.util.RandomSource random) {
+    public BlockPos getClosestDestination(BlockPos sourcePos) {
         if (destinations.isEmpty()) return null;
-        int index = random.nextInt(destinations.size());
-        int i = 0;
+
+        BlockPos closest = null;
+        double minDistanceSq = Double.MAX_VALUE;
+
         for (BlockPos pos : destinations) {
-            if (i == index) return pos;
-            i++;
+            if (pos.equals(sourcePos)) continue;
+            double distSq = pos.distSqr(sourcePos);
+            if (distSq < minDistanceSq) {
+                minDistanceSq = distSq;
+                closest = pos;
+            }
         }
-        return null;
+        return closest;
     }
 
     @Override

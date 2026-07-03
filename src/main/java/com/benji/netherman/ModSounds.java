@@ -16,6 +16,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> UNIT_IDLE = registerSoundEvent("unit_idle");
     public static final RegistryObject<SoundEvent> SPINNING_WHEEL = registerSoundEvent("spinning_wheel");
 
+    public static final RegistryObject<SoundEvent> SHOCK = registerSoundEvent("shock");
+
     public static final RegistryObject<SoundEvent> SPEECH_1 = registerSoundEvent("speech_1");
     public static final RegistryObject<SoundEvent> SPEECH_2 = registerSoundEvent("speech_2");
     public static final RegistryObject<SoundEvent> SPEECH_3 = registerSoundEvent("speech_3");

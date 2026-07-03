@@ -1473,8 +1473,9 @@ public class NetherExp {
                         net.minecraft.world.phys.Vec3 look = player.getLookAngle();
                         player.setDeltaMovement(player.getDeltaMovement().add(look.scale(0.85D)));
 
-                        player.level().playSound(player, player.blockPosition(), net.minecraft.sounds.SoundEvents.ENDER_DRAGON_FLAP, net.minecraft.sounds.SoundSource.PLAYERS, 1.5F, 1.0F);
-                        player.level().playSound(player, player.blockPosition(), net.minecraft.sounds.SoundEvents.PHANTOM_FLAP, net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.3F);
+                        player.level().playSound(player, player.blockPosition(), net.minecraft.sounds.SoundEvents.ENDER_DRAGON_FLAP, net.minecraft.sounds.SoundSource.PLAYERS, 0.8F, 1.0F);
+                        player.level().playSound(player, player.blockPosition(), net.minecraft.sounds.SoundEvents.PHANTOM_FLAP, net.minecraft.sounds.SoundSource.PLAYERS, 0.5F, 1.3F);
+                        player.level().playSound(player, player.blockPosition(), ModSounds.SHOCK.get(), net.minecraft.sounds.SoundSource.PLAYERS, 5.0F, 1.0F);
 
                         player.getPersistentData().putInt("AzazelBoostTrail", 35);
                         com.benji.netherman.client.renderer.AzazelWingTrails.spawnShockwave(player);

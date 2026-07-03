@@ -14,6 +14,8 @@
   "prison3": { "sounds": [ "netherman:prison3" ] },
   "prison4": { "sounds": [ "netherman:prison4" ] },
 
+  "shock": { "sounds": [ "netherman:shock" ] },
+
   "speech_1": { "sounds": [ "netherman:speech_1" ] },
   "speech_2": { "sounds": [ "netherman:speech_2" ] },
   "speech_3": { "sounds": [ "netherman:speech_3" ] },

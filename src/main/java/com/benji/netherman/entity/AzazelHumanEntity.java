@@ -251,12 +251,19 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
             startDeathCinematic();
             return false;
         }
-        
+
         if (state < 5) {
             if (state == 3 && source.getEntity() instanceof Player) {
                 this.entityData.set(BOSS_STATE, 4);
                 this.entityData.set(DIALOGUE_TICK, 0);
                 this.playSound(ModSounds.LAUGH.get(), 2.0F, 1.0F);
+
+                Vec3 forward = Vec3.directionFromRotation(0, this.getYRot()).normalize();
+                this.setPos(this.getX() + forward.x * 2.0D, this.getY(), this.getZ() + forward.z * 2.0D);
+
+                for (ServerPlayer p : this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(64.0D))) {
+                    p.addEffect(new MobEffectInstance(NetherExp.PRAEMIUM.get(), -1, 0, false, false, true));
+                }
             }
             return false;
         }
@@ -305,7 +312,7 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
         // remove boss-theme
         java.util.List<Player> nearbyPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(100.0D));
         for (Player p : nearbyPlayers) {
-            p.removeEffect(NetherExp.ANXIETY_EFFECT.get());
+            p.removeEffect(NetherExp.PRAEMIUM.get());
         }
     }
 
@@ -562,7 +569,7 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
 
             if (state == 5 && this.tickCount % 20 == 0) {
                 for (ServerPlayer p : this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(100.0D))) {
-                    p.addEffect(new MobEffectInstance(NetherExp.ANXIETY_EFFECT.get(), 3000, 0, false, false, true));
+                    p.addEffect(new MobEffectInstance(NetherExp.PRAEMIUM.get(), -1, 0, false, false, true));
                 }
 
 

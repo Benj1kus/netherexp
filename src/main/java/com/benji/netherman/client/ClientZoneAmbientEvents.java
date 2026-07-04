@@ -34,7 +34,6 @@ public class ClientZoneAmbientEvents {
 
             shakeTimer--;
 
-            
             float shakeX = (mc.player.getRandom().nextFloat() - 0.5F) * shakeIntensity;
             float shakeY = (mc.player.getRandom().nextFloat() - 0.5F) * shakeIntensity;
             float shakeZ = (mc.player.getRandom().nextFloat() - 0.5F) * shakeIntensity;
@@ -43,7 +42,6 @@ public class ClientZoneAmbientEvents {
             event.setYaw(event.getYaw() + shakeY);
             event.setRoll(event.getRoll() + shakeZ);
 
-            
             if (shakeTimer < 10) {
                 shakeIntensity *= 0.8F;
             }
@@ -54,7 +52,6 @@ public class ClientZoneAmbientEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.START || event.player != Minecraft.getInstance().player) return;
         LocalPlayer player = (LocalPlayer) event.player;
-
 
         if (Minecraft.getInstance().screen == null) {
             for (com.benji.netherman.entity.AzazelHumanEntity boss : player.level().getEntitiesOfClass(com.benji.netherman.entity.AzazelHumanEntity.class, player.getBoundingBox().inflate(20.0D))) {
@@ -69,24 +66,32 @@ public class ClientZoneAmbientEvents {
         int currentZoneType = -1;
         MobEffect activeEffect = null;
 
-        if (player.hasEffect(NetherExp.ALERTNESS_EFFECT.get())) {
+        if (player.hasEffect(NetherExp.PRAEMIUM.get())) {
+            currentZoneType = 5;
+            activeEffect = NetherExp.PRAEMIUM.get();
+        }
+        else if (player.hasEffect(NetherExp.ALERTNESS_EFFECT.get())) {
             currentZoneType = 4;
             activeEffect = NetherExp.ALERTNESS_EFFECT.get();
-        } else if (player.hasEffect(NetherExp.ANXIETY_EFFECT.get())) {
+        }
+        else if (player.hasEffect(NetherExp.ANXIETY_EFFECT.get())) {
             currentZoneType = 3;
             activeEffect = NetherExp.ANXIETY_EFFECT.get();
-        } else if (player.hasEffect(NetherExp.FAITH_EFFECT.get())) {
+        }
+        else if (player.hasEffect(NetherExp.FAITH_EFFECT.get())) {
             currentZoneType = 2;
             activeEffect = NetherExp.FAITH_EFFECT.get();
-        } else if (player.hasEffect(NetherExp.EXCITEMENT_EFFECT.get())) {
+        }
+        else if (player.hasEffect(NetherExp.EXCITEMENT_EFFECT.get())) {
             currentZoneType = 1;
             activeEffect = NetherExp.EXCITEMENT_EFFECT.get();
-        } else if (player.hasEffect(NetherExp.FEAR_EFFECT.get())) {
+        }
+        else if (player.hasEffect(NetherExp.FEAR_EFFECT.get())) {
             currentZoneType = 0;
             activeEffect = NetherExp.FEAR_EFFECT.get();
         }
 
-        if (currentZoneType == 3 && isPlayingBossIntro) {
+        if ((currentZoneType == 3 || currentZoneType == 5) && isPlayingBossIntro) {
             bossMusicTimer--;
             if (bossMusicTimer <= 0) {
                 isPlayingBossIntro = false;
@@ -94,7 +99,9 @@ public class ClientZoneAmbientEvents {
                     Minecraft.getInstance().getSoundManager().stop(currentAmbientSound);
                 }
 
-                currentAmbientSound = new ZoneAmbientSoundInstance(ModSounds.BOSS_FIGHT_LOOP.get(), player, activeEffect, true);
+                var loopSound = (currentZoneType == 5) ? ModSounds.AZAZEL_FIGHT_LOOP.get() : ModSounds.BOSS_FIGHT_LOOP.get();
+
+                currentAmbientSound = new ZoneAmbientSoundInstance(loopSound, player, activeEffect, true);
                 Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
             }
         }
@@ -106,11 +113,14 @@ public class ClientZoneAmbientEvents {
             }
 
             if (currentZoneType != -1) {
-                if (currentZoneType == 3) {
-                    currentAmbientSound = new ZoneAmbientSoundInstance(ModSounds.BOSS_FIGHT.get(), player, activeEffect, false);
+                if (currentZoneType == 3 || currentZoneType == 5) {
+
+                    var introSound = (currentZoneType == 5) ? ModSounds.AZAZEL_FIGHT.get() : ModSounds.BOSS_FIGHT.get();
+                    currentAmbientSound = new ZoneAmbientSoundInstance(introSound, player, activeEffect, false);
                     Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
 
-                    bossMusicTimer = 2900;
+                    // 6020 - Azazel HUman 2900 - azazel angel
+                    bossMusicTimer = (currentZoneType == 5) ? 6020 : 2900;
                     isPlayingBossIntro = true;
                 } else {
                     var soundEvent = switch (currentZoneType) {

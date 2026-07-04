@@ -42,7 +42,7 @@ public class SamsoniteBellBlockEntity extends BellBlockEntity {
 
             if (level.getGameTime() % 20 == 0) {
 
-                AABB playerBox = new AABB(pos).inflate(10.0D);
+                AABB playerBox = new AABB(pos).inflate(5.0D);
                 boolean hasPlayer = !level.getEntitiesOfClass(Player.class, playerBox).isEmpty();
 
                 if (hasPlayer) {

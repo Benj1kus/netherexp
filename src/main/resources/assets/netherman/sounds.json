@@ -83,6 +83,9 @@
   "azazel_damage1": { "sounds": [ "netherman:azazel_damage1" ] },
   "azazel_damage2": { "sounds": [ "netherman:azazel_damage2" ] },
 
+  "azazel_fight": { "sounds": [ "netherman:azazel_fight" ] },
+  "azazel_fight_loop": { "sounds": [ "netherman:azazel_fight_loop" ] },
+
   "idle_pray": { "sounds": [ "netherman:idle_pray" ] },
   "boss_fight": { "sounds": [ "netherman:boss_fight" ] },
   "boss_fight_loop": { "sounds": [ "netherman:boss_fight_loop" ] },

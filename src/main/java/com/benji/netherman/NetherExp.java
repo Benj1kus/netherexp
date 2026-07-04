@@ -9,7 +9,9 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.*;
@@ -19,6 +21,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.config.ModConfig;
 import com.benji.netherman.client.ManipulationOverlay;
 import com.benji.netherman.client.renderer.*;
@@ -837,13 +840,17 @@ public class NetherExp {
     public static final RegistryObject<MobEffect> FAITH_EFFECT = EFFECTS.register("faith", () -> new ZoneEffect(0x800080));
     public static final RegistryObject<MobEffect> ANXIETY_EFFECT = EFFECTS.register("anxiety", () -> new ZoneEffect(0x8B0000));
     public static final RegistryObject<MobEffect> ALERTNESS_EFFECT = EFFECTS.register("alertness", () -> new ZoneEffect(0x8B0000));
+    public static final RegistryObject<MobEffect> DESTINY_EFFECT = EFFECTS.register("destiny", () -> new ZoneEffect(0x8B0000));
+    public static final RegistryObject<MobEffect> PRAEMIUM = EFFECTS.register("praemium", () -> new ZoneEffect(0x8B0000));
+
+
     public static final RegistryObject<net.minecraft.world.item.crafting.RecipeSerializer<?>> CRIMSON_ARROW_CRAFTING = RECIPE_SERIALIZERS.register("crimson_arrow_coating",
             () -> new net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer<>(com.benji.netherman.item.crafting.CrimsonArrowRecipe::new));
 
 
     public static final RegistryObject<EntityType<AzazelEntity>> AZAZEL = ENTITIES.register("azazel",
             () -> EntityType.Builder.of(AzazelEntity::new, MobCategory.MONSTER)
-                    .sized(3.0F, 4.5F)
+                    .  sized(3.0F, 4.5F)
                     .fireImmune()
                     .build(new ResourceLocation(MODID, "azazel").toString()));
 
@@ -1254,6 +1261,34 @@ public class NetherExp {
 
     @net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = MODID, bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.FORGE)
     public static class ForgeEvents {
+
+        @SubscribeEvent
+        public static void onLivingTick(LivingEvent.LivingTickEvent event) {
+            if (!(event.getEntity() instanceof Player player)) {
+                return;
+            }
+
+            if (player.level().isClientSide()) {
+                return;
+            }
+
+            boolean hasFullSet =
+                    player.getItemBySlot(EquipmentSlot.HEAD).is(NetherExp.AZAZEL_HELMET.get()) &&
+                            player.getItemBySlot(EquipmentSlot.CHEST).is(NetherExp.AZAZEL_CHESTPLATE.get()) &&
+                            player.getItemBySlot(EquipmentSlot.LEGS).is(NetherExp.AZAZEL_LEGGINGS.get()) &&
+                            player.getItemBySlot(EquipmentSlot.FEET).is(NetherExp.AZAZEL_BOOTS.get());
+
+            if (hasFullSet) {
+                player.addEffect(new MobEffectInstance(
+                        NetherExp.DESTINY_EFFECT.get(),
+                        220,
+                        0,
+                        false,
+                        false,
+                        true
+                ));
+            }
+        }
 
         @net.minecraftforge.eventbus.api.SubscribeEvent
         public static void onLivingHurt(net.minecraftforge.event.entity.living.LivingHurtEvent event) {

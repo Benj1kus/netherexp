@@ -682,6 +682,11 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
         return 400 + this.random.nextInt(600);
     }
 
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {

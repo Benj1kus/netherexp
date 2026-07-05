@@ -716,7 +716,7 @@ public class NetherExp {
 
     public static final RegistryObject<Item> MUSIC_DISC_GOD = ITEMS.register("music_disc_god",
             () -> new RecordItem(15, ModSounds.AZAZEL_FIGHT,
-                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 2500));
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 2460));
 
     public static final RegistryObject<Item> MUSIC_DISC_QUAR = ITEMS.register("music_disc_quar",
             () -> new RecordItem(6, ModSounds.CAVE_AMBIENT,
@@ -1338,6 +1338,17 @@ public class NetherExp {
 
         @net.minecraftforge.eventbus.api.SubscribeEvent
         public static void onLivingDeath(net.minecraftforge.event.entity.living.LivingDeathEvent event) {
+            if (event.getEntity() instanceof net.minecraft.world.entity.player.Player deadPlayer) {
+                if (event.getSource().getEntity() instanceof com.benji.netherman.entity.AzazelHumanEntity) {
+
+                    deadPlayer.displayClientMessage(
+                            net.minecraft.network.chat.Component.literal("You can change his stats in mod config")
+                                    .withStyle(net.minecraft.ChatFormatting.AQUA),
+                            true
+                    );
+                }
+            }
+
             if (event.getSource().getEntity() instanceof net.minecraft.world.entity.player.Player player) {
                 net.minecraft.world.entity.LivingEntity victim = event.getEntity();
 

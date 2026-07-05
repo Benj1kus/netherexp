@@ -716,7 +716,7 @@ public class NetherExp {
 
     public static final RegistryObject<Item> MUSIC_DISC_GOD = ITEMS.register("music_disc_god",
             () -> new RecordItem(15, ModSounds.AZAZEL_FIGHT,
-                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 6020));
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 2500));
 
     public static final RegistryObject<Item> MUSIC_DISC_QUAR = ITEMS.register("music_disc_quar",
             () -> new RecordItem(6, ModSounds.CAVE_AMBIENT,

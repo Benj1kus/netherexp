@@ -26,6 +26,10 @@ public class ModMessages {
 
         INSTANCE = net;
 
+        net.registerMessage(id(), AzazelBoostPacket.class,
+                AzazelBoostPacket::toBytes,
+                AzazelBoostPacket::new,
+                AzazelBoostPacket::handle);
 
         net.messageBuilder(FogSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(FogSyncS2CPacket::new)
@@ -40,6 +44,9 @@ public class ModMessages {
                 .add();
     }
 
+    public static <MSG> void sendToServer(MSG message) {
+        INSTANCE.sendToServer(message);
+    }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
     }

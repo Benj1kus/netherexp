@@ -1514,6 +1514,7 @@ public class NetherExp {
 
                         player.getPersistentData().putInt("AzazelBoostTrail", 35);
                         com.benji.netherman.client.renderer.AzazelWingTrails.spawnShockwave(player);
+                        com.benji.netherman.network.ModMessages.sendToServer(new com.benji.netherman.network.AzazelBoostPacket());
                     }
                 }
             }

@@ -378,6 +378,7 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
                             net.minecraft.world.item.ItemStack[] loot = new net.minecraft.world.item.ItemStack[] {
                                     new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_SPEAR.get(), 1),
                                     new net.minecraft.world.item.ItemStack(NetherExp.MUSIC_DISC_QUAR.get(), 1),
+                                    new net.minecraft.world.item.ItemStack(NetherExp.MUSIC_DISC_SACRED.get(), 1),
                                     new net.minecraft.world.item.ItemStack(NetherExp.MUSIC_DISC_MAZE.get(), 1),
                                     new net.minecraft.world.item.ItemStack(NetherExp.CHANCE_TOTEM.get(), 2),
                                     new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_SHIELD.get(), 2),
@@ -387,6 +388,7 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
                                     new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_BOOTS.get(), 1),
                                     new net.minecraft.world.item.ItemStack(NetherExp.AZAZEL_TROPHY_ITEM.get(), 1),
                                     new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 55),
+                                    new net.minecraft.world.item.ItemStack(Items.MILK_BUCKET, 1),
                                     new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.NETHERITE_SCRAP, 20),
                                     new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE, 10),
                             };

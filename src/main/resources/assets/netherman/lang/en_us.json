@@ -226,6 +226,12 @@
   "advancement.netherman.enter_mansion.title": "Damn...",
   "advancement.netherman.enter_mansion.description": "Now That's Luxury!",
 
+  "advancement.netherman.enter_maze.title": "Shh…",
+  "advancement.netherman.enter_maze.description": "Be careful",
+
+  "advancement.netherman.azazel.title": "Be praised",
+  "advancement.netherman.azazel.description": "Be proud",
+
   "advancement.netherman.kill_azazel.title": "God.",
   "advancement.netherman.kill_azazel.description": "You killed him.",
 
@@ -268,12 +274,14 @@
   "item.netherman.music_disc_sacred": "§bMusic Disc",
   "item.netherman.music_disc_maze": "§bMusic Disc",
   "item.netherman.music_disc_azazel": "§bMusic Disc",
+  "item.netherman.music_disc_god": "§bMusic Disc",
 
   "item.netherman.music_disc_boss.desc": "Toby Fox - GUARDIAN",
   "item.netherman.music_disc_quar.desc": "Casmox - §kGUARDIAN",
   "item.netherman.music_disc_sacred.desc": "Casmox - §kGUARDIAN",
   "item.netherman.music_disc_maze.desc": "Casmox - §kGUARDIAN",
   "item.netherman.music_disc_azazel.desc": "Casmox - §kGUARDIAN",
+  "item.netherman.music_disc_god.desc": "Shirō Sagisu - Keep Your Head Above The Mayhem",
 
   "effect.netherman.manipulation": "Manipulation",
   "effect.netherman.destiny": "Destiny",

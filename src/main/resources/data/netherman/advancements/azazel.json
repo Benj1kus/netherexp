@@ -1,0 +1,32 @@
+{
+  "parent": "netherman:enter_mansion",
+  "display": {
+    "icon": {
+      "item": "netherman:locker_quest3"
+    },
+    "title": {
+      "translate": "advancement.netherman.azazel.title"
+    },
+    "description": {
+      "translate": "advancement.netherman.azazel.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "got_stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "netherman:azazel_chestplate"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "netherman:chiseled_samsonit"
+    },
+    "title": {
+      "translate": "advancement.netherman.enter_maze.title"
+    },
+    "description": {
+      "translate": "advancement.netherman.enter_maze.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/polished_blackstone_bricks.png"
+  },
+  "criteria": {
+    "in_maze": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "netherman:maze"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

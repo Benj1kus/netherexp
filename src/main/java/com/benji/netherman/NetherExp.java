@@ -714,6 +714,10 @@ public class NetherExp {
             () -> new RecordItem(15, ModSounds.BOSS_FIGHT,
                     new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 2900));
 
+    public static final RegistryObject<Item> MUSIC_DISC_GOD = ITEMS.register("music_disc_god",
+            () -> new RecordItem(15, ModSounds.AZAZEL_FIGHT,
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 6020));
+
     public static final RegistryObject<Item> MUSIC_DISC_QUAR = ITEMS.register("music_disc_quar",
             () -> new RecordItem(6, ModSounds.CAVE_AMBIENT,
                     new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), 660));
@@ -1212,8 +1216,16 @@ public class NetherExp {
             event.accept(CRIMSON_ARROW_ITEM);
             event.accept(CHANCE_TOTEM);
             event.accept(NOTE);
+            event.accept(AZAZEL_HELMET);
+            event.accept(AZAZEL_CHESTPLATE);
+            event.accept(AZAZEL_LEGGINGS);
+            event.accept(AZAZEL_BOOTS);
+            event.accept(AZAZEL_SCYTHE);
+            event.accept(AZAZEL_SPEAR);
+            event.accept(AZAZEL_SHIELD);
             event.accept(MUSIC_DISC_AZAZEL);
             event.accept(MUSIC_DISC_BOSS);
+            event.accept(MUSIC_DISC_GOD);
             event.accept(MUSIC_DISC_QUAR);
             event.accept(MUSIC_DISC_SACRED);
             event.accept(MUSIC_DISC_MAZE);

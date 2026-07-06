@@ -30,7 +30,15 @@ displayName="Cult of Azazel" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="logo.png" #optional
 # A text field displayed in the mod UI
-#credits="" #optional
+credits='''
+SFX,Concept Arts & Music - §eCasmox§r
+
+Localization Contributors:
+§cTurkish§r - Casmox
+§4Vietnamese§r - honsoang
+§bKorean§r - _StrawberrySushi
+§6German§r - DUM! Bum Bum Bum!
+'''
 # A text field displayed in the mod UI
 authors="Benj1kus" #optional
 # Display Test controls the display for your mod in the server connection screen

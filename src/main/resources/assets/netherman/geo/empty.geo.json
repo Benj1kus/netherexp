@@ -3,10 +3,19 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.unknown",
+				"identifier": "geometry.empty",
 				"texture_width": 16,
 				"texture_height": 16
-			}
+			},
+			"bones": [
+				{
+					"name": "dummy_bone",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [0, 0, 0], "size": [0, 0, 0], "uv": [0, 0]}
+					]
+				}
+			]
 		}
 	]
 }

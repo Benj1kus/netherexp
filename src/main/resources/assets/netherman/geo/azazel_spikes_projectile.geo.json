@@ -14,7 +14,10 @@
 				{
 					"name": "all",
 					"pivot": [0, 8, 0],
-					"rotation": [0, -90, 0]
+					"rotation": [0, -90, 0],
+					"cubes": [
+						{"origin": [0, 0, 0], "size": [0, 0, 0], "uv": [0, 0]}
+					]
 				},
 				{
 					"name": "chain",

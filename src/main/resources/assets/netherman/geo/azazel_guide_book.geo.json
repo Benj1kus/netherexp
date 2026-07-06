@@ -13,7 +13,10 @@
 			"bones": [
 				{
 					"name": "guide_book",
-					"pivot": [1, 11.8, 0]
+					"pivot": [1, 11.8, 0],
+					"cubes": [
+						{"origin": [0, 0, 0], "size": [0, 0, 0], "uv": [0, 0]}
+					]
 				},
 				{
 					"name": "bone",
@@ -56,7 +59,10 @@
 				{
 					"name": "pages",
 					"parent": "rp",
-					"pivot": [1, 12.53, 0]
+					"pivot": [1, 12.53, 0],
+					"cubes": [
+						{"origin": [0, 0, 0], "size": [0, 0, 0], "uv": [0, 0]}
+					]
 				},
 				{
 					"name": "str2",

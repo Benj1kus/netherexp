@@ -560,6 +560,20 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
 
                     if (tick >= 900) {
                         this.entityData.set(BOSS_STATE, 3);
+                        this.entityData.set(DIALOGUE_TICK, 0);
+                    }
+                } else if (state == 3) {
+                    if (tick >= 200) {
+                        this.entityData.set(BOSS_STATE, 4);
+                        this.entityData.set(DIALOGUE_TICK, 0);
+                        this.playSound(ModSounds.LAUGH.get(), 2.0F, 1.0F);
+
+                        Vec3 forward = Vec3.directionFromRotation(0, this.getYRot()).normalize();
+                        this.setPos(this.getX() + forward.x * 2.0D, this.getY(), this.getZ() + forward.z * 2.0D);
+
+                        for (ServerPlayer p : this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(64.0D))) {
+                            p.addEffect(new MobEffectInstance(NetherExp.PRAEMIUM.get(), -1, 0, false, false, true));
+                        }
                     }
                 } else if (state == 4 && tick >= 30) {
                     this.entityData.set(BOSS_STATE, 5);

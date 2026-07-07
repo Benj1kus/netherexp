@@ -119,7 +119,7 @@ public class ClientZoneAmbientEvents {
                     currentAmbientSound = new ZoneAmbientSoundInstance(introSound, player, activeEffect, false);
                     Minecraft.getInstance().getSoundManager().play(currentAmbientSound);
 
-                    // 6020 - Azazel HUman 2900 - azazel angel
+                    //  Azazel HUman/ azazel angel
                     bossMusicTimer = (currentZoneType == 5) ? 1340 : 2460;
                     isPlayingBossIntro = true;
                 } else {

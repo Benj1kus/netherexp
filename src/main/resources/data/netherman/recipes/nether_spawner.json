@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "N.N",
+    "#R#"
+  ],
+  "key": {
+    "#": { "item": "netherman:blackstone_column" },
+    "N": { "item": "minecraft:nether_wart_block" },
+    ".": { "item": "minecraft:blaze_powder" },
+    "R": { "item": "minecraft:respawn_anchor" }
+  },
+  "result": {
+    "item": "netherman:nether_spawner",
+    "count": 1
+  }
+}

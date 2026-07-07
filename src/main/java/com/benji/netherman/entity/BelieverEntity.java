@@ -60,6 +60,11 @@ public class BelieverEntity extends PathfinderMob implements GeoEntity {
     }
 
     @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_SICK, false);

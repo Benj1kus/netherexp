@@ -161,6 +161,12 @@ public class AzazelEntity extends Monster implements GeoEntity {
     public boolean hurt(DamageSource source, float amount) {
         if (this.level().isClientSide()) return false;
 
+        if (source.is(net.minecraft.world.damagesource.DamageTypes.IN_WALL) ||
+                source.is(net.minecraft.world.damagesource.DamageTypes.FALLING_BLOCK) ||
+                source.is(net.minecraft.world.damagesource.DamageTypes.CRAMMING)) {
+            return false;
+        }
+
         if (source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(net.minecraft.world.damagesource.DamageTypes.GENERIC_KILL)) {
             this.isInstantKill = true;
         }

@@ -144,7 +144,7 @@ public class AzazelConfig {
                 .defineInRange("miniBossCooldown", 18000, 1200, 1000000);
 
         CIVILIAN_NPC_COOLDOWN = BUILDER.comment("Cooldown (in ticks) for spawning Civilian NPCs (Blacksmith, Doctor, Gilded Golem, Trader).")
-                .defineInRange("civilianNpcCooldown", 72000, 1200, 1000000);
+                .defineInRange("civilianNpcCooldown", 20000, 1200, 1000000);
 
         BELIEVERS_SPAWN_COUNT = BUILDER.comment("Number of Believers spawned at once.")
                 .defineInRange("believersSpawnCount", 5, 1, 20);
@@ -156,7 +156,7 @@ public class AzazelConfig {
                 .defineInRange("believersMaxNearby", 5, 1, 50);
 
         BELIEVERS_SUCCESS_COOLDOWN = BUILDER.comment("Cooldown if Believers successfully spawned.")
-                .defineInRange("believersSuccessCooldown", 72000, 1200, 1000000);
+                .defineInRange("believersSuccessCooldown", 20000, 1200, 1000000);
 
         BELIEVERS_FAIL_COOLDOWN = BUILDER.comment("Soft cooldown if spawning was skipped because there are too many Believers around.")
                 .defineInRange("believersFailCooldown", 600, 20, 72000);
@@ -182,7 +182,7 @@ public class AzazelConfig {
         MIDAS_BOSSUNIT_COUNT = BUILDER.comment("Number of BossUnits spawned during Midas attack").defineInRange("midasBossUnitCount", 3, 0, 10);
         MIDAS_GUARDIAN_COUNT = BUILDER.comment("Number of Guardians spawned during Midas attack").defineInRange("midasGuardianCount", 2, 0, 10);
         MIDAS_FIRE_DAMAGE = BUILDER.comment("Fire damage dealt per tick on the fire ring").defineInRange("midasFireDamage", 8.0, 0.0, 100.0);
-        MIDAS_GOLD_TIME = BUILDER.comment("Ticks required near the boss to turn an item into gold (40 = 2 seconds)").defineInRange("midasGoldTime", 40, 1, 2000);
+        MIDAS_GOLD_TIME = BUILDER.comment("Ticks required near the boss to turn an item into gold (40 = 2 seconds)").defineInRange("midasGoldTime", 200, 1, 2000);
         BUILDER.pop();
 
         BUILDER.push("Azazel Prison Attack");

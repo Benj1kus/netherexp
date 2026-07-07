@@ -9,7 +9,7 @@
         { "type": "minecraft:item", "name": "minecraft:iron_axe", "weight": 1 },
         { "type": "minecraft:item", "name": "minecraft:diamond_pickaxe", "weight": 1 },
         { "type": "minecraft:item", "name": "minecraft:diamond_sword", "weight": 1 },
-        { "type": "minecraft:item", "name": "minecraft:netherite_pickaxe", "weight": 1 },
+        { "type": "minecraft:item", "name": "minecraft:diamond_pickaxe", "weight": 1 },
         { "type": "minecraft:item", "name": "minecraft:diamond_boots", "weight": 1 },
         { "type": "minecraft:item", "name": "minecraft:iron_chestplate", "weight": 1 },
         { "type": "minecraft:item", "name": "minecraft:golden_leggings", "weight": 1 },

@@ -72,6 +72,11 @@ public class AzazelGuideBookEntity extends PathfinderMob implements GeoEntity {
     }
 
     @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    @Override
     public void tick() {
         super.tick();
 

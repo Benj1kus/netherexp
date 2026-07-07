@@ -72,6 +72,11 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
     public void push(double x, double y, double z) {}
 
     @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (this.level().isClientSide()) return InteractionResult.sidedSuccess(true);
 

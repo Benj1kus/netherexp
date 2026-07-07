@@ -941,6 +941,11 @@ public class AzazelEntity extends Monster implements GeoEntity {
         }
     }
 
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

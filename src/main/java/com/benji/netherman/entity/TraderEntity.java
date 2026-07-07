@@ -85,6 +85,10 @@ public class TraderEntity extends PathfinderMob implements GeoEntity {
     private boolean isAcceptedItem(ItemStack stack) {
         return stack.is(Items.GOLD_INGOT) || stack.is(Items.DIAMOND) || stack.is(Items.NETHERITE_INGOT);
     }
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {

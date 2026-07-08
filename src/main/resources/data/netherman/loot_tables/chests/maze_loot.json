@@ -72,7 +72,7 @@
       "entries": [
         { "type": "minecraft:empty", "weight": 10 },
         { "type": "minecraft:item", "name": "netherman:chance_totem", "weight": 2 },
-        { "type": "minecraft:item", "name": "netherman:manipulator_stick", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:iron_sword", "weight": 2 },
         { "type": "minecraft:item", "name": "minecraft:netherite_scrap", "weight": 2 },
         { "type": "minecraft:item", "name": "minecraft:end_crystal", "weight": 2 },
         { "type": "minecraft:item", "name": "netherman:faith_part", "weight": 5 },

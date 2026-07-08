@@ -1,6 +1,7 @@
 package com.benji.netherman.entity;
 
 import com.benji.netherman.ModSounds;
+import com.benji.netherman.config.AzazelConfig;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -115,19 +116,26 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
         return InteractionResult.sidedSuccess(false);
     }
 
-    private static List<MobEffect> CACHED_EFFECTS = null;
-
     private void giveRandomPotion(Player player) {
         ItemStack potion = new ItemStack(Items.POTION);
-        if (CACHED_EFFECTS == null) {
-            CACHED_EFFECTS = ForgeRegistries.MOB_EFFECTS.getValues().stream()
-                    .filter(effect -> ForgeRegistries.MOB_EFFECTS.getKey(effect) != null && ForgeRegistries.MOB_EFFECTS.getKey(effect).getNamespace().equals("minecraft"))
-                    .toList();
-        }
 
-        if (CACHED_EFFECTS.isEmpty()) return;
+        boolean restrictMods = AzazelConfig.DOCTOR_VANILLA_POTIONS_ONLY.get();
+        java.util.List<? extends String> allowedNamespaces = AzazelConfig.DOCTOR_ALLOWED_MOD_NAMESPACES.get();
 
-        MobEffect randomEffect = CACHED_EFFECTS.get(this.random.nextInt(CACHED_EFFECTS.size()));
+        List<MobEffect> availableEffects = ForgeRegistries.MOB_EFFECTS.getValues().stream()
+                .filter(effect -> {
+                    if (!restrictMods) return true;
+
+                    net.minecraft.resources.ResourceLocation key = ForgeRegistries.MOB_EFFECTS.getKey(effect);
+                    if (key == null) return false;
+
+                    return allowedNamespaces.contains(key.getNamespace());
+                })
+                .toList();
+
+        if (availableEffects.isEmpty()) return;
+
+        MobEffect randomEffect = availableEffects.get(this.random.nextInt(availableEffects.size()));
 
         int durationTicks = 200 + this.random.nextInt(1600);
         int amplifier = this.random.nextInt(4);

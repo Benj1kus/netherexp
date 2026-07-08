@@ -58,6 +58,10 @@ public class AzazelConfig {
     public static final ForgeConfigSpec.IntValue BELIEVERS_SUCCESS_COOLDOWN;
     public static final ForgeConfigSpec.IntValue BELIEVERS_FAIL_COOLDOWN;
 
+    public static final ForgeConfigSpec.BooleanValue DOCTOR_VANILLA_POTIONS_ONLY;
+    public static final ForgeConfigSpec.ConfigValue<java.util.List<? extends String>> DOCTOR_ALLOWED_MOD_NAMESPACES;
+
+
     public static final ForgeConfigSpec.DoubleValue MELEE_ATTACK_RADIUS;
     public static final ForgeConfigSpec.IntValue SHIELD_HITS_MIN;
     public static final ForgeConfigSpec.IntValue SHIELD_HITS_MAX;
@@ -134,7 +138,16 @@ public class AzazelConfig {
         PASSIVE_SUMMON_CHANCE = BUILDER.comment("Chance (1 in X ticks) to spawn minions passively while idle.").defineInRange("passiveSummonChance", 600, 100, 2400);
         BUILDER.pop();
 
-        
+        BUILDER.push("NPC Doctor Config");
+
+        DOCTOR_VANILLA_POTIONS_ONLY = BUILDER.comment("true = the Doctor will only give potions with effects from vanilla.false = it gives random effects from ANY installed mod")
+                .define("doctorVanillaPotionsOnly", false);
+
+        DOCTOR_ALLOWED_MOD_NAMESPACES = BUILDER.comment("A list of mod IDs (namespaces) allowed to be given as potions by the Doctor if doctorVanillaPotionsOnly is true.")
+                .defineListAllowEmpty(java.util.List.of("doctorAllowedModNamespaces"), () -> java.util.List.of("minecraft"), obj -> obj instanceof String);
+
+        BUILDER.pop();
+
         BUILDER.push("Nether Spawner Configuration");
 
         PLAYER_DETECTION_RADIUS = BUILDER.comment("Radius within which the spawner detects players to activate.")

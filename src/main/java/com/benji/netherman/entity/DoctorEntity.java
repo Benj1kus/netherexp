@@ -120,8 +120,13 @@ public class DoctorEntity extends PathfinderMob implements GeoEntity {
     private void giveRandomPotion(Player player) {
         ItemStack potion = new ItemStack(Items.POTION);
         if (CACHED_EFFECTS == null) {
-            CACHED_EFFECTS = ForgeRegistries.MOB_EFFECTS.getValues().stream().toList();
+            CACHED_EFFECTS = ForgeRegistries.MOB_EFFECTS.getValues().stream()
+                    .filter(effect -> ForgeRegistries.MOB_EFFECTS.getKey(effect) != null && ForgeRegistries.MOB_EFFECTS.getKey(effect).getNamespace().equals("minecraft"))
+                    .toList();
         }
+
+        if (CACHED_EFFECTS.isEmpty()) return;
+
         MobEffect randomEffect = CACHED_EFFECTS.get(this.random.nextInt(CACHED_EFFECTS.size()));
 
         int durationTicks = 200 + this.random.nextInt(1600);

@@ -1,6 +1,6 @@
 {
   "type": "minecraft:jigsaw",
-  "biomes": "#minecraft:is_overworld",
+  "biomes": "#netherman:overworld_land",
   "step": "underground_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "none",

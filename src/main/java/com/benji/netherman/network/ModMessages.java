@@ -26,6 +26,12 @@ public class ModMessages {
 
         INSTANCE = net;
 
+        net.messageBuilder(AzazelCutscenePacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(AzazelCutscenePacket::new)
+                .encoder(AzazelCutscenePacket::toBytes)
+                .consumerMainThread(AzazelCutscenePacket::handle)
+                .add();
+
         net.registerMessage(id(), AzazelBoostPacket.class,
                 AzazelBoostPacket::toBytes,
                 AzazelBoostPacket::new,

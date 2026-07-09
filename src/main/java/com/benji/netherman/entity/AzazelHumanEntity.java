@@ -176,67 +176,6 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
             }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
-
-        if (state == 3) {
-            if (!this.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
-                ServerLevel currentLevel = (ServerLevel) this.level();
-                ServerLevel respawnLevel = currentLevel.getServer().getLevel(serverPlayer.getRespawnDimension());
-                if (respawnLevel == null) respawnLevel = currentLevel.getServer().overworld();
-
-                BlockPos respawnPos = serverPlayer.getRespawnPosition();
-                float respawnAngle = serverPlayer.getRespawnAngle();
-
-                if (respawnPos != null) {
-                    Optional<Vec3> safePos = Player.findRespawnPositionAndUseSpawnBlock(respawnLevel, respawnPos, respawnAngle, serverPlayer.isRespawnForced(), true);
-                    if (safePos.isPresent()) {
-                        serverPlayer.teleportTo(respawnLevel, safePos.get().x, safePos.get().y, safePos.get().z, respawnAngle, 0.0F);
-                    } else {
-                        BlockPos sharedSpawn = respawnLevel.getSharedSpawnPos();
-                        serverPlayer.teleportTo(respawnLevel, sharedSpawn.getX(), sharedSpawn.getY(), sharedSpawn.getZ(), respawnAngle, 0.0F);
-                    }
-                } else {
-                    BlockPos sharedSpawn = respawnLevel.getSharedSpawnPos();
-                    serverPlayer.teleportTo(respawnLevel, sharedSpawn.getX(), sharedSpawn.getY(), sharedSpawn.getZ(), respawnAngle, 0.0F);
-                }
-
-                respawnLevel.playSound(null, serverPlayer.blockPosition(), ModSounds.BELL_BEAST_LAUGH.get(), SoundSource.PLAYERS, 1.5F, 1.0F);
-
-                DustParticleOptions redMagic = new DustParticleOptions(new Vector3f(1.0F, 0.0F, 0.0F), 1.5F);
-                respawnLevel.sendParticles(serverPlayer, redMagic, true, serverPlayer.getX(), serverPlayer.getY() + 1.0D, serverPlayer.getZ(), 80, 0.8D, 1.0D, 0.8D, 0.1D);
-
-                BlockPos barrelPos = serverPlayer.blockPosition();
-                for (int[] offset : new int[][]{{1,0,0}, {-1,0,0}, {0,0,1}, {0,0,-1}, {0,1,0}}) {
-                    BlockPos checkPos = serverPlayer.blockPosition().offset(offset[0], offset[1], offset[2]);
-                    if (respawnLevel.getBlockState(checkPos).canBeReplaced()) {
-                        barrelPos = checkPos;
-                        break;
-                    }
-                }
-                respawnLevel.setBlockAndUpdate(barrelPos, Blocks.BARREL.defaultBlockState());
-
-                respawnLevel.playSound(null, barrelPos, SoundEvents.TOTEM_USE, SoundSource.BLOCKS, 1.0F, 1.5F);
-
-                respawnLevel.sendParticles(serverPlayer, ParticleTypes.TOTEM_OF_UNDYING, true, barrelPos.getX() + 0.5D, barrelPos.getY() + 1.0D, barrelPos.getZ() + 0.5D, 60, 0.4D, 0.5D, 0.4D, 0.2D);
-
-                net.minecraft.world.level.block.entity.BlockEntity blockEntity = respawnLevel.getBlockEntity(barrelPos);
-                if (blockEntity instanceof net.minecraft.world.level.block.entity.BarrelBlockEntity barrel) {
-                    barrel.setItem(0, new ItemStack(NetherExp.AZAZEL_HELMET.get(), 1));
-                    barrel.setItem(1, new ItemStack(NetherExp.AZAZEL_CHESTPLATE.get(), 1));
-                    barrel.setItem(2, new ItemStack(NetherExp.AZAZEL_LEGGINGS.get(), 1));
-                    barrel.setItem(3, new ItemStack(NetherExp.AZAZEL_BOOTS.get(), 1));
-                    barrel.setItem(4, new ItemStack(NetherExp.QUOTA.get(), 1));
-                    barrel.setItem(5, new ItemStack(com.benji.netherman.NetherExp.FAITH_PART.get(), 5));
-                    barrel.setItem(6, new ItemStack(com.benji.netherman.NetherExp.FAITH_ESSENCE.get(), 1));
-                }
-
-                this.bossEvent.removeAllPlayers();
-                serverPlayer.getPersistentData().putBoolean("AzazelCultist", true);
-                com.benji.netherman.QuotaManager.generateNewQuota(serverPlayer);
-                this.discard();
-            }
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
-        }
-
         return super.mobInteract(player, hand);
     }
     @Override
@@ -254,18 +193,6 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
         }
 
         if (state < 5) {
-            if (state == 3 && source.getEntity() instanceof Player) {
-                this.entityData.set(BOSS_STATE, 4);
-                this.entityData.set(DIALOGUE_TICK, 0);
-                this.playSound(ModSounds.LAUGH.get(), 2.0F, 1.0F);
-
-                Vec3 forward = Vec3.directionFromRotation(0, this.getYRot()).normalize();
-                this.setPos(this.getX() + forward.x * 2.0D, this.getY(), this.getZ() + forward.z * 2.0D);
-
-                for (ServerPlayer p : this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(64.0D))) {
-                    p.addEffect(new MobEffectInstance(NetherExp.PRAEMIUM.get(), -1, 0, false, false, true));
-                }
-            }
             return false;
         }
 

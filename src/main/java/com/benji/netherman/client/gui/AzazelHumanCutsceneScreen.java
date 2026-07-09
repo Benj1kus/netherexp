@@ -118,13 +118,13 @@ public class AzazelHumanCutsceneScreen extends Screen {
             int attackX = centerX + 40 - btnSize;
 
             if (mouseX >= surrenderX && mouseX <= surrenderX + btnSize && mouseY >= baseY && mouseY <= baseY + btnSize) {
-                this.minecraft.gameMode.interact(this.minecraft.player, boss, InteractionHand.MAIN_HAND);
+                com.benji.netherman.network.ModMessages.sendToServer(new com.benji.netherman.network.AzazelCutscenePacket(0, boss.getId()));
                 this.minecraft.setScreen(null);
                 return true;
             }
 
             if (mouseX >= attackX && mouseX <= attackX + btnSize && mouseY >= baseY && mouseY <= baseY + btnSize) {
-                this.minecraft.gameMode.attack(this.minecraft.player, boss);
+                com.benji.netherman.network.ModMessages.sendToServer(new com.benji.netherman.network.AzazelCutscenePacket(1, boss.getId()));
                 this.minecraft.setScreen(null);
                 return true;
             }

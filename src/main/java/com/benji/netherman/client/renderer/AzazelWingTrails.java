@@ -225,7 +225,6 @@ public class AzazelWingTrails {
                         Vec3 backUp = right.cross(look).normalize();
 
                         float boostProgress = Math.min(1.0F, data.ticksRemaining / 15.0F);
-                        drawVaporCone(buffer, matrix, playerPos, look, right, backUp, boostProgress);
                     }
                 }
             }
@@ -274,44 +273,6 @@ public class AzazelWingTrails {
         addVertex(buffer, matrix, p1.subtract(right), r, g, b, alpha);
         addVertex(buffer, matrix, p2.subtract(right), r, g, b, alpha);
         addVertex(buffer, matrix, p2.add(right), r, g, b, alpha);
-    }
-
-    private static void drawVaporCone(BufferBuilder buffer, Matrix4f matrix, Vec3 center, Vec3 look, Vec3 right, Vec3 backUp, float boostProgress) {
-        if (boostProgress <= 0.01F) return;
-
-        int maxAlpha = (int) (60 * boostProgress);
-        int rings = 6;
-        float length = 0.3F;
-        float maxRadius = 1.7F;
-
-        int segments = 24;
-        Vec3[] prevRing = new Vec3[segments + 1];
-
-        for (int rIndex = 0; rIndex <= rings; rIndex++) {
-            float rProgress = (float) rIndex / rings;
-            float currentRadius = maxRadius * (float)Math.sqrt(rProgress);
-            float zOffset = length * (1.0F - rProgress) - 0.3F;
-
-            Vec3 currentRingCenter = center.add(look.scale(zOffset));
-            Vec3[] currentRing = new Vec3[segments + 1];
-
-            for (int i = 0; i <= segments; i++) {
-                double angle = (i * 2.0 * Math.PI) / segments;
-                Vec3 dirVec = right.scale(Math.cos(angle)).add(backUp.scale(Math.sin(angle)));
-                currentRing[i] = currentRingCenter.add(dirVec.scale(currentRadius));
-
-                if (rIndex > 0 && i > 0) {
-                    int a1 = (int) (maxAlpha * (1.0F - (float)(rIndex - 1) / rings));
-                    int a2 = (int) (maxAlpha * (1.0F - (float)rIndex / rings));
-
-                    addVertex(buffer, matrix, prevRing[i - 1], 255, 255, 255, a1);
-                    addVertex(buffer, matrix, currentRing[i - 1], 255, 255, 255, a2);
-                    addVertex(buffer, matrix, currentRing[i], 255, 255, 255, a2);
-                    addVertex(buffer, matrix, prevRing[i], 255, 255, 255, a1);
-                }
-            }
-            prevRing = currentRing;
-        }
     }
 
     private static void drawRibbon(BufferBuilder buffer, Matrix4f matrix, LinkedList<Vec3> points, Vec3 camPos, float startWidth) {

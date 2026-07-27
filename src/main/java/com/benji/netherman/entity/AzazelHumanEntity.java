@@ -68,7 +68,7 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
     private final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(Component.literal("Azazel, The Awakened"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
     private float damageTakenRecently = 0.0F;
     private int damageTimer = 0;
-    private int defendCooldown = 0; 
+    private int defendCooldown = 0;
     private static final int[] LINE_LENGTHS = {31, 33, 40, 31, 28, 33, 35, 39, 29, 29};
     public boolean isInstantKill = false;
 
@@ -94,7 +94,7 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
     }
 
 
-    
+
     @Override
     public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor level, net.minecraft.world.DifficultyInstance difficulty, net.minecraft.world.entity.MobSpawnType reason, @Nullable net.minecraft.world.entity.SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
 
@@ -178,12 +178,14 @@ public class AzazelHumanEntity extends Monster implements GeoEntity {
         }
         return super.mobInteract(player, hand);
     }
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (this.level().isClientSide()) return false;
 
         if (source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(net.minecraft.world.damagesource.DamageTypes.GENERIC_KILL)) {
             this.isInstantKill = true;
+            return super.hurt(source, amount);
         }
 
         int state = this.entityData.get(BOSS_STATE);

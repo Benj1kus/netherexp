@@ -127,6 +127,20 @@ public class QuotaManager {
     public static void failQuota(Player player) {
         CompoundTag data = player.getPersistentData();
 
+        boolean isCultist = data.getBoolean("AzazelCultist");
+
+        boolean hasQuota = false;
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            if (player.getInventory().getItem(i).is(NetherExp.QUOTA.get())) {
+                hasQuota = true;
+                break;
+            }
+        }
+
+        if (!isCultist || !hasQuota) {
+            return;
+        }
+
         player.level().playSound(null, player.blockPosition(), ModSounds.BELL_BEAST_LAUGH.get(), SoundSource.PLAYERS, 1.5F, 1.0F);
 
         var attr = player.getAttribute(Attributes.MAX_HEALTH);
@@ -139,7 +153,7 @@ public class QuotaManager {
 
         if (player.level() instanceof ServerLevel sl) {
             for (int i = 0; i < 3; i++) {
-                var statue = NetherExp.STATUE.get().create(sl);
+                var statue = NetherExp.STATUE.get().create(sl); // Для 1.21.1 возможно ModEntities.STATUE.get()
                 if (statue != null) {
                     double dx = (sl.random.nextDouble() - 0.5) * 6;
                     double dz = (sl.random.nextDouble() - 0.5) * 6;

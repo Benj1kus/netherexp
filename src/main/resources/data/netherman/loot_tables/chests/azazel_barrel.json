@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:manipulator_stick" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:music_disc_azazel" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:music_disc_boss" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:chance_totem", "functions": [ { "function": "minecraft:set_count", "count": 2 } ] } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "minecraft:totem_of_undying" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:note" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:azazel_trophy" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "minecraft:diamond", "functions": [ { "function": "minecraft:set_count", "count": 25 } ] } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "minecraft:netherite_scrap", "functions": [ { "function": "minecraft:set_count", "count": 12 } ] } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "minecraft:enchanted_golden_apple", "functions": [ { "function": "minecraft:set_count", "count": 4 } ] } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:nether_spawner" } ] }
+  ]
+}

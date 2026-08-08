@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:azazel_spear" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:music_disc_quar" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:music_disc_sacred" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:music_disc_maze" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:chance_totem", "functions": [ { "function": "minecraft:set_count", "count": 2 } ] } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:azazel_shield", "functions": [ { "function": "minecraft:set_count", "count": 2 } ] } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:azazel_chestplate" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:azazel_helmet" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:azazel_leggings" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:azazel_boots" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "netherman:azazel_trophy" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "minecraft:diamond", "functions": [ { "function": "minecraft:set_count", "count": 55 } ] } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "minecraft:milk_bucket" } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "minecraft:netherite_scrap", "functions": [ { "function": "minecraft:set_count", "count": 20 } ] } ] },
+    { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "minecraft:enchanted_golden_apple", "functions": [ { "function": "minecraft:set_count", "count": 10 } ] } ] }
+  ]
+}

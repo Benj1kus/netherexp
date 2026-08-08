@@ -427,7 +427,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
                             for (int i = 0; i < 30; i++) {
                                 net.minecraft.world.item.Item goldItem = this.random.nextBoolean() ? net.minecraft.world.item.Items.GOLD_INGOT : net.minecraft.world.item.Items.GOLD_NUGGET;
                                 net.minecraft.world.entity.item.ItemEntity gold = new net.minecraft.world.entity.item.ItemEntity(
-                                        serverLevel, this.getX(), this.getY() + 1.0D, this.getZ(), new ItemStack(goldItem, 1)
+                                        serverLevel, this.getX(), this.getY() + 1.0D, this.getZ(), new net.minecraft.world.item.ItemStack(goldItem, 1)
                                 );
                                 gold.setDeltaMovement((this.random.nextDouble() - 0.5D) * 0.5D, 0.5D + this.random.nextDouble() * 0.3D, (this.random.nextDouble() - 0.5D) * 0.5D);
                                 serverLevel.addFreshEntity(gold);
@@ -438,27 +438,7 @@ public class AzazelEntity extends Monster implements GeoEntity {
 
                             net.minecraft.world.level.block.entity.BlockEntity blockEntity = serverLevel.getBlockEntity(barrelPos);
                             if (blockEntity instanceof net.minecraft.world.level.block.entity.BarrelBlockEntity barrel) {
-                                java.util.List<Integer> availableSlots = new java.util.ArrayList<>();
-                                for (int i = 0; i < 27; i++) availableSlots.add(i);
-                                java.util.Collections.shuffle(availableSlots);
-
-                                ItemStack[] loot = new ItemStack[] {
-                                        new ItemStack(NetherExp.MANIPULATOR_STICK.get(), 1),
-                                        new ItemStack(NetherExp.MUSIC_DISC_AZAZEL.get(), 1),
-                                        new ItemStack(NetherExp.MUSIC_DISC_BOSS.get(), 1),
-                                        new ItemStack(NetherExp.CHANCE_TOTEM.get(), 2),
-                                        new ItemStack(net.minecraft.world.item.Items.TOTEM_OF_UNDYING, 1),
-                                        new ItemStack(NetherExp.NOTE.get(), 1),
-                                        new ItemStack(NetherExp.AZAZEL_TROPHY_ITEM.get(), 1),
-                                        new ItemStack(net.minecraft.world.item.Items.DIAMOND, 25),
-                                        new ItemStack(net.minecraft.world.item.Items.NETHERITE_SCRAP, 12),
-                                        new ItemStack(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE, 4),
-                                        new ItemStack(NetherExp.NETHER_SPAWNER_ITEM.get(), 1)
-                                };
-
-                                for (int i = 0; i < loot.length && i < availableSlots.size(); i++) {
-                                    barrel.setItem(availableSlots.get(i), loot[i]);
-                                }
+                                barrel.setLootTable(new net.minecraft.resources.ResourceLocation("netherman", "chests/azazel_barrel"), this.random.nextLong());
                             }
                         }
                         this.bossEvent.removeAllPlayers();

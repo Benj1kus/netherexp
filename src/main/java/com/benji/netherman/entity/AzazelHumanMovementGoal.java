@@ -27,7 +27,7 @@ public class AzazelHumanMovementGoal extends Goal {
     public boolean canUse() {
         
         int state = boss.getEntityData().get(AzazelHumanEntity.BOSS_STATE);
-        if (state < 5 || state == 14) return false; 
+        if (state < 5 || state == 14 || state >= 100) return false;
 
         LivingEntity target = boss.getTarget();
         if (target == null) return false;

@@ -60,6 +60,7 @@ public class AzazelHumanPhase2Goal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return tick < MAX_TICKS;
+        int state = boss.getEntityData().get(AzazelHumanEntity.BOSS_STATE);
+        return tick < MAX_TICKS && state < 100;
     }
 }

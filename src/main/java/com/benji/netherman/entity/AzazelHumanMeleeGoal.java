@@ -213,6 +213,6 @@ public class AzazelHumanMeleeGoal extends Goal {
     public boolean canContinueToUse() {
         
         int state = boss.getEntityData().get(AzazelHumanEntity.BOSS_STATE);
-        return currentAnimTick < maxAnimTick && state != 40;
+        return currentAnimTick < maxAnimTick && state != 40 && state < 100;
     }
 }

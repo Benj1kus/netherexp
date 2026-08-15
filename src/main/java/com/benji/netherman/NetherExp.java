@@ -1319,18 +1319,30 @@ public class NetherExp {
                 }
 
                 if (event.getSource().is(net.minecraft.world.damagesource.DamageTypes.FLY_INTO_WALL)) {
-                    if (player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST).is(com.benji.netherman.NetherExp.AZAZEL_CHESTPLATE.get())) {
+                    if (player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST)
+                            .is(com.benji.netherman.NetherExp.AZAZEL_CHESTPLATE.get())) {
 
                         event.setCanceled(true);
 
-                        player.getPersistentData().putInt("AzazelDrillTicks", 12);
+                        if (com.benji.netherman.config.AzazelConfig.AZAZEL_ARMOR_BLOCK_BREAKING.get()) {
 
-                        net.minecraft.world.phys.Vec3 look = player.getLookAngle().normalize();
-                        player.getPersistentData().putDouble("AzazelDrillX", look.x);
-                        player.getPersistentData().putDouble("AzazelDrillY", look.y);
-                        player.getPersistentData().putDouble("AzazelDrillZ", look.z);
+                            player.getPersistentData().putInt("AzazelDrillTicks", 12);
 
-                        player.level().playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE, net.minecraft.sounds.SoundSource.PLAYERS, 1.5F, 1.2F);
+                            net.minecraft.world.phys.Vec3 look = player.getLookAngle().normalize();
+
+                            player.getPersistentData().putDouble("AzazelDrillX", look.x);
+                            player.getPersistentData().putDouble("AzazelDrillY", look.y);
+                            player.getPersistentData().putDouble("AzazelDrillZ", look.z);
+
+                            player.level().playSound(
+                                    null,
+                                    player.blockPosition(),
+                                    net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE,
+                                    net.minecraft.sounds.SoundSource.PLAYERS,
+                                    1.5F,
+                                    1.2F
+                            );
+                        }
                     }
                 }
             }
@@ -1457,24 +1469,31 @@ public class NetherExp {
                         player.hurtMarked = true;
 
                         if (!player.level().isClientSide() && player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
-                            net.minecraft.world.phys.Vec3 targetPos = player.position().add(drillDir.scale(1.2D));
-                            net.minecraft.core.BlockPos centerBlock = net.minecraft.core.BlockPos.containing(targetPos.x, targetPos.y + 0.6D, targetPos.z);
 
-                            int r = 1;
-                            for (int x = -r; x <= r; x++) {
-                                for (int y = -r; y <= r + 1; y++) {
-                                    for (int z = -r; z <= r; z++) {
-                                        net.minecraft.core.BlockPos targetBlock = centerBlock.offset(x, y, z);
-                                        net.minecraft.world.level.block.state.BlockState state = serverLevel.getBlockState(targetBlock);
+                            if (com.benji.netherman.config.AzazelConfig.AZAZEL_ARMOR_BLOCK_BREAKING.get()) {
+                                net.minecraft.world.phys.Vec3 targetPos = player.position().add(drillDir.scale(1.2D));
+                                net.minecraft.core.BlockPos centerBlock = net.minecraft.core.BlockPos.containing(
+                                        targetPos.x,
+                                        targetPos.y + 0.6D,
+                                        targetPos.z
+                                );
 
+                                int r = 1;
 
-                                        if (!state.isAir() && state.getDestroySpeed(serverLevel, targetBlock) >= 0) {
-                                            serverLevel.destroyBlock(targetBlock, true, player);
+                                for (int x = -r; x <= r; x++) {
+                                    for (int y = -r; y <= r + 1; y++) {
+                                        for (int z = -r; z <= r; z++) {
+                                            net.minecraft.core.BlockPos targetBlock = centerBlock.offset(x, y, z);
+                                            net.minecraft.world.level.block.state.BlockState state =
+                                                    serverLevel.getBlockState(targetBlock);
+
+                                            if (!state.isAir() && state.getDestroySpeed(serverLevel, targetBlock) >= 0) {
+                                                serverLevel.destroyBlock(targetBlock, true, player);
+                                            }
                                         }
                                     }
                                 }
                             }
-
 
                             serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.FLAME, player.getX(), player.getY() + 0.8D, player.getZ(), 6, 0.4D, 0.4D, 0.4D, 0.1D);
                             serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.LAVA, player.getX(), player.getY() + 0.8D, player.getZ(), 3, 0.3D, 0.3D, 0.3D, 0.1D);

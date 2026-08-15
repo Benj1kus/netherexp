@@ -6,6 +6,8 @@ public class AzazelConfig {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;
 
+    public static final ForgeConfigSpec.BooleanValue AZAZEL_ARMOR_BLOCK_BREAKING;
+
     public static final ForgeConfigSpec.DoubleValue MAX_HEALTH;
     public static final ForgeConfigSpec.DoubleValue MOVEMENT_SPEED;
     public static final ForgeConfigSpec.DoubleValue KNOCKBACK_RESISTANCE;
@@ -78,7 +80,15 @@ public class AzazelConfig {
 
     static {
 
-        
+
+        BUILDER.push("Azazel Armor Configuration");
+
+        AZAZEL_ARMOR_BLOCK_BREAKING = BUILDER
+                .comment("Allows the Chestplate to break blocks when flying into them at high speed.")
+                .define("azazelArmorBlockBreaking", true);
+
+        BUILDER.pop();
+
         BUILDER.push("Azazel Boss Configuration");
         MAX_HEALTH = BUILDER.comment("Maximum health of Azazel").defineInRange("maxHealth", 800.0, 100.0, 10000.0);
         MOVEMENT_SPEED = BUILDER.comment("Movement speed of Azazel").defineInRange("movementSpeed", 0.2, 0.05, 1.0);
